@@ -33,9 +33,11 @@
     "embla-carousel-react": "^7.0.9",
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
+    "moralis-v1": "^1.12.0",
     "next": "13.1.6",
     "next-fonts": "^1.5.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-moralis": "^1.4.2"
   }
 }
