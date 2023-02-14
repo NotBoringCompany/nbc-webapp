@@ -1,10 +1,7 @@
-import { createStyles, Header, Group, Center, Burger, Container, Button, Transition, Paper, Menu } from '@mantine/core';
+import { createStyles, Header, Group, Center, Burger, Container, Transition, Paper } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconChevronDown, IconLayoutDashboard, IconLogout } from '@tabler/icons';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
 import { useMoralis } from 'react-moralis';
 import NBCLogo from '../../../public/NBCLogo.png';
 import ConnectWalletButton from '../Buttons/ConnectWallet';
@@ -111,19 +108,16 @@ const useStyles = createStyles((theme) => ({
 const NavbarItems = (props) => {
     const enableDropdown = props.isDropdown;
     const { classes } = useStyles();
-    const { isAuthenticated, logout } = useMoralis();
-    const router = useRouter();
-
-    const handleLogout = async () => {
-      await logout();
-      router.push('/');
-    }
+    const { isAuthenticated } = useMoralis();
 
     if (enableDropdown) {
         return (
         <>
             <Center className={classes.centerItems}>
                 <Link href='/mint' className={classes.link}>Mint</Link>
+            </Center>
+            <Center className={classes.centerItems}>
+                <Link href='/wl-checker' className={classes.link}>WL Checker</Link>
             </Center>
             <Center className={classes.centerItems}>
                 { !isAuthenticated ? (
@@ -139,6 +133,7 @@ const NavbarItems = (props) => {
     return (
         <>
             <Link href='/mint' className={classes.link}>Mint</Link>
+            <Link href='/wl-checker' className={classes.link}>WL Checker</Link>
             { !isAuthenticated ? (
               <ConnectWalletButton />
             ) : (
@@ -152,7 +147,7 @@ const MainNavbar = () => {
     const [ opened, { toggle }] = useDisclosure(false);
     const { classes } = useStyles();
     return (
-        <Header height={HEADER_HEIGHT} mb={120} className={classes.header}>
+        <Header sx={{borderBottom: 0}} height={HEADER_HEIGHT} mb={20} className={classes.header}>
             <Container className={classes.containerHeader}>
                 <Link href='/'>
                     <Image src={NBCLogo} alt='nbc logo' width={40} height={40} priority />
