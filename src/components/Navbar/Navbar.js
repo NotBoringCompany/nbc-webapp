@@ -1,9 +1,14 @@
-import { createStyles, Header, Group, Center, Burger, Container, Button, Transition, Paper } from '@mantine/core';
+import { createStyles, Header, Group, Center, Burger, Container, Button, Transition, Paper, Menu } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { IconChevronDown, IconLayoutDashboard, IconLogout } from '@tabler/icons';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useMoralis } from 'react-moralis';
 import NBCLogo from '../../../public/NBCLogo.png';
 import ConnectWalletButton from '../Buttons/ConnectWallet';
+import NavbarMenu from '../Dropdowns/NavbarMenu';
 
 const HEADER_HEIGHT = 60;
 
@@ -43,9 +48,8 @@ const useStyles = createStyles((theme) => ({
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
     borderTopWidth: 0,
-    overflow: 'hidden',
 
-    [theme.fn.largerThan('sm')]: {
+    [theme.fn.largerThan('xs')]: {
       display: 'none',
     },
   },
@@ -53,6 +57,10 @@ const useStyles = createStyles((theme) => ({
   centerItems: {
     marginTop: 10,
     marginBottom: 10,
+  },
+
+  menuMargin: {
+    marginTop: 3,
   },
 
   connectButton: {
@@ -63,6 +71,14 @@ const useStyles = createStyles((theme) => ({
       transitionDuration: '200ms',
       backgroundColor: '#42ca9f',
     },
+
+    '&:active': {
+      transform: 'translateY(2px)',
+    },
+  },
+
+  myAccountParagraph: {
+    marginRight: 5,
   },
 
   link: {
@@ -95,6 +111,13 @@ const useStyles = createStyles((theme) => ({
 const NavbarItems = (props) => {
     const enableDropdown = props.isDropdown;
     const { classes } = useStyles();
+    const { isAuthenticated, logout } = useMoralis();
+    const router = useRouter();
+
+    const handleLogout = async () => {
+      await logout();
+      router.push('/');
+    }
 
     if (enableDropdown) {
         return (
@@ -103,7 +126,11 @@ const NavbarItems = (props) => {
                 <Link href='/mint' className={classes.link}>Mint</Link>
             </Center>
             <Center className={classes.centerItems}>
-                <ConnectWalletButton />
+                { !isAuthenticated ? (
+                  <ConnectWalletButton />
+                ) : (
+                  <NavbarMenu />
+                )}
             </Center>
         </>
         );
@@ -112,7 +139,11 @@ const NavbarItems = (props) => {
     return (
         <>
             <Link href='/mint' className={classes.link}>Mint</Link>
-            <ConnectWalletButton />
+            { !isAuthenticated ? (
+              <ConnectWalletButton />
+            ) : (
+              <NavbarMenu />
+            )}
         </>
     );
 }
