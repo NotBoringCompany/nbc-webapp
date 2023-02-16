@@ -1,10 +1,22 @@
 import MainNavbar from '@/components/Navbar/Navbar';
 import { createStyles, Center, Container, Flex, Button, BackgroundImage, Box, TextInput } from '@mantine/core';
 import Image from 'next/image';
-import XandLamox from '../../public/XandLamox.png'
+import XandLamox from '../../public/XandLamox.png';
+import TestKey from '../../public/TestKey.png';
 import { useState } from 'react';
 
+const useStyles = createStyles((theme) => ({
+    keyImage: {
+        borderRadius: '50%',
+        marginTop: '-40px',
+        marginBottom: '10px',
+        zIndex: 5,
+        border: '3px solid #42ca9f'
+    }
+}));
+
 const WLChecker = () => {
+    const { classes } = useStyles();
     const [walletValue, setWalletValue] = useState('');
     return (
         <>
@@ -13,6 +25,7 @@ const WLChecker = () => {
                 gap='md'
                 justify='center'
                 align='center'
+                direction='column'
             >
                 <Box sx={(theme) => ({
                     background: 'rgba(0, 0, 0, 0.85)',
@@ -31,6 +44,7 @@ const WLChecker = () => {
                         fontSize: theme.fontSizes.xs,
                     }
                 })}>
+                    <Image src={TestKey} alt='TestKey' width={90} height={90} className={classes.keyImage} />
                     <h1>Genesis Pass Whitelist Checker</h1>
                     <p>
                         Enter your <b>EVM</b> wallet address below to check <br />
@@ -39,6 +53,8 @@ const WLChecker = () => {
                     <TextInput
                         sx={(theme) => ({
                             marginTop: 25,
+                            outlineColor: '#42ca9f',
+                            
                         })}
                         placeholder='0x123...'
                         value={walletValue}
@@ -49,7 +65,13 @@ const WLChecker = () => {
                             background: '#42ca9f',
                             marginTop: 25,
                             marginBottom: 15,
+                            ':hover': {
+                                transform: 'scale(1.01) translate(1px, -3px)',
+                                transitionDuration: '200ms',
+                                backgroundColor: '#42ca9f',
+                            }
                         })}
+                        onClick={() => alert(`Checking wallet ${walletValue}`)}
                     >
                         Check wallet
                     </Button>
@@ -61,8 +83,9 @@ const WLChecker = () => {
                     fill
                     style={{
                         objectFit: 'cover',
-                        zIndex: -9999
+                        zIndex: -9999,
                     }}
+                    quality={100}
                 />
             </Flex>
         </>

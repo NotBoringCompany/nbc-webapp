@@ -120,6 +120,9 @@ const NavbarItems = (props) => {
                 <Link href='/wl-checker' className={classes.link}>WL Checker</Link>
             </Center>
             <Center className={classes.centerItems}>
+              <Link href='/wl-collection' className={classes.link}>WL Collection</Link>
+            </Center>
+            <Center className={classes.centerItems}>
                 { !isAuthenticated ? (
                   <ConnectWalletButton />
                 ) : (
@@ -134,6 +137,7 @@ const NavbarItems = (props) => {
         <>
             <Link href='/mint' className={classes.link}>Mint</Link>
             <Link href='/wl-checker' className={classes.link}>WL Checker</Link>
+            <Link href='/wl-collection' className={classes.link}>WL Collection</Link>
             { !isAuthenticated ? (
               <ConnectWalletButton />
             ) : (
