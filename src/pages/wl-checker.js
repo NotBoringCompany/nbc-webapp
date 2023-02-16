@@ -17,7 +17,7 @@ const useStyles = createStyles((theme) => ({
 
 const WLChecker = () => {
     const { classes } = useStyles();
-    const [walletValue, setWalletValue] = useState('');
+    const [ walletValue, setWalletValue ] = useState('');
     return (
         <>
             <MainNavbar />
