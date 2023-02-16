@@ -1,6 +1,6 @@
-const { Flex } = require('@mantine/core');
+const { Flex, Text } = require('@mantine/core');
 
-const WLCollectionMB = ({children}) => {
+const WLCollectionWP = ({children}) => {
     return (
         <Flex
             gap='md'
@@ -23,4 +23,4 @@ const WLCollectionMB = ({children}) => {
     )
 }
 
-export default WLCollectionMB;
+export default WLCollectionWP;
