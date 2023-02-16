@@ -12,16 +12,13 @@ const HEADER_HEIGHT = 60;
 const useStyles = createStyles((theme) => ({
   header: {
     backgroundColor: '#000000',
-  },
-
-  containerHeader: {
     display: 'flex',
     flex: 'column',
-    zIndex: 3,
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: '100%',
+    height: HEADER_HEIGHT,
     borderBottom: 0,
+    margin: '0px 50px 0px 50px',
   },
 
   links: {
@@ -151,25 +148,30 @@ const MainNavbar = () => {
     const [ opened, { toggle }] = useDisclosure(false);
     const { classes } = useStyles();
     return (
-        <Header sx={{borderBottom: 0}} height={HEADER_HEIGHT} mb={20} className={classes.header}>
-            <Container className={classes.containerHeader}>
-                <Link href='/'>
-                    <Image src={NBCLogo} alt='nbc logo' width={40} height={40} priority />
-                </Link>
-                <Group spacing={20} className={classes.links}>
-                    <NavbarItems />
-                </Group>
+      <Header 
+        sx={{borderBottom: 0}}
+        height={HEADER_HEIGHT} 
+        mb={20} 
+        className={classes.header}
+      >
+        <Link href='/'>
+          <Image src={NBCLogo} alt='nbc logo' width={40} height={40} priority />
+        </Link>
+        <Group spacing={20} className={classes.links}>
+          <NavbarItems />
+        </Group>
 
-                <Burger opened={opened} onClick={toggle} className={classes.burger} size='sm' />
-                <Transition transition='pop-top-right' duration={200} mounted={opened}>
-                    {(styles) => (
-                        <Paper className={classes.dropdown} withBorder style={styles}>
-                            <NavbarItems isDropdown />
-                        </Paper>
-                    )}
-                </Transition>
-            </Container>
-        </Header>
+        <Burger opened={opened} onClick={toggle} className={classes.burger} size='sm' />
+        <Transition transition='pop-top-right' duration={200} mounted={opened}>
+          {(styles) => (
+            <Paper className={classes.dropdown} sx={(theme) => ({
+              backgroundColor: '#000000',
+            })}>
+              <NavbarItems isDropdown />
+            </Paper>
+          )}
+        </Transition>
+      </Header>
     )
 }
 

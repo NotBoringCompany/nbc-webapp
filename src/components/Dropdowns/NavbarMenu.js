@@ -5,23 +5,24 @@ const { createStyles, Menu, Button } = require('@mantine/core');
 const { IconChevronDown, IconLayoutDashboard, IconLogout } = require('@tabler/icons');
 
 const useStyles = createStyles((theme) => ({
-    menuMargin: {
-        marginTop: 3,
-      },
-    
-      connectButton: {
+  menuDropdown: {
+      marginTop: 3,
+      backgroundColor: '#000000',
+    },
+  
+    connectButton: {
+      backgroundColor: '#42ca9f',
+  
+      '&:hover': {
+        transform: 'scale(1.01) translate(1px, -3px)',
+        transitionDuration: '200ms',
         backgroundColor: '#42ca9f',
-    
-        '&:hover': {
-          transform: 'scale(1.01) translate(1px, -3px)',
-          transitionDuration: '200ms',
-          backgroundColor: '#42ca9f',
-        },
-    
-        '&:active': {
-          transform: 'translateY(2px)',
-        },
       },
+  
+      '&:active': {
+        transform: 'translateY(2px)',
+      },
+    },
 }));
 
 const NavbarMenu = () => {
@@ -42,7 +43,7 @@ const NavbarMenu = () => {
                 </Button>
             </Menu.Target>
         
-            <Menu.Dropdown className={classes.menuMargin}>
+            <Menu.Dropdown className={classes.menuDropdown}>
                 <Menu.Item icon={<IconLayoutDashboard size={14} />}>Dashboard</Menu.Item>
 
                 <Menu.Divider />

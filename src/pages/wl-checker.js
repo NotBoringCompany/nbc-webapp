@@ -1,5 +1,5 @@
 import MainNavbar from '@/components/Navbar/Navbar';
-import { createStyles, Center, Container, Flex, Button, BackgroundImage, Box, TextInput } from '@mantine/core';
+import { createStyles, Center, Container, Flex, Button, BackgroundImage, Box, TextInput, Input } from '@mantine/core';
 import Image from 'next/image';
 import XandLamox from '../../public/XandLamox.png';
 import TestKey from '../../public/TestKey.png';
@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
         marginBottom: '10px',
         zIndex: 5,
         border: '3px solid #42ca9f'
-    }
+    },
 }));
 
 const WLChecker = () => {
@@ -53,9 +53,15 @@ const WLChecker = () => {
                     <TextInput
                         sx={(theme) => ({
                             marginTop: 25,
-                            outlineColor: '#42ca9f',
-                            
                         })}
+                        styles={(theme) => ({
+                            input: {
+                                ':focus-within': {
+                                    borderColor: '#42ca9f'
+                                }
+                            }
+                        })}
+                        radius='sm'
                         placeholder='0x123...'
                         value={walletValue}
                         onChange={(e) => setWalletValue(e.target.value)}
