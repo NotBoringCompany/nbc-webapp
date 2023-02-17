@@ -1,5 +1,7 @@
-import { Box, Flex } from '@mantine/core';
-import { IconWallet } from '@tabler/icons';
+import ConnectWalletStepButton from '@/components/Buttons/ConnectWalletStep';
+import { Box, Button, Container, Flex } from '@mantine/core';
+import { IconArrowRightRhombus, IconWallet } from '@tabler/icons';
+import { useMoralis } from 'react-moralis';
 
 const ConnectWalletStep = () => {
     return (
@@ -18,12 +20,19 @@ const ConnectWalletStep = () => {
             <Flex
                 direction='row'
                 align='center'
+                justify='space-between'
                 sx={(theme) => ({
                     marginLeft: 15,
                 })}
             >
-                <IconWallet size={35} />
-                <h3 style={{marginLeft: 30}}>Connect your wallet</h3>
+                <Flex
+                    direction='row'
+                    align='center'
+                >
+                    <IconWallet size={35} />
+                    <h3 style={{marginLeft: 30}}>Connect your wallet</h3>
+                </Flex>
+                <ConnectWalletStepButton />
             </Flex>
         </Box>
     );

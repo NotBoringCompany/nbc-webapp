@@ -6,7 +6,7 @@ const GlobalStyles = () => {
             styles={(theme) => ({
                 body: {
                     backgroundColor: theme.colorScheme === 'dark' ? theme.black : theme.white,
-                    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.black,
+                    color: theme.colorScheme === 'dark' ? theme.colors.black : theme.white,
                 }
             })}
         />

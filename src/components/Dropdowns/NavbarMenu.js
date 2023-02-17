@@ -32,7 +32,7 @@ const NavbarMenu = () => {
 
     const handleLogout = async () => {
         await logout();
-        router.push('/');
+        router.reload(window.location.pathname);
       }
     return (
         <Menu shadow='md' width={200}>
@@ -48,7 +48,7 @@ const NavbarMenu = () => {
 
                 <Menu.Divider />
                 
-                <Menu.Item onClick={handleLogout} icon={<IconLogout size={14} />}>Logout</Menu.Item>
+                <Menu.Item onClick={handleLogout} icon={<IconLogout size={14}/>}>Logout</Menu.Item>
             </Menu.Dropdown>
         </Menu>
     )
