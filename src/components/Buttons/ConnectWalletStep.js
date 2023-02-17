@@ -45,6 +45,10 @@ const ConnectWalletStepButton = () => {
 
                 ':hover': {
                     cursor: 'not-allowed'
+                },
+
+                [theme.fn.smallerThan('sm')]: {
+                    fontSize: 10,
                 }
             })}
             disabled

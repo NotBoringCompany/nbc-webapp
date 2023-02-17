@@ -1,6 +1,8 @@
 import { Box, Flex } from '@mantine/core';
 import { IconWallet } from '@tabler/icons';
 import ConnectWalletStep from './StepsComponents/ConnectWallet';
+import FollowTwitterStep from './StepsComponents/CheckTwitter';
+import CheckTwitterStep from './StepsComponents/CheckTwitter';
 
 const WLCollectionSteps = () => {
     return (
@@ -10,9 +12,13 @@ const WLCollectionSteps = () => {
             justify='center'
             sx={(theme) => ({
                 width: '75%',
+                [theme.fn.smallerThan('sm')]: {
+                    minWidth: '100%',
+                }
             })}
         >
             <ConnectWalletStep />
+            <CheckTwitterStep />
         </Flex>
     );
 }
