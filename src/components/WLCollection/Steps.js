@@ -1,24 +1,31 @@
-import { Box, Flex } from '@mantine/core';
-import { IconWallet } from '@tabler/icons';
+import { Flex } from '@mantine/core';
 import ConnectWalletStep from './StepsComponents/ConnectWallet';
-import FollowTwitterStep from './StepsComponents/CheckTwitter';
 import CheckTwitterStep from './StepsComponents/CheckTwitter';
+import RetweetStep from './StepsComponents/Retweet';
+import SubmitStep from './StepsComponents/Submit';
 
 const WLCollectionSteps = () => {
     return (
         <Flex
             direction='column'
-            align='center'
-            justify='center'
             sx={(theme) => ({
                 width: '75%',
+                marginTop: 30,
                 [theme.fn.smallerThan('sm')]: {
                     minWidth: '100%',
                 }
             })}
         >
-            <ConnectWalletStep />
-            <CheckTwitterStep />
+            <Flex
+                direction='column'
+                align='center'
+                justify='center'
+            >
+                <ConnectWalletStep />
+                <CheckTwitterStep />
+                <RetweetStep />
+            </Flex>
+            <SubmitStep />
         </Flex>
     );
 }

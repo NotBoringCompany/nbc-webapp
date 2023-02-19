@@ -1,6 +1,8 @@
 const withFonts = require('next-fonts');
-module.exports = withFonts({
+const withVideos = require('next-videos');
+
+module.exports = withVideos(withFonts({
   webpack(config, options) {
     return config;
   }
-});
+}));

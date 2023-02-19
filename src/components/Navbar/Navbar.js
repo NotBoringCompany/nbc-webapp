@@ -11,7 +11,6 @@ const HEADER_HEIGHT = 60;
 
 const useStyles = createStyles((theme) => ({
   header: {
-    backgroundColor: '#000000',
     display: 'flex',
     flex: 'column',
     justifyContent: 'space-between',
@@ -149,7 +148,10 @@ const MainNavbar = () => {
     const { classes } = useStyles();
     return (
       <Header 
-        sx={{borderBottom: 0}}
+        sx={(theme) => ({
+          borderBottom: 0, 
+          backgroundColor: theme.fn.rgba(theme.black, 0)
+        })}
         height={HEADER_HEIGHT} 
         mb={20} 
         className={classes.header}

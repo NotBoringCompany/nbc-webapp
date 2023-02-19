@@ -1,22 +1,13 @@
 import ConnectWalletStepButton from '@/components/Buttons/ConnectWalletStep';
 import { Box, Button, Container, Flex, Text } from '@mantine/core';
-import { IconArrowRightRhombus, IconWallet } from '@tabler/icons';
+import { IconArrowRightRhombus, IconCheck, IconWallet } from '@tabler/icons';
 import { useMoralis } from 'react-moralis';
+import StepsBox from './StepsBox';
 
 const ConnectWalletStep = () => {
+    const { isAuthenticated } = useMoralis();
     return (
-        <Box
-            sx={(theme) => ({
-                borderRadius: theme.radius.md,
-                width: '100%',
-                textAlign: 'center',
-                borderBottom: '2px solid #42ca9f',
-                borderRight: '2px solid #42ca9f',
-                borderTop: '2px solid #42ca9f',
-                borderLeft: '2px solid #42ca9f',
-                marginBottom: 15,
-            })}
-        >
+        <StepsBox style={isAuthenticated ? {border: '2px solid #42ca9f'} : {border: '2px solid white'}}>
             <Flex
                 direction='row'
                 align='center'
@@ -29,8 +20,9 @@ const ConnectWalletStep = () => {
                     direction='row'
                     align='center'
                 >
-                    <IconWallet size={35} />
-                    <Text 
+                    <IconWallet size={35} color={isAuthenticated ? '#42ca9f' : 'white'} />
+                    <Text
+                        color={isAuthenticated ? '#42ca9f' : 'white'}
                         sx={(theme) => ({
                             margin: '20px 0px 20px 25px',
                             fontSize: 20,
@@ -44,10 +36,13 @@ const ConnectWalletStep = () => {
                     >
                         Connect your wallet
                     </Text>
+                    {isAuthenticated && (
+                        <IconCheck style={{marginLeft: 5}} color='#42ca9f' />
+                    )}
                 </Flex>
                 <ConnectWalletStepButton />
             </Flex>
-        </Box>
+        </StepsBox>
     );
 }
 

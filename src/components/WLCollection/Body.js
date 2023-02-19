@@ -6,10 +6,10 @@ const WLCollectionBody = ({children}) => {
             justify='center'
             align='center'
             sx={(theme) => ({
-                maxWidth: '75%',
+                maxWidth: '80%',
                 flexDirection: 'row',                        
 
-                [theme.fn.smallerThan('sm')]: {
+                [theme.fn.smallerThan('md')]: {
                     marginTop: -20,
                     fontSize: '16px',
                     maxWidth: '90%',

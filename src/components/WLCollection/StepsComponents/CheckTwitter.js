@@ -1,21 +1,12 @@
-const { default: FollowTwitterStepButton, default: CheckTwitterStepButton } = require('@/components/Buttons/CheckTwitterStep');
-const { Box, Flex, Anchor, Tooltip, Button, Badge, Text } = require('@mantine/core');
-const { IconBrandTwitter, IconInfoSquareRounded, IconInfoCircle, IconInfoSquare } = require('@tabler/icons');
+import CheckTwitterStepButton from '@/components/Buttons/CheckTwitterStep';
+import StepsBox from './StepsBox';
+
+const { Flex, Tooltip, Badge, Text } = require('@mantine/core');
+const { IconBrandTwitter } = require('@tabler/icons');
 
 const CheckTwitterStep = () => {
     return (
-        <Box
-            sx={(theme) => ({
-                borderRadius: theme.radius.md,
-                width: '100%',
-                textAlign: 'center',
-                borderBottom: '2px solid #42ca9f',
-                borderRight: '2px solid #42ca9f',
-                borderTop: '2px solid #42ca9f',
-                borderLeft: '2px solid #42ca9f',
-                marginBottom: 15,
-            })}
-        >
+        <StepsBox>
             <Flex
                 direction='row'
                 align='center'
@@ -29,7 +20,8 @@ const CheckTwitterStep = () => {
                     align='center'
                 >
                     <IconBrandTwitter size={35}/>
-                    <Text 
+                    <Text
+                        color={'white'}
                         sx={(theme) => ({
                             margin: '20px 10px 20px 25px',
                             fontSize: 20,
@@ -41,10 +33,10 @@ const CheckTwitterStep = () => {
                             }
                         })}
                     >
-                        Follow <a href='https://twitter.com/realmhunterio' style={{color: '#42ca9f'}} target='_blank' rel='noreferrer'>Realm Hunter</a>, <a href='https://twitter.com/TheArchitectNBC' style={{color: '#42ca9f'}} target='_blank' rel='noreferrer'> Jason</a> 
+                        Follow <a href='https://twitter.com/realmhunterio' style={{color: '#ffffff'}} target='_blank' rel='noreferrer'>Realm Hunter</a>, <a href='https://twitter.com/TheArchitectNBC' style={{color: '#ffffff'}} target='_blank' rel='noreferrer'> Jason</a> 
                     </Text>
                     <Tooltip 
-                        label='Once you follow both, click on the Verify button to confirm.'
+                        label='Once you follow the required users, click on the Verify button to confirm.'
                     >
                         <Badge
                             sx={(theme) => ({
@@ -57,7 +49,7 @@ const CheckTwitterStep = () => {
                 </Flex>
                 <CheckTwitterStepButton />
             </Flex>
-        </Box>
+        </StepsBox>
     );
 }
 

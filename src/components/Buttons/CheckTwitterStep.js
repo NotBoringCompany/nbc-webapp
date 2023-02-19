@@ -18,14 +18,6 @@ const CheckTwitterStepButton = () => {
                 }
             })}
             rightIcon={<IconArrowRightRhombus />}
-            onClick={() => handleAuth(
-                setAuthError,
-                setIsAuthenticating,
-                enableWeb3,
-                Moralis,
-                authenticate,
-                'metamask'
-            )}
         >
             Verify
         </Button>

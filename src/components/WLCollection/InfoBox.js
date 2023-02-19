@@ -12,7 +12,7 @@ const WLCollectionInfoBox = () => {
     return (
         <Box
             sx={(theme) => ({
-                margin: '20px 30px',
+                margin: '20px 30px 35px 0px',
                 padding: '10px 20px',
                 borderRadius: theme.radius.md,
                 width: '50%',
@@ -22,7 +22,8 @@ const WLCollectionInfoBox = () => {
                 borderTop: '2px solid #42ca9f',
                 borderLeft: '2px solid #42ca9f',
 
-                [theme.fn.smallerThan('sm')]: {
+                [theme.fn.smallerThan('md')]: {
+                    margin: '20px 0px 35px 0px',
                     width: '100%',
                 }
             })}
