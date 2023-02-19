@@ -21,13 +21,13 @@ const useStyles = createStyles((theme) => ({
   },
 
   links: {
-    [theme.fn.smallerThan('xs')]: {
+    [theme.fn.smallerThan('md')]: {
       display: 'none',
     },
   },
 
   burger: {
-    [theme.fn.largerThan('xs')]: {
+    [theme.fn.largerThan('md')]: {
       display: 'none',
     },
   },
@@ -42,7 +42,7 @@ const useStyles = createStyles((theme) => ({
     borderTopLeftRadius: 0,
     borderTopWidth: 0,
 
-    [theme.fn.largerThan('xs')]: {
+    [theme.fn.largerThan('md')]: {
       display: 'none',
     },
   },

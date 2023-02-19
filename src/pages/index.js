@@ -10,6 +10,9 @@ const useStyles = createStyles((theme) => ({
   keyVideo: {
     width: '45%',
     zIndex: -1,
+    [theme.fn.smallerThan('xl')]: {
+      width: '60%',
+    },
     [theme.fn.smallerThan('sm')]: {
       width: '100%',
     }
@@ -41,7 +44,7 @@ export default function Home() {
         sx={(theme) => ({
           minWidth: '100%',
           minHeight: '100%',
-          [theme.fn.smallerThan('sm')]: {
+          [theme.fn.smallerThan('lg')]: {
             flexDirection: 'column'
           }
         })}
@@ -60,8 +63,6 @@ export default function Home() {
           align='center'
           direction='row'
           sx={(theme) => ({
-            minHeight: '50%',
-            maxHeight: '50%',
             [theme.fn.smallerThan('sm')]: {
               justify: 'center',
             }
@@ -77,8 +78,11 @@ export default function Home() {
               fontWeight: 600,
               marginLeft: 50,
               marginRight: 'auto',
+              [theme.fn.smallerThan('md')]: {
+                fontSize: 50,
+              },
               [theme.fn.smallerThan('sm')]: {
-                fontSize: 30,
+                fontSize: 40,
               }
             })}>
               Genesis Pass <Text span c='#42ca9f'>Free Mint</Text>
@@ -87,9 +91,14 @@ export default function Home() {
               fontSize: 26,
               fontWeight: 300,
               marginLeft: 50,
+              [theme.fn.smallerThan('lg')]: {
+                fontSize: 22,
+              },
+              [theme.fn.smallerThan('md')]: {
+                fontSize: 20,
+              },
               [theme.fn.smallerThan('sm')]: {
                 fontSize: 16,
-                marginLeft: 0,
               }
             })}>
               Participate in our upcoming and highly anticipated Free Mint.
@@ -97,6 +106,9 @@ export default function Home() {
             <Flex
               sx={(theme) => ({
                 marginBottom: 50,
+              [theme.fn.smallerThan('md')]: {
+                marginTop: -20,
+              },
               [theme.fn.smallerThan('sm')]: {
                 marginTop: -30,
               }
@@ -114,9 +126,11 @@ export default function Home() {
                   transitionDuration: '200ms',
                   backgroundColor: '#42ca9f',
                 },
+                [theme.fn.smallerThan('lg')]: {
+                  fontSize: 16,
+                },
                 [theme.fn.smallerThan('sm')]: {
                   fontSize: 12,
-                  marginLeft: 50
                 }
               })}
               >
@@ -133,6 +147,10 @@ export default function Home() {
                   transform: 'scale(1.01) translate(1px, -3px)',
                   transitionDuration: '200ms',
                   backgroundColor: '#42ca9f',
+                },
+                [theme.fn.smallerThan('lg')]: {
+                  fontSize: 16,
+                  marginRight: 0,
                 },
                 [theme.fn.smallerThan('sm')]: {
                   fontSize: 12,
@@ -155,15 +173,6 @@ export default function Home() {
               </a>
             </Flex>
           </Flex>
-          {/* <video
-            loop
-            autoPlay
-            muted
-            playsInline
-            style={{width: '45%', marginLeft: 100}}
-          >
-            <source src={require('../../public/Chaos_Key_Trim.mp4')} type='video/mp4' />
-          </video> */}
         </Flex>
       </Flex>
     </>
