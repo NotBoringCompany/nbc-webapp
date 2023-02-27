@@ -79,9 +79,11 @@ export default function Home() {
               marginLeft: 50,
               marginRight: 'auto',
               [theme.fn.smallerThan('md')]: {
+                marginLeft: 0,
                 fontSize: 50,
               },
               [theme.fn.smallerThan('sm')]: {
+                marginLeft: 0,
                 fontSize: 40,
               }
             })}>
@@ -95,17 +97,23 @@ export default function Home() {
                 fontSize: 22,
               },
               [theme.fn.smallerThan('md')]: {
+                marginLeft: 0,
                 fontSize: 20,
               },
               [theme.fn.smallerThan('sm')]: {
+                marginLeft: 0,
                 fontSize: 16,
               }
             })}>
               Participate in our upcoming and highly anticipated Free Mint.
             </Text>
             <Flex
+              justify='center'
+              align='center'
               sx={(theme) => ({
                 marginBottom: 50,
+                marginLeft: 'auto',
+                marginRight: 'auto',
               [theme.fn.smallerThan('md')]: {
                 marginTop: -20,
               },
@@ -140,7 +148,6 @@ export default function Home() {
                 border: '2px solid #42ca9f',
                 backgroundColor: 'transparent',
                 marginTop: 50,
-                marginRight: 30,
                 height: '50px',
                 fontSize: 18,
                 ':hover': {
