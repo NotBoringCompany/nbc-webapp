@@ -1,3 +1,5 @@
+import WLVerificationWhitelistStatus from './WhitelistStatus'
+
 const { Flex, Text } = require('@mantine/core')
 
 const WLVerificationWholePage = ({children}) => {
@@ -21,6 +23,7 @@ const WLVerificationWholePage = ({children}) => {
             >
                 Genesis Pass <Text span c='#42ca9f'>Wallet Verification</Text>
             </Text>
+            <WLVerificationWhitelistStatus />
             {children}
         </Flex>
     )

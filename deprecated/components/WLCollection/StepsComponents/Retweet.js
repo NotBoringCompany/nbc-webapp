@@ -1,5 +1,5 @@
 import CheckTwitterStepButton from 'deprecated/components/WLCollection/Buttons/CheckTwitterStep';
-import RetweetStepButton from '@/components/Buttons/RetweetStep';
+import RetweetStepButton from 'deprecated/components/WLCollection/Buttons/RetweetStep';
 import StepsBox from './StepsBox';
 
 const { Flex, Text, Box } = require('@mantine/core');
