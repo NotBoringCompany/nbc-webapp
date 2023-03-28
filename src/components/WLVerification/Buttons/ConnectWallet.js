@@ -1,9 +1,11 @@
+import handleAuth from '@/utils/moralisAuth';
 import { Button } from '@mantine/core';
+import { IconArrowRightRhombus } from '@tabler/icons';
 import { useState } from 'react';
 const { useMoralis } = require('react-moralis')
 
 const WLVerificationConnectWalletButton = () => {
-    const { enableWeb3, isAuthenticated, logout, Moralis } = useMoralis();
+    const { enableWeb3, isAuthenticated, authenticate, logout, Moralis } = useMoralis();
     const [ authError, setAuthError ] = useState(false);
     const [ isAuthenticating, setIsAuthenticating ] = useState(false);
 
@@ -19,6 +21,15 @@ const WLVerificationConnectWalletButton = () => {
                         backgroundColor: '#42ca9f',
                     }
                 })}
+                rightIcon={<IconArrowRightRhombus />}
+                onClick={() => handleAuth(
+                    setAuthError,
+                    setIsAuthenticating,
+                    enableWeb3,
+                    Moralis,
+                    authenticate,
+                    'metamask'
+                )}
             >
                 Connect
             </Button>
@@ -32,14 +43,14 @@ const WLVerificationConnectWalletButton = () => {
                 marginRight: 25,
 
                 ':hover': {
-                    cursor: 'not-allowed'
+                    cursor: 'not-allowed',
+                    backgroundColor: '#42ca9f',
                 },
 
                 [theme.fn.smallerThan('sm')]: {
                     fontSize: 10,
                 }
             })}
-            disabled
         >
             Wallet already connected
         </Button>

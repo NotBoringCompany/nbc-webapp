@@ -1,8 +1,9 @@
+import { useState } from 'react'
 import WLVerificationWhitelistStatus from './WhitelistStatus'
 
 const { Flex, Text } = require('@mantine/core')
 
-const WLVerificationWholePage = ({children}) => {
+const WLVerificationWholePage = ({whitelistType, setWhitelistType, wallet, setWallet, children}) => {
     return (
         <Flex
             gap='md'
@@ -23,7 +24,7 @@ const WLVerificationWholePage = ({children}) => {
             >
                 Genesis Pass <Text span c='#42ca9f'>Wallet Verification</Text>
             </Text>
-            <WLVerificationWhitelistStatus />
+            <WLVerificationWhitelistStatus whitelistType={whitelistType} setWhitelistType={setWhitelistType} wallet={wallet} setWallet={setWallet}/>
             {children}
         </Flex>
     )

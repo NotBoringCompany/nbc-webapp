@@ -2,14 +2,8 @@ import { Box, Button, Flex, Text } from '@mantine/core'
 import { useEffect, useState } from 'react'
 import { useMoralis } from 'react-moralis'
 
-const WLVerificationWhitelistStatus = () => {
-    const { isAuthenticated, user } = useMoralis();
-    const [wallet, setWallet] = useState('');
-    const [whitelistType, setWhitelistType] = useState('');
-
+const WLVerificationWhitelistStatus = ({ whitelistType, setWhitelistType, wallet, setWallet }) => {
     useEffect(() => {
-        setWallet(user && user.attributes.ethAddress)
-
         const checkWlType = async () => {
             try {
                 const res = await fetch(
@@ -19,7 +13,7 @@ const WLVerificationWhitelistStatus = () => {
                     }
                 )
         
-                const data = await res.json()
+                const { data } = await res.json()
                 setWhitelistType(data.whitelistType)
             } catch (err) {
                 console.log(err)
@@ -27,15 +21,15 @@ const WLVerificationWhitelistStatus = () => {
         }
 
         checkWlType()
-    }, [user, wallet])
+    }, [wallet, setWhitelistType])
 
     
     return (
         <Box
-            style={whitelistType === 'none' ? { border: '2px solid #ca4242' } : { border: '2px solid #42ca9f' }}
+            style={!wallet ? { border: '2px solid white' } : whitelistType === 'none' ? { border: '2px solid #ca4242' } : { border: '2px solid #42ca9f' }}
             sx={(theme) => ({
                 borderRadius: theme.radius.md,
-                width: '33%',
+                width: '40%',
             })}
         >
             <Flex
@@ -44,13 +38,13 @@ const WLVerificationWhitelistStatus = () => {
                 justify='center'
             >
                 <Text
-                    color={whitelistType === 'none' ? '#ca4242' : '#42ca9f'}
+                    color={!wallet ? 'white' : whitelistType === 'none' ? '#ca4242' : '#42ca9f'}
                     sx={(theme) => ({
                         margin: '10px 25px 10px 25px',
                         fontSize: 22
                     })}
                 >
-                    Your Whitelist Status: <Text span style={{fontWeight: 500}}>{whitelistType === 'none' ? 'Not Whitelisted' : whitelistType}</Text>
+                    Your Whitelist Status: <Text span style={{fontWeight: 500}}>{!wallet ? 'Wallet not connected' : whitelistType === 'none' ? 'Not Whitelisted' : whitelistType}</Text>
                 </Text>
             </Flex>
         </Box>
