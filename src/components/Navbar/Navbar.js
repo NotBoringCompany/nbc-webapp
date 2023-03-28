@@ -131,9 +131,9 @@ const NavbarItems = (props) => {
 
     return (
         <>
-            <Link href='/mint' className={classes.link}>Mint</Link>
-            <Link href='/wl-checker' className={classes.link}>WL Checker</Link>
-            <Link href='/wl-collection' className={classes.link}>WL Collection</Link>
+            {/* <Link href='/mint' className={classes.link}>Mint</Link>
+            <Link href='/wl-checker' className={classes.link}>WL Checker</Link> */}
+            {/* <Link href='/wl-collection' className={classes.link}>WL Collection</Link> */}
             { !isAuthenticated ? (
               <ConnectWalletButton />
             ) : (

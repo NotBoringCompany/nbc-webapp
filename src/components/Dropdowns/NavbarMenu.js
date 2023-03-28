@@ -44,9 +44,9 @@ const NavbarMenu = () => {
             </Menu.Target>
         
             <Menu.Dropdown className={classes.menuDropdown}>
-                <Menu.Item icon={<IconLayoutDashboard size={14} />}>Dashboard</Menu.Item>
+                {/* <Menu.Item icon={<IconLayoutDashboard size={14} />}>Dashboard</Menu.Item> */}
 
-                <Menu.Divider />
+                {/* <Menu.Divider /> */}
                 
                 <Menu.Item onClick={handleLogout} icon={<IconLogout size={14}/>}>Logout</Menu.Item>
             </Menu.Dropdown>
