@@ -17,7 +17,6 @@ export default function App({ Component, pageProps }) {
         withNormalizeCSS
         theme={{
           colorScheme: 'dark',
-          // colorScheme: 'dark',
           fontFamily: 'Chakra Petch, sans-serif',
           loader: 'oval', 
         }}

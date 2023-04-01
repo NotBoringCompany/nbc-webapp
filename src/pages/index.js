@@ -13,23 +13,9 @@ import { useMoralis } from 'react-moralis';
 import x0005 from '../../public/x0005.jpeg';
 
 export default function Home() {
-    const [whitelistType, setWhitelistType] = useState('');
-    const { isAuthenticated, user } = useMoralis();
-    const [wallet, setWallet] = useState('');
-
-    useEffect(() => {
-        setWallet(user && user.attributes.ethAddress)
-    }, [user])
-
     return (
         <>
             <MainNavbar />
-            <WLVerificationWholePage whitelistType={whitelistType} setWhitelistType={setWhitelistType} wallet={wallet} setWallet={setWallet}>
-                <WLVerificationMainBody>
-                    <WLVerificationInfoBox />
-                    <WLVerificationSteps wallet={wallet} isAuthenticated={isAuthenticated} isWhitelisted={whitelistType === 'guaranteed' || whitelistType === 'overallocated'} />
-                </WLVerificationMainBody>
-            </WLVerificationWholePage>
         </>
     )
 }
