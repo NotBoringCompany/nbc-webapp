@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { useMoralis } from 'react-moralis';
 
 const { createStyles, Menu, Button } = require('@mantine/core');
-const { IconChevronDown, IconLayoutDashboard, IconLogout } = require('@tabler/icons');
+const { IconChevronDown, IconLogout } = require('@tabler/icons');
 
 const useStyles = createStyles((theme) => ({
   menuDropdown: {
