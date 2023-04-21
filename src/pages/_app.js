@@ -1,6 +1,5 @@
 // import '@/styles/globals.css';
-import { AppProps } from 'next/app';
-import Head from 'next/head';
+import Layout from '@/components/Layout/Layout';
 import { MantineProvider } from '@mantine/core';
 import CustomFonts from '@/components/Globals/CustomFonts';
 import { MoralisProvider } from 'react-moralis';
@@ -23,7 +22,9 @@ export default function App({ Component, pageProps }) {
       >
         <GlobalStyles />
         <CustomFonts />
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </MantineProvider>
     </MoralisProvider>
   );
