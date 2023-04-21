@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { createStyles, Modal, Button, Group, Center } from '@mantine/core';
+import { createStyles, Modal, Button, Center } from '@mantine/core';
 import MetamaskLogo from '../../../public/Metamask.png';
 import Image from 'next/image';
 import { useMoralis } from 'react-moralis';
