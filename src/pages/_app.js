@@ -18,6 +18,9 @@ export default function App({ Component, pageProps }) {
 					colorScheme: "dark",
 					fontFamily: "Chakra Petch, sans-serif",
 					loader: "oval",
+					colors: {
+						nbcGreen: ["#42ca9f"],
+					},
 				}}
 			>
 				<GlobalStyles />

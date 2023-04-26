@@ -3,6 +3,7 @@ import { Button, Flex, Text } from "@mantine/core";
 import StakingBox from "@/components/Staking/StakingBox";
 import maxSelectedKey from "@/utils/maxSelectedKey";
 import Layout from "@/components/Layout/Layout";
+import StakingModal from "@/components/Staking/StakingModal";
 
 export default function Staking({ data }) {
 	const [selectKeyComboType, setSelectedKeyComboType] = useState(null);
@@ -11,6 +12,11 @@ export default function Staking({ data }) {
 		keyChain: null,
 		superiorKeyChain: null,
 	});
+	const [showStakingModal, setShowStakingModal] = useState(false);
+
+	const [loadingStakingRewardAndPoints, setLoadingStakingRewardAndPoints] =
+		useState(true);
+
 	const maxSelectedK = maxSelectedKey(selectKeyComboType);
 	const confirmButtonDisabled = comboSelection.keys.length !== maxSelectedK;
 	const handleSelectKey = (rhKey) => {
@@ -59,11 +65,25 @@ export default function Staking({ data }) {
 	const handleConfirmButton = () => {
 		if (!confirmButtonDisabled) {
 			//launches modal
+			setShowStakingModal(true);
+
+			//TODO: fetches API to get the rewards and points for
+			// the selected key combo (subpool)
+			setLoadingStakingRewardAndPoints(true);
+			setTimeout(() => {
+				setLoadingStakingRewardAndPoints(false);
+			}, 1500);
 		}
 	};
 
 	return (
-		<Layout>
+		<Layout withAuth>
+			<StakingModal
+				showStakingModal={showStakingModal}
+				onCloseStakingModal={() => setShowStakingModal(false)}
+				subpool={comboSelection}
+				loadingStakingRewardAndPoints={loadingStakingRewardAndPoints}
+			/>
 			<Flex direction={"column"}>
 				<StakingBox
 					selectedKeyCombo={selectKeyComboType}

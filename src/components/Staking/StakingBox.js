@@ -1,5 +1,4 @@
-import { SimpleGrid } from "@mantine/core";
-import { Flex, Text, Select } from "@mantine/core";
+import { Flex, Text, Select, SimpleGrid, Modal } from "@mantine/core";
 import maxSelectedKey from "@/utils/maxSelectedKey";
 import NFTCard from "@/components/Staking/NFTCard";
 
@@ -36,7 +35,7 @@ const StakingBox = ({
 			sx={{
 				border: "2px solid #42ca9f",
 				overflowY: "scroll",
-				maxHeight: "50vh",
+				maxHeight: "80vh",
 			}}
 		>
 			<Text sx={{ fontSize: "24px" }} weight={"800"} mb={"md"} color="#42ca9f">
@@ -50,6 +49,8 @@ const StakingBox = ({
 			<Select
 				placeholder="Pick a Key Combo"
 				data={DATA}
+				size="md"
+				defaultValue={"asd"}
 				onChange={onSelectKeyComboType}
 			/>
 			{!!selectedKeyCombo ? (
