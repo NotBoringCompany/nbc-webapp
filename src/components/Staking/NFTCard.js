@@ -1,12 +1,12 @@
 import React from "react";
 import { Card, Image, Button, Group, Text } from "@mantine/core";
 
-const NFTCard = ({ rhKey, onSelect, selected, absolutelyDisabled }) => {
-	const { name, image } = rhKey;
+const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled }) => {
+	const { name, image } = nft;
 	const noActionAllowed = absolutelyDisabled && !selected;
 	const handleSelectNFT = () => {
 		if (!noActionAllowed) {
-			onSelect(rhKey);
+			onSelect(nft);
 		}
 	};
 	return (
@@ -16,6 +16,9 @@ const NFTCard = ({ rhKey, onSelect, selected, absolutelyDisabled }) => {
 				":hover": {
 					cursor: noActionAllowed ? "not-allowed" : "pointer",
 				},
+				minHeight: "380px",
+				display: "flex",
+				flexDirection: "column",
 			}}
 			shadow="sm"
 			padding="lg"
@@ -27,7 +30,7 @@ const NFTCard = ({ rhKey, onSelect, selected, absolutelyDisabled }) => {
 				<Image src={image} height={240} alt={name} />
 			</Card.Section>
 
-			<Group position="apart" mt="md" mb="xs">
+			<Group position="apart" mt="md" mb="auto">
 				<Text weight={500}>{name}</Text>
 			</Group>
 			<Button

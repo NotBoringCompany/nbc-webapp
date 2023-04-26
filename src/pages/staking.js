@@ -1,80 +1,19 @@
 import { useState } from "react";
-import { SimpleGrid } from "@mantine/core";
-import { Flex, Text, Select } from "@mantine/core";
+import { Button, Flex, Text } from "@mantine/core";
+import StakingBox from "@/components/Staking/StakingBox";
 import maxSelectedKey from "@/utils/maxSelectedKey";
-import NFTCard from "@/components/Staking/NFTCard";
+import Layout from "@/components/Layout/Layout";
 
-const DATA = [
-	{ value: "single", label: "Single (1 key)" },
-	{ value: "pair", label: "Pair (2 keys)" },
-	{ value: "trio", label: "Trio (3 keys)" },
-	{ value: "pentuple", label: "Pentuple (5 keys)" },
-	{ value: "flush", label: "Flush (15 keys)" },
-];
-
-const Box = ({
-	onSelectKeyComboType,
-	selectedKeyCombo,
-	nfts,
-	onSelectNFT,
-	comboSelection,
-}) => {
-	const maxSelectedKeys = maxSelectedKey(selectedKeyCombo);
-	return (
-		<Flex
-			px={24}
-			py={16}
-			direction={"column"}
-			w={"100%"}
-			sx={{ border: "2px solid #42ca9f" }}
-		>
-			<Text mb={"sm"}>Key Combo</Text>
-			<Select
-				placeholder="Pick a Key Combo"
-				data={DATA}
-				onChange={onSelectKeyComboType}
-			/>
-			{!!selectedKeyCombo ? (
-				<>
-					<Text mt={"md"}>
-						Select any {maxSelectedKeys} {maxSelectedKeys > 1 ? "keys" : "key"}{" "}
-						and optionally, a keychain.
-					</Text>
-					<SimpleGrid my={"md"} spacing={"md"} cols={3}>
-						{nfts.keys.map((k) => (
-							// 'key' is a reserved keyword
-							// by React. We have tp use it, when
-							// rendering arrays. But, it can't
-							// be used for our rendering purposes.
-
-							//'rhKey' is the key that we are
-							//displaying.
-							<NFTCard
-								key={k.name}
-								rhKey={k}
-								onSelect={onSelectNFT}
-								selected={
-									comboSelection.keys.findIndex((key) => key.id === k.id) >= 0
-								}
-								absolutelyDisabled={
-									comboSelection.keys.length === maxSelectedKeys
-								}
-							/>
-						))}
-					</SimpleGrid>
-				</>
-			) : null}
-		</Flex>
-	);
-};
-
-export default function Stake({ data }) {
+export default function Staking({ data }) {
 	const [selectKeyComboType, setSelectedKeyComboType] = useState(null);
 	const [comboSelection, setComboSelection] = useState({
 		keys: [],
-		keyChain: [],
+		keyChain: null,
+		superiorKeyChain: null,
 	});
-	const handleSelectNFT = (rhKey) => {
+	const maxSelectedK = maxSelectedKey(selectKeyComboType);
+	const confirmButtonDisabled = comboSelection.keys.length !== maxSelectedK;
+	const handleSelectKey = (rhKey) => {
 		const exist =
 			comboSelection.keys.findIndex((key) => key.id === rhKey.id) >= 0;
 		if (!exist) {
@@ -87,6 +26,18 @@ export default function Stake({ data }) {
 			setComboSelection({ ...comboSelection, keys });
 		}
 	};
+
+	const handleSelectKeyChain = (selectedNFT, isSuperior = false) => {
+		const exist = isSuperior
+			? !!comboSelection.superiorKeyChain
+			: !!comboSelection.keyChain; // is not null
+		const nft = isSuperior ? "superiorKeyChain" : "keyChain";
+		if (!exist) {
+			setComboSelection({ ...comboSelection, [nft]: selectedNFT });
+		} else {
+			setComboSelection({ ...comboSelection, [nft]: null });
+		}
+	};
 	const handleSelectKeyComboType = (e) => {
 		setSelectedKeyComboType(e);
 		const maxSelectedKeys = maxSelectedKey(e);
@@ -97,18 +48,45 @@ export default function Stake({ data }) {
 			const keys = [...comboSelection.keys].slice(0, maxSelectedKeys);
 			setComboSelection({ ...comboSelection, keys });
 		}
+
+		// if combo not "flush"
+		// but a superior keychain has been selected
+		if (e !== "flush" && !!comboSelection.superiorKeyChain) {
+			setComboSelection({ ...comboSelection, superiorKeyChain: null });
+		}
+	};
+
+	const handleConfirmButton = () => {
+		if (!confirmButtonDisabled) {
+			//launches modal
+		}
 	};
 
 	return (
-		<Flex dir="row">
-			<Box
-				selectedKeyCombo={selectKeyComboType}
-				onSelectNFT={handleSelectNFT}
-				onSelectKeyComboType={handleSelectKeyComboType}
-				nfts={data}
-				comboSelection={comboSelection}
-			/>
-		</Flex>
+		<Layout>
+			<Flex direction={"column"}>
+				<StakingBox
+					selectedKeyCombo={selectKeyComboType}
+					onSelectKey={handleSelectKey}
+					onSelectKeyChain={handleSelectKeyChain}
+					onSelectKeyComboType={handleSelectKeyComboType}
+					nfts={data}
+					comboSelection={comboSelection}
+				/>
+				<Button
+					w="160px"
+					h="50px"
+					mt="md"
+					radius="md"
+					variant="light"
+					color="green"
+					onClick={handleConfirmButton}
+					disabled={confirmButtonDisabled}
+				>
+					<Text size={"lg"}>Confirm</Text>
+				</Button>
+			</Flex>
+		</Layout>
 	);
 }
 
@@ -138,6 +116,28 @@ export async function getServerSideProps(ctx) {
 				name: "Key of Salvation #124124",
 				image:
 					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+			},
+		],
+		keyChains: [
+			{
+				id: "72",
+				name: "Keychain #72",
+				image:
+					"https://dl.openseauserdata.com/cache/originImage/files/20b8a48b266291c3ca707d9056042979.gif",
+			},
+			{
+				id: "77",
+				name: "Keychain #77",
+				image:
+					"https://dl.openseauserdata.com/cache/originImage/files/20b8a48b266291c3ca707d9056042979.gif",
+			},
+		],
+		superiorKeyChains: [
+			{
+				id: "79822",
+				name: "Superior Keychain #79822",
+				image:
+					"https://dl.openseauserdata.com/cache/originImage/files/a6d28c508c28a967913f28a72a12cf4d.gif",
 			},
 		],
 	};
