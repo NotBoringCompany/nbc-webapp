@@ -117,6 +117,30 @@ export async function getServerSideProps(ctx) {
 				image:
 					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
 			},
+			{
+				id: "21",
+				name: "Key of Salvation #21",
+				image:
+					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+			},
+			{
+				id: "33",
+				name: "Key of Salvation #33",
+				image:
+					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+			},
+			{
+				id: "31",
+				name: "Key of Salvation #31",
+				image:
+					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+			},
+			{
+				id: "91237",
+				name: "Key of Salvation #91237",
+				image:
+					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+			},
 		],
 		keyChains: [
 			{

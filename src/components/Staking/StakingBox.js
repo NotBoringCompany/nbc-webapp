@@ -20,6 +20,13 @@ const StakingBox = ({
 	comboSelection,
 }) => {
 	const maxSelectedKeys = maxSelectedKey(selectedKeyCombo);
+	const cardColumnsBreakpoints = [
+		{ minWidth: "xl", cols: 8, spacing: "md" },
+		{ minWidth: "lg", cols: 5, spacing: "md" },
+		{ minWidth: "md", cols: 3, spacing: "md" },
+		{ minWidth: "sm", cols: 2, spacing: "sm" },
+		{ minWidth: "xs", cols: 1, spacing: "sm" },
+	];
 	return (
 		<Flex
 			px={24}
@@ -51,13 +58,14 @@ const StakingBox = ({
 						Select any {maxSelectedKeys} {maxSelectedKeys > 1 ? "keys" : "key"}{" "}
 						and optionally, a keychain.
 					</Text>
-					<Text size={"sm"}>
-						<i>Superior keychains can only be used for Flush combos.</i>
-					</Text>
 					<Text size={"lg"} weight={"600"} mt={"md"}>
 						Keys
 					</Text>
-					<SimpleGrid my={"md"} spacing={"md"} cols={4}>
+					<SimpleGrid
+						my={"md"}
+						spacing={"md"}
+						breakpoints={cardColumnsBreakpoints}
+					>
 						{nfts.keys.map((k) => (
 							// 'key' is a reserved keyword
 							// by React. We have tp use it, when
@@ -84,7 +92,11 @@ const StakingBox = ({
 						Keychains
 					</Text>
 
-					<SimpleGrid my={"md"} spacing={"md"} cols={4}>
+					<SimpleGrid
+						my={"md"}
+						spacing={"md"}
+						breakpoints={cardColumnsBreakpoints}
+					>
 						{nfts.keyChains.map((keyChain) => (
 							// 'key' is a reserved keyword
 							// by React. We have tp use it, when
@@ -107,8 +119,15 @@ const StakingBox = ({
 					<Text size={"lg"} weight={"600"} mt={"md"}>
 						Superior Keychains
 					</Text>
+					<Text size={"sm"}>
+						<i>Superior keychains can only be used for Flush combos.</i>
+					</Text>
 
-					<SimpleGrid my={"md"} spacing={"md"} cols={4}>
+					<SimpleGrid
+						my={"md"}
+						spacing={"md"}
+						breakpoints={cardColumnsBreakpoints}
+					>
 						{nfts.superiorKeyChains.map((superiorKeyChain) => (
 							// 'key' is a reserved keyword
 							// by React. We have tp use it, when
