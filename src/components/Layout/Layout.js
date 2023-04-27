@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@mantine/core';
+import { Box, Flex, ScrollArea, Text } from '@mantine/core';
 import React from 'react';
 import { Container } from '@mantine/core';
 import MainNavbar from '../Navbar/Navbar';
@@ -46,9 +46,13 @@ const Layout = ({ children, authWallComponent, withAuth = false }) => {
 			direction='column'
 		>
 			<MainNavbar />
-			<Container sx={{ width: '100%', maxWidth: '100%' }} px={'40px'}>
-				{withAuth ? <>{isAuthenticated ? children : authWall}</> : children}
-			</Container>
+			<ScrollArea
+				h={'85vh'}
+			>
+				<Container sx={{ width: '100%', maxWidth: '100%' }} px={'40px'}>
+					{withAuth ? <>{isAuthenticated ? children : authWall}</> : children}
+				</Container>
+			</ScrollArea>
 		</Flex>
 	);
 };
