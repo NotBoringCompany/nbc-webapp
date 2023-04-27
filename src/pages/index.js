@@ -1,10 +1,5 @@
-import MainNavbar from '@/components/Navbar/Navbar';
-
+import Layout from "@/components/Layout/Layout";
 
 export default function Home() {
-    return (
-        <>
-            <MainNavbar />
-        </>
-    )
+	return <Layout>Home Screen.</Layout>;
 }
