@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Box, Button, Divider, Flex, Text } from '@mantine/core';
+import { Box, Button, Divider, Flex, Select, Text } from '@mantine/core';
 import StakingBox from '@/components/Staking/StakingBox';
 import maxSelectedKey from '@/utils/maxSelectedKey';
 import Layout from '@/components/Layout/Layout';
@@ -7,8 +7,11 @@ import StakingModal from '@/components/Staking/StakingModal';
 import { useMoralis } from 'react-moralis';
 import RECToken from '../../public/recToken.png';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export default function Staking({ data, stakingPoolData }) {
+	const router = useRouter();
+	
 	const [selectKeyComboType, setSelectedKeyComboType] = useState(null);
 	const [comboSelection, setComboSelection] = useState({
 		keys: [],
@@ -139,6 +142,19 @@ export default function Staking({ data, stakingPoolData }) {
 								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Your Reward Share</Text>
 								<Text>TODO</Text>
 							</Flex>
+							<Button 
+								sx={(theme) => ({
+									backgroundColor: '#42ca9f',
+									':hover': {
+										transform: 'scale(1.01) translate(1px, -3px)',
+										transitionDuration: '200ms',
+										backgroundColor: '#42ca9f',
+									}
+								})}
+								onClick={() => router.push(`/staking-pools/${pool.StakingPoolID}`)}
+							>
+								Stake
+							</Button>
 						</Flex>
 						{stakingPoolData.activePools.length > 1 && (
 							<Divider color='#42ca9f' style={{width: '100%'}} size='sm' variant='dashed' />
