@@ -8,6 +8,8 @@ import {
 	Box,
 	Collapse,
 	Loader,
+	Divider,
+	Center,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import NFTCardPreview from './NFTCardPreview';
@@ -43,36 +45,33 @@ const StakingModal = ({
 	};
 
 	const stakingPreview = (
-		<>
+		<Flex
+			direction='column'
+			justify='center'
+			align='center'
+			sx={(theme) => ({
+				textAlign: 'center',
+			})}
+		>
 			{loadingStakingRewardAndPoints ? (
-				<Loader color='green' />
+					<Loader color='#42ca9f' />
 			) : (
 				<>
-					<Text
-						size='md'
-						mb='md'
-						sx={{
-							strong: {
-								color: '#42ca9f',
-							},
-						}}
-					>
-						This staking pool has a total reward of:{' '}
-						<strong>500000 REC tokens.</strong>
-						<br /> Total staking pool points generated so far:{' '}
-						<strong>123 points.</strong> <br />
-						With your current staking combo, you will earn{' '}
-						<strong>1212 points</strong> for this subpool.
-						<br />
-						As of now, you will be eligible to earn{' '}
-						<strong>5512 tokens.*</strong>{' '}
-					</Text>
+					<Text color='#42ca9f' size={24}>STAKING POOL TOTAL REWARD</Text>
+					<Divider color='#42ca9f' size='xs' sx={{marginBottom: 5}} variant='dashed' />
+					<Text style={{marginBottom: 20}}>500,000 $REC</Text>
+					<Text color='#42ca9f' size={24}>TOTAL SUBPOOL POINTS GENERATED</Text>
+					<Divider color='#42ca9f' size='xs' sx={{marginBottom: 5}} variant='dashed' />
+					<Text style={{marginBottom: 20}}>10000 POINTS</Text>
+					<Text color='#42ca9f' size={24}>WITH YOUR COMBO, YOU WILL EARN</Text>
+					<Divider color='#42ca9f' size='xs' sx={{marginBottom: 5}} variant='dashed' />
+					<Text style={{marginBottom: 20}}>250 POINTS ///// 15,000 $REC</Text>
 					<Text size='sm' my='md' color='#42ca9f'>
-						<i>
-							*please bear in mind that this number will decrease as more users
-							stake.
-						</i>
-					</Text>
+							<i>
+								*please bear in mind that this number will decrease as more users
+								stake.
+							</i>
+						</Text>
 				</>
 			)}
 
@@ -86,9 +85,8 @@ const StakingModal = ({
 					}}
 					onClick={toggle}
 				>
-					{opened ? 'Hide' : 'See'} your selected keys combination
+					{opened ? 'Hide' : 'See'} your selected combination for this subpool
 				</Text>
-
 				<Collapse in={opened}>
 					<Flex
 						sx={{
@@ -116,23 +114,32 @@ const StakingModal = ({
 					h='50px'
 					mt='md'
 					radius='md'
-					variant='light'
-					color='green'
 					onClick={handleStakingButtonClick}
 					disabled={loadingStakingRewardAndPoints || loadingStaking}
+					sx={(theme) => ({
+						backgroundColor: '#42ca9f',
+						':hover': {
+							transform: 'scale(1.01) translate(1px, -3px)',
+							transitionDuration: '200ms',
+							backgroundColor: '#42ca9f',
+						},
+					})}
 				>
 					{loadingStaking ? (
 						<Loader color='grey' />
 					) : (
-						<Text size={'lg'}>Stake!</Text>
+						<Text size={'lg'}>Stake</Text>
 					)}
 				</Button>
 			</Box>
-		</>
+		</Flex>
 	);
 
 	const successContent = (
-		<Flex direction={'column'}>
+		<Flex 
+			direction={'column'}
+			align='center'
+		>
 			<Text size='lg' my='md' color='#42ca9f'>
 				Congratulations, staking was <strong>successful!</strong>
 			</Text>
@@ -181,8 +188,8 @@ const StakingModal = ({
 			closeOnClickOutside={!successfulStake}
 			title={
 				successfulStake
-					? 'Successful Staking'
-					: 'Preview of Your Staking Subpool'
+				? 'Successful Staking'
+				: 'Preview of Your Staking Subpool'
 			}
 		>
 			{successfulStake ? successContent : stakingPreview}

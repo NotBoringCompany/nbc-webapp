@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { Flex, Text, Select, SimpleGrid, Modal, Button } from '@mantine/core';
-=======
-import { Flex, Text, Select, SimpleGrid, Modal } from '@mantine/core';
->>>>>>> fbf3be680790af9c6e5fb20552622c455e7b56e3
 import maxSelectedKey from '@/utils/maxSelectedKey';
 import NFTCard from '@/components/Staking/NFTCard';
 
@@ -38,11 +34,7 @@ const StakingBox = ({
 			w={'100%'}
 			sx={{
 				border: '2px solid #42ca9f',
-<<<<<<< HEAD
 				overflowY: 'auto',
-=======
-				overflowY: 'scroll',
->>>>>>> fbf3be680790af9c6e5fb20552622c455e7b56e3
 				maxHeight: '80vh',
 			}}
 		>
@@ -65,11 +57,8 @@ const StakingBox = ({
 				<>
 					<Text mt={'md'}>
 						Select any {maxSelectedKeys} {maxSelectedKeys > 1 ? 'keys' : 'key'}{' '}
-<<<<<<< HEAD
 						and (optionally) a Keychain/Superior Keychain to stake.
-=======
 						and optionally, a keychain.
->>>>>>> fbf3be680790af9c6e5fb20552622c455e7b56e3
 					</Text>
 					<Text size={'lg'} weight={'600'} mt={'md'}>
 						Keys

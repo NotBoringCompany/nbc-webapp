@@ -5,8 +5,7 @@ import { useState } from 'react';
 import { useMoralis } from 'react-moralis';
 
 const ConnectWalletStepButton = () => {
-	const { enableWeb3, isAuthenticated, authenticate, logout, Moralis } =
-		useMoralis();
+	const { enableWeb3, isAuthenticated, authenticate, logout, Moralis } = useMoralis();
 	const [authError, setAuthError] = useState(false);
 	const [isAuthenticating, setIsAuthenticating] = useState(false);
 
