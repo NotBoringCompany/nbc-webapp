@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 
 export default function Staking({ data, stakingPoolData }) {
 	const router = useRouter();
-	
+
 	const [selectKeyComboType, setSelectedKeyComboType] = useState(null);
 	const [comboSelection, setComboSelection] = useState({
 		keys: [],
@@ -103,7 +103,7 @@ export default function Staking({ data, stakingPoolData }) {
 							textAlign: 'center'
 						})}
 					>
-						<Text sx={{marginTop: 25, marginBottom: 5}} size={24} weight={600}>ACTIVE SUBPOOLS</Text>
+						<Text sx={{marginTop: 25, marginBottom: 5}} size={24} weight={600}>ACTIVE STAKING POOLS</Text>
 						<Flex
 							justify='center'
 						>
@@ -172,7 +172,7 @@ export default function Staking({ data, stakingPoolData }) {
 						color: 'grey'
 					})}
 					>
-						<Text sx={{marginTop: 25, marginBottom: 5}} size={24} weight={600}>CLOSED SUBPOOLS</Text>
+						<Text sx={{marginTop: 25, marginBottom: 5}} size={24} weight={600}>CLOSED STAKING POOLS</Text>
 						<Flex
 							justify='center'
 						>
