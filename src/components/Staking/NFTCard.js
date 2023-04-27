@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, Image, Button, Group, Text } from "@mantine/core";
+import React from 'react';
+import { Card, Image, Button, Group, Text } from '@mantine/core';
 
 const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled }) => {
 	const { name, image } = nft;
@@ -13,36 +13,36 @@ const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled }) => {
 		<Card
 			onClick={handleSelectNFT}
 			sx={{
-				":hover": {
-					cursor: noActionAllowed ? "not-allowed" : "pointer",
+				':hover': {
+					cursor: noActionAllowed ? 'not-allowed' : 'pointer',
 				},
-				minHeight: "380px",
-				display: "flex",
-				flexDirection: "column",
+				minHeight: '380px',
+				display: 'flex',
+				flexDirection: 'column',
 			}}
-			shadow="sm"
-			padding="lg"
-			radius="md"
+			shadow='sm'
+			padding='lg'
+			radius='md'
 			withBorder
-			w={"100%"}
+			w={'100%'}
 		>
 			<Card.Section>
 				<Image src={image} height={240} alt={name} />
 			</Card.Section>
 
-			<Group position="apart" mt="md" mb="auto">
+			<Group position='apart' mt='md' mb='auto'>
 				<Text weight={500}>{name}</Text>
 			</Group>
 			<Button
 				onClick={handleSelectNFT}
-				variant="light"
-				color={selected ? "red" : "green"}
+				variant='light'
+				color={selected ? 'red' : 'green'}
 				fullWidth
-				mt="md"
-				radius="md"
+				mt='md'
+				radius='md'
 				disabled={absolutelyDisabled && !selected}
 			>
-				{selected ? "Unselect" : "Select"}
+				{selected ? 'Unselect' : 'Select'}
 			</Button>
 		</Card>
 	);

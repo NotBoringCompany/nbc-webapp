@@ -1,13 +1,13 @@
-import { Flex, Text, Select, SimpleGrid, Modal } from "@mantine/core";
-import maxSelectedKey from "@/utils/maxSelectedKey";
-import NFTCard from "@/components/Staking/NFTCard";
+import { Flex, Text, Select, SimpleGrid, Modal, Button } from '@mantine/core';
+import maxSelectedKey from '@/utils/maxSelectedKey';
+import NFTCard from '@/components/Staking/NFTCard';
 
 const DATA = [
-	{ value: "single", label: "Single (1 key)" },
-	{ value: "pair", label: "Pair (2 keys)" },
-	{ value: "trio", label: "Trio (3 keys)" },
-	{ value: "pentuple", label: "Pentuple (5 keys)" },
-	{ value: "flush", label: "Flush (15 keys)" },
+	{ value: 'single', label: 'Single (1 key)' },
+	{ value: 'pair', label: 'Pair (2 keys)' },
+	{ value: 'trio', label: 'Trio (3 keys)' },
+	{ value: 'pentuple', label: 'Pentuple (5 keys)' },
+	{ value: 'flush', label: 'Flush (15 keys)' },
 ];
 
 const StakingBox = ({
@@ -20,51 +20,51 @@ const StakingBox = ({
 }) => {
 	const maxSelectedKeys = maxSelectedKey(selectedKeyCombo);
 	const cardColumnsBreakpoints = [
-		{ minWidth: "xl", cols: 8, spacing: "md" },
-		{ minWidth: "lg", cols: 5, spacing: "md" },
-		{ minWidth: "md", cols: 3, spacing: "md" },
-		{ minWidth: "sm", cols: 2, spacing: "sm" },
-		{ minWidth: "xs", cols: 1, spacing: "sm" },
+		{ minWidth: 'xl', cols: 8, spacing: 'md' },
+		{ minWidth: 'lg', cols: 5, spacing: 'md' },
+		{ minWidth: 'md', cols: 3, spacing: 'md' },
+		{ minWidth: 'sm', cols: 2, spacing: 'sm' },
+		{ minWidth: 'xs', cols: 1, spacing: 'sm' },
 	];
 	return (
 		<Flex
 			px={24}
 			py={16}
-			direction={"column"}
-			w={"100%"}
+			direction={'column'}
+			w={'100%'}
 			sx={{
-				border: "2px solid #42ca9f",
-				overflowY: "scroll",
-				maxHeight: "80vh",
+				border: '2px solid #42ca9f',
+				overflowY: 'auto',
+				maxHeight: '80vh',
 			}}
 		>
-			<Text sx={{ fontSize: "24px" }} weight={"800"} mb={"md"} color="#42ca9f">
+			<Text sx={{ fontSize: '24px' }} weight={'800'} mb={'md'} color='#42ca9f'>
 				Staking
 			</Text>
 
-			<Text size={"lg"} weight={"600"} mb={"md"}>
+			<Text size={'lg'} weight={'600'} mb={'md'}>
 				Key Combo
 			</Text>
 
 			<Select
-				placeholder="Pick a Key Combo"
+				placeholder='Pick a Key Combo'
 				data={DATA}
-				size="md"
-				defaultValue={"asd"}
+				size='md'
+				defaultValue={'asd'}
 				onChange={onSelectKeyComboType}
 			/>
 			{!!selectedKeyCombo ? (
 				<>
-					<Text mt={"md"}>
-						Select any {maxSelectedKeys} {maxSelectedKeys > 1 ? "keys" : "key"}{" "}
-						and optionally, a keychain.
+					<Text mt={'md'}>
+						Select any {maxSelectedKeys} {maxSelectedKeys > 1 ? 'keys' : 'key'}{' '}
+						and (optionally) a Keychain/Superior Keychain to stake.
 					</Text>
-					<Text size={"lg"} weight={"600"} mt={"md"}>
+					<Text size={'lg'} weight={'600'} mt={'md'}>
 						Keys
 					</Text>
 					<SimpleGrid
-						my={"md"}
-						spacing={"md"}
+						my={'md'}
+						spacing={'md'}
 						breakpoints={cardColumnsBreakpoints}
 					>
 						{nfts.keys.map((k) => (
@@ -89,13 +89,13 @@ const StakingBox = ({
 						))}
 					</SimpleGrid>
 
-					<Text size={"lg"} weight={"600"} mt={"md"}>
+					<Text size={'lg'} weight={'600'} mt={'md'}>
 						Keychains
 					</Text>
 
 					<SimpleGrid
-						my={"md"}
-						spacing={"md"}
+						my={'md'}
+						spacing={'md'}
 						breakpoints={cardColumnsBreakpoints}
 					>
 						{nfts.keyChains.map((keyChain) => (
@@ -117,16 +117,16 @@ const StakingBox = ({
 						))}
 					</SimpleGrid>
 
-					<Text size={"lg"} weight={"600"} mt={"md"}>
+					<Text size={'lg'} weight={'600'} mt={'md'}>
 						Superior Keychains
 					</Text>
-					<Text size={"sm"}>
+					<Text size={'sm'}>
 						<i>Superior keychains can only be used for Flush combos.</i>
 					</Text>
 
 					<SimpleGrid
-						my={"md"}
-						spacing={"md"}
+						my={'md'}
+						spacing={'md'}
 						breakpoints={cardColumnsBreakpoints}
 					>
 						{nfts.superiorKeyChains.map((superiorKeyChain) => (
@@ -142,10 +142,10 @@ const StakingBox = ({
 									comboSelection.superiorKeyChain.id === superiorKeyChain.id
 								}
 								absolutelyDisabled={
-									selectedKeyCombo !== "flush" ||
+									selectedKeyCombo !== 'flush' ||
 									!!comboSelection.keyChain ||
 									!!comboSelection.superiorKeyChain
-								} // not "flush" combo or flush combo but already selected one
+								} // not 'flush' combo or flush combo but already selected one
 							/>
 						))}
 					</SimpleGrid>

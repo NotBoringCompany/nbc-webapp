@@ -1,14 +1,14 @@
 const maxSelectedKey = (combo) => {
 	switch (combo) {
-		case "single":
+		case 'single':
 			return 1;
-		case "pair":
+		case 'pair':
 			return 2;
-		case "trio":
+		case 'trio':
 			return 3;
-		case "pentuple":
+		case 'pentuple':
 			return 5;
-		case "flush":
+		case 'flush':
 			return 15;
 	}
 };

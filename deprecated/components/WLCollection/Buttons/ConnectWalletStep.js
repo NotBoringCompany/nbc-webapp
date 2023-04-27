@@ -1,8 +1,8 @@
-import handleAuth from "@/utils/moralisAuth";
-import { Button } from "@mantine/core";
-import { IconArrowRightRhombus } from "@tabler/icons";
-import { useState } from "react";
-import { useMoralis } from "react-moralis";
+import handleAuth from '@/utils/moralisAuth';
+import { Button } from '@mantine/core';
+import { IconArrowRightRhombus } from '@tabler/icons';
+import { useState } from 'react';
+import { useMoralis } from 'react-moralis';
 
 const ConnectWalletStepButton = () => {
 	const { enableWeb3, isAuthenticated, authenticate, logout, Moralis } =
@@ -14,12 +14,12 @@ const ConnectWalletStepButton = () => {
 		return (
 			<Button
 				sx={(theme) => ({
-					backgroundColor: "#42ca9f",
+					backgroundColor: '#42ca9f',
 					marginRight: 25,
-					":hover": {
-						transform: "scale(1.01) translate(1px, -3px)",
-						transitionDuration: "200ms",
-						backgroundColor: "#42ca9f",
+					':hover': {
+						transform: 'scale(1.01) translate(1px, -3px)',
+						transitionDuration: '200ms',
+						backgroundColor: '#42ca9f',
 					},
 				})}
 				rightIcon={<IconArrowRightRhombus />}
@@ -30,7 +30,7 @@ const ConnectWalletStepButton = () => {
 						enableWeb3,
 						Moralis,
 						authenticate,
-						"metamask"
+						'metamask'
 					)
 				}
 			>
@@ -42,14 +42,14 @@ const ConnectWalletStepButton = () => {
 	return (
 		<Button
 			sx={(theme) => ({
-				backgroundColor: "#42ca9f",
+				backgroundColor: '#42ca9f',
 				marginRight: 25,
 
-				":hover": {
-					cursor: "not-allowed",
+				':hover': {
+					cursor: 'not-allowed',
 				},
 
-				[theme.fn.smallerThan("sm")]: {
+				[theme.fn.smallerThan('sm')]: {
 					fontSize: 10,
 				},
 			})}
