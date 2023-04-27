@@ -173,7 +173,7 @@ export default function Staking({ data, stakingPoolData }) {
 									Stake
 								</Button>
 							</Flex>
-							{stakingPoolData.activePools.length > 1 && (
+							{stakingPoolData.stakeablePools.length > 1 && (
 								<Divider color='#42ca9f' style={{width: '100%'}} size='sm' variant='dashed' />
 							)}
 						</>
@@ -253,6 +253,9 @@ export default function Staking({ data, stakingPoolData }) {
 					>
 						<Divider color='grey' style={{ width: '20%', marginLeft: '40%', marginRight: '40%' }} />
 					</Flex>
+					{!closedPools && (
+						<Text size={20} style={{marginTop: 30, marginBottom: 30 }}>There are currently no closed staking pools.</Text>
+					)}
 					{closedPools && closedPools.map(pool => (
 						<>
 							<Flex
