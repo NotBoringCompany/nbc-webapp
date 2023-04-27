@@ -84,10 +84,7 @@ export default function Staking({ data }) {
 				subpool={comboSelection}
 				loadingStakingRewardAndPoints={loadingStakingRewardAndPoints}
 			/>
-			<Flex 
-				direction='column'
-				align='center'
-			>
+			<Flex direction={'column'}>
 				<StakingBox
 					selectedKeyCombo={selectKeyComboType}
 					onSelectKey={handleSelectKey}
@@ -101,6 +98,8 @@ export default function Staking({ data }) {
 					h='50px'
 					mt='md'
 					radius='md'
+					variant='light'
+					color='green'
 					onClick={handleConfirmButton}
 					disabled={confirmButtonDisabled}
 					sx={(theme) => ({
