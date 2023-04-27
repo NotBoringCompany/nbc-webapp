@@ -1,11 +1,14 @@
-import { useState } from 'react';
-import { Button, Flex, Text } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { Box, Button, Divider, Flex, Text } from '@mantine/core';
 import StakingBox from '@/components/Staking/StakingBox';
 import maxSelectedKey from '@/utils/maxSelectedKey';
 import Layout from '@/components/Layout/Layout';
 import StakingModal from '@/components/Staking/StakingModal';
+import { useMoralis } from 'react-moralis';
+import RECToken from '../../public/recToken.png';
+import Image from 'next/image';
 
-export default function Staking({ data }) {
+export default function Staking({ data, stakingPoolData }) {
 	const [selectKeyComboType, setSelectedKeyComboType] = useState(null);
 	const [comboSelection, setComboSelection] = useState({
 		keys: [],
@@ -78,7 +81,197 @@ export default function Staking({ data }) {
 
 	return (
 		<Layout withAuth>
-			<StakingModal
+			<Flex
+				direction='column'
+				align='center'
+				sx={(theme) => ({
+					marginTop: 40,
+				})}
+			>
+				<Text c='#42ca9f' size={60} weight={700}>STAKING POOLS</Text>
+				<Text size={24}>Stake your Factory NFTs to earn special yields.</Text>
+				{stakingPoolData.activePools.map(pool => (
+					<Box
+						key={pool.ID}
+						sx={(theme) => ({
+							border: '3px solid #42ca9f',
+							marginTop: 80,
+							borderRadius: theme.radius.xl,
+							textAlign: 'center'
+						})}
+					>
+						<Text sx={{marginTop: 25, marginBottom: 5}} size={24} weight={600}>ACTIVE SUBPOOLS</Text>
+						<Flex
+							justify='center'
+						>
+							<Divider color='#42ca9f' style={{ width: '20%', marginLeft: '40%', marginRight: '40%' }} />
+						</Flex>
+						<Flex
+							direction='row'
+							align='center'
+							sx={(theme) => ({
+								padding: '20px 20px',
+							})}
+						>
+							<Image src={RECToken} width={60} alt='recToken' />
+							<Text size={24} weight={700} sx={{marginLeft: 20, marginRight: 20}}>REC Token</Text>
+							<Flex direction='column' align='center'>
+								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Staking Pool ID</Text>
+								<Text>{pool.StakingPoolID}</Text>
+							</Flex>
+							<Flex direction='column' align='center'>
+								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Total Reward</Text>
+								<Text>{pool.Reward.Amount}</Text>
+							</Flex>
+							<Flex direction='column' align='center'>
+								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Total Subpools</Text>
+								<Text>{(pool.ActiveSubpools !== null ? pool.ActiveSubpools.length : 0) + (pool.ClosedSubpools !== null ? pool.ClosedSubpools.length : 0)}</Text>
+							</Flex>
+							<Flex direction='column' align='center'>
+								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Total Subpool Points</Text>
+								<Text>{pool.TotalYieldPoints}</Text>
+							</Flex>
+							<Flex direction='column' align='center'>
+								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Your Subpool Points</Text>
+								<Text>TODO</Text>
+							</Flex>
+							<Flex direction='column' align='center'>
+								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Your Reward Share</Text>
+								<Text>TODO</Text>
+							</Flex>
+						</Flex>
+						{stakingPoolData.activePools.length > 1 && (
+							<Divider color='#42ca9f' style={{width: '100%'}} size='sm' variant='dashed' />
+						)}
+					</Box>
+				))}
+				{stakingPoolData.closedPools.map(pool => (
+					<Box
+					key={pool.ID}
+					sx={(theme) => ({
+						border: '3px solid grey',
+						marginTop: 80,
+						borderRadius: theme.radius.xl,
+						textAlign: 'center',
+						color: 'grey'
+					})}
+					>
+						<Text sx={{marginTop: 25, marginBottom: 5}} size={24} weight={600}>CLOSED SUBPOOLS</Text>
+						<Flex
+							justify='center'
+						>
+							<Divider style={{ width: '20%', marginLeft: '40%', marginRight: '40%' }} />
+						</Flex>
+						<Flex
+							direction='row'
+							align='center'
+							sx={(theme) => ({
+								padding: '20px 20px',
+							})}
+						>
+							<Image src={RECToken} width={60} alt='recToken' />
+							<Text size={24} weight={700} sx={{marginLeft: 20, marginRight: 20}}>REC Token</Text>
+							<Flex direction='column' align='center'>
+								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Staking Pool ID</Text>
+								<Text>{pool.StakingPoolID}</Text>
+							</Flex>
+							<Flex direction='column' align='center'>
+								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Total Reward</Text>
+								<Text>{pool.Reward.Amount}</Text>
+							</Flex>
+							<Flex direction='column' align='center'>
+								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Total Subpools</Text>
+								<Text>{(pool.ActiveSubpools !== null ? pool.ActiveSubpools.length : 0) + (pool.ClosedSubpools !== null ? pool.ClosedSubpools.length : 0)}</Text>
+							</Flex>
+							<Flex direction='column' align='center'>
+								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Total Subpool Points</Text>
+								<Text>{pool.TotalYieldPoints}</Text>
+							</Flex>
+							<Flex direction='column' align='center'>
+								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Your Subpool Points</Text>
+								<Text>TODO</Text>
+							</Flex>
+							<Flex direction='column' align='center'>
+								<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Your Reward Share</Text>
+								<Text>TODO</Text>
+							</Flex>
+						</Flex>
+						{stakingPoolData.closedPools.length > 1 && (
+							<Divider color='#42ca9f' style={{width: '100%'}} size='sm' variant='dashed' />
+						)}
+					</Box>
+				))}
+				{/* <Box
+					sx={(theme) => ({
+						border: '3px solid #42ca9f',
+						marginTop: 80,
+						borderRadius: theme.radius.xl,
+					})}
+				>
+					<Flex
+						direction='row'
+						align='center'
+						sx={(theme) => ({
+							padding: '20px 20px',
+						})}
+					>
+						<Image src={RECToken} width={60} alt='recToken' />
+						<Text size={24} weight={700} sx={{marginLeft: 20, marginRight: 20}}>REC Token</Text>
+						<Flex direction='column' align='center'>
+						<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Total Reward</Text>
+							<Text>500,000</Text>
+						</Flex>
+						<Flex direction='column' align='center'>
+							<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Total Subpools</Text>
+							<Text>31</Text>
+						</Flex>
+						<Flex direction='column' align='center'>
+							<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Total Subpool Points</Text>
+							<Text>9,244</Text>
+						</Flex>
+						<Flex direction='column' align='center'>
+							<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Your Subpool Points</Text>
+							<Text>344</Text>
+						</Flex>
+						<Flex direction='column' align='center'>
+							<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Your Reward Share</Text>
+							<Text>22,958</Text>
+						</Flex>
+					</Flex>
+					<Divider color='#42ca9f' style={{width: '100%'}} size='sm' variant='dashed' />
+					<Flex
+						direction='row'
+						align='center'
+						sx={(theme) => ({
+							padding: '20px 20px',
+						})}
+					>
+						<Image src={RECToken} width={60} alt='recToken' />
+						<Text size={24} weight={700} sx={{marginLeft: 20, marginRight: 20}}>REC Token</Text>
+						<Flex direction='column' align='center'>
+						<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Total Reward</Text>
+							<Text>500,000</Text>
+						</Flex>
+						<Flex direction='column' align='center'>
+							<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Total Subpools</Text>
+							<Text>31</Text>
+						</Flex>
+						<Flex direction='column' align='center'>
+							<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Total Subpool Points</Text>
+							<Text>9,244</Text>
+						</Flex>
+						<Flex direction='column' align='center'>
+							<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Your Subpool Points</Text>
+							<Text>344</Text>
+						</Flex>
+						<Flex direction='column' align='center'>
+							<Text size={18} weight={700} sx={{marginLeft: 20, marginRight: 20}}>Your Reward Share</Text>
+							<Text>22,958</Text>
+						</Flex>
+					</Flex>
+				</Box> */}
+			</Flex>
+			{/* <StakingModal
 				showStakingModal={showStakingModal}
 				onCloseStakingModal={() => setShowStakingModal(false)}
 				subpool={comboSelection}
@@ -114,12 +307,23 @@ export default function Staking({ data }) {
 				>
 					<Text size={'lg'}>Confirm</Text>
 				</Button>
-			</Flex>
+			</Flex> */}
 		</Layout>
 	);
 }
 
 export async function getServerSideProps(ctx) {
+	const stakingPoolDataRawResponse = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/fetch-staking-pools`, {
+		method: 'GET',
+		headers: {
+			'Accept': '*',
+			'Content-Type': 'application/json',
+		}
+	}).catch((err) => console.log(err))
+	
+	const stakingPoolDataResponse = await stakingPoolDataRawResponse.json();
+	const stakingPoolData = stakingPoolDataResponse.data.stakingPools;
+
 	const MOCK_SERVER_RESPONSE_NFTS = {
 		keys: [
 			{
@@ -198,6 +402,7 @@ export async function getServerSideProps(ctx) {
 	return {
 		props: {
 			data: MOCK_SERVER_RESPONSE_NFTS,
+			stakingPoolData,
 		},
 	};
 }

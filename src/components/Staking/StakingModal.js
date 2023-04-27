@@ -19,7 +19,7 @@ const StakingModal = ({
 	showStakingModal,
 	onCloseStakingModal,
 	subpool,
-	loadingStakingRewardAndPoints,
+	loadingStakingRewardAndPoints
 }) => {
 	const cardColumnsBreakpoints = [
 		{ maxWidth: 'xl', cols: 3, spacing: 'md' },
