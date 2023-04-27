@@ -42,35 +42,35 @@ const StakingPool = ({stakingPoolData}) => {
         <Layout withAuth>
             {!stakingPoolDataExists && (
                 <Flex direction='column' align='center' justify='center'>
-                <Box
-                    sx={(theme) => ({
-                        borderRadius: theme.radius.md,
-                        width: '50%',
-                        border: '2px solid #ca4242',
-                        padding: '20px',
-                        textAlign: 'center',
-                        marginTop: 30,
-                    })}
-                >
-                    <Flex
-                        direction='row'
-                        align='center'
-                        justify='center'
+                    <Box
+                        sx={(theme) => ({
+                            borderRadius: theme.radius.md,
+                            width: '50%',
+                            border: '2px solid #ca4242',
+                            padding: '20px',
+                            textAlign: 'center',
+                            marginTop: 30,
+                        })}
                     >
-                        <IconAlertOctagon color='#ca4242' size={40} style={{marginRight: 10}} />
-                        <Text sx={(theme) => ({
-                            fontSize: 40,
-                            color: '#ca4242',
-                            fontWeight: 700
-                        })}>
-                            STAKING PAGE NOT AVAILABLE
+                        <Flex
+                            direction='row'
+                            align='center'
+                            justify='center'
+                        >
+                            <IconAlertOctagon color='#ca4242' size={40} style={{marginRight: 10}} />
+                            <Text sx={(theme) => ({
+                                fontSize: 40,
+                                color: '#ca4242',
+                                fontWeight: 700
+                            })}>
+                                STAKING PAGE NOT AVAILABLE
+                            </Text>
+                        </Flex>
+                        <Text size='lg'>
+                            This staking pool might not exist or is not available.
                         </Text>
-                    </Flex>
-                    <Text size='lg'>
-                        This staking pool might not exist or is not available.
-                    </Text>
-                </Box>
-            </Flex>
+                    </Box>
+                </Flex>
             )}
             {stakingPoolDataExists && (
                 <Flex
@@ -102,7 +102,21 @@ const StakingPool = ({stakingPoolData}) => {
                                 fontSize: 40,
                                 fontWeight: 700,
                                 color: '#42ca9f'
-                            })}>\ Staking Pool {id} {'/'}</Text>
+                            })}>
+                                \ Staking Pool {id} {'/'}
+                            </Text>
+                        </Flex>
+                        <Flex
+                            direction='column'
+                            align='center'
+                            justify='center'
+                            sx={(theme) => ({
+                                marginBottom: 20,
+                            })}
+                        >
+                            <Text c='#42ca9f' size={20} weight={600}>ENTRY: {new Date(stakingPoolData.EntryAllowance).toLocaleString()}</Text>
+                            <Text c='#42ca9f' size={20} weight={600}>STARTS: {new Date(stakingPoolData.StartTime).toLocaleString()}</Text>
+                            <Text c='#42ca9f' size={20} weight={600}>ENDS: {new Date(stakingPoolData.EndTime).toLocaleString()}</Text>
                         </Flex>
                         <Flex
                             direction='column'
