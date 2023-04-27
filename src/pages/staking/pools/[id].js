@@ -2,10 +2,17 @@ import Layout from '@/components/Layout/Layout';
 import { Box, Divider, Flex, Text } from '@mantine/core';
 import { IconAlertOctagon, IconMinusVertical } from '@tabler/icons';
 import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react';
+import { useMoralis } from 'react-moralis';
 
 const StakingPool = ({stakingPoolData}) => {
     const router = useRouter();
     const { id } = router.query;
+    const { user } = useMoralis();
+
+    const [stakerInventory, setStakerInventory] = useState(null);
+    const [stakerTotalSubpoolPoints, setStakerTotalSubpoolPoints] = useState(0);
+    const [totalTokenShare, setTotalTokenShare] = useState(0);
 
     const stakingPoolDataExists = stakingPoolData !== null;
     let activeSubpoolsLength;
@@ -15,6 +22,38 @@ const StakingPool = ({stakingPoolData}) => {
         activeSubpoolsLength = stakingPoolData.ActiveSubpools !== null ? stakingPoolData.ActiveSubpools.length : 0
         closedSubpoolsLength = stakingPoolData.ClosedSubpools !== null ? stakingPoolData.ClosedSubpools.length : 0
     }
+
+    const getStakerInventory = async () => {
+        const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user && user.attributes.ethAddress}/${id}`);
+        const res = await rawRes.json();
+
+        setStakerInventory(res.data ? res.data.inventory : null);
+        console.log('staker inventory set');
+    }
+
+    const getStakerTotalSubpoolPoints = async () => {
+        const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/staker-total-subpool-points/${user && user.attributes.ethAddress}/${id}`)
+        const res = await rawRes.json();
+
+        setStakerTotalSubpoolPoints(res.data ? res.data.totalSubpoolPoints : 0);
+        console.log('staker total subpool points set');
+    }
+
+    const getTotalTokenShare = async () => {
+        const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/calculate-total-token-share/${user && user.attributes.ethAddress}/${id}`)
+        const res = await rawRes.json();
+
+        setTotalTokenShare(res.data ? res.data.totalTokenShare : 0);
+        console.log('total token share set');
+    }
+
+    useEffect(() => {
+        if (user) {
+            getStakerInventory();
+            getStakerTotalSubpoolPoints();
+            getTotalTokenShare();
+        }
+    }, [user])
 
     const stakerCount = () => {
         const stakers = [];
@@ -170,7 +209,7 @@ const StakingPool = ({stakingPoolData}) => {
                             <Flex style={{marginBottom: 10}}>
                                 <Divider color='#42ca9f' style={{ width: '80%', marginRight: '10%' }} />
                             </Flex>
-                            <Text>{activeSubpoolsLength + closedSubpoolsLength}</Text>
+                            <Text>{activeSubpoolsLength + closedSubpoolsLength} subpool(s)</Text>
                         </Flex>
                         <Flex
                             direction='column'
@@ -188,7 +227,43 @@ const StakingPool = ({stakingPoolData}) => {
                             <Flex style={{marginBottom: 10}}>
                                 <Divider color='#42ca9f' style={{ width: '80%', marginRight: '10%' }} />
                             </Flex>
-                            <Text>{stakerCount()}</Text>
+                            <Text>{stakerCount()} staker(s)</Text>
+                        </Flex>
+                        <Flex
+                            direction='column'
+                            sx={(theme) => ({
+                                marginBottom: 20,
+                            })}
+                        >
+                            <Flex
+                                direction='row'
+                                align='center'
+                            >
+                                <IconAlertOctagon color='#42ca9f' style={{marginRight: 10}} />
+                                <Text size={20} weight={600}>YOUR SUBPOOL POINTS</Text>
+                            </Flex>
+                            <Flex style={{marginBottom: 10}}>
+                                <Divider color='#42ca9f' style={{ width: '80%', marginRight: '10%' }} />
+                            </Flex>
+                            <Text>{stakerTotalSubpoolPoints} points</Text>
+                        </Flex>
+                        <Flex
+                            direction='column'
+                            sx={(theme) => ({
+                                marginBottom: 20,
+                            })}
+                        >
+                            <Flex
+                                direction='row'
+                                align='center'
+                            >
+                                <IconAlertOctagon color='#42ca9f' style={{marginRight: 10}} />
+                                <Text size={20} weight={600}>YOUR TOTAL REWARD SHARE</Text>
+                            </Flex>
+                            <Flex style={{marginBottom: 10}}>
+                                <Divider color='#42ca9f' style={{ width: '80%', marginRight: '10%' }} />
+                            </Flex>
+                            <Text>{totalTokenShare} {stakingPoolData.Reward.Name}</Text>
                         </Flex>
                     </Box>
                     <Box
