@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Badge, Box, Button, Divider, Flex, Text } from '@mantine/core';
-import maxSelectedKey from '@/utils/maxSelectedKey';
+import maxSelectedKey from '@/utils/kosData';
 import Layout from '@/components/Layout/Layout';
 import RECToken from '../../public/recToken.png';
 import Image from 'next/image';

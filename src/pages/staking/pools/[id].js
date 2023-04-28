@@ -1,14 +1,14 @@
 import Layout from '@/components/Layout/Layout';
-import { Box, Button, Divider, Flex, Text } from '@mantine/core';
+import { Box, Button, Divider, Flex, Select, Text } from '@mantine/core';
 import { IconAlertOctagon, IconMinusVertical } from '@tabler/icons';
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
-import maxSelectedKey from '@/utils/maxSelectedKey';
+import { maxSelectedKey, keyCombos } from '@/utils/kosData';
 import StakingBox from '@/components/Staking/StakingBox';
 import StakingModal from '@/components/Staking/StakingModal';
 
-const StakingPool = ({stakingPoolData}) => {
+const StakingPool = ({data, stakingPoolData}) => {
     const router = useRouter();
     const { id } = router.query;
     const { user } = useMoralis();
@@ -152,16 +152,28 @@ const StakingPool = ({stakingPoolData}) => {
     }
     return (
         <Layout withAuth>
+            <Flex
+                direction='column'
+                align='center'
+            >
+                <Text sx={(theme) => ({
+                    fontSize: 72,
+                    fontWeight: 700,
+                    color: '#42ca9f'
+                })}>
+                    Staking Pool {id}
+                </Text>
+            </Flex>
             {!stakingPoolDataExists && (
                 <Flex direction='column' align='center' justify='center'>
                     <Box
                         sx={(theme) => ({
                             borderRadius: theme.radius.md,
-                            width: '50%',
+                            minWidth: '50%',
                             border: '2px solid #ca4242',
                             padding: '20px',
                             textAlign: 'center',
-                            marginTop: 30,
+                            marginTop: 15,
                         })}
                     >
                         <Flex
@@ -186,9 +198,9 @@ const StakingPool = ({stakingPoolData}) => {
             )}
             {stakingPoolDataExists && (
                 <Flex
-                direction='row'
-                align='center'
-                justify='center'
+                    direction='row'
+                    align='center'
+                    justify='center'
                 >
                     <Box
                         sx={(theme) => ({
@@ -197,7 +209,7 @@ const StakingPool = ({stakingPoolData}) => {
                             borderRadius: theme.radius.md,
                             // textAlign: 'center',
                             padding: 20,
-                            width: '30%',
+                            minWidth: '30%',
                             marginRight: 50,
                         })}
                     >
@@ -209,13 +221,12 @@ const StakingPool = ({stakingPoolData}) => {
                                 marginBottom: 20,
                             })}
                         >
-                            {/* <IconMinusVertical size={60} color='#42ca9f' /> */}
                             <Text sx={(theme) => ({
                                 fontSize: 40,
                                 fontWeight: 700,
                                 color: '#42ca9f'
                             })}>
-                                \ Staking Pool {id} {'/'}
+                                STAKING POOL DATA
                             </Text>
                         </Flex>
                         <Flex
@@ -339,25 +350,23 @@ const StakingPool = ({stakingPoolData}) => {
                             <Text>{totalTokenShare} {stakingPoolData.Reward.Name}</Text>
                         </Flex>
                     </Box>
-                    {/* <StakingModal
+                    <StakingModal
                         showStakingModal={showStakingModal}
                         onCloseStakingModal={() => setShowStakingModal(false)}
                         subpool={comboSelection}
                         loadingStakingRewardAndPoints={loadingStakingRewardAndPoints}
                     />
-                    <Flex 
-                        direction={'column'}
-                        align='center'
-                    >
-                        <StakingBox
-                            selectedKeyCombo={selectKeyComboType}
-                            onSelectKey={handleSelectKey}
-                            onSelectKeyChain={handleSelectKeyChain}
-                            onSelectKeyComboType={handleSelectKeyComboType}
-                            nfts={data}
-                            comboSelection={comboSelection}
-                        />
-                        <Button
+                    <StakingBox
+                        selectedKeyCombo={selectKeyComboType}
+                        onSelectKey={handleSelectKey}
+                        onSelectKeyChain={handleSelectKeyChain}
+                        onSelectKeyComboType={handleSelectKeyComboType}
+                        nfts={data}
+                        comboSelection={comboSelection}
+                        confirmButtonClick={handleConfirmButton}
+                        confirmButtonDisabled={confirmButtonDisabled}
+                    />
+                        {/* <Button
                             w='160px'
                             h='50px'
                             mt='md'
@@ -374,19 +383,8 @@ const StakingPool = ({stakingPoolData}) => {
                             })}
                         >
                             <Text size={'lg'}>Confirm</Text>
-                        </Button>
-                    </Flex> */}
-                    {/* <Box
-                        sx={(theme) => ({
-                            border: '3px solid',
-                            marginTop: 80,
-                            borderRadius: theme.radius.xl,
-                            textAlign: 'center',
-                            width: '50%'
-                        })}
-                    >
-                        <Text c='#42ca9f' size={60} weight={700}>STAKE</Text>
-                    </Box> */}
+                        </Button> */}
+                        {/* </Flex> */}
                 </Flex>
             )}
         </Layout>
@@ -413,9 +411,85 @@ export async function getServerSideProps(ctx) {
             : null
         : null;
 
+        const MOCK_SERVER_RESPONSE_NFTS = {
+            keys: [
+              {
+                id: '6969',
+                name: 'Key of Salvation #6969',
+                image:
+                  'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
+              },
+              {
+                id: '51',
+                name: 'Key of Salvation #51',
+                image:
+                  'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
+              },
+              {
+                id: '123',
+                name: 'Key of Salvation #123',
+                image:
+                  'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
+              },
+              {
+                id: '124124',
+                name: 'Key of Salvation #124124',
+                image:
+                  'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
+              },
+              {
+                id: '21',
+                name: 'Key of Salvation #21',
+                image:
+                  'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
+              },
+              {
+                id: '33',
+                name: 'Key of Salvation #33',
+                image:
+                  'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
+              },
+              {
+                id: '31',
+                name: 'Key of Salvation #31',
+                image:
+                  'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
+              },
+              {
+                id: '91237',
+                name: 'Key of Salvation #91237',
+                image:
+                  'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
+              },
+            ],
+            keyChains: [
+              {
+                id: '72',
+                name: 'Keychain #72',
+                image:
+                  'https://dl.openseauserdata.com/cache/originImage/files/20b8a48b266291c3ca707d9056042979.gif',
+              },
+              {
+                id: '77',
+                name: 'Keychain #77',
+                image:
+                  'https://dl.openseauserdata.com/cache/originImage/files/20b8a48b266291c3ca707d9056042979.gif',
+              },
+            ],
+            superiorKeyChains: [
+              {
+                id: '79822',
+                name: 'Superior Keychain #79822',
+                image:
+                  'https://dl.openseauserdata.com/cache/originImage/files/a6d28c508c28a967913f28a72a12cf4d.gif',
+              },
+            ],
+          };
+
     return {
         props: {
-            stakingPoolData
+            stakingPoolData,
+            data: MOCK_SERVER_RESPONSE_NFTS,
         }
     }
 }

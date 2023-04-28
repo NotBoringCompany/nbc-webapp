@@ -1,14 +1,7 @@
-import { Flex, Text, Select, SimpleGrid, Modal, Button } from '@mantine/core';
-import maxSelectedKey from '@/utils/maxSelectedKey';
+import { Flex, Text, Select, SimpleGrid, Modal, Button, Box } from '@mantine/core';
+import {keyCombos, maxSelectedKey} from '@/utils/kosData';
 import NFTCard from '@/components/Staking/NFTCard';
-
-const DATA = [
-	{ value: 'single', label: 'Single (1 key)' },
-	{ value: 'pair', label: 'Pair (2 keys)' },
-	{ value: 'trio', label: 'Trio (3 keys)' },
-	{ value: 'pentuple', label: 'Pentuple (5 keys)' },
-	{ value: 'flush', label: 'Flush (15 keys)' },
-];
+import { IconAlertOctagon } from '@tabler/icons';
 
 const StakingBox = ({
 	onSelectKeyComboType,
@@ -17,12 +10,14 @@ const StakingBox = ({
 	onSelectKey,
 	onSelectKeyChain,
 	comboSelection,
+	confirmButtonClick,
+	confirmButtonDisabled
 }) => {
 	const maxSelectedKeys = maxSelectedKey(selectedKeyCombo);
 	const cardColumnsBreakpoints = [
-		{ minWidth: 'xl', cols: 8, spacing: 'md' },
-		{ minWidth: 'lg', cols: 5, spacing: 'md' },
-		{ minWidth: 'md', cols: 3, spacing: 'md' },
+		{ minWidth: 'xl', cols: 5, spacing: 'md' },
+		{ minWidth: 'lg', cols: 3, spacing: 'md' },
+		{ minWidth: 'md', cols: 2, spacing: 'md' },
 		{ minWidth: 'sm', cols: 2, spacing: 'sm' },
 		{ minWidth: 'xs', cols: 1, spacing: 'sm' },
 	];
@@ -30,25 +25,31 @@ const StakingBox = ({
 		<Flex
 			px={24}
 			py={16}
-			direction={'column'}
-			w={'100%'}
-			sx={{
+			direction='column'
+			align='center'
+			sx={(theme) => ({
 				border: '2px solid #42ca9f',
+				borderRadius: theme.radius.md,
 				overflowY: 'auto',
 				maxHeight: '80vh',
-			}}
+				minWidth: '50%',
+				marginTop: 50,
+			})}
 		>
-			<Text sx={{ fontSize: '24px' }} weight={'800'} mb={'md'} color='#42ca9f'>
-				Staking
+			<Text size={40} weight={'800'} mb={'md'} color='#42ca9f'>
+				STAKING
 			</Text>
-
-			<Text size={'lg'} weight={'600'} mb={'md'}>
-				Key Combo
-			</Text>
+			<Flex
+				style={{marginBottom: 15 }}
+				align='center'
+			>
+				<IconAlertOctagon style={{marginRight: 10 }} color='#42ca9f' />
+				<Text c='#42ca9f' size={20}>Please select a key combo to continue.</Text>
+			</Flex>
 
 			<Select
-				placeholder='Pick a Key Combo'
-				data={DATA}
+				placeholder='Pick a key combo'
+				data={keyCombos}
 				size='md'
 				defaultValue={'asd'}
 				onChange={onSelectKeyComboType}
@@ -57,14 +58,14 @@ const StakingBox = ({
 				<>
 					<Text mt={'md'}>
 						Select any {maxSelectedKeys} {maxSelectedKeys > 1 ? 'keys' : 'key'}{' '}
-						and (optionally) a Keychain/Superior Keychain to stake.
-						and optionally, a keychain.
+						to stake. You can also add EITHER 1 Keychain or 1 Superior Keychain to increase your points.
 					</Text>
-					<Text size={'lg'} weight={'600'} mt={'md'}>
-						Keys
+					<Text>NOTE: If you chose {'Flush'} as your combo, you can only stake along a Superior Keychain.</Text>
+					<Text size={30} weight={'600'} mt={50} c='#42ca9f'>
+						YOUR KEYS
 					</Text>
 					<SimpleGrid
-						my={'md'}
+						my={20}
 						spacing={'md'}
 						breakpoints={cardColumnsBreakpoints}
 					>
@@ -132,7 +133,7 @@ const StakingBox = ({
 					>
 						{nfts.superiorKeyChains.map((superiorKeyChain) => (
 							// 'key' is a reserved keyword
-							// by React. We have tp use it, when
+							// by React. We have to use it when
 							// rendering arrays.
 							<NFTCard
 								key={superiorKeyChain.id}
@@ -150,6 +151,25 @@ const StakingBox = ({
 							/>
 						))}
 					</SimpleGrid>
+					<Button
+						size='xl'
+						w='160px'
+						h='50px'
+						mt='md'
+						radius='md'
+						onClick={confirmButtonClick}
+						disabled={confirmButtonDisabled}
+						sx={(theme) => ({
+							backgroundColor: '#42ca9f',
+							':hover': {
+								transform: 'scale(1.01) translate(1px, -3px)',
+								transitionDuration: '200ms',
+								backgroundColor: '#42ca9f',
+							},
+						})}
+					>
+						<Text size={'lg'}>Confirm</Text>
+					</Button>
 				</>
 			) : null}
 		</Flex>
