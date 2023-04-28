@@ -23,9 +23,6 @@ const AuthModal = () => {
       onClose={() => setOpened(false)}
       size={'md'}
     >
-      <Text size={'md'}>
-        <b>Connect your email and password</b> to easily log in next time.
-      </Text>
       <AuthForm />
     </Modal>
   );
