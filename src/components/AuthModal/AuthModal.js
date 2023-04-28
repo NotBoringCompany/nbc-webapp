@@ -1,16 +1,32 @@
-import { Modal } from '@mantine/core';
+import { Modal, Text } from '@mantine/core';
+import { useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
+import AuthForm from '../Form/AuthForm';
 
 const AuthModal = () => {
-  const { isAuthenticated, user, login } = useMoralis();
-  console.log(user && user.attributes);
-  console.log({ isAuthenticated });
-  if (!user) {
-    return null;
-  }
+  const { user } = useMoralis();
+  const [opened, setOpened] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      if (!user.attributes.email) {
+        setOpened(true);
+      }
+    }
+  }, [user]);
+
   return (
-    <Modal opened size={'md'}>
-      asd
+    <Modal
+      centered
+      title="Complete your account"
+      opened={opened}
+      onClose={() => setOpened(false)}
+      size={'md'}
+    >
+      <Text size={'md'}>
+        <b>Connect your email and password</b> to easily log in next time.
+      </Text>
+      <AuthForm />
     </Modal>
   );
 };
