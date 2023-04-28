@@ -45,8 +45,7 @@ const Layout = ({
   withAuth = false,
   mustNotAuth = false,
 }) => {
-  const { isAuthenticated, isAuthUndefined, isAuthenticating, user, is } =
-    useMoralis();
+  const { isAuthenticated, isAuthUndefined } = useMoralis();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const authWall = !!authWallComponent ? authWallComponent : AuthWall;
