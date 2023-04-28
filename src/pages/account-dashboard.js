@@ -75,11 +75,3 @@ const Accountdashboard = () => {
 };
 
 export default Accountdashboard;
-
-export async function getStaticProps(ctx) {
-  return {
-    props: {
-      data: null,
-    },
-  };
-}
