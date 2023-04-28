@@ -111,7 +111,11 @@ export default function Staking({ data, stakingPoolData }) {
           <Flex justify="center">
             <Divider
               color="#42ca9f"
-              style={{ width: '20%', marginLeft: '40%', marginRight: '40%' }}
+              style={{
+                width: '20%',
+                marginLeft: '40%',
+                marginRight: '40%',
+              }}
             />
           </Flex>
           {!stakeablePools && !ongoingPools && (
@@ -143,7 +147,10 @@ export default function Staking({ data, stakingPoolData }) {
                   <Text
                     size={24}
                     weight={700}
-                    sx={{ marginLeft: 20, marginRight: 20 }}
+                    sx={{
+                      marginLeft: 20,
+                      marginRight: 20,
+                    }}
                   >
                     REC Token
                   </Text>
@@ -151,7 +158,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Staking Pool ID
                     </Text>
@@ -161,7 +171,11 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20, marginBottom: 5 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                        marginBottom: 5,
+                      }}
                     >
                       Status
                     </Text>
@@ -171,7 +185,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Total Reward
                     </Text>
@@ -181,7 +198,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Total Subpools
                     </Text>
@@ -198,7 +218,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Total Subpool Points
                     </Text>
@@ -208,7 +231,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Your Subpool Points
                     </Text>
@@ -218,7 +244,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Your Reward Share
                     </Text>
@@ -264,7 +293,10 @@ export default function Staking({ data, stakingPoolData }) {
                   <Text
                     size={24}
                     weight={700}
-                    sx={{ marginLeft: 20, marginRight: 20 }}
+                    sx={{
+                      marginLeft: 20,
+                      marginRight: 20,
+                    }}
                   >
                     REC Token
                   </Text>
@@ -272,7 +304,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Staking Pool ID
                     </Text>
@@ -282,7 +317,11 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20, marginBottom: 5 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                        marginBottom: 5,
+                      }}
                     >
                       Status
                     </Text>
@@ -292,7 +331,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Total Reward
                     </Text>
@@ -302,7 +344,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Total Subpools
                     </Text>
@@ -319,7 +364,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Total Subpool Points
                     </Text>
@@ -329,7 +377,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Your Subpool Points
                     </Text>
@@ -339,7 +390,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Your Reward Share
                     </Text>
@@ -388,7 +442,11 @@ export default function Staking({ data, stakingPoolData }) {
           <Flex justify="center">
             <Divider
               color="grey"
-              style={{ width: '20%', marginLeft: '40%', marginRight: '40%' }}
+              style={{
+                width: '20%',
+                marginLeft: '40%',
+                marginRight: '40%',
+              }}
             />
           </Flex>
           {!closedPools && (
@@ -410,7 +468,10 @@ export default function Staking({ data, stakingPoolData }) {
                   <Text
                     size={24}
                     weight={700}
-                    sx={{ marginLeft: 20, marginRight: 20 }}
+                    sx={{
+                      marginLeft: 20,
+                      marginRight: 20,
+                    }}
                   >
                     REC Token
                   </Text>
@@ -418,7 +479,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Staking Pool ID
                     </Text>
@@ -428,7 +492,11 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20, marginBottom: 5 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                        marginBottom: 5,
+                      }}
                     >
                       Status
                     </Text>
@@ -438,7 +506,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Total Reward
                     </Text>
@@ -448,7 +519,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Total Subpools
                     </Text>
@@ -465,7 +539,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Total Subpool Points
                     </Text>
@@ -475,7 +552,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Your Subpool Points
                     </Text>
@@ -485,7 +565,10 @@ export default function Staking({ data, stakingPoolData }) {
                     <Text
                       size={18}
                       weight={700}
-                      sx={{ marginLeft: 20, marginRight: 20 }}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
                     >
                       Your Reward Share
                     </Text>
