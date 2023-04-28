@@ -56,7 +56,11 @@ const Layout = ({
         router.replace('/');
       }
 
-      setLoading(false);
+      //Preventing "blip" screen / race condition. Hacky for now, should be polished next.
+      // "Blip" here means showing the screen it's not supposed to show for a split second (1 seocnd or a bit less)
+      setTimeout(() => {
+        setLoading(false);
+      }, 150);
     }
   }, [isAuthUndefined, isAuthenticated, mustNotAuth, router]);
 
