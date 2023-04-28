@@ -1,38 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# NBC Webapp, built for the latest features.
+### Please note that this is still a work-in-progress and that changes will be made until a stable deployment phase has been reached.
 
-## Getting Started
+## Architecture and threat model
+![image](https://user-images.githubusercontent.com/60882255/235132605-0acd2780-5eeb-4acb-99d8-0d0693094afd.png)
 
-First, run the development server:
+## Website
+Please have a Metamask wallet ready to access the web app.
+(Click here to visit the live web app)[https://nbc-webapp.vercel.app/]
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Local development
+If you prefer to instantiate a local host instance of the web app instead, please do the following:
+### 1. Clone and visit the project
+`git clone https://github.com/NotBoringCompany/nbc-webapp.git`
+`cd nbc-webapp`
+### 2. Install packages and dependencies
+Either `npm i` or `yarn i`. 
+### 3. .env variables **REQUIRED**
+Please contact me for the .env variables as some of them are private. This step is **REQUIRED** to start the local host instance.
+### 4. Run the instance
+Once you've received the .env variables, run the following command:
+`npm run dev`
+and visit `localhost:3000` on your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
