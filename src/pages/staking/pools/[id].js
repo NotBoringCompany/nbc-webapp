@@ -1,9 +1,12 @@
 import Layout from '@/components/Layout/Layout';
-import { Box, Divider, Flex, Text } from '@mantine/core';
+import { Box, Button, Divider, Flex, Text } from '@mantine/core';
 import { IconAlertOctagon, IconMinusVertical } from '@tabler/icons';
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
+import maxSelectedKey from '@/utils/maxSelectedKey';
+import StakingBox from '@/components/Staking/StakingBox';
+import StakingModal from '@/components/Staking/StakingModal';
 
 const StakingPool = ({stakingPoolData}) => {
     const router = useRouter();
@@ -54,6 +57,76 @@ const StakingPool = ({stakingPoolData}) => {
             getTotalTokenShare();
         }
     }, [user])
+
+    const [selectKeyComboType, setSelectedKeyComboType] = useState(null);
+	const [comboSelection, setComboSelection] = useState({
+		keys: [],
+		keyChain: null,
+		superiorKeyChain: null,
+	});
+	const [showStakingModal, setShowStakingModal] = useState(false);
+
+	const [loadingStakingRewardAndPoints, setLoadingStakingRewardAndPoints] =
+		useState(true);
+
+	const maxSelectedK = maxSelectedKey(selectKeyComboType);
+	const confirmButtonDisabled = comboSelection.keys.length !== maxSelectedK;
+	const handleSelectKey = (rhKey) => {
+		const exist =
+			comboSelection.keys.findIndex((key) => key.id === rhKey.id) >= 0;
+		if (!exist) {
+			const keys = [...comboSelection.keys, rhKey];
+			setComboSelection({ ...comboSelection, keys });
+		} else {
+			const keys = [...comboSelection.keys].filter(
+				(key) => key.id !== rhKey.id
+			);
+			setComboSelection({ ...comboSelection, keys });
+		}
+	};
+
+	const handleSelectKeyChain = (selectedNFT, isSuperior = false) => {
+		const exist = isSuperior
+			? !!comboSelection.superiorKeyChain
+			: !!comboSelection.keyChain; // is not null
+		const nft = isSuperior ? 'superiorKeyChain' : 'keyChain';
+		if (!exist) {
+			setComboSelection({ ...comboSelection, [nft]: selectedNFT });
+		} else {
+			setComboSelection({ ...comboSelection, [nft]: null });
+		}
+	};
+	const handleSelectKeyComboType = (e) => {
+		setSelectedKeyComboType(e);
+		const maxSelectedKeys = maxSelectedKey(e);
+
+		//If there's more keys selected then
+		//what's allowed in the selected key combo type
+		if (comboSelection.keys.length > maxSelectedKeys) {
+			const keys = [...comboSelection.keys].slice(0, maxSelectedKeys);
+			setComboSelection({ ...comboSelection, keys });
+		}
+
+		// if combo not 'flush'
+		// but a superior keychain has been selected
+		if (e !== 'flush' && !!comboSelection.superiorKeyChain) {
+			setComboSelection({ ...comboSelection, superiorKeyChain: null });
+		}
+	};
+
+	const handleConfirmButton = () => {
+		if (!confirmButtonDisabled) {
+			//launches modal
+			setShowStakingModal(true);
+
+			//TODO: fetches API to get the rewards and points for
+			// the selected key combo (subpool)
+			setLoadingStakingRewardAndPoints(true);
+			setTimeout(() => {
+				setLoadingStakingRewardAndPoints(false);
+			}, 1500);
+		}
+	};
 
     const stakerCount = () => {
         const stakers = [];
@@ -266,7 +339,44 @@ const StakingPool = ({stakingPoolData}) => {
                             <Text>{totalTokenShare} {stakingPoolData.Reward.Name}</Text>
                         </Flex>
                     </Box>
-                    <Box
+                    {/* <StakingModal
+                        showStakingModal={showStakingModal}
+                        onCloseStakingModal={() => setShowStakingModal(false)}
+                        subpool={comboSelection}
+                        loadingStakingRewardAndPoints={loadingStakingRewardAndPoints}
+                    />
+                    <Flex 
+                        direction={'column'}
+                        align='center'
+                    >
+                        <StakingBox
+                            selectedKeyCombo={selectKeyComboType}
+                            onSelectKey={handleSelectKey}
+                            onSelectKeyChain={handleSelectKeyChain}
+                            onSelectKeyComboType={handleSelectKeyComboType}
+                            nfts={data}
+                            comboSelection={comboSelection}
+                        />
+                        <Button
+                            w='160px'
+                            h='50px'
+                            mt='md'
+                            radius='md'
+                            onClick={handleConfirmButton}
+                            disabled={confirmButtonDisabled}
+                            sx={(theme) => ({
+                                backgroundColor: '#42ca9f',
+                                ':hover': {
+                                    transform: 'scale(1.01) translate(1px, -3px)',
+                                    transitionDuration: '200ms',
+                                    backgroundColor: '#42ca9f',
+                                },
+                            })}
+                        >
+                            <Text size={'lg'}>Confirm</Text>
+                        </Button>
+                    </Flex> */}
+                    {/* <Box
                         sx={(theme) => ({
                             border: '3px solid',
                             marginTop: 80,
@@ -275,7 +385,8 @@ const StakingPool = ({stakingPoolData}) => {
                             width: '50%'
                         })}
                     >
-                    </Box>
+                        <Text c='#42ca9f' size={60} weight={700}>STAKE</Text>
+                    </Box> */}
                 </Flex>
             )}
         </Layout>
