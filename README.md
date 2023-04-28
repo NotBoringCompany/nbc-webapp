@@ -12,6 +12,10 @@ Please have a Metamask wallet ready to access the web app.
 If you prefer to instantiate a local host instance of the web app instead, please do the following:
 ### 1. Clone and visit the project
 `git clone https://github.com/NotBoringCompany/nbc-webapp.git`
+
+and then:
+
+
 `cd nbc-webapp`
 ### 2. Install packages and dependencies
 Either `npm i` or `yarn i`. 
