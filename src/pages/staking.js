@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { Badge, Box, Button, Divider, Flex, Text } from "@mantine/core";
-import maxSelectedKey from "@/utils/maxSelectedKey";
-import Layout from "@/components/Layout/Layout";
-import RECToken from "../../public/recToken.png";
-import Image from "next/image";
-import { useRouter } from "next/router";
+import { useState } from 'react';
+import { Badge, Box, Button, Divider, Flex, Text } from '@mantine/core';
+import maxSelectedKey from '@/utils/maxSelectedKey';
+import Layout from '@/components/Layout/Layout';
+import RECToken from '../../public/recToken.png';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 export default function Staking({ data, stakingPoolData }) {
 	const router = useRouter();
@@ -40,7 +40,7 @@ export default function Staking({ data, stakingPoolData }) {
 		const exist = isSuperior
 			? !!comboSelection.superiorKeyChain
 			: !!comboSelection.keyChain; // is not null
-		const nft = isSuperior ? "superiorKeyChain" : "keyChain";
+		const nft = isSuperior ? 'superiorKeyChain' : 'keyChain';
 		if (!exist) {
 			setComboSelection({ ...comboSelection, [nft]: selectedNFT });
 		} else {
@@ -60,7 +60,7 @@ export default function Staking({ data, stakingPoolData }) {
 
 		// if combo not 'flush'
 		// but a superior keychain has been selected
-		if (e !== "flush" && !!comboSelection.superiorKeyChain) {
+		if (e !== 'flush' && !!comboSelection.superiorKeyChain) {
 			setComboSelection({ ...comboSelection, superiorKeyChain: null });
 		}
 	};
@@ -98,11 +98,11 @@ export default function Staking({ data, stakingPoolData }) {
 				<Text size={24}>Stake your Factory NFTs to earn special yields.</Text>
 				<Box
 					sx={(theme) => ({
-						border: "3px solid #42ca9f",
+						border: '3px solid #42ca9f',
 						marginTop: 80,
 						borderRadius: theme.radius.xl,
-						textAlign: "center",
-						minWidth: "90%",
+						textAlign: 'center',
+						minWidth: '90%',
 					})}
 				>
 					<Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
@@ -111,7 +111,7 @@ export default function Staking({ data, stakingPoolData }) {
 					<Flex justify="center">
 						<Divider
 							color="#42ca9f"
-							style={{ width: "20%", marginLeft: "40%", marginRight: "40%" }}
+							style={{ width: '20%', marginLeft: '40%', marginRight: '40%' }}
 						/>
 					</Flex>
 					{!stakeablePools && !ongoingPools && (
@@ -126,9 +126,9 @@ export default function Staking({ data, stakingPoolData }) {
 									<Divider
 										color="#42ca9f"
 										style={{
-											width: "20%",
-											marginLeft: "40%",
-											marginRight: "40%",
+											width: '20%',
+											marginLeft: '40%',
+											marginRight: '40%',
 										}}
 									/>
 								</Flex>
@@ -136,7 +136,7 @@ export default function Staking({ data, stakingPoolData }) {
 									direction="row"
 									align="center"
 									sx={(theme) => ({
-										padding: "20px 20px",
+										padding: '20px 20px',
 									})}
 								>
 									<Image src={RECToken} width={60} alt="recToken" />
@@ -226,11 +226,11 @@ export default function Staking({ data, stakingPoolData }) {
 									</Flex>
 									<Button
 										sx={(theme) => ({
-											backgroundColor: "#42ca9f",
-											":hover": {
-												transform: "scale(1.01) translate(1px, -3px)",
-												transitionDuration: "200ms",
-												backgroundColor: "#42ca9f",
+											backgroundColor: '#42ca9f',
+											':hover': {
+												transform: 'scale(1.01) translate(1px, -3px)',
+												transitionDuration: '200ms',
+												backgroundColor: '#42ca9f',
 											},
 										})}
 										onClick={() =>
@@ -243,7 +243,7 @@ export default function Staking({ data, stakingPoolData }) {
 								{stakingPoolData.stakeablePools.length > 1 && (
 									<Divider
 										color="#42ca9f"
-										style={{ width: "100%" }}
+										style={{ width: '100%' }}
 										size="sm"
 										variant="dashed"
 									/>
@@ -257,7 +257,7 @@ export default function Staking({ data, stakingPoolData }) {
 									direction="row"
 									align="center"
 									sx={(theme) => ({
-										padding: "20px 20px",
+										padding: '20px 20px',
 									})}
 								>
 									<Image src={RECToken} width={60} alt="recToken" />
@@ -347,11 +347,11 @@ export default function Staking({ data, stakingPoolData }) {
 									</Flex>
 									<Button
 										sx={(theme) => ({
-											backgroundColor: "#42ca9f",
-											":hover": {
-												transform: "scale(1.01) translate(1px, -3px)",
-												transitionDuration: "200ms",
-												backgroundColor: "#42ca9f",
+											backgroundColor: '#42ca9f',
+											':hover': {
+												transform: 'scale(1.01) translate(1px, -3px)',
+												transitionDuration: '200ms',
+												backgroundColor: '#42ca9f',
 											},
 										})}
 										onClick={() =>
@@ -364,7 +364,7 @@ export default function Staking({ data, stakingPoolData }) {
 								{stakingPoolData.ongoingPools.length > 1 && (
 									<Divider
 										color="#42ca9f"
-										style={{ width: "100%" }}
+										style={{ width: '100%' }}
 										size="sm"
 										variant="dashed"
 									/>
@@ -374,12 +374,12 @@ export default function Staking({ data, stakingPoolData }) {
 				</Box>
 				<Box
 					sx={(theme) => ({
-						border: "3px solid grey",
+						border: '3px solid grey',
 						marginTop: 80,
 						borderRadius: theme.radius.xl,
-						color: "grey",
-						textAlign: "center",
-						minWidth: "90%",
+						color: 'grey',
+						textAlign: 'center',
+						minWidth: '90%',
 					})}
 				>
 					<Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
@@ -388,7 +388,7 @@ export default function Staking({ data, stakingPoolData }) {
 					<Flex justify="center">
 						<Divider
 							color="grey"
-							style={{ width: "20%", marginLeft: "40%", marginRight: "40%" }}
+							style={{ width: '20%', marginLeft: '40%', marginRight: '40%' }}
 						/>
 					</Flex>
 					{!closedPools && (
@@ -403,7 +403,7 @@ export default function Staking({ data, stakingPoolData }) {
 									direction="row"
 									align="center"
 									sx={(theme) => ({
-										padding: "20px 20px",
+										padding: '20px 20px',
 									})}
 								>
 									<Image src={RECToken} width={60} alt="recToken" />
@@ -493,11 +493,11 @@ export default function Staking({ data, stakingPoolData }) {
 									</Flex>
 									<Button
 										sx={(theme) => ({
-											backgroundColor: "#42ca9f",
-											":hover": {
-												transform: "scale(1.01) translate(1px, -3px)",
-												transitionDuration: "200ms",
-												backgroundColor: "#42ca9f",
+											backgroundColor: '#42ca9f',
+											':hover': {
+												transform: 'scale(1.01) translate(1px, -3px)',
+												transitionDuration: '200ms',
+												backgroundColor: '#42ca9f',
 											},
 										})}
 										onClick={() =>
@@ -510,7 +510,7 @@ export default function Staking({ data, stakingPoolData }) {
 								{stakingPoolData.closedPools.length > 1 && (
 									<Divider
 										color="#42ca9f"
-										style={{ width: "100%" }}
+										style={{ width: '100%' }}
 										size="sm"
 										variant="dashed"
 									/>
@@ -564,10 +564,10 @@ export async function getServerSideProps(ctx) {
 	const stakingPoolDataRawResponse = await fetch(
 		`https://nbc-webapp-api-production.up.railway.app/kos/fetch-staking-pools`,
 		{
-			method: "GET",
+			method: 'GET',
 			headers: {
-				Accept: "*",
-				"Content-Type": "application/json",
+				Accept: '*',
+				'Content-Type': 'application/json',
 			},
 		}
 	).catch((err) => console.log(err));
@@ -578,74 +578,74 @@ export async function getServerSideProps(ctx) {
 	const MOCK_SERVER_RESPONSE_NFTS = {
 		keys: [
 			{
-				id: "6969",
-				name: "Key of Salvation #6969",
+				id: '6969',
+				name: 'Key of Salvation #6969',
 				image:
-					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+					'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
 			},
 			{
-				id: "51",
-				name: "Key of Salvation #51",
+				id: '51',
+				name: 'Key of Salvation #51',
 				image:
-					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+					'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
 			},
 			{
-				id: "123",
-				name: "Key of Salvation #123",
+				id: '123',
+				name: 'Key of Salvation #123',
 				image:
-					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+					'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
 			},
 			{
-				id: "124124",
-				name: "Key of Salvation #124124",
+				id: '124124',
+				name: 'Key of Salvation #124124',
 				image:
-					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+					'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
 			},
 			{
-				id: "21",
-				name: "Key of Salvation #21",
+				id: '21',
+				name: 'Key of Salvation #21',
 				image:
-					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+					'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
 			},
 			{
-				id: "33",
-				name: "Key of Salvation #33",
+				id: '33',
+				name: 'Key of Salvation #33',
 				image:
-					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+					'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
 			},
 			{
-				id: "31",
-				name: "Key of Salvation #31",
+				id: '31',
+				name: 'Key of Salvation #31',
 				image:
-					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+					'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
 			},
 			{
-				id: "91237",
-				name: "Key of Salvation #91237",
+				id: '91237',
+				name: 'Key of Salvation #91237',
 				image:
-					"https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif",
+					'https://dl.openseauserdata.com/cache/originImage/files/916c0d6d13ae2d7f089f321b5b418461.gif',
 			},
 		],
 		keyChains: [
 			{
-				id: "72",
-				name: "Keychain #72",
+				id: '72',
+				name: 'Keychain #72',
 				image:
-					"https://dl.openseauserdata.com/cache/originImage/files/20b8a48b266291c3ca707d9056042979.gif",
+					'https://dl.openseauserdata.com/cache/originImage/files/20b8a48b266291c3ca707d9056042979.gif',
 			},
 			{
-				id: "77",
-				name: "Keychain #77",
+				id: '77',
+				name: 'Keychain #77',
 				image:
-					"https://dl.openseauserdata.com/cache/originImage/files/20b8a48b266291c3ca707d9056042979.gif",
+					'https://dl.openseauserdata.com/cache/originImage/files/20b8a48b266291c3ca707d9056042979.gif',
 			},
 		],
 		superiorKeyChains: [
 			{
-				id: "79822",
-				name: "Superior Keychain #79822",
+				id: '79822',
+				name: 'Superior Keychain #79822',
 				image:
-					"https://dl.openseauserdata.com/cache/originImage/files/a6d28c508c28a967913f28a72a12cf4d.gif",
+					'https://dl.openseauserdata.com/cache/originImage/files/a6d28c508c28a967913f28a72a12cf4d.gif',
 			},
 		],
 	};
