@@ -1,0 +1,16 @@
+{
+  "version": "2.0.1",
+  "summary": {
+    "title": "New Threat Model",
+    "owner": "Suwandre",
+    "description": "A webapp made for NBC that fetches data from the Backend API (in nbc-webapp-api). Currently allows staking and logging in with Metamask (via react-moralis).",
+    "id": 0
+  },
+  "detail": {
+    "contributors": [],
+    "diagrams": [],
+    "diagramTop": 0,
+    "reviewer": "Suwandre",
+    "threatTop": 0
+  }
+}
