@@ -1,16 +1,27 @@
 import { useForm } from '@mantine/form';
 import { useMoralis } from 'react-moralis';
 import { Text, TextInput, Button, Loader } from '@mantine/core';
-
+import moralisErrorMessage from '@/utils/moralisErrorMessage';
 /**
- * `AuthForm` renders in 2 different "styles":
- * 1. When user has email and password already set / linked to their wallet - it'll show as "Change email & password"
- * 2. When user has neither email and password set / linked to their wallet, it'll show as "Set / link email & password"
+ * `AuthForm` renders in 3 different "styles" with 2 different "behaviours":
+ * 1. When user has email and password already set / linked to their wallet - it'll show as "Change email & password" (behaviour 1)
+ * 2. When user has neither email and password set / linked to their wallet, it'll show as "Set / link email & password" (behaviour 1)
+ * 3. When using `forLogin`, then it'll act as a login form (behaviour 2)
  *
  */
-const AuthForm = () => {
-  const { isAuthenticated, user, setUserData, isUserUpdating } = useMoralis();
+const AuthForm = ({ forLogin = false }) => {
+  const {
+    isAuthenticated,
+    user,
+    setUserData,
+    isUserUpdating,
+    login,
+    isAuthenticating,
+    authError,
+  } = useMoralis();
   const hasEmail = user && user.attributes.email;
+
+  const loading = isUserUpdating || isAuthenticating;
 
   const form = useForm({
     initialValues: { email: '', password: '' },
@@ -22,14 +33,19 @@ const AuthForm = () => {
     },
   });
 
-  if (!user) {
+  if (!user && !forLogin) {
     return null;
   }
 
   const handleFormSubmit = async (formData) => {
     const { email, password } = formData;
-    if (isAuthenticated && user) {
-      await setUserData({ email, password });
+    if (!forLogin) {
+      if (isAuthenticated && user) {
+        await setUserData({ email, password });
+      }
+    } else {
+      const x = await login(email, password);
+      console.log({ x });
     }
   };
 
@@ -39,6 +55,14 @@ const AuthForm = () => {
       It seems like you haven{`'`}t connected your email yet. <br />
       <span>Connect your email and password</span> to easily log in next time.
     </>
+  );
+
+  const updateEmailPasswordLeadText = !hasEmail
+    ? doesntHaveEmailLeadText
+    : hasEmailLeadText;
+
+  const forLoginLeadText = (
+    <>Sign in into your account using your email and password</>
   );
 
   return (
@@ -52,9 +76,9 @@ const AuthForm = () => {
         })}
         size={'md'}
       >
-        {!hasEmail ? doesntHaveEmailLeadText : hasEmailLeadText}
+        {forLogin ? forLoginLeadText : updateEmailPasswordLeadText}
       </Text>
-      <form sx onSubmit={form.onSubmit(handleFormSubmit)}>
+      <form onSubmit={form.onSubmit(handleFormSubmit)}>
         <TextInput
           my="sm"
           sx={(theme) => ({
@@ -95,10 +119,16 @@ const AuthForm = () => {
           {...form.getInputProps('password')}
         />
 
+        {!!authError && forLogin && (
+          <Text sx={{ color: '#ca4242' }} mt="md">
+            {moralisErrorMessage('auth', authError.code)}
+          </Text>
+        )}
+
         <Button
           h="48px"
           miw="200px"
-          disabled={isUserUpdating}
+          disabled={loading}
           type="submit"
           mt="lg"
           sx={{
@@ -110,11 +140,15 @@ const AuthForm = () => {
             },
           }}
         >
-          {isUserUpdating ? (
+          {loading ? (
             <Loader color="green" />
           ) : (
             <Text size="md">
-              {hasEmail ? `Change` : `Set`} Email & Password
+              {forLogin ? (
+                'Log in'
+              ) : (
+                <>{hasEmail ? `Change` : `Set`} Email & Password</>
+              )}
             </Text>
           )}
         </Button>
