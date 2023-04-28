@@ -9,11 +9,11 @@ const Accountdashboard = () => {
   const userHasEmail = user && !!user.attributes.email;
   return (
     <Layout withAuth>
-      <Container maw="1024px" direction="column">
+      <Container maw='1024px' direction='column'>
         <Title
-          weight="500"
-          size="32px"
-          mb="32px"
+          weight='500'
+          size='32px'
+          mb='32px'
           sx={(theme) => ({
             color: theme.colors.nbcGreen[0],
           })}
@@ -21,16 +21,16 @@ const Accountdashboard = () => {
           Account Dashboard
         </Title>
 
-        <Title
-          weight="300"
-          size="24px"
-          mb="12px"
+        <Text
+          weight='300'
+          size='24px'
+          mb='12px'
           sx={(theme) => ({
             color: theme.colors.nbcGreen[0],
           })}
         >
           Details
-        </Title>
+        </Text>
 
         {!!user && (
           <Text
@@ -57,17 +57,17 @@ const Accountdashboard = () => {
             {userHasEmail ? <span>{user.attributes.email}</span> : '-'}
           </Text>
         )}
-        <Divider my="md" />
-        <Title
-          weight="300"
-          size="24px"
-          mb="12px"
+        <Divider my='md' />
+        <Text
+          weight='300'
+          size='24px'
+          mb='12px'
           sx={(theme) => ({
             color: theme.colors.nbcGreen[0],
           })}
         >
           Email & Password
-        </Title>
+        </Text>
         <AuthForm />
       </Container>
     </Layout>

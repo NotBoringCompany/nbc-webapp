@@ -18,7 +18,7 @@ const AuthModal = () => {
   return (
     <Modal
       centered
-      title="Complete your account"
+      title='Link your account'
       opened={opened}
       onClose={() => setOpened(false)}
       size={'md'}

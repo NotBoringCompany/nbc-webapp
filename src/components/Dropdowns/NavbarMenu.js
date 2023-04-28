@@ -34,7 +34,7 @@ const NavbarMenu = () => {
     router.reload(window.location.pathname);
   };
   return (
-    <Menu shadow="md" width={200}>
+    <Menu shadow='md' width={200}>
       <Menu.Target>
         <Button className={classes.connectButton}>
           <p className={classes.myAccountParagraph}>My Account</p>

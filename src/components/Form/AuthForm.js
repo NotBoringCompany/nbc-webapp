@@ -49,7 +49,7 @@ const AuthForm = ({ forLogin = false }) => {
     }
   };
 
-  const hasEmailLeadText = <>Change your email and password</>;
+  const hasEmailLeadText = <>Change your email and password.</>;
   const doesntHaveEmailLeadText = (
     <>
       It seems like you haven{`'`}t connected your email yet. <br />
