@@ -6,7 +6,7 @@
 
 ## Website
 Please have a Metamask wallet ready to access the web app.
-(Click here to visit the live web app)[https://nbc-webapp.vercel.app/]
+[Click here to visit the live web app](https://nbc-webapp.vercel.app/)
 
 ## Local development
 If you prefer to instantiate a local host instance of the web app instead, please do the following:
