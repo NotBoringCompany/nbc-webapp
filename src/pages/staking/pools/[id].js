@@ -17,20 +17,21 @@ const StakingPool = ({data, stakingPoolData}) => {
     const [stakerTotalSubpoolPoints, setStakerTotalSubpoolPoints] = useState(0);
     const [totalTokenShare, setTotalTokenShare] = useState(0);
 
+    const stakingOngoing = new Date().getTime() >= new Date(stakingPoolData?.StartTime).getTime();
     const stakingPoolDataExists = stakingPoolData !== null;
     let activeSubpoolsLength;
     let closedSubpoolsLength;
 
     if (stakingPoolDataExists) {
-        activeSubpoolsLength = stakingPoolData.ActiveSubpools !== null ? stakingPoolData.ActiveSubpools.length : 0
-        closedSubpoolsLength = stakingPoolData.ClosedSubpools !== null ? stakingPoolData.ClosedSubpools.length : 0
+        activeSubpoolsLength = stakingPoolData?.ActiveSubpools?.length ?? 0;
+        closedSubpoolsLength = stakingPoolData?.ClosedSubpools?.length ?? 0;
     }
 
     const getStakerInventory = async () => {
         const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user && user.attributes.ethAddress}/${id}`);
         const res = await rawRes.json();
 
-        setStakerInventory(res.data ? res.data.inventory : null);
+        setStakerInventory(res?.data?.inventory ?? null);
         console.log('staker inventory set');
     }
 
@@ -38,7 +39,7 @@ const StakingPool = ({data, stakingPoolData}) => {
         const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/staker-total-subpool-points/${user && user.attributes.ethAddress}/${id}`)
         const res = await rawRes.json();
 
-        setStakerTotalSubpoolPoints(res.data ? res.data.totalSubpoolPoints : 0);
+        setStakerTotalSubpoolPoints(res?.data?.totalSubpoolPoints ?? 0);
         console.log('staker total subpool points set');
     }
 
@@ -46,7 +47,7 @@ const StakingPool = ({data, stakingPoolData}) => {
         const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/calculate-total-token-share/${user && user.attributes.ethAddress}/${id}`)
         const res = await rawRes.json();
 
-        setTotalTokenShare(res.data ? res.data.totalTokenShare : 0);
+        setTotalTokenShare(res?.data?.totalTokenShare ?? 0);
         console.log('total token share set');
     }
 
@@ -365,6 +366,7 @@ const StakingPool = ({data, stakingPoolData}) => {
                         comboSelection={comboSelection}
                         confirmButtonClick={handleConfirmButton}
                         confirmButtonDisabled={confirmButtonDisabled}
+                        stakingOngoing={stakingOngoing}
                     />
                         {/* <Button
                             w='160px'
@@ -403,13 +405,7 @@ export async function getServerSideProps(ctx) {
     const stakingPoolDataRes = await stakingPoolDataRawRes.json();
 
     // checks if staking pool data exists or not. if yes, check if `data.stakingPoolData` exists. if not, return null.
-    const stakingPoolData = stakingPoolDataRes
-        ? stakingPoolDataRes.data !== null
-            ? stakingPoolDataRes.data.stakingPoolData != null
-                ? stakingPoolDataRes.data.stakingPoolData
-                : null
-            : null
-        : null;
+    const stakingPoolData = stakingPoolDataRes?.data?.stakingPoolData ?? null;
 
         const MOCK_SERVER_RESPONSE_NFTS = {
             keys: [
