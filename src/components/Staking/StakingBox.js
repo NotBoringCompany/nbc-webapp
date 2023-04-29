@@ -1,4 +1,4 @@
-import { Flex, Text, Select, SimpleGrid, Modal, Button, Box } from '@mantine/core';
+import { Flex, Text, Select, SimpleGrid, Modal, Button, Box, createStyles } from '@mantine/core';
 import {keyCombos, maxSelectedKey} from '@/utils/kosData';
 import NFTCard from '@/components/Staking/NFTCard';
 import { IconAlertOctagon } from '@tabler/icons';
@@ -6,9 +6,9 @@ import { IconAlertOctagon } from '@tabler/icons';
 const StakingBox = ({
 	onSelectKeyComboType,
 	selectedKeyCombo,
-	nfts,
+	stakerInventory,
 	onSelectKey,
-	onSelectKeyChain,
+	onSelectKeychain,
 	comboSelection,
 	confirmButtonClick,
 	confirmButtonDisabled,
@@ -81,7 +81,7 @@ const StakingBox = ({
 								spacing={'md'}
 								breakpoints={cardColumnsBreakpoints}
 							>
-								{nfts.keys.map((k) => (
+								{stakerInventory.keyData.map((k) => (
 									// 'key' is a reserved keyword
 									// by React. We have tp use it, when
 									// rendering arrays. But, it can't
@@ -94,7 +94,7 @@ const StakingBox = ({
 										nft={k}
 										onSelect={onSelectKey}
 										selected={
-											comboSelection.keys.findIndex((key) => key.id === k.id) >= 0
+											comboSelection.keys.findIndex((key) => key.name === k.name) >= 0
 										}
 										absolutelyDisabled={
 											comboSelection.keys.length === maxSelectedKeys
@@ -103,8 +103,8 @@ const StakingBox = ({
 								))}
 							</SimpleGrid>
 
-							<Text size={'lg'} weight={'600'} mt={'md'}>
-								Keychains
+							<Text size={30} weight={'600'} mt={50} c='#42ca9f'>
+								YOUR KEYCHAINS
 							</Text>
 
 							<SimpleGrid
@@ -112,30 +112,27 @@ const StakingBox = ({
 								spacing={'md'}
 								breakpoints={cardColumnsBreakpoints}
 							>
-								{nfts.keyChains.map((keyChain) => (
+								{stakerInventory.keychainData?.map((keychain) => (
 									// 'key' is a reserved keyword
 									// by React. We have tp use it, when
 									// rendering arrays.
 									<NFTCard
-										key={keyChain.id}
-										nft={keyChain}
-										onSelect={onSelectKeyChain}
+										key={keychain.name}
+										nft={keychain}
+										onSelect={onSelectKeychain}
 										selected={
-											!!comboSelection.keyChain &&
-											comboSelection.keyChain.id === keyChain.id
+											!!comboSelection.keychain &&
+											comboSelection.keychain.name === keychain.name
 										}
 										absolutelyDisabled={
-											!!comboSelection.keyChain || !!comboSelection.superiorKeyChain
+											!!comboSelection.keychain || !!comboSelection.superiorKeychain
 										} // not null
 									/>
 								))}
 							</SimpleGrid>
 
-							<Text size={'lg'} weight={'600'} mt={'md'}>
-								Superior Keychains
-							</Text>
-							<Text size={'sm'}>
-								<i>Superior keychains can only be used for Flush combos.</i>
+							<Text size={30} weight={'600'} mt={50} c='#42ca9f'>
+								YOUR SUPERIOR KEYCHAINS
 							</Text>
 
 							<SimpleGrid
@@ -143,23 +140,22 @@ const StakingBox = ({
 								spacing={'md'}
 								breakpoints={cardColumnsBreakpoints}
 							>
-								{nfts.superiorKeyChains.map((superiorKeyChain) => (
+								{stakerInventory.superiorKeychainData?.map((superiorKeychain) => (
 									// 'key' is a reserved keyword
 									// by React. We have to use it when
 									// rendering arrays.
 									<NFTCard
-										key={superiorKeyChain.id}
-										nft={superiorKeyChain}
-										onSelect={(sKC) => onSelectKeyChain(sKC, true)}
+										key={superiorKeychain.name}
+										nft={superiorKeychain}
+										onSelect={(sKC) => onSelectKeychain(sKC, true)}
 										selected={
-											!!comboSelection.superiorKeyChain &&
-											comboSelection.superiorKeyChain.id === superiorKeyChain.id
+											!!comboSelection.superiorKeychain &&
+											comboSelection.superiorKeychain.name === superiorKeychain.name
 										}
 										absolutelyDisabled={
-											selectedKeyCombo !== 'flush' ||
-											!!comboSelection.keyChain ||
-											!!comboSelection.superiorKeyChain
-										} // not 'flush' combo or flush combo but already selected one
+											!!comboSelection.keychain ||
+											!!comboSelection.superiorKeychain
+										}
 									/>
 								))}
 							</SimpleGrid>

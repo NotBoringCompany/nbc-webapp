@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Image, Button, Group, Text } from '@mantine/core';
 
 const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled }) => {
-	const { name, image } = nft;
+	const { name, imageUrl, metadata } = nft;
 	const noActionAllowed = absolutelyDisabled && !selected;
 	const handleSelectNFT = () => {
 		if (!noActionAllowed) {
@@ -27,7 +27,22 @@ const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled }) => {
 			w={'100%'}
 		>
 			<Card.Section>
-				<Image src={image} height={240} alt={name} />
+				{imageUrl.includes('mp4') && (
+					<video
+						alt={name}
+						autoPlay
+						loop
+						playsInline
+						muted
+						width={'100%'}
+						height={'100%'}
+					>
+						<source type='video/mp4' src={imageUrl} />
+					</video>
+				)}
+				{!imageUrl.includes('mp4') && (
+					<Image src={imageUrl} alt={imageUrl} />
+				)}
 			</Card.Section>
 
 			<Group position='apart' mt='md' mb='auto'>
@@ -35,8 +50,14 @@ const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled }) => {
 			</Group>
 			<Button
 				onClick={handleSelectNFT}
-				variant='light'
-				color={selected ? 'red' : 'green'}
+				sx={(theme) => ({
+					backgroundColor: selected ? 'red' : '#42ca9f',
+					':hover': {
+						backgroundColor: selected ? 'red' : '#42ca9f',
+						transform: 'scale(1.01) translate(1px, -3px)',
+						transitionDuration: '200ms',
+					}
+				})}
 				fullWidth
 				mt='md'
 				radius='md'
