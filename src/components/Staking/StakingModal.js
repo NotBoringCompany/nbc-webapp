@@ -19,7 +19,8 @@ const StakingModal = ({
 	showStakingModal,
 	onCloseStakingModal,
 	subpool,
-	loadingStakingRewardAndPoints
+	loadingStakingRewardAndPoints,
+	preSubpoolData
 }) => {
 	const cardColumnsBreakpoints = [
 		{ maxWidth: 'xl', cols: 3, spacing: 'md' },
@@ -59,19 +60,24 @@ const StakingModal = ({
 				<>
 					<Text color='#42ca9f' size={24}>STAKING POOL TOTAL REWARD</Text>
 					<Divider color='#42ca9f' size='xs' sx={{marginBottom: 5}} variant='dashed' />
-					<Text style={{marginBottom: 20}}>500,000 $REC</Text>
+					<Text style={{marginBottom: 20}}>{preSubpoolData.poolTotalReward} {preSubpoolData.poolRewardName}</Text>
 					<Text color='#42ca9f' size={24}>TOTAL SUBPOOL POINTS GENERATED</Text>
+					<Text size='sm' color='#42ca9f'>
+						<i>
+							*this includes this subpool{"'"}s points.
+						</i>
+					</Text>
 					<Divider color='#42ca9f' size='xs' sx={{marginBottom: 5}} variant='dashed' />
-					<Text style={{marginBottom: 20}}>10000 POINTS</Text>
+					<Text style={{marginBottom: 20}}>{preSubpoolData.newTotalPoolPoints} POINTS</Text>
 					<Text color='#42ca9f' size={24}>WITH YOUR COMBO, YOU WILL EARN</Text>
 					<Divider color='#42ca9f' size='xs' sx={{marginBottom: 5}} variant='dashed' />
-					<Text style={{marginBottom: 20}}>250 POINTS ///// 15,000 $REC</Text>
+					<Text style={{marginBottom: 20}}>{preSubpoolData.comboSum} POINTS {'<->'} {preSubpoolData.tokenShare} {preSubpoolData.poolRewardName}</Text>
 					<Text size='sm' my='md' color='#42ca9f'>
-							<i>
-								*please bear in mind that this number will decrease as more users
-								stake.
-							</i>
-						</Text>
+						<i>
+							*please bear in mind that this number will decrease as more users
+							stake.
+						</i>
+					</Text>
 				</>
 			)}
 
@@ -100,7 +106,7 @@ const StakingModal = ({
 					>
 						<SimpleGrid breakpoints={cardColumnsBreakpoints}>
 							{subpool.keys.map((key) => (
-								<NFTCardPreview key={key.id} nft={key} />
+								<NFTCardPreview key={key.name} nft={key} />
 							))}
 							{!!keyChain ? <NFTCardPreview nft={keyChain} /> : null}
 							{!!superiorKeyChain ? (

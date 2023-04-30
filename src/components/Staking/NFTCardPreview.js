@@ -2,7 +2,7 @@ import React from 'react';
 import { Card, Image, Button, Group, Text } from '@mantine/core';
 
 const NFTCardPreview = ({ nft }) => {
-	const { name, image } = nft;
+	const { name, imageUrl, metadata } = nft;
 	return (
 		<Card
 			sx={{
@@ -17,7 +17,22 @@ const NFTCardPreview = ({ nft }) => {
 			radius='md'
 			p='0'
 		>
-			<Image src={image} height={'60px'} width={'60px'} alt={name} />
+			{imageUrl.includes('mp4') && (
+				<video
+					alt={name}
+					autoPlay
+					loop
+					playsInline
+					muted
+					width={'60px'}
+					height={'60px'}
+				>
+					<source type='video/mp4' src={imageUrl} />
+				</video>
+			)}
+			{!imageUrl.includes('mp4') && (
+				<Image src={imageUrl} height={'60px'} width={'60px'} alt={name} />
+			)}
 			<Text weight={500} size={'sm'} px='sm'>
 				{name}
 			</Text>

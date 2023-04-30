@@ -16,6 +16,7 @@ const StakingPool = ({ stakingPoolData }) => {
     const [stakerInventory, setStakerInventory] = useState(null);
     const [stakerTotalSubpoolPoints, setStakerTotalSubpoolPoints] = useState(0);
     const [totalTokenShare, setTotalTokenShare] = useState(0);
+    const [preSubpoolData, setPreSubpoolData] = useState(null);
 
     const stakingOngoing = new Date().getTime() >= new Date(stakingPoolData?.StartTime).getTime();
     const stakingPoolDataExists = stakingPoolData !== null;
@@ -71,7 +72,6 @@ const StakingPool = ({ stakingPoolData }) => {
 		useState(true);
 
 	const maxSelectedK = maxSelectedKey(selectKeyComboType);
-    console.log('maxSelectedK', maxSelectedK)
 	const confirmButtonDisabled = comboSelection.keys.length !== maxSelectedK;
 	const handleSelectKey = (rhKey) => {
 		const exist =
@@ -110,17 +110,36 @@ const StakingPool = ({ stakingPoolData }) => {
 		}
 	};
 
-	const handleConfirmButton = () => {
+	const handleConfirmButton = async () => {
 		if (!confirmButtonDisabled) {
 			//launches modal
 			setShowStakingModal(true);
 
+            // fetch the key token ids for the key combo
+            const tokenIds = comboSelection.keys.map((key) => key.tokenID);
+            const tokenIdsStr = tokenIds.join(',');
+
+            const keychainId = comboSelection.keychain ? comboSelection.keychain.tokenID : -1;
+            const superiorKeychainId = comboSelection.superiorKeychain ? comboSelection.superiorKeychain.tokenID : -1;
+
 			//TODO: fetches API to get the rewards and points for
 			// the selected key combo (subpool)
+            const subpoolRewardRawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/fetch-token-pre-add-subpool-data/?stakingPoolId=${id}&keyIds=${tokenIdsStr}&keychainId=${keychainId}&superiorKeychainId=${superiorKeychainId}`, {
+                method: 'GET',
+                headers: {
+                    'Accept': '*/*',
+                    'Content-Type': 'application/json'
+                }
+            });
+            const subpoolRewardRes = await subpoolRewardRawRes?.json();
+            setPreSubpoolData(subpoolRewardRes?.data?.tokenPreAddSubpoolData ?? null);
+
+            console.log(preSubpoolData);
+
 			setLoadingStakingRewardAndPoints(true);
 			setTimeout(() => {
 				setLoadingStakingRewardAndPoints(false);
-			}, 1500);
+			}, 4000);
 		}
 	};
 
@@ -351,6 +370,7 @@ const StakingPool = ({ stakingPoolData }) => {
                         onCloseStakingModal={() => setShowStakingModal(false)}
                         subpool={comboSelection}
                         loadingStakingRewardAndPoints={loadingStakingRewardAndPoints}
+                        preSubpoolData={preSubpoolData}
                     />
                     <StakingBox
                         selectedKeyCombo={selectKeyComboType}
