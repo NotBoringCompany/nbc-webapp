@@ -367,6 +367,7 @@ const StakingPool = ({ stakingPoolData }) => {
                         </Flex>
                     </Box>
                     <StakingModal
+                        stakingPoolId={id}
                         showStakingModal={showStakingModal}
                         onCloseStakingModal={() => setShowStakingModal(false)}
                         subpool={comboSelection}
