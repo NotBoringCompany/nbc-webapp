@@ -14,6 +14,7 @@ const StakingPool = ({ stakingPoolData }) => {
     const { user } = useMoralis();
 
     const [stakerInventory, setStakerInventory] = useState(null);
+    const [stakerInventoryLoading, setStakerInventoryLoading] = useState(true);
     const [stakerTotalSubpoolPoints, setStakerTotalSubpoolPoints] = useState(0);
     const [totalTokenShare, setTotalTokenShare] = useState(0);
     const [preSubpoolData, setPreSubpoolData] = useState(null);
@@ -33,6 +34,7 @@ const StakingPool = ({ stakingPoolData }) => {
         const res = await rawRes.json();
 
         setStakerInventory(res?.data?.inventory ?? null);
+        setStakerInventoryLoading(false);
         console.log('staker inventory set');
     }
 
@@ -171,6 +173,7 @@ const StakingPool = ({ stakingPoolData }) => {
             <Flex
                 direction='column'
                 align='center'
+                justify='center'
             >
                 <Text sx={(theme) => ({
                     fontSize: 72,
@@ -379,6 +382,7 @@ const StakingPool = ({ stakingPoolData }) => {
                         onSelectKey={handleSelectKey}
                         onSelectKeychain={handleSelectKeychain}
                         onSelectKeyComboType={handleSelectKeyComboType}
+                        stakerInventoryLoading={stakerInventoryLoading}
                         stakerInventory={stakerInventory}
                         comboSelection={comboSelection}
                         confirmButtonClick={handleConfirmButton}

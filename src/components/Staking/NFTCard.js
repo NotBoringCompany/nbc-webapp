@@ -1,14 +1,15 @@
 import React from 'react';
 import { Card, Image, Button, Group, Text } from '@mantine/core';
 
-const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled }) => {
+const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled, nftStakeable }) => {
 	const { name, imageUrl, metadata } = nft;
-	const noActionAllowed = absolutelyDisabled && !selected;
+	const noActionAllowed = (absolutelyDisabled && !selected) || !nftStakeable;
 	const handleSelectNFT = () => {
 		if (!noActionAllowed) {
 			onSelect(nft);
 		}
 	};
+	
 	return (
 		<Card
 			onClick={handleSelectNFT}
@@ -61,7 +62,7 @@ const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled }) => {
 				fullWidth
 				mt='md'
 				radius='md'
-				disabled={absolutelyDisabled && !selected}
+				disabled={noActionAllowed}
 			>
 				{selected ? 'Unselect' : 'Select'}
 			</Button>
