@@ -66,6 +66,7 @@ const StakingPool = ({ stakingPoolData }) => {
 		keychain: null,
 		superiorKeychain: null,
 	});
+    console.log('comboSelection', comboSelection)
 	const [showStakingModal, setShowStakingModal] = useState(false);
 
 	const [loadingStakingRewardAndPoints, setLoadingStakingRewardAndPoints] =

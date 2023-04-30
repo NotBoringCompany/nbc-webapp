@@ -33,8 +33,8 @@ const StakingModal = ({
 	const [loadingStaking, setLoadingStaking] = useState(false);
 	const [successfulStake, setSuccessfulStake] = useState(false);
 
-	const keyChain = subpool.keyChain;
-	const superiorKeyChain = subpool.superiorKeyChain;
+	const keychain = subpool.keychain;
+	const superiorKeychain = subpool.superiorKeychain;
 
 	const handleStakingButtonClick = () => {
 		setLoadingStaking(true);
@@ -108,9 +108,9 @@ const StakingModal = ({
 							{subpool.keys.map((key) => (
 								<NFTCardPreview key={key.name} nft={key} />
 							))}
-							{!!keyChain ? <NFTCardPreview nft={keyChain} /> : null}
-							{!!superiorKeyChain ? (
-								<NFTCardPreview nft={superiorKeyChain} />
+							{!!keychain ? <NFTCardPreview nft={keychain} /> : null}
+							{!!superiorKeychain ? (
+								<NFTCardPreview nft={superiorKeychain} />
 							) : null}
 						</SimpleGrid>
 					</Flex>

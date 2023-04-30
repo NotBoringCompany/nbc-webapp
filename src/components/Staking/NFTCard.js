@@ -51,9 +51,9 @@ const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled }) => {
 			<Button
 				onClick={handleSelectNFT}
 				sx={(theme) => ({
-					backgroundColor: selected ? 'red' : '#42ca9f',
+					backgroundColor: selected ? '#ca4242' : '#42ca9f',
 					':hover': {
-						backgroundColor: selected ? 'red' : '#42ca9f',
+						backgroundColor: selected ? '#ca4242' : '#42ca9f',
 						transform: 'scale(1.01) translate(1px, -3px)',
 						transitionDuration: '200ms',
 					}
