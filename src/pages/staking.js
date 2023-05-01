@@ -16,13 +16,13 @@ export default function Staking({ stakingPoolData }) {
   return (
     <Layout withAuth>
       <Flex
-        direction="column"
-        align="center"
+        direction='column'
+        align='center'
         sx={(theme) => ({
           marginTop: 40,
         })}
       >
-        <Text c="#42ca9f" size={60} weight={700}>
+        <Text c='#42ca9f' size={60} weight={700}>
           STAKING POOLS
         </Text>
         <Text size={24}>Stake your Factory NFTs to earn special yields.</Text>
@@ -38,9 +38,9 @@ export default function Staking({ stakingPoolData }) {
           <Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
             ACTIVE STAKING POOLS
           </Text>
-          <Flex justify="center">
+          <Flex justify='center'>
             <Divider
-              color="#42ca9f"
+              color='#42ca9f'
               style={{
                 width: '20%',
                 marginLeft: '40%',
@@ -56,9 +56,9 @@ export default function Staking({ stakingPoolData }) {
           {stakeablePools &&
             stakeablePools.map((pool) => (
               <>
-                <Flex justify="center">
+                <Flex justify='center'>
                   <Divider
-                    color="#42ca9f"
+                    color='#42ca9f'
                     style={{
                       width: '20%',
                       marginLeft: '40%',
@@ -67,13 +67,13 @@ export default function Staking({ stakingPoolData }) {
                   />
                 </Flex>
                 <Flex
-                  direction="row"
-                  align="center"
+                  direction='row'
+                  align='center'
                   sx={(theme) => ({
                     padding: '20px 20px',
                   })}
                 >
-                  <Image src={RECToken} width={60} alt="recToken" />
+                  <Image src={RECToken} width={60} alt='recToken' />
                   <Text
                     size={24}
                     weight={700}
@@ -84,7 +84,7 @@ export default function Staking({ stakingPoolData }) {
                   >
                     REC Token
                   </Text>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -97,7 +97,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>{pool.StakingPoolID}</Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -109,9 +109,9 @@ export default function Staking({ stakingPoolData }) {
                     >
                       Status
                     </Text>
-                    <Badge c="#42ca9f">ONGOING</Badge>
+                    <Badge c='#42ca9f'>ONGOING</Badge>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -124,7 +124,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>{pool.Reward.Amount}</Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -144,7 +144,7 @@ export default function Staking({ stakingPoolData }) {
                           : 0)}
                     </Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -157,7 +157,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>{pool.TotalYieldPoints}</Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -170,7 +170,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>TODO</Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -201,10 +201,10 @@ export default function Staking({ stakingPoolData }) {
                 </Flex>
                 {stakingPoolData.stakeablePools.length > 1 && (
                   <Divider
-                    color="#42ca9f"
+                    color='#42ca9f'
                     style={{ width: '100%' }}
-                    size="sm"
-                    variant="dashed"
+                    size='sm'
+                    variant='dashed'
                   />
                 )}
               </>
@@ -213,13 +213,13 @@ export default function Staking({ stakingPoolData }) {
             ongoingPools.map((pool) => (
               <>
                 <Flex
-                  direction="row"
-                  align="center"
+                  direction='row'
+                  align='center'
                   sx={(theme) => ({
                     padding: '20px 20px',
                   })}
                 >
-                  <Image src={RECToken} width={60} alt="recToken" />
+                  <Image src={RECToken} width={60} alt='recToken' />
                   <Text
                     size={24}
                     weight={700}
@@ -230,7 +230,7 @@ export default function Staking({ stakingPoolData }) {
                   >
                     REC Token
                   </Text>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -243,7 +243,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>{pool.StakingPoolID}</Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -255,9 +255,9 @@ export default function Staking({ stakingPoolData }) {
                     >
                       Status
                     </Text>
-                    <Badge c="#42ca9f">ONGOING</Badge>
+                    <Badge c='#42ca9f'>ONGOING</Badge>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -270,7 +270,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>{pool.Reward.Amount}</Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -290,7 +290,7 @@ export default function Staking({ stakingPoolData }) {
                           : 0)}
                     </Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -303,7 +303,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>{pool.TotalYieldPoints}</Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -316,7 +316,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>TODO</Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -347,10 +347,10 @@ export default function Staking({ stakingPoolData }) {
                 </Flex>
                 {stakingPoolData.ongoingPools.length > 1 && (
                   <Divider
-                    color="#42ca9f"
+                    color='#42ca9f'
                     style={{ width: '100%' }}
-                    size="sm"
-                    variant="dashed"
+                    size='sm'
+                    variant='dashed'
                   />
                 )}
               </>
@@ -369,9 +369,9 @@ export default function Staking({ stakingPoolData }) {
           <Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
             CLOSED STAKING POOLS
           </Text>
-          <Flex justify="center">
+          <Flex justify='center'>
             <Divider
-              color="grey"
+              color='grey'
               style={{
                 width: '20%',
                 marginLeft: '40%',
@@ -388,13 +388,13 @@ export default function Staking({ stakingPoolData }) {
             closedPools.map((pool) => (
               <>
                 <Flex
-                  direction="row"
-                  align="center"
+                  direction='row'
+                  align='center'
                   sx={(theme) => ({
                     padding: '20px 20px',
                   })}
                 >
-                  <Image src={RECToken} width={60} alt="recToken" />
+                  <Image src={RECToken} width={60} alt='recToken' />
                   <Text
                     size={24}
                     weight={700}
@@ -405,7 +405,7 @@ export default function Staking({ stakingPoolData }) {
                   >
                     REC Token
                   </Text>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -418,7 +418,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>{pool.StakingPoolID}</Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -430,9 +430,9 @@ export default function Staking({ stakingPoolData }) {
                     >
                       Status
                     </Text>
-                    <Badge c="grey">CLOSED</Badge>
+                    <Badge c='grey'>CLOSED</Badge>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -445,7 +445,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>{pool.Reward.Amount}</Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -465,7 +465,7 @@ export default function Staking({ stakingPoolData }) {
                           : 0)}
                     </Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -478,7 +478,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>{pool.TotalYieldPoints}</Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -491,7 +491,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>TODO</Text>
                   </Flex>
-                  <Flex direction="column" align="center">
+                  <Flex direction='column' align='center'>
                     <Text
                       size={18}
                       weight={700}
@@ -522,10 +522,10 @@ export default function Staking({ stakingPoolData }) {
                 </Flex>
                 {stakingPoolData.closedPools.length > 1 && (
                   <Divider
-                    color="#42ca9f"
+                    color='#42ca9f'
                     style={{ width: '100%' }}
-                    size="sm"
-                    variant="dashed"
+                    size='sm'
+                    variant='dashed'
                   />
                 )}
               </>

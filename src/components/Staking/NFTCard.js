@@ -64,7 +64,12 @@ const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled, nftStakeable }) 
 				radius='md'
 				disabled={noActionAllowed}
 			>
-				{selected ? 'Unselect' : 'Select'}
+				{noActionAllowed 
+					? 'Staked'
+						: selected
+						? 'Unselect'
+					: 'Select'
+				}
 			</Button>
 		</Card>
 	);

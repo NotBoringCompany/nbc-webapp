@@ -182,6 +182,21 @@ const StakingPool = ({ stakingPoolData }) => {
                 })}>
                     Staking Pool {id}
                 </Text>
+                <Button
+                    h={'8vh'}
+                    disabled={stakerTotalSubpoolPoints === 0}
+                    onClick={() => router.replace('/staking/my-subpools')}
+                    sx={(theme) => ({
+                        backgroundColor: '#42ca9f',
+                        ':hover': {
+                            transform: 'scale(1.01) translate(1px, -3px)',
+                            transitionDuration: '200ms',
+                            backgroundColor: '#42ca9f',
+                        },
+                    })}
+                >
+                    <Text size={24}>View my subpools</Text>
+                </Button>
             </Flex>
             {!stakingPoolDataExists && (
                 <Flex direction='column' align='center' justify='center'>
