@@ -137,7 +137,7 @@ const StakingPool = ({ stakingPoolData }) => {
             const subpoolRewardRes = await subpoolRewardRawRes?.json();
             setPreSubpoolData(subpoolRewardRes?.data?.tokenPreAddSubpoolData ?? null);
 
-            console.log(preSubpoolData);
+            console.log('preSubpoolData', preSubpoolData);
 
 			setLoadingStakingRewardAndPoints(true);
 			setTimeout(() => {

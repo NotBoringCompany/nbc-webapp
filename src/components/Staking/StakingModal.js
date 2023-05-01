@@ -14,14 +14,18 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import NFTCardPreview from './NFTCardPreview';
 import { useRouter } from 'next/router';
+import { useMoralis } from 'react-moralis';
 
 const StakingModal = ({
+	stakingPoolId,
 	showStakingModal,
 	onCloseStakingModal,
 	subpool,
 	loadingStakingRewardAndPoints,
 	preSubpoolData
 }) => {
+	const { user } = useMoralis();
+	
 	const cardColumnsBreakpoints = [
 		{ maxWidth: 'xl', cols: 3, spacing: 'md' },
 		{ minWidth: 'md', cols: 3, spacing: 'md' },
@@ -38,10 +42,30 @@ const StakingModal = ({
 
 	const handleStakingButtonClick = async () => {
 		setLoadingStaking(true);
+
+		const keyIds = subpool.keys.map(key => key.tokenID);
+
+		const stakeRequest = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/add-subpool`, {
+			method: 'POST',
+			headers: {
+				'Accept': '*/*',
+                'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				keyIds: keyIds,
+				stakerWallet: user && user.attributes.ethAddress,
+				stakingPoolId: parseInt(stakingPoolId),
+				keychainId: subpool.keychain ? subpool.keychain.tokenID : -1,
+				superiorKeychainId: subpool.superiorKeychain ? subpool.superiorKeychain.tokenID : -1,
+			}),
+		}).catch(err => console.log(err));
+		const stakeResponse = await stakeRequest.json();
+		console.log('STAKE RESPONSE', stakeResponse);
+		// TO DO: handle error if it fails.
 		setTimeout(() => {
 			setSuccessfulStake(true);
 		}, 2800);
-	};
+	}
 
 	const stakingPreview = (
 		<Flex

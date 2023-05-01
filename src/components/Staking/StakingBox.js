@@ -89,12 +89,17 @@ const StakingBox = ({
 											<Text size={30} weight={'600'} mt={50} c='#42ca9f'>
 												YOUR KEYS
 											</Text>
+											{stakerInventory.keychainData && stakerInventory.keychainData.length === 0 && (
+											<Text>
+												No Keys owned. You can find them in secondary marketplaces such as OpenSea or Blur.
+											</Text>
+											)}
 											<SimpleGrid
 												my={20}
 												spacing={'md'}
 												breakpoints={cardColumnsBreakpoints}
 											>
-												{stakerInventory.keyData.map((k) => (
+												{stakerInventory.keyData?.sort((a, b) => a.tokenID - b.tokenID).map((k) => (
 													// 'key' is a reserved keyword
 													// by React. We have tp use it, when
 													// rendering arrays. But, it can't
@@ -116,15 +121,20 @@ const StakingBox = ({
 													/>
 												))}
 											</SimpleGrid>
-										<Text size={30} weight={'600'} mt={50} c='#42ca9f'>
-											YOUR KEYCHAINS
-										</Text>
+											<Text size={30} weight={'600'} mt={50} c='#42ca9f'>
+												YOUR KEYCHAINS
+											</Text>
+											{stakerInventory.keychainData && stakerInventory.keychainData.length === 0 && (
+												<Text>
+													No Keychains owned. You can find them in secondary marketplaces such as OpenSea or Blur.
+												</Text>
+											)}
 											<SimpleGrid
 												my={'md'}
 												spacing={'md'}
 												breakpoints={cardColumnsBreakpoints}
 											>
-												{stakerInventory.keychainData?.map((keychain) => (
+												{stakerInventory.keychainData?.sort((a, b) => a.tokenID - b.tokenID).map((keychain) => (
 													// 'key' is a reserved keyword
 													// by React. We have tp use it, when
 													// rendering arrays.
@@ -137,7 +147,8 @@ const StakingBox = ({
 															comboSelection.keychain.name === keychain.name
 														}
 														absolutelyDisabled={
-															!!comboSelection.keychain || !!comboSelection.superiorKeychain
+															!!comboSelection.keychain || !!comboSelection.superiorKeychain ||
+															selectedKeyCombo === 'flush'  // 'flush' combo disallows keychains.
 														} // not null
 														nftStakeable={keychain.stakeable}
 													/>
@@ -146,12 +157,17 @@ const StakingBox = ({
 										<Text size={30} weight={'600'} mt={50} c='#42ca9f'>
 											YOUR SUPERIOR KEYCHAINS
 										</Text>
+										{stakerInventory.superiorKeychainData && stakerInventory.superiorKeychainData.length === 0 && (
+											<Text>
+												No Superior Keychains owned. You can find them in secondary marketplaces such as OpenSea or Blur.
+											</Text>
+										)}
 											<SimpleGrid
 												my={'md'}
 												spacing={'md'}
 												breakpoints={cardColumnsBreakpoints}
 											>
-												{stakerInventory.superiorKeychainData?.map((superiorKeychain) => (
+												{stakerInventory.superiorKeychainData?.sort((a, b) => a.tokenID - b.tokenID).map((superiorKeychain) => (
 													// 'key' is a reserved keyword
 													// by React. We have to use it when
 													// rendering arrays.
