@@ -2,6 +2,9 @@ import { useForm } from '@mantine/form';
 import { useMoralis } from 'react-moralis';
 import { Text, TextInput, Button, Loader } from '@mantine/core';
 import moralisErrorMessage from '@/utils/moralisErrorMessage';
+import { randomBytes, sha256 } from 'ethers/lib/utils.js';
+import CryptoJS from 'crypto-js';
+
 /**
  * `AuthForm` renders in 3 different "styles" with 2 different "behaviours":
  * 1. When user has email and password already set / linked to their wallet - it'll show as "Change email & password" (behaviour 1)
@@ -41,7 +44,13 @@ const AuthForm = ({ forLogin = false }) => {
     const { email, password } = formData;
     if (!forLogin) {
       if (isAuthenticated && user) {
-        await setUserData({ email, password });
+        const uniqueHash = CryptoJS.SHA256(CryptoJS.lib.WordArray.random(64).toString(CryptoJS.enc.Base64));
+
+        await setUserData({ 
+          email: email, 
+          password: password,
+          uniqueHash: uniqueHash.toString(),
+        });
       }
     } else {
       const x = await login(email, password);

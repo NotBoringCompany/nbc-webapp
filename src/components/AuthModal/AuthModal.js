@@ -9,11 +9,10 @@ const AuthModal = () => {
 
   useEffect(() => {
     if (user) {
-      if (!user.attributes.email) {
-        setOpened(true);
-      }
+      setOpened(!user.attributes.email)
+      console.log(user.attributes.email)
     }
-  }, [user]);
+  }, [user, user?.attributes]);
 
   return (
     <Modal
