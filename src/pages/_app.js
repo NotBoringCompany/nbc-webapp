@@ -5,6 +5,7 @@ import CustomFonts from '@/components/Globals/CustomFonts';
 import { MoralisProvider } from 'react-moralis';
 import GlobalStyles from '@/components/Globals/Styles';
 import AuthModal from '@/components/AuthModal/AuthModal';
+import{ Analytics } from '@vercel/analytics/react';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -27,6 +28,7 @@ export default function App({ Component, pageProps }) {
         <GlobalStyles />
         <CustomFonts />
         <AuthModal />
+        <Analytics />
         <Component {...pageProps} />
       </MantineProvider>
     </MoralisProvider>
