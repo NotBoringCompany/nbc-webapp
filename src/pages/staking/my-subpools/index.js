@@ -55,7 +55,7 @@ const MySubpools = () => {
                     })}
                 >
                     <Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
-                        ACTIVE SUBPOOLS
+                        SUBPOOL LIST
                     </Text>
                     <Flex justify='center'>
                         <Divider

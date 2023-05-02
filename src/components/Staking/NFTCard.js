@@ -9,6 +9,8 @@ const NFTCard = ({ showButton, nft, onSelect, selected, absolutelyDisabled, nftS
 			onSelect(nft);
 		}
 	};
+
+	console.log("Metadata: ", metadata)
 	
 	return (
 		<Card
@@ -46,8 +48,16 @@ const NFTCard = ({ showButton, nft, onSelect, selected, absolutelyDisabled, nftS
 				)}
 			</Card.Section>
 
-			<Group position='apart' mt='md' mb='auto'>
-				<Text weight={500}>{name}</Text>
+			<Group position='left' mt='md' mb='auto'>
+				<Text weight={500} size={18}>{name}</Text>
+				{metadata && name.includes('Key Of Salvation') && (
+					<>
+						<Text weight={500}>House: {metadata.houseTrait}</Text>
+						<Text weight={500}>Type: {metadata.typeTrait}</Text>
+						<Text weight={500}>Luck Rating: {metadata.luckTrait}</Text>
+						<Text weight={500}>Luck Boost: {metadata.luckBoostTrait}</Text>
+					</>
+				)}
 			</Group>
 			{showButton && (
 				<Button

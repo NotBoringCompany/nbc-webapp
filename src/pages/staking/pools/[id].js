@@ -184,7 +184,6 @@ const StakingPool = ({ stakingPoolData }) => {
                 </Text>
                 <Button
                     h={'8vh'}
-                    disabled={stakerTotalSubpoolPoints === 0}
                     onClick={() => router.replace('/staking/my-subpools')}
                     sx={(theme) => ({
                         backgroundColor: '#42ca9f',
