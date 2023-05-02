@@ -222,7 +222,7 @@ const MySubpools = () => {
                                                 backgroundColor: '#42ca9f',
                                             },
                                         })}
-                                        onClick={() => router.replace(`/staking/my-subpools/${pool.StakingPoolID}/${pool.SubpoolID}`)}
+                                        onClick={() => router.replace(`/staking/subpools/${pool.StakingPoolID}/${pool.SubpoolID}`)}
                                     >
                                         Visit Subpool
                                     </Button>
