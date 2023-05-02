@@ -1,4 +1,4 @@
-import { createStyles, Menu, Button, Divider } from '@mantine/core';
+import { createStyles, Menu, Button, Divider, Text } from '@mantine/core';
 import { IconUser, IconChevronDown, IconLogout } from '@tabler/icons';
 import { useRouter } from 'next/router';
 import { useMoralis } from 'react-moralis';
@@ -47,7 +47,7 @@ const NavbarMenu = () => {
           onClick={() => router.push('/account-dashboard')}
           icon={<IconUser size={14} />}
         >
-          Account Dashboard
+          <Text>Account Dashboard</Text>
         </Menu.Item>
         <Divider />
         <Menu.Item onClick={handleLogout} icon={<IconLogout size={14} />}>

@@ -1,5 +1,5 @@
 import { useMoralis } from 'react-moralis';
-import { Container, Title, Text, Divider } from '@mantine/core';
+import { Container, Text, Divider } from '@mantine/core';
 import AuthForm from '@/components/Form/AuthForm';
 import Layout from '@/components/Layout/Layout';
 
@@ -10,7 +10,7 @@ const Accountdashboard = () => {
   return (
     <Layout withAuth>
       <Container maw='1024px' direction='column'>
-        <Title
+        <Text
           weight='500'
           size='32px'
           mb='32px'
@@ -19,7 +19,7 @@ const Accountdashboard = () => {
           })}
         >
           Account Dashboard
-        </Title>
+        </Text>
 
         <Text
           weight='300'
