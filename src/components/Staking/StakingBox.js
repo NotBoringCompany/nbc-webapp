@@ -4,6 +4,7 @@ import NFTCard from '@/components/Staking/NFTCard';
 import { IconAlertOctagon } from '@tabler/icons';
 import { useDisclosure } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
+import { cardColumnsBreakpoints } from '../Breakpoints/CardColumns';
 
 const StakingBox = ({
 	onSelectKeyComboType,
@@ -18,13 +19,6 @@ const StakingBox = ({
 	stakingOngoing,
 }) => {
 	const maxSelectedKeys = maxSelectedKey(selectedKeyCombo);
-	const cardColumnsBreakpoints = [
-		{ minWidth: 'xl', cols: 5, spacing: 'md' },
-		{ minWidth: 'lg', cols: 3, spacing: 'md' },
-		{ minWidth: 'md', cols: 2, spacing: 'md' },
-		{ minWidth: 'sm', cols: 2, spacing: 'sm' },
-		{ minWidth: 'xs', cols: 1, spacing: 'sm' },
-	];
 	return (
 		<Flex
 			px={24}
@@ -101,13 +95,14 @@ const StakingBox = ({
 											>
 												{stakerInventory.keyData?.sort((a, b) => a.tokenID - b.tokenID).map((k) => (
 													// 'key' is a reserved keyword
-													// by React. We have tp use it, when
+													// by React. We have to use it, when
 													// rendering arrays. But, it can't
 													// be used for our rendering purposes.
 
 													//'rhKey' is the key that we are
 													//displaying.
 													<NFTCard
+														showButton={true}
 														key={k.name}
 														nft={k}
 														onSelect={onSelectKey}
@@ -136,9 +131,10 @@ const StakingBox = ({
 											>
 												{stakerInventory.keychainData?.sort((a, b) => a.tokenID - b.tokenID).map((keychain) => (
 													// 'key' is a reserved keyword
-													// by React. We have tp use it, when
+													// by React. We have to use it, when
 													// rendering arrays.
 													<NFTCard
+														showButton={true}
 														key={keychain.name}
 														nft={keychain}
 														onSelect={onSelectKeychain}
@@ -172,6 +168,7 @@ const StakingBox = ({
 													// by React. We have to use it when
 													// rendering arrays.
 													<NFTCard
+														showButton={true}
 														key={superiorKeychain.name}
 														nft={superiorKeychain}
 														onSelect={(sKC) => onSelectKeychain(sKC, true)}

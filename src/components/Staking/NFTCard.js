@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Image, Button, Group, Text } from '@mantine/core';
 
-const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled, nftStakeable }) => {
+const NFTCard = ({ showButton, nft, onSelect, selected, absolutelyDisabled, nftStakeable }) => {
 	const { name, imageUrl, metadata } = nft;
 	const noActionAllowed = (absolutelyDisabled && !selected) || !nftStakeable;
 	const handleSelectNFT = () => {
@@ -17,7 +17,7 @@ const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled, nftStakeable }) 
 				':hover': {
 					cursor: noActionAllowed ? 'not-allowed' : 'pointer',
 				},
-				minHeight: '380px',
+				minHeight: showButton ? '380px' : '280px',
 				display: 'flex',
 				flexDirection: 'column',
 			}}
@@ -49,28 +49,30 @@ const NFTCard = ({ nft, onSelect, selected, absolutelyDisabled, nftStakeable }) 
 			<Group position='apart' mt='md' mb='auto'>
 				<Text weight={500}>{name}</Text>
 			</Group>
-			<Button
-				onClick={handleSelectNFT}
-				sx={(theme) => ({
-					backgroundColor: selected ? '#ca4242' : '#42ca9f',
-					':hover': {
+			{showButton && (
+				<Button
+					onClick={handleSelectNFT}
+					sx={(theme) => ({
 						backgroundColor: selected ? '#ca4242' : '#42ca9f',
-						transform: 'scale(1.01) translate(1px, -3px)',
-						transitionDuration: '200ms',
+						':hover': {
+							backgroundColor: selected ? '#ca4242' : '#42ca9f',
+							transform: 'scale(1.01) translate(1px, -3px)',
+							transitionDuration: '200ms',
+						}
+					})}
+					fullWidth
+					mt='md'
+					radius='md'
+					disabled={noActionAllowed}
+				>
+					{noActionAllowed 
+						? 'Staked'
+							: selected
+							? 'Unselect'
+						: 'Select'
 					}
-				})}
-				fullWidth
-				mt='md'
-				radius='md'
-				disabled={noActionAllowed}
-			>
-				{noActionAllowed 
-					? 'Staked'
-						: selected
-						? 'Unselect'
-					: 'Select'
-				}
-			</Button>
+				</Button>
+			)}
 		</Card>
 	);
 };

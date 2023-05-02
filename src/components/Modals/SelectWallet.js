@@ -66,7 +66,7 @@ const SelectWallet = ({ showSelectWallet, setShowSelectWallet }) => {
             }
           >
             {isAuthenticating ? (
-              <Loader color="green" />
+              <Loader color='green' />
             ) : (
               <>
                 {' '}

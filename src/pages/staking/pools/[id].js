@@ -142,7 +142,7 @@ const StakingPool = ({ stakingPoolData }) => {
 			setLoadingStakingRewardAndPoints(true);
 			setTimeout(() => {
 				setLoadingStakingRewardAndPoints(false);
-			}, 4000);
+			}, 2000);
 		}
 	};
 

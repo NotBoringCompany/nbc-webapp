@@ -2,11 +2,13 @@ import Layout from '@/components/Layout/Layout'
 import { Badge, Box, Button, Divider, Flex, Popover, Text, Tooltip } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { IconAlertOctagon } from '@tabler/icons'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { useMoralis } from 'react-moralis'
 
 const MySubpools = () => {
     const { user } = useMoralis();
+    const router = useRouter();
     const [ stakerSubpools, setStakerSubpools ] = useState(null);
 
     const fetchStakerSubpools = async () => {
@@ -220,6 +222,7 @@ const MySubpools = () => {
                                                 backgroundColor: '#42ca9f',
                                             },
                                         })}
+                                        onClick={() => router.replace(`/staking/my-subpools/${pool.StakingPoolID}/${pool.SubpoolID}`)}
                                     >
                                         Visit Subpool
                                     </Button>

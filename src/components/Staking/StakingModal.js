@@ -25,6 +25,7 @@ const StakingModal = ({
 	preSubpoolData
 }) => {
 	const { user } = useMoralis();
+	const router = useRouter();
 	
 	const cardColumnsBreakpoints = [
 		{ maxWidth: 'xl', cols: 3, spacing: 'md' },
@@ -169,7 +170,7 @@ const StakingModal = ({
 			align='center'
 		>
 			<Text size='lg' my='md' color='#42ca9f'>
-				Congratulations, staking was <strong>successful!</strong>
+				Staking was <strong>successful!</strong>
 			</Text>
 
 			<Flex mt='md'>
@@ -197,7 +198,7 @@ const StakingModal = ({
 						color: theme.colors.nbcGreen[0],
 						borderColor: theme.colors.nbcGreen[0],
 					})}
-					onClick={() => push('/my-subpools')}
+					onClick={() => router.replace('/staking/my-subpools')}
 				>
 					<Text size={'sm'}>See your subpools</Text>
 				</Button>
