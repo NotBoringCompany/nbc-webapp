@@ -126,7 +126,6 @@ const NavbarItems = (props) => {
         return (
         <>
             <Center className={classes.centerItems}>
-                {/* <Link href='/mint' className={classes.link}>Staking</Link> */}
                 <Menu shadow='md' width={200}>
                   <Menu.Target>
                     <Button
@@ -176,47 +175,46 @@ const NavbarItems = (props) => {
 
     return (
         <>
-            {/* <Link href='/staking' className={classes.link}>Staking</Link> */}
-            <Menu shadow='md' width={200}>
-              <Menu.Target>
-                <Button
-                  sx={(theme) => ({
+          <Menu shadow='md' width={200}>
+            <Menu.Target>
+              <Button
+                sx={(theme) => ({
+                  backgroundColor: '#000000',
+                  ':hover': {
                     backgroundColor: '#000000',
-                    ':hover': {
-                      backgroundColor: '#000000',
-                    },
-                    ':active': {
-                      backgroundColor: '#000000',
-                    }
-                  })}
-                >
-                  <Text sx={(theme) => ({
-                    color: theme.colors.dark[0],
-                  })}>Staking</Text>
-                </Button>
-              </Menu.Target>
+                  },
+                  ':active': {
+                    backgroundColor: '#000000',
+                  }
+                })}
+              >
+                <Text sx={(theme) => ({
+                  color: theme.colors.dark[0],
+                })}>Staking</Text>
+              </Button>
+            </Menu.Target>
 
-              <Menu.Dropdown className={classes.menuDropdown}>
-                <Menu.Item
-                  onClick={() => router.push('/staking')}
-                  icon={<IconUser size={14} />}
-                >
-                  <Text>Staking Pools</Text>
-                </Menu.Item>
-                <Divider />
-                <Menu.Item 
-                icon={<IconLogout size={14} />}
-                onClick={() => router.replace('/staking/my-subpools')}
-                >
-                  My Subpools
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu>
-            { !isAuthenticated ? (
-              <ConnectWalletButton />
-            ) : (
-              <NavbarMenu />
-            )}
+            <Menu.Dropdown className={classes.menuDropdown}>
+              <Menu.Item
+                onClick={() => router.push('/staking')}
+                icon={<IconUser size={14} />}
+              >
+                <Text>Staking Pools</Text>
+              </Menu.Item>
+              <Divider />
+              <Menu.Item 
+              icon={<IconLogout size={14} />}
+              onClick={() => router.replace('/staking/my-subpools')}
+              >
+                My Subpools
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+          { !isAuthenticated ? (
+            <ConnectWalletButton />
+          ) : (
+            <NavbarMenu />
+          )}
         </>
     );
 }
