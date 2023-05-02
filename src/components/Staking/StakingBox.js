@@ -81,7 +81,7 @@ const StakingBox = ({
 											textAlign: 'center',
 										})}>
 											<Text size={30} weight={'600'} mt={50} c='#42ca9f'>
-												YOUR KEYS
+												YOUR KEYS (SORTED BY DESCENDING LUCK)
 											</Text>
 											{stakerInventory.keychainData && stakerInventory.keychainData.length === 0 && (
 											<Text>
@@ -93,7 +93,7 @@ const StakingBox = ({
 												spacing={'md'}
 												breakpoints={cardColumnsBreakpoints}
 											>
-												{stakerInventory.keyData?.sort((a, b) => a.tokenID - b.tokenID).map((k) => (
+												{stakerInventory.keyData?.sort((a, b) => b.metadata.luckTrait - a.metadata.luckTrait).map((k) => (
 													// 'key' is a reserved keyword
 													// by React. We have to use it, when
 													// rendering arrays. But, it can't
