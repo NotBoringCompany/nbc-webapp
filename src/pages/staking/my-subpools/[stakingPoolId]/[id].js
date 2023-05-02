@@ -33,7 +33,7 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData }) => {
         });
 
         const res = await rawRes.json();
-        
+
         setTimeout(() => {
             setUnstakeDone(true);
             setTimeout(() => {

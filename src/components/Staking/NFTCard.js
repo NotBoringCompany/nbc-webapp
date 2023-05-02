@@ -10,6 +10,8 @@ const NFTCard = ({ showButton, nft, onSelect, selected, absolutelyDisabled, nftS
 		}
 	};
 
+	console.log("NFT", nft)
+
 	console.log("Metadata: ", metadata)
 	
 	return (

@@ -1,4 +1,4 @@
-import { createStyles, Header, Group, Center, Burger, Container, Transition, Paper } from '@mantine/core';
+import { createStyles, Header, Group, Center, Burger, Container, Transition, Paper, Menu, Button, Text, Divider, Flex } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,6 +6,8 @@ import { useMoralis } from 'react-moralis';
 import NBCLogo from '../../../public/NBCLogo.png';
 import ConnectWalletButton from '../Buttons/ConnectWallet';
 import NavbarMenu from '../Dropdowns/NavbarMenu';
+import { IconChevronDown, IconLogout, IconUser } from '@tabler/icons';
+import { useRouter } from 'next/router';
 
 const HEADER_HEIGHT = 60;
 
@@ -35,13 +37,6 @@ const useStyles = createStyles((theme) => ({
   dropdown: {
     position: 'absolute',
     top: HEADER_HEIGHT,
-    left: 0,
-    right: 0,
-    zIndex: 0,
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0,
-    borderTopWidth: 0,
-
     [theme.fn.largerThan('md')]: {
       display: 'none',
     },
@@ -54,6 +49,25 @@ const useStyles = createStyles((theme) => ({
 
   menuMargin: {
     marginTop: 3,
+  },
+
+  menuDropdown: {
+    marginTop: 3,
+    backgroundColor: '#000000',
+  },
+
+  connectButton: {
+    backgroundColor: '#42ca9f',
+
+    '&:hover': {
+      transform: 'scale(1.01) translate(1px, -3px)',
+      transitionDuration: '200ms',
+      backgroundColor: '#42ca9f',
+    },
+
+    '&:active': {
+      transform: 'translateY(2px)',
+    },
   },
 
   connectButton: {
@@ -106,11 +120,48 @@ const NavbarItems = (props) => {
     const { classes } = useStyles();
     const { isAuthenticated } = useMoralis();
 
+    const router = useRouter();
+
     if (enableDropdown) {
         return (
         <>
             <Center className={classes.centerItems}>
-                <Link href='/mint' className={classes.link}>Staking</Link>
+                {/* <Link href='/mint' className={classes.link}>Staking</Link> */}
+                <Menu shadow='md' width={200}>
+                  <Menu.Target>
+                    <Button
+                      sx={(theme) => ({
+                        backgroundColor: '#000000',
+                        ':hover': {
+                          backgroundColor: '#000000',
+                        },
+                        ':active': {
+                          backgroundColor: '#000000',
+                        }
+                      })}
+                    >
+                      <Text sx={(theme) => ({
+                        color: theme.colors.dark[0],
+                      })}>Staking</Text>
+                    </Button>
+                  </Menu.Target>
+
+                  <Menu.Dropdown className={classes.menuDropdown}>
+                    <Menu.Item
+                      onClick={() => router.push('/staking')}
+                      icon={<IconUser size={14} />}
+                    >
+                      <Text>Staking Pools</Text>
+                    </Menu.Item>
+                    <Divider />
+                    <Menu.Item 
+                    icon={<IconLogout size={14} />}
+                    onClick={() => router.replace('/staking/my-subpools')}
+                    >
+                      My Subpools
+                    </Menu.Item>
+                  </Menu.Dropdown>
+                </Menu>
             </Center>
             <Center className={classes.centerItems}>
                 { !isAuthenticated ? (
@@ -125,7 +176,42 @@ const NavbarItems = (props) => {
 
     return (
         <>
-            <Link href='/staking' className={classes.link}>Staking</Link>
+            {/* <Link href='/staking' className={classes.link}>Staking</Link> */}
+            <Menu shadow='md' width={200}>
+              <Menu.Target>
+                <Button
+                  sx={(theme) => ({
+                    backgroundColor: '#000000',
+                    ':hover': {
+                      backgroundColor: '#000000',
+                    },
+                    ':active': {
+                      backgroundColor: '#000000',
+                    }
+                  })}
+                >
+                  <Text sx={(theme) => ({
+                    color: theme.colors.dark[0],
+                  })}>Staking</Text>
+                </Button>
+              </Menu.Target>
+
+              <Menu.Dropdown className={classes.menuDropdown}>
+                <Menu.Item
+                  onClick={() => router.push('/staking')}
+                  icon={<IconUser size={14} />}
+                >
+                  <Text>Staking Pools</Text>
+                </Menu.Item>
+                <Divider />
+                <Menu.Item 
+                icon={<IconLogout size={14} />}
+                onClick={() => router.replace('/staking/my-subpools')}
+                >
+                  My Subpools
+                </Menu.Item>
+              </Menu.Dropdown>
+            </Menu>
             { !isAuthenticated ? (
               <ConnectWalletButton />
             ) : (
