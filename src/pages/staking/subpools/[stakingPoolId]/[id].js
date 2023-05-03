@@ -1,12 +1,13 @@
 import { cardColumnsBreakpoints } from '@/components/Breakpoints/CardColumns';
 import Layout from '@/components/Layout/Layout'
 import NFTCard from '@/components/Staking/NFTCard';
-import { Box, Button, Divider, Flex, List, Loader, Modal, SimpleGrid, Text } from '@mantine/core';
-import { IconAlertOctagon } from '@tabler/icons';
+import { Box, Button, Divider, Flex, HoverCard, List, Loader, Modal, SimpleGrid, Text } from '@mantine/core';
+import { IconAlertOctagon, IconHomeQuestion, IconQuestionCircle, IconQuestionMark, IconZoomQuestion } from '@tabler/icons';
 import { useRouter } from 'next/router'
 import { useState } from 'react';
+import MathJax from 'react-mathjax2'
 
-const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData }) => {
+const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackSubpoolPoints }) => {
     const router = useRouter();
     const { stakingPoolId, id } = router.query;
     const subpoolDataExists = subpoolData !== null;
@@ -203,6 +204,40 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData }) => {
                                 >
                                     <IconAlertOctagon color='#42ca9f' style={{marginRight: 10}} />
                                     <Text size={20} weight={600}>SUBPOOL REWARD SHARE</Text>
+                                    <HoverCard width={280} shadow='md'>
+                                        <HoverCard.Target>
+                                            <Button 
+                                                sx={(theme) => ({
+                                                    backgroundColor: '#000000',
+                                                    ':hover': {
+                                                        backgroundColor: '#000000',
+                                                    }
+                                                })}
+                                                size='xs'
+                                            >
+                                                <IconQuestionCircle />
+                                            </Button>
+                                        </HoverCard.Target>
+                                        <HoverCard.Dropdown>
+                                            <Flex
+                                                direction='column'
+                                                align='center'
+                                                justify='center'
+                                            >
+                                                <Text>Luck/Luck Boost Bonus: {backtrackSubpoolPoints.luckAndLuckBoostSum}</Text>
+                                                <Text>Key Combo Bonus: {backtrackSubpoolPoints.keyCombo}</Text>
+                                                <Text>Keychain Combo Bonus: {backtrackSubpoolPoints.keychainCombo}</Text>
+                                                <Text mt={20} mb={10} size={20} weight={600} underline>TOTAL SUBPOOL POINTS</Text>
+                                                <MathJax.Context input='tex'>
+                                                    <MathJax.Node inline>{`\\left(100\\ +\\ \\left(${backtrackSubpoolPoints.luckAndLuckBoostSum}\\right)^{0.85}\\ +\\ ${backtrackSubpoolPoints.keyCombo}\\right)\\ \\cdot\\ ${backtrackSubpoolPoints.keychainCombo}`}</MathJax.Node>
+                                                </MathJax.Context>
+                                                <MathJax.Context input='tex'>
+                                                    <MathJax.Node inline>{`=${backtrackSubpoolPoints.totalSubpoolPoints}`}</MathJax.Node>
+                                                </MathJax.Context>
+                                                {/* <BlockMath>{`\\left(100\\ +\\ \\left(${backtrackSubpoolPoints.luckAndLuckBoostSum}\\right)^{0.85}\\ +\\ ${backtrackSubpoolPoints.keyCombo}\\right)\\ \\cdot\\ ${backtrackSubpoolPoints.keychainCombo}`}</BlockMath> */}
+                                            </Flex>
+                                        </HoverCard.Dropdown>
+                                    </HoverCard>
                                 </Flex>
                                 <Flex style={{marginBottom: 10}}>
                                     <Divider color='#42ca9f' style={{ width: '80%', marginRight: '10%' }} />
@@ -406,11 +441,16 @@ export async function getServerSideProps(ctx) {
     const stakingPoolDataRes = await stakingPoolDataRawRes.json();
     const stakingPoolData = stakingPoolDataRes?.data?.stakingPoolData ?? null;
 
+    const backtrackSubpoolPointsRawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/backtrack-subpool-points/${stakingPoolId}/${id}`);
+    const backtrackSubpoolPointsRes = await backtrackSubpoolPointsRawRes.json();
+    const backtrackSubpoolPoints = backtrackSubpoolPointsRes?.data?.backtrackSubpoolPoints ?? null;
+
     return {
         props: {
             subpoolData,
             subpoolTokenShare,
             stakingPoolData,
+            backtrackSubpoolPoints
         }
     }
 }
