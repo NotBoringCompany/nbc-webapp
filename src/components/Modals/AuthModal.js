@@ -1,4 +1,4 @@
-import { Modal, Text } from '@mantine/core';
+import { Modal } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
 import AuthForm from '../Form/AuthForm';
@@ -9,8 +9,8 @@ const AuthModal = () => {
 
   useEffect(() => {
     if (user) {
-      setOpened(!user.attributes.email)
-      console.log(user.attributes.email)
+      setOpened(!user.attributes.email);
+      console.log(user.attributes.email);
     }
   }, [user, user?.attributes]);
 

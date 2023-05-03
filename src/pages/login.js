@@ -1,12 +1,20 @@
 import AuthForm from '@/components/Form/AuthForm';
 import Layout from '@/components/Layout/Layout';
-import { Flex, Title } from '@mantine/core';
+import ForgotPasswordRequestModal from '@/components/Modals/ForgotPasswordRequestModal';
+import { Flex, Title, Button } from '@mantine/core';
+import { useState } from 'react';
 
 const Login = () => {
+  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
+    useState(false);
   return (
     <Layout mustNotAuth>
+      <ForgotPasswordRequestModal
+        isOpen={isForgotPasswordModalOpen}
+        onClose={() => setIsForgotPasswordModalOpen(false)}
+      />
       <Flex
-        direction="column"
+        direction='column'
         sx={(theme) => ({
           margin: 'auto',
           width: '100%',
@@ -28,6 +36,22 @@ const Login = () => {
           Log In
         </Title>
         <AuthForm forLogin />
+        <Button
+          onClick={() => setIsForgotPasswordModalOpen(true)}
+          mt='md'
+          variant='subtle'
+          sx={(theme) => ({
+            color: theme.colors.nbcRed[0],
+            justifyContent: 'flex-start',
+            padding: 0,
+            width: 'fit-content',
+            ':hover': {
+              background: 'transparent',
+            },
+          })}
+        >
+          Forgot password
+        </Button>
       </Flex>
     </Layout>
   );
