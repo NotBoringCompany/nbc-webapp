@@ -186,24 +186,6 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                                 >
                                     <IconAlertOctagon color='#42ca9f' style={{marginRight: 10}} />
                                     <Text size={20} weight={600}>SUBPOOL POINTS</Text>
-                                </Flex>
-                                <Flex style={{marginBottom: 10}}>
-                                    <Divider color='#42ca9f' style={{ width: '80%', marginRight: '10%' }} />
-                                </Flex>
-                                <Text>{subpoolData.subpoolPoints} POINTS</Text>
-                            </Flex>
-                            <Flex
-                                direction='column'
-                                sx={(theme) => ({
-                                    marginBottom: 20,
-                                })}
-                            >
-                                <Flex
-                                    direction='row'
-                                    align='center'
-                                >
-                                    <IconAlertOctagon color='#42ca9f' style={{marginRight: 10}} />
-                                    <Text size={20} weight={600}>SUBPOOL REWARD SHARE</Text>
                                     <HoverCard width={280} shadow='md'>
                                         <HoverCard.Target>
                                             <Button 
@@ -238,6 +220,24 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                                             </Flex>
                                         </HoverCard.Dropdown>
                                     </HoverCard>
+                                </Flex>
+                                <Flex style={{marginBottom: 10}}>
+                                    <Divider color='#42ca9f' style={{ width: '80%', marginRight: '10%' }} />
+                                </Flex>
+                                <Text>{subpoolData.subpoolPoints} POINTS</Text>
+                            </Flex>
+                            <Flex
+                                direction='column'
+                                sx={(theme) => ({
+                                    marginBottom: 20,
+                                })}
+                            >
+                                <Flex
+                                    direction='row'
+                                    align='center'
+                                >
+                                    <IconAlertOctagon color='#42ca9f' style={{marginRight: 10}} />
+                                    <Text size={20} weight={600}>SUBPOOL REWARD SHARE</Text>
                                 </Flex>
                                 <Flex style={{marginBottom: 10}}>
                                     <Divider color='#42ca9f' style={{ width: '80%', marginRight: '10%' }} />
