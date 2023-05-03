@@ -6,18 +6,23 @@ import { IconAlertOctagon, IconHomeQuestion, IconQuestionCircle, IconQuestionMar
 import { useRouter } from 'next/router'
 import { useState } from 'react';
 import MathJax from 'react-mathjax2'
+import { useMoralis } from 'react-moralis';
 
 const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackSubpoolPoints }) => {
     const router = useRouter();
     const { stakingPoolId, id } = router.query;
     const subpoolDataExists = subpoolData !== null;
+    const { user } = useMoralis();
 
     const now = new Date().getTime();
     const startTime = stakingPoolData.StartTime;
 
     const [showUnstakeModal, setShowUnstakeModal] = useState(false);
+    const [showClaimModal, setShowClaimModal] = useState(false);
     const [unstakeLoading, setUnstakeLoading] = useState(false);
     const [unstakeDone, setUnstakeDone] = useState(false);
+    const [claimLoading, setClaimLoading] = useState(false);
+    const [claimDone, setClaimDone] = useState(false);
 
     const handleUnstake = async () => {
         setUnstakeLoading(true);
@@ -41,6 +46,35 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                 router.replace('/staking/my-subpools')
             }, 2000)
         }, 2000);
+    }
+
+    const handleClaimReward = async () => {
+        setClaimLoading(true);
+        const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/claim-reward`, {
+            method: 'POST',
+            headers: {
+                'Accept': '*/*',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                wallet: user && user.attributes.ethAddress,
+                stakingPoolId: parseInt(stakingPoolId),
+                subpoolId: parseInt(id),
+            })
+        });
+
+        const res = await rawRes.json();
+
+        setTimeout(() => {
+            setClaimDone(true);
+            setTimeout(() => {
+                router.replace('/staking/my-subpools')
+            }, 2000)
+        })
+    }
+
+    const handleClaimModal = () => {
+        setShowClaimModal(!showClaimModal);
     }
 
     const handleUnstakeModal = () => {
@@ -155,7 +189,7 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                                         marginLeft: 10,
                                     })}
                                     onClick={handleUnstakeModal}
-                                    disabled={now > stakingPoolData.StartTime}
+                                    disabled={now > new Date(stakingPoolData.StartTime).getTime()}
                                 >
                                     Unstake
                                 </Button>
@@ -169,9 +203,10 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                                         },
                                         marginLeft: 10,
                                     })}
-                                    disabled={!subpoolData.rewardClaimable}
+                                    disabled={!subpoolData.rewardClaimable || subpoolData.rewardClaimed}
+                                    onClick={handleClaimModal}
                                 >
-                                    Claim Reward
+                                    {subpoolData.rewardClaimed ? 'Reward Claimed' : 'Claim Reward'}
                                 </Button>
                             </Flex>
                             <Flex
@@ -216,7 +251,6 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                                                 <MathJax.Context input='tex'>
                                                     <MathJax.Node inline>{`=${backtrackSubpoolPoints.totalSubpoolPoints}`}</MathJax.Node>
                                                 </MathJax.Context>
-                                                {/* <BlockMath>{`\\left(100\\ +\\ \\left(${backtrackSubpoolPoints.luckAndLuckBoostSum}\\right)^{0.85}\\ +\\ ${backtrackSubpoolPoints.keyCombo}\\right)\\ \\cdot\\ ${backtrackSubpoolPoints.keychainCombo}`}</BlockMath> */}
                                             </Flex>
                                         </HoverCard.Dropdown>
                                     </HoverCard>
@@ -364,6 +398,65 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                 </>
             )}
             <Modal
+                opened={showClaimModal}
+                centered
+                onClose={() => setShowClaimModal(false)}
+                title={<Text size={24}>{!claimDone ? 'Claim Reward' : 'Reward Claimed'}</Text>}
+                withCloseButton={false}
+            >
+                {!unstakeDone && (
+                    <>
+                        <Flex
+                            direction='row'
+                        >
+                            <IconAlertOctagon size={30} style={{marginRight: 10}} />
+                            <Text size={16}>Claiming {subpoolTokenShare} {stakingPoolData.Reward.Name}. Proceed?</Text>
+                        </Flex>
+                        <Flex
+                            direction='row'
+                            align='center'
+                            justify='center'
+                            mt={15}
+                        >
+                            <Button 
+                                size='sm'
+                                sx={(theme) => ({
+                                    backgroundColor: '#42ca9f',
+                                    minHeight: '40px',
+                                    minWidth: '5vw',
+
+                                    '&:hover': {
+                                    transform: 'scale(1.01) translate(1px, -3px)',
+                                    transitionDuration: '200ms',
+                                    backgroundColor: '#42ca9f',
+                                    },
+
+                                    '&:active': {
+                                    transform: 'translateY(2px)',
+                                    },
+                                })}
+                                onClick={handleClaimReward}
+                            >
+                                {claimLoading ? (
+                                    <Loader color='white' />
+                                ) : (
+                                    <Text>Confirm</Text>
+                                )}
+                            </Button>
+                        </Flex>
+                    </>
+                )}
+                {claimDone && (
+                    <>
+                        <Flex
+                            direction='row'
+                        >
+                            <Text size={16}>Reward claimed successfully! Redirecting...</Text>
+                        </Flex>   
+                    </>
+                )}
+            </Modal>
+            <Modal
                 opened={showUnstakeModal}
                 centered
                 onClose={() => setShowUnstakeModal(false)}
@@ -404,7 +497,7 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                                 onClick={handleUnstake}
                             >
                                 {unstakeLoading ? (
-                                    <Loader color='#42ca9f' />
+                                    <Loader color='white' />
                                 ) : (
                                     <Text>Confirm</Text>
                                 )}

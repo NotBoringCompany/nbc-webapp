@@ -168,7 +168,7 @@ const MySubpools = () => {
                                         marginRight: 20,
                                     }}
                                     >
-                                        Superior Keychain Staked?
+                                        Sup. Keychain Staked?
                                     </Text>
                                     <Text>{pool.StakedSuperiorKeychainID !== -1 ? 'Yes' : 'No'}</Text>
                                 </Flex>
@@ -181,23 +181,8 @@ const MySubpools = () => {
                                         marginRight: 20,
                                     }}
                                     >
-                                        Claim Reward
+                                        Claimable?
                                     </Text>
-                                    {pool.RewardClaimable && (
-                                        <Button
-                                            sx={(theme) => ({
-                                                backgroundColor: '#42ca9f',
-                                                ':hover': {
-                                                    transform: 'scale(1.01) translate(1px, -3px)',
-                                                    transitionDuration: '200ms',
-                                                    backgroundColor: '#42ca9f',
-                                                },
-                                            })}
-                                            disabled={!pool.RewardClaimable}
-                                        >
-                                            Claim
-                                        </Button>
-                                    )}
                                     {!pool.RewardClaimable && (
                                         <Tooltip label='Subpool is still ongoing. Cannot claim yet.'>
                                             <Badge sx={(theme) => ({
@@ -206,6 +191,26 @@ const MySubpools = () => {
                                                 color: 'white',
                                                 textAlign: 'center',
                                             })}>NOT AVAILABLE</Badge>
+                                        </Tooltip>
+                                    )}
+                                    {pool.RewardClaimable && !pool.RewardClaimed && (
+                                        <Tooltip label='Visit Subpool to claim your reward.'>
+                                            <Badge sx={(theme) => ({
+                                                marginTop: 5,
+                                                backgroundColor: '#42ca9f',
+                                                color: 'white',
+                                                textAlign: 'center',
+                                            })}>CLAIMABLE</Badge>
+                                        </Tooltip>
+                                    )}
+                                    {pool.RewardClaimable && pool.RewardClaimed && (
+                                        <Tooltip label='Reward claimed.'>
+                                            <Badge sx={(theme) => ({
+                                                marginTop: 5,
+                                                backgroundColor: 'grey',
+                                                color: 'white',
+                                                textAlign: 'center',
+                                            })}>CLAIMED</Badge>
                                         </Tooltip>
                                     )}
                                 </Flex>
