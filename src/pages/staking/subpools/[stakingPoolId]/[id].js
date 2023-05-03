@@ -206,7 +206,7 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                                     disabled={!subpoolData.rewardClaimable || subpoolData.rewardClaimed}
                                     onClick={handleClaimModal}
                                 >
-                                    {subpoolData.rewardClaimed ? 'Reward Claimed' : 'Claim Reward'}
+                                    {subpoolData.rewardClaimable ? subpoolData.rewardClaimed ? 'Reward Claimed' : 'Claim Reward' : 'Not Claimable'}
                                 </Button>
                             </Flex>
                             <Flex
@@ -404,7 +404,7 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                 title={<Text size={24}>{!claimDone ? 'Claim Reward' : 'Reward Claimed'}</Text>}
                 withCloseButton={false}
             >
-                {!unstakeDone && (
+                {!claimDone && (
                     <>
                         <Flex
                             direction='row'
