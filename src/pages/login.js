@@ -1,7 +1,7 @@
 import AuthForm from '@/components/Form/AuthForm';
 import Layout from '@/components/Layout/Layout';
 import ForgotPasswordRequestModal from '@/components/Modals/ForgotPasswordRequestModal';
-import { Flex, Title, Button } from '@mantine/core';
+import { Flex, Text, Button } from '@mantine/core';
 import { useState } from 'react';
 
 const Login = () => {
@@ -25,23 +25,24 @@ const Login = () => {
           border: `2px solid ${theme.colors.nbcGreen[0]}`,
         })}
       >
-        <Title
+        <Text
           sx={(theme) => ({
             margin: 0,
             marginBottom: '8px',
             color: theme.colors.nbcGreen[0],
-            fontWeight: 700,
+            fontWeight: 600,
+            fontSize: 32,
           })}
         >
           Log In
-        </Title>
+        </Text>
         <AuthForm forLogin />
         <Button
           onClick={() => setIsForgotPasswordModalOpen(true)}
           mt='md'
           variant='subtle'
           sx={(theme) => ({
-            color: theme.colors.nbcRed[0],
+            color: theme.colors.nbcGreen[0],
             justifyContent: 'flex-start',
             padding: 0,
             width: 'fit-content',
