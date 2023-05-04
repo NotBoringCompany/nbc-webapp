@@ -87,7 +87,7 @@ const StakingModal = ({
 					<Text color='#42ca9f' size={24}>TOTAL SUBPOOL POINTS GENERATED</Text>
 					<Text size='sm' color='#42ca9f'>
 						<i>
-							*this includes this subpool{"'"}s points.
+							*within this staking pool. This includes this subpool{"'"}s points.
 						</i>
 					</Text>
 					<Divider color='#42ca9f' size='xs' sx={{marginBottom: 5}} variant='dashed' />

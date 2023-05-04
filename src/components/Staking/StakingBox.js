@@ -18,6 +18,7 @@ const StakingBox = ({
 	confirmButtonDisabled,
 	stakingOngoing,
 	stakingClosed,
+	currentComboAllowed
 }) => {
 	const maxSelectedKeys = maxSelectedKey(selectedKeyCombo);
 	return (
@@ -81,7 +82,19 @@ const StakingBox = ({
 								defaultValue={'asd'}
 								onChange={onSelectKeyComboType}
 							/>
-							{!!selectedKeyCombo ? (
+							{!!selectedKeyCombo && !currentComboAllowed && (
+								<Flex
+									style={{marginTop: 30 }}
+									align='center'
+									sx={(theme) => ({
+										position: 'relative',
+									})}
+								>
+									<IconAlertOctagon style={{marginRight: 10 }} color='#ca4242' size={30} />
+									<Text c='#ca4242' size={20}>You have staked the limit for this current combo. <br /> Please change to another combo.</Text>
+								</Flex>
+							)}
+							{!!selectedKeyCombo && currentComboAllowed ? (
 								<>
 									<Text mt={'md'}>
 										Select any {maxSelectedKeys} {maxSelectedKeys > 1 ? 'keys' : 'key'}{' '}

@@ -18,6 +18,9 @@ const StakingPool = ({ stakingPoolData }) => {
     const [stakerTotalSubpoolPoints, setStakerTotalSubpoolPoints] = useState(0);
     const [totalTokenShare, setTotalTokenShare] = useState(0);
     const [preSubpoolData, setPreSubpoolData] = useState(null);
+    const [subpoolComboEligible, setSubpoolComboEligible] = useState(false);
+    const [selectKeyComboType, setSelectedKeyComboType] = useState(null);
+    const [comboCount, setComboCount] = useState(0);
 
     const stakingOngoing = new Date().getTime() >= new Date(stakingPoolData?.StartTime).getTime();
     const stakingClosed = new Date().getTime() >= new Date(stakingPoolData?.EndTime).getTime();
@@ -55,21 +58,34 @@ const StakingPool = ({ stakingPoolData }) => {
         console.log('total token share set');
     }
 
+    const checkSubpoolComboEligibility = async () => {
+        const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/check-subpool-combo-eligiblity/${user && user.attributes.ethAddress}/${id}/${comboCount}`);
+        const res = await rawRes.json();
+        console.log('eligibility raw res: ', rawRes);
+
+        const eligible = res?.data?.isEligible === true ? true : false;
+        console.log('eligible', eligible);
+        setSubpoolComboEligible(eligible);
+    }
+
     useEffect(() => {
         if (user) {
             getStakerInventory();
             getStakerTotalSubpoolPoints();
             getTotalTokenShare();
         }
-    }, [user])
+    }, [user]);
 
-    const [selectKeyComboType, setSelectedKeyComboType] = useState(null);
+    useEffect(() => {
+        checkSubpoolComboEligibility();
+    }, [comboCount]);
+
 	const [comboSelection, setComboSelection] = useState({
 		keys: [],
 		keychain: null,
 		superiorKeychain: null,
 	});
-    console.log('comboSelection', comboSelection)
+
 	const [showStakingModal, setShowStakingModal] = useState(false);
 
 	const [loadingStakingRewardAndPoints, setLoadingStakingRewardAndPoints] =
@@ -105,6 +121,7 @@ const StakingPool = ({ stakingPoolData }) => {
 	const handleSelectKeyComboType = (e) => {
 		setSelectedKeyComboType(e);
 		const maxSelectedKeys = maxSelectedKey(e);
+        setComboCount(maxSelectedKeys);
 
 		//If there's more keys selected then
 		//what's allowed in the selected key combo type
@@ -137,8 +154,6 @@ const StakingPool = ({ stakingPoolData }) => {
             });
             const subpoolRewardRes = await subpoolRewardRawRes?.json();
             setPreSubpoolData(subpoolRewardRes?.data?.tokenPreAddSubpoolData ?? null);
-
-            console.log('preSubpoolData', preSubpoolData);
 
 			setLoadingStakingRewardAndPoints(true);
 			setTimeout(() => {
@@ -397,6 +412,7 @@ const StakingPool = ({ stakingPoolData }) => {
                         onSelectKey={handleSelectKey}
                         onSelectKeychain={handleSelectKeychain}
                         onSelectKeyComboType={handleSelectKeyComboType}
+                        currentComboAllowed={subpoolComboEligible}
                         stakerInventoryLoading={stakerInventoryLoading}
                         stakerInventory={stakerInventory}
                         comboSelection={comboSelection}
