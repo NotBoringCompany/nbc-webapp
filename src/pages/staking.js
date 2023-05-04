@@ -32,13 +32,15 @@ export default function Staking({ stakingPoolData }) {
             marginTop: 80,
             borderRadius: theme.radius.xl,
             textAlign: 'center',
-            minWidth: '90%',
+            minWidth: '50%',
           })}
         >
           <Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
             ACTIVE STAKING POOLS
           </Text>
-          <Flex justify='center'>
+          <Flex 
+            justify='center'
+          >
             <Divider
               color='#42ca9f'
               style={{
@@ -56,7 +58,7 @@ export default function Staking({ stakingPoolData }) {
           {stakeablePools &&
             stakeablePools.map((pool) => (
               <>
-                <Flex justify='center'>
+                <Flex justify='center' align='center'>
                   <Divider
                     color='#42ca9f'
                     style={{
@@ -104,12 +106,36 @@ export default function Staking({ stakingPoolData }) {
                       sx={{
                         marginLeft: 20,
                         marginRight: 20,
-                        marginBottom: 5,
                       }}
                     >
-                      Status
+                      Entry Until
                     </Text>
-                    <Badge c='#42ca9f'>ONGOING</Badge>
+                    <Text>{new Date(pool.StartTime).toLocaleString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: false
+                    }).replace(/24/, '00')}</Text>
+                  </Flex>
+                  <Flex direction='column' align='center'>
+                    <Text
+                      size={18}
+                      weight={700}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
+                    >
+                      Ends At
+                    </Text>
+                    <Text>{new Date(pool.EndTime).toLocaleString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: false
+                    }).replace(/24/, '00')}</Text>
                   </Flex>
                   <Flex direction='column' align='center'>
                     <Text
@@ -131,18 +157,14 @@ export default function Staking({ stakingPoolData }) {
                       sx={{
                         marginLeft: 20,
                         marginRight: 20,
+                        marginBottom: 5,
                       }}
                     >
-                      Total Subpools
+                      Status
                     </Text>
-                    <Text>
-                      {(pool.ActiveSubpools !== null
-                        ? pool.ActiveSubpools.length
-                        : 0) +
-                        (pool.ClosedSubpools !== null
-                          ? pool.ClosedSubpools.length
-                          : 0)}
-                    </Text>
+                    <Badge c='white' sx={(theme) => ({
+                      backgroundColor: '#42ca9f',
+                    })}>STAKEABLE</Badge>
                   </Flex>
                   <Flex direction='column' align='center'>
                     <Text
@@ -156,19 +178,6 @@ export default function Staking({ stakingPoolData }) {
                       Total Subpool Points
                     </Text>
                     <Text>{pool.TotalYieldPoints}</Text>
-                  </Flex>
-                  <Flex direction='column' align='center'>
-                    <Text
-                      size={18}
-                      weight={700}
-                      sx={{
-                        marginLeft: 20,
-                        marginRight: 20,
-                      }}
-                    >
-                      Your Subpool Points
-                    </Text>
-                    <Text>TODO</Text>
                   </Flex>
                   <Flex direction='column' align='center'>
                     <Text
@@ -196,17 +205,9 @@ export default function Staking({ stakingPoolData }) {
                       router.push(`/staking/pools/${pool.StakingPoolID}`)
                     }
                   >
-                    Stake
+                    View Pool
                   </Button>
                 </Flex>
-                {stakingPoolData.stakeablePools.length > 1 && (
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '100%' }}
-                    size='sm'
-                    variant='dashed'
-                  />
-                )}
               </>
             ))}
           {ongoingPools &&
@@ -250,12 +251,36 @@ export default function Staking({ stakingPoolData }) {
                       sx={{
                         marginLeft: 20,
                         marginRight: 20,
-                        marginBottom: 5,
                       }}
                     >
-                      Status
+                      Entry Until
                     </Text>
-                    <Badge c='#42ca9f'>ONGOING</Badge>
+                    <Text>{new Date(pool.StartTime).toLocaleString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: false
+                    })}</Text>
+                  </Flex>
+                  <Flex direction='column' align='center'>
+                    <Text
+                      size={18}
+                      weight={700}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
+                    >
+                      Ends At
+                    </Text>
+                    <Text>{new Date(pool.EndTime).toLocaleString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: false
+                    }).replace(/24/, '00')}</Text>
                   </Flex>
                   <Flex direction='column' align='center'>
                     <Text
@@ -277,18 +302,14 @@ export default function Staking({ stakingPoolData }) {
                       sx={{
                         marginLeft: 20,
                         marginRight: 20,
+                        marginBottom: 5,
                       }}
                     >
-                      Total Subpools
+                      Status
                     </Text>
-                    <Text>
-                      {(pool.ActiveSubpools !== null
-                        ? pool.ActiveSubpools.length
-                        : 0) +
-                        (pool.ClosedSubpools !== null
-                          ? pool.ClosedSubpools.length
-                          : 0)}
-                    </Text>
+                    <Badge c='white' sx={(theme) => ({
+                      backgroundColor: '#ca4242',
+                    })}>ONGOING</Badge>
                   </Flex>
                   <Flex direction='column' align='center'>
                     <Text
@@ -302,19 +323,6 @@ export default function Staking({ stakingPoolData }) {
                       Total Subpool Points
                     </Text>
                     <Text>{pool.TotalYieldPoints}</Text>
-                  </Flex>
-                  <Flex direction='column' align='center'>
-                    <Text
-                      size={18}
-                      weight={700}
-                      sx={{
-                        marginLeft: 20,
-                        marginRight: 20,
-                      }}
-                    >
-                      Your Subpool Points
-                    </Text>
-                    <Text>TODO</Text>
                   </Flex>
                   <Flex direction='column' align='center'>
                     <Text
@@ -345,14 +353,6 @@ export default function Staking({ stakingPoolData }) {
                     View Pool
                   </Button>
                 </Flex>
-                {stakingPoolData.ongoingPools.length > 1 && (
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '100%' }}
-                    size='sm'
-                    variant='dashed'
-                  />
-                )}
               </>
             ))}
         </Box>
@@ -363,7 +363,7 @@ export default function Staking({ stakingPoolData }) {
             borderRadius: theme.radius.xl,
             color: 'grey',
             textAlign: 'center',
-            minWidth: '90%',
+            minWidth: '50%',
           })}
         >
           <Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
@@ -425,12 +425,36 @@ export default function Staking({ stakingPoolData }) {
                       sx={{
                         marginLeft: 20,
                         marginRight: 20,
-                        marginBottom: 5,
                       }}
                     >
-                      Status
+                      Entry Until
                     </Text>
-                    <Badge c='grey'>CLOSED</Badge>
+                    <Text>{new Date(pool.StartTime).toLocaleString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: false
+                    })}</Text>
+                  </Flex>
+                  <Flex direction='column' align='center'>
+                    <Text
+                      size={18}
+                      weight={700}
+                      sx={{
+                        marginLeft: 20,
+                        marginRight: 20,
+                      }}
+                    >
+                      Ends At
+                    </Text>
+                    <Text>{new Date(pool.EndTime).toLocaleString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      hour: 'numeric',
+                      minute: 'numeric',
+                      hour12: false
+                    }).replace(/24/, '00')}</Text>
                   </Flex>
                   <Flex direction='column' align='center'>
                     <Text
@@ -452,18 +476,14 @@ export default function Staking({ stakingPoolData }) {
                       sx={{
                         marginLeft: 20,
                         marginRight: 20,
+                        marginBottom: 5,
                       }}
                     >
-                      Total Subpools
+                      Status
                     </Text>
-                    <Text>
-                      {(pool.ActiveSubpools !== null
-                        ? pool.ActiveSubpools.length
-                        : 0) +
-                        (pool.ClosedSubpools !== null
-                          ? pool.ClosedSubpools.length
-                          : 0)}
-                    </Text>
+                    <Badge sx={(theme) => ({
+                      backgroundColor: '#grey',
+                    })}>CLOSED</Badge>
                   </Flex>
                   <Flex direction='column' align='center'>
                     <Text
@@ -477,19 +497,6 @@ export default function Staking({ stakingPoolData }) {
                       Total Subpool Points
                     </Text>
                     <Text>{pool.TotalYieldPoints}</Text>
-                  </Flex>
-                  <Flex direction='column' align='center'>
-                    <Text
-                      size={18}
-                      weight={700}
-                      sx={{
-                        marginLeft: 20,
-                        marginRight: 20,
-                      }}
-                    >
-                      Your Subpool Points
-                    </Text>
-                    <Text>TODO</Text>
                   </Flex>
                   <Flex direction='column' align='center'>
                     <Text

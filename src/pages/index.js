@@ -13,7 +13,7 @@ export default function Home() {
         align='center'
         justify='center'
       >
-        <Box 
+        {/* <Box 
           sx={(theme) => ({
             background: 'rgba(0, 0, 0, 0.85)',
             borderRadius: theme.radius.md,
@@ -53,7 +53,7 @@ export default function Home() {
             }
           })}
         >
-        </Box>
+        </Box> */}
       </Flex>
     </Layout>
   )

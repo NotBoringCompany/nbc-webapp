@@ -221,7 +221,7 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                                 >
                                     <IconAlertOctagon color='#42ca9f' style={{marginRight: 10}} />
                                     <Text size={20} weight={600}>SUBPOOL POINTS</Text>
-                                    <HoverCard width={280} shadow='md'>
+                                    <HoverCard width={350} shadow='md'>
                                         <HoverCard.Target>
                                             <Button 
                                                 sx={(theme) => ({
@@ -242,11 +242,12 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                                                 justify='center'
                                             >
                                                 <Text>Luck/Luck Boost Bonus: {backtrackSubpoolPoints.luckAndLuckBoostSum}</Text>
+                                                <Text>Angel Multiplier: {backtrackSubpoolPoints.angelMultiplier}</Text>
                                                 <Text>Key Combo Bonus: {backtrackSubpoolPoints.keyCombo}</Text>
                                                 <Text>Keychain Combo Bonus: {backtrackSubpoolPoints.keychainCombo}</Text>
                                                 <Text mt={20} mb={10} size={20} weight={600} underline>TOTAL SUBPOOL POINTS</Text>
                                                 <MathJax.Context input='tex'>
-                                                    <MathJax.Node inline>{`\\left(100\\ +\\ \\left(${backtrackSubpoolPoints.luckAndLuckBoostSum}\\right)^{0.85}\\ +\\ ${backtrackSubpoolPoints.keyCombo}\\right)\\ \\cdot\\ ${backtrackSubpoolPoints.keychainCombo}`}</MathJax.Node>
+                                                    <MathJax.Node inline>{`\\left(100\\ +\\ \\left(${backtrackSubpoolPoints.luckAndLuckBoostSum}\\right)^{${backtrackSubpoolPoints.angelMultiplier}}\\ +\\ ${backtrackSubpoolPoints.keyCombo}\\right)\\ \\cdot\\ ${backtrackSubpoolPoints.keychainCombo}`}</MathJax.Node>
                                                 </MathJax.Context>
                                                 <MathJax.Context input='tex'>
                                                     <MathJax.Node inline>{`=${backtrackSubpoolPoints.totalSubpoolPoints}`}</MathJax.Node>
@@ -368,22 +369,12 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                                                 nft={k}
                                             />
                                         ))}
-                                    </SimpleGrid>
-                                    <SimpleGrid
-                                        my='md'
-                                        spacing='md'
-                                        breakpoints={cardColumnsBreakpoints}
-                                    >
                                         {subpoolData.stakedKeychain?.tokenID !== -1 && (
                                             <NFTCard
                                                 key={subpoolData.stakedKeychain?.name}
                                                 nft={subpoolData.stakedKeychain}
                                             />
                                         )}
-                                    </SimpleGrid>
-                                    <SimpleGrid
-                                        breakpoints={cardColumnsBreakpoints}
-                                    >
                                         {subpoolData.stakedSuperiorKeychain?.tokenID !== -1 && (
                                             <NFTCard
                                                 key={subpoolData.stakedSuperiorKeychain?.name}

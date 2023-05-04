@@ -20,6 +20,7 @@ const StakingPool = ({ stakingPoolData }) => {
     const [preSubpoolData, setPreSubpoolData] = useState(null);
 
     const stakingOngoing = new Date().getTime() >= new Date(stakingPoolData?.StartTime).getTime();
+    const stakingClosed = new Date().getTime() >= new Date(stakingPoolData?.EndTime).getTime();
     const stakingPoolDataExists = stakingPoolData !== null;
     let activeSubpoolsLength;
     let closedSubpoolsLength;
@@ -183,7 +184,7 @@ const StakingPool = ({ stakingPoolData }) => {
                     Staking Pool {id}
                 </Text>
                 <Button
-                    h={'8vh'}
+                    h={'5vh'}
                     onClick={() => router.replace('/staking/my-subpools')}
                     sx={(theme) => ({
                         backgroundColor: '#42ca9f',
@@ -402,6 +403,7 @@ const StakingPool = ({ stakingPoolData }) => {
                         confirmButtonClick={handleConfirmButton}
                         confirmButtonDisabled={confirmButtonDisabled}
                         stakingOngoing={stakingOngoing}
+                        stakingClosed={stakingClosed}
                     />
                 </Flex>
             )}
