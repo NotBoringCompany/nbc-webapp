@@ -37,10 +37,9 @@ const StakingPool = ({ stakingPoolData }) => {
 
   const getStakerInventory = async () => {
     const rawRes = await fetch(
-      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${
-      //   user && user.attributes.ethAddress
-      // }/${id}`
-      `https://run.mocky.io/v3/f0ffba98-3091-4d1e-bbf9-472d51afa790`
+      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${
+        user && user.attributes.ethAddress
+      }/${id}`
     );
     const res = await rawRes.json();
 
@@ -107,8 +106,21 @@ const StakingPool = ({ stakingPoolData }) => {
   const [loadingStakingRewardAndPoints, setLoadingStakingRewardAndPoints] =
     useState(true);
 
+  const selectedCorrectNumberOfKeys =
+    comboSelection.keys.length === maxSelectedKey(selectedKeyComboType);
+
+  const selectedSuperiorKeychain = !!comboSelection.superiorKeychain;
+
+  const selectedNorZeroOrThreeKeychains =
+    comboSelection.keychains.length !== 0 &&
+    comboSelection.keychains.length !== 3;
+
   const confirmButtonDisabled =
-    comboSelection.keys.length !== maxSelectedKey(selectedKeyComboType);
+    selectedKeyComboType === 'flush'
+      ? !selectedCorrectNumberOfKeys ||
+        selectedNorZeroOrThreeKeychains ||
+        (selectedSuperiorKeychain && comboSelection.keychains.length === 0)
+      : !selectedCorrectNumberOfKeys;
 
   const handleSelectKey = (rhKey) => {
     const exist =
