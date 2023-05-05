@@ -34,6 +34,7 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
+                wallet: user && user.attributes.ethAddress,
                 stakingPoolId: parseInt(stakingPoolId),
                 subpoolId: parseInt(id),
             })

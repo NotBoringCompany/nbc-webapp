@@ -148,13 +148,13 @@ const NavbarItems = (props) => {
                   <Menu.Dropdown className={classes.menuDropdown}>
                     <Menu.Item
                       onClick={() => router.push('/staking')}
-                      icon={<IconUser size={14} />}
+                      icon={<IconMoneybag size={14} />}
                     >
                       <Text>Staking Pools</Text>
                     </Menu.Item>
                     <Divider />
                     <Menu.Item 
-                    icon={<IconLogout size={14} />}
+                    icon={<IconPool size={14} />}
                     onClick={() => router.replace('/staking/my-subpools')}
                     >
                       My Subpools
