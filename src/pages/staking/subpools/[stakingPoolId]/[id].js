@@ -369,12 +369,12 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
                                                 nft={k}
                                             />
                                         ))}
-                                        {subpoolData.stakedKeychain?.tokenID !== -1 && (
+                                        {subpoolData.stakedKeychain?.sort((a, b) => a.TokenID - b.TokenID).map(keychain => (
                                             <NFTCard
                                                 key={subpoolData.stakedKeychain?.name}
                                                 nft={subpoolData.stakedKeychain}
                                             />
-                                        )}
+                                        ))}
                                         {subpoolData.stakedSuperiorKeychain?.tokenID !== -1 && (
                                             <NFTCard
                                                 key={subpoolData.stakedSuperiorKeychain?.name}
