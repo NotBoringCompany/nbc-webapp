@@ -54,8 +54,7 @@ const AuthForm = ({ forLogin = false }) => {
         });
       }
     } else {
-      const x = await login(email, password);
-      console.log({ x });
+      await login(email, password);
     }
   };
 
