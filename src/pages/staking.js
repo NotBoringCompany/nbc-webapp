@@ -179,19 +179,6 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>{pool.TotalYieldPoints}</Text>
                   </Flex>
-                  <Flex direction='column' align='center'>
-                    <Text
-                      size={18}
-                      weight={700}
-                      sx={{
-                        marginLeft: 20,
-                        marginRight: 20,
-                      }}
-                    >
-                      Your Reward Share
-                    </Text>
-                    <Text>TODO</Text>
-                  </Flex>
                   <Button
                     sx={(theme) => ({
                       backgroundColor: '#42ca9f',
@@ -324,19 +311,7 @@ export default function Staking({ stakingPoolData }) {
                     </Text>
                     <Text>{pool.TotalYieldPoints}</Text>
                   </Flex>
-                  <Flex direction='column' align='center'>
-                    <Text
-                      size={18}
-                      weight={700}
-                      sx={{
-                        marginLeft: 20,
-                        marginRight: 20,
-                      }}
-                    >
-                      Your Reward Share
-                    </Text>
-                    <Text>TODO</Text>
-                  </Flex>
+
                   <Button
                     sx={(theme) => ({
                       backgroundColor: '#42ca9f',
@@ -497,19 +472,6 @@ export default function Staking({ stakingPoolData }) {
                       Total Subpool Points
                     </Text>
                     <Text>{pool.TotalYieldPoints}</Text>
-                  </Flex>
-                  <Flex direction='column' align='center'>
-                    <Text
-                      size={18}
-                      weight={700}
-                      sx={{
-                        marginLeft: 20,
-                        marginRight: 20,
-                      }}
-                    >
-                      Your Reward Share
-                    </Text>
-                    <Text>TODO</Text>
                   </Flex>
                   <Button
                     sx={(theme) => ({
