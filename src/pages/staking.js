@@ -527,14 +527,6 @@ export default function Staking({ stakingPoolData }) {
                     View Pool
                   </Button>
                 </Flex>
-                {stakingPoolData.closedPools.length > 1 && (
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '100%' }}
-                    size='sm'
-                    variant='dashed'
-                  />
-                )}
               </>
             ))}
         </Box>

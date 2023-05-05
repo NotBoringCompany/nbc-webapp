@@ -6,7 +6,7 @@ import { useMoralis } from 'react-moralis';
 import NBCLogo from '../../../public/NBCLogo.png';
 import ConnectWalletButton from '../Buttons/ConnectWallet';
 import NavbarMenu from '../Dropdowns/NavbarMenu';
-import { IconChevronDown, IconLogout, IconUser } from '@tabler/icons';
+import { IconChevronDown, IconLogout, IconMoneybag, IconPool, IconUser } from '@tabler/icons';
 import { useRouter } from 'next/router';
 
 const HEADER_HEIGHT = 60;
@@ -197,13 +197,13 @@ const NavbarItems = (props) => {
             <Menu.Dropdown className={classes.menuDropdown}>
               <Menu.Item
                 onClick={() => router.push('/staking')}
-                icon={<IconUser size={14} />}
+                icon={<IconMoneybag size={14} />}
               >
                 <Text>Staking Pools</Text>
               </Menu.Item>
               <Divider />
               <Menu.Item 
-              icon={<IconLogout size={14} />}
+              icon={<IconPool size={14} />}
               onClick={() => router.replace('/staking/my-subpools')}
               >
                 My Subpools
