@@ -29,6 +29,7 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
         const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/unstake-from-subpool`, {
             method: 'POST',
             headers: {
+                'session-token': user && user.get('sessionToken'),
                 'Accept': '*/*',
                 'Content-Type': 'application/json'
             },
@@ -53,6 +54,7 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
         const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/claim-reward`, {
             method: 'POST',
             headers: {
+                'session-token': user && user.get('sessionToken'),
                 'Accept': '*/*',
                 'Content-Type': 'application/json'
             },

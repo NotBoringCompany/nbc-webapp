@@ -46,12 +46,15 @@ const StakingModal = ({
 
     const keyIds = subpool.keys.map((key) => key.tokenID);
 
+    console.log('session token: ', user && user.get('sessionToken'));
+
     const stakeRequest = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/add-subpool`,
       {
         method: 'POST',
         headers: {
-          Accept: '*/*',
+          'session-token': user && user.get('sessionToken'),
+          'Accept': '*/*',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
