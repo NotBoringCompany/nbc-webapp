@@ -70,6 +70,15 @@ const StakingModal = ({
     ).catch((err) => console.log(err));
     const stakeResponse = await stakeRequest.json();
     console.log('STAKE RESPONSE', stakeResponse);
+    console.log('ADD SUBPOOL BODY: ', JSON.stringify({
+      keyIds: keyIds,
+      stakerWallet: user && user.attributes.ethAddress,
+      stakingPoolId: parseInt(stakingPoolId),
+      keychainIds: keychains.map((k) => k.tokenID),
+      superiorKeychainId: subpool.superiorKeychain
+        ? subpool.superiorKeychain.tokenID
+        : -1,
+    }))
     // TO DO: handle error if it fails.
     setTimeout(() => {
       setSuccessfulStake(true);
