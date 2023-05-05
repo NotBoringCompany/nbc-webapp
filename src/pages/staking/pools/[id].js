@@ -37,9 +37,10 @@ const StakingPool = ({ stakingPoolData }) => {
 
   const getStakerInventory = async () => {
     const rawRes = await fetch(
-      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${
-        user && user.attributes.ethAddress
-      }/${id}`
+      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${
+      //   user && user.attributes.ethAddress
+      // }/${id}`
+      `https://run.mocky.io/v3/f0ffba98-3091-4d1e-bbf9-472d51afa790`
     );
     const res = await rawRes.json();
 

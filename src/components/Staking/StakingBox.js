@@ -127,7 +127,7 @@ const StakingBox = ({
                   </Text>
                   <Text>
                     NOTE: If you chose {'Flush'} as your combo, you can only
-                    stake along a Superior Keychain.
+                    stake along a Superior Keychain or 3 Keychains.
                   </Text>
                   <ScrollArea
                     h={'80vh'}
