@@ -155,9 +155,9 @@ const MySubpools = () => {
                                         marginRight: 20,
                                     }}
                                     >
-                                        Keychain Staked?
+                                        Keychain(s) Staked?
                                     </Text>
-                                    <Text>{pool.StakedKeychainID !== -1 ? 'Yes' : 'No'}</Text>
+                                    <Text>{pool.StakedKeychainIDs?.length > 0 ? 'Yes' : 'No'}</Text>
                                 </Flex>
                                 <Flex direction='column' align='center'>
                                     <Text
