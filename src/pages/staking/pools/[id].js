@@ -109,17 +109,13 @@ const StakingPool = ({ stakingPoolData }) => {
   const selectedCorrectNumberOfKeys =
     comboSelection.keys.length === maxSelectedKey(selectedKeyComboType);
 
-  const selectedSuperiorKeychain = !!comboSelection.superiorKeychain;
-
   const selectedNorZeroOrThreeKeychains =
     comboSelection.keychains.length !== 0 &&
     comboSelection.keychains.length !== 3;
 
   const confirmButtonDisabled =
     selectedKeyComboType === 'flush'
-      ? !selectedCorrectNumberOfKeys ||
-        selectedNorZeroOrThreeKeychains ||
-        (selectedSuperiorKeychain && comboSelection.keychains.length === 0)
+      ? !selectedCorrectNumberOfKeys || selectedNorZeroOrThreeKeychains
       : !selectedCorrectNumberOfKeys;
 
   const handleSelectKey = (rhKey) => {
