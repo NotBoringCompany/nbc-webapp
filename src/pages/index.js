@@ -2,7 +2,7 @@ import Layout from '@/components/Layout/Layout';
 import { Box, Flex, Text } from '@mantine/core';
 import { IconAlertOctagon, IconCheck, IconX } from '@tabler/icons';
 import { useMoralis } from 'react-moralis';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function Home() {
   const { isAuthenticated, user } = useMoralis();
