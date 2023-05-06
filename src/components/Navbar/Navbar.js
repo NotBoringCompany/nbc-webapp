@@ -203,7 +203,7 @@ const NavbarItems = (props) => {
                   },
                 })}
               >
-                <Link href='/login'>Log in</Link>
+                <Link href='/login'>Login</Link>
               </Text>
             </Flex>
           ) : (
@@ -279,7 +279,7 @@ const NavbarItems = (props) => {
                   },
                 })}
               >
-                <Link href='/login'>Log in</Link>
+                <Link href='/login'>Login</Link>
               </Text>
             </Flex>
           ) : (
@@ -346,7 +346,7 @@ const NavbarItems = (props) => {
               },
             })}
           >
-            <Link href='/login'>Log in</Link>
+            <Link href='/login'>Login</Link>
           </Text>
         </>
       ) : (

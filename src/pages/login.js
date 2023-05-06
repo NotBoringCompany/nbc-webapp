@@ -9,7 +9,7 @@ const Login = () => {
     useState(false);
   return (
     <Layout
-      pageTitle={'Log in'}
+      pageTitle={'Login'}
       description='Log in to your Realm Hunter account'
       mustNotAuth
     >
@@ -38,7 +38,7 @@ const Login = () => {
             fontSize: 32,
           })}
         >
-          Log In
+          Login
         </Text>
         <AuthForm forLogin />
         <Button

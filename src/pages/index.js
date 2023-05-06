@@ -76,7 +76,7 @@ export default function Home() {
             <Text size={18} color={hasKey ? '#42ca9f' : '#e9d562'}>{emailConnected ? 'At least 1 Key Of Salvation owned' : 'Own at least 1 Key Of Salvation*'}</Text>
           </Flex>
           {isAuthenticated && emailConnected && (
-            <Text size={18} color='#42ca9f' mt={30} weight={700}>ALPHA LINK:  </Text>
+            <Text size={18} color='#42ca9f' mt={30} weight={700}>ALPHA LINK: <a href="https://drive.google.com/uc?export=download&id=1w6bsqIvBPX1Y-YpeLJafxCVL57YIRo9g" download>Download File</a></Text>
           )}
           <Text size={15} mt={30}>*Note: You don{"'t"} need a Key to gain access to the download link, <strong><br />however you are required to own AT LEAST 1 Key to log in and play the alpha.</strong></Text>
         </Box>
