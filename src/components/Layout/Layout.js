@@ -46,7 +46,7 @@ const Layout = ({
   withAuth = false,
   mustNotAuth = false,
   pageTitle,
-  description = 'An immersive franchise developed by  Not Boring Company',
+  description = 'Building immersive Web3-native IP franchises.',
   keywords = 'realm hunter, multiplayer game, nft gaming, nft', // seo keywords, separated by commas
 }) => {
   const { isAuthenticated, isAuthUndefined } = useMoralis();
@@ -54,7 +54,7 @@ const Layout = ({
   const router = useRouter();
   const authWall = !!authWallComponent ? authWallComponent : AuthWall;
 
-  const title = !!pageTitle ? `${pageTitle} | Realm Hunter` : `Realm Hunter`;
+  const title = !!pageTitle ? `${pageTitle} | Not Boring Company` : `Not Boring Company`;
 
   useEffect(() => {
     if (!isAuthUndefined) {
@@ -80,7 +80,7 @@ const Layout = ({
       </Head>
       <Flex direction='column'>
         <MainNavbar />
-        <ScrollArea h={'85vh'}>
+        <ScrollArea h={'calc(100vh - 80px)'}>
           <Container
             sx={{
               width: '100%',

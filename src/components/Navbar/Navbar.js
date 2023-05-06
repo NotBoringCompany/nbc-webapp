@@ -130,12 +130,14 @@ const NavbarItems = (props) => {
                   <Menu.Target>
                     <Button
                       sx={(theme) => ({
-                        backgroundColor: '#000000',
+                        backgroundColor: 'transparent',
                         ':hover': {
-                          backgroundColor: '#000000',
+                          backgroundColor: 'transparent',
+                          transform: 'scale(1.01) translate(1px, -3px)',
+                          transitionDuration: '200ms',
                         },
                         ':active': {
-                          backgroundColor: '#000000',
+                          backgroundColor: 'transparent',
                         }
                       })}
                     >
@@ -179,12 +181,14 @@ const NavbarItems = (props) => {
             <Menu.Target>
               <Button
                 sx={(theme) => ({
-                  backgroundColor: '#000000',
+                  backgroundColor: 'transparent',
                   ':hover': {
-                    backgroundColor: '#000000',
+                    backgroundColor: 'transparent',
+                    transform: 'scale(1.01) translate(1px, -3px)',
+                    transitionDuration: '200ms',
                   },
                   ':active': {
-                    backgroundColor: '#000000',
+                    backgroundColor: 'transparent',
                   }
                 })}
               >

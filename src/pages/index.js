@@ -1,51 +1,91 @@
 import Layout from '@/components/Layout/Layout';
-import { Flex } from '@mantine/core';
+import { Box, Flex, Text } from '@mantine/core';
+import NBCLogo from '../../public/NBCLogo.png'
+import X0005 from '../../public/x0005.jpeg'
+import Image from 'next/image';
+import AngelKey from '../../public/Angel-P_S-Star_3.mp4'
+import Rokkan from '../../public/Rokkan.png'
+import Rokkan2 from '../../public/Rokkan2.jpeg'
+import { IconAlertOctagon, IconCheck, IconQuestionCircle, IconX } from '@tabler/icons';
+import { useMoralis } from 'react-moralis';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const { isAuthenticated, user } = useMoralis();
+  const emailConnected = user && user.get('emailAddress') !== null;
+  // checks if the user has AT LEAST 1 key of salvation
+  const [hasKey, setHasKey] = useState(false);
+
+  const ownsKey = async () => {
+    const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/owner-ids/${user && user.attributes.ethAddress}`);
+    const res = await rawRes.json();
+
+    setHasKey(res.data?.ownerIds?.length > 0);
+  }
+
+  useEffect(() => {
+    ownsKey();
+  }, [user])
+
   return (
     <Layout>
-      <Flex direction='column' align='center' justify='center'>
-        {/* <Box 
+      <Flex align='center' justify='center' direction='column' h={'calc(100vh - 150px)'}>
+        <Text size={94} weight={700}>
+          REALM HUNTER: ALPHA RELEASE
+        </Text>
+        <Text size={36} weight={500}>
+          Alpha V1.0 is now out for Key Of Salvation holders!
+        </Text>
+        <Box
           sx={(theme) => ({
-            background: 'rgba(0, 0, 0, 0.85)',
             borderRadius: theme.radius.md,
-            borderBottom: '3px solid #42ca9f',
-            borderRight: '1px solid #42ca9f',
-            borderTop: '1px solid #42ca9f',
-            borderLeft: '3px solid #42ca9f',
-            padding: theme.spacing.md,
-            justifyContent: 'center',
+            minWidth: '50%',
+            border: isAuthenticated && emailConnected ? '2px solid #42ca9f' : '2px solid #ca4242',
+            padding: '20px',
             textAlign: 'center',
-            marginTop: 45,
-            width: '35%',
-            [theme.fn.smallerThan('sm')]:
-            {
-                fontSize: theme.fontSizes.xs,
-            }
+            marginTop: 50,
           })}
         >
-          <Text>Staking LIVE!</Text>
+          <Flex
+            direction='row'
+            align='center'
+            justify='center'
+          >
+            <IconAlertOctagon size={30} style={{marginRight: 15}} />
+            <Text size={22} weight={600}>FOLLOW THESE STEPS TO GAIN ACCESS TO THE ALPHA</Text>
+          </Flex>
+          <Flex
+            direction='row'
+            align='center'
+            justify='center'
+            mt={30}
+          >
+            {isAuthenticated ? <IconCheck size={30} style={{marginRight: 15}} color='#42ca9f' /> : <IconX size={30} style={{marginRight: 15}} color='#ca4242' />}
+            <Text size={18} color={isAuthenticated ? '#42ca9f' : '#ca4242'}>{isAuthenticated ? 'Wallet connected' : 'Connect your wallet'}</Text>
+          </Flex>
+          <Flex
+            direction='row'
+            align='center'
+            justify='center'
+            mt={10}
+          >
+            {emailConnected ? <IconCheck size={30} style={{marginRight: 15}} color='#42ca9f' /> : <IconX size={30} style={{marginRight: 15}} color='#ca4242' />}
+            <Text size={18} color={emailConnected ? '#42ca9f' : '#ca4242'}>{emailConnected ? 'Email connected' : 'Connect your email to your wallet'}</Text>
+          </Flex>
+          <Flex
+            direction='row'
+            align='center'
+            justify='center'
+            mt={10}
+          >
+            {hasKey ? <IconCheck size={30} style={{marginRight: 15}} color='#42ca9f' /> : <IconX size={30} style={{marginRight: 15}} color='#e9d562' />}
+            <Text size={18} color={hasKey ? '#42ca9f' : '#e9d562'}>{emailConnected ? 'At least 1 Key Of Salvation owned' : 'Own at least 1 Key Of Salvation*'}</Text>
+          </Flex>
+          {isAuthenticated && emailConnected && (
+            <Text size={18} color='#42ca9f' mt={30} weight={700}>ALPHA LINK:  </Text>
+          )}
+          <Text size={15} mt={30}>*Note: You don{"'t"} need a Key to gain access to the download link, <strong><br />however you are required to own AT LEAST 1 Key to log in to the game.</strong></Text>
         </Box>
-        <Box 
-          sx={(theme) => ({
-            background: 'rgba(0, 0, 0, 0.85)',
-            borderRadius: theme.radius.md,
-            borderBottom: '3px solid #42ca9f',
-            borderRight: '1px solid #42ca9f',
-            borderTop: '1px solid #42ca9f',
-            borderLeft: '3px solid #42ca9f',
-            padding: theme.spacing.md,
-            justifyContent: 'center',
-            textAlign: 'center',
-            marginTop: 45,
-            width: '35%',
-            [theme.fn.smallerThan('sm')]:
-            {
-                fontSize: theme.fontSizes.xs,
-            }
-          })}
-        >
-        </Box> */}
       </Flex>
     </Layout>
   );
