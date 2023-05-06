@@ -151,81 +151,7 @@ const NavbarItems = (props) => {
   if (enableDropdown) {
     return (
       <>
-        <Center className={classes.centerItems}>
-          <Menu shadow='md' width={200}>
-            <Menu.Target>
-              <Button
-                sx={(theme) => ({
-                  backgroundColor: 'transparent',
-                  ':hover': {
-                    backgroundColor: 'transparent',
-                    transform: 'scale(1.01) translate(1px, -3px)',
-                    transitionDuration: '200ms',
-                  },
-                  ':active': {
-                    backgroundColor: 'transparent',
-                  },
-                })}
-              >
-                <Text
-                  sx={(theme) => ({
-                    color: theme.colors.dark[0],
-                  })}
-                >
-                  Staking
-                </Text>
-              </Button>
-            </Menu.Target>
-
-            <Menu.Dropdown className={classes.menuDropdown}>
-              <Menu.Item
-                onClick={() => router.push('/staking')}
-                icon={<IconMoneybag size={14} />}
-              >
-                <Text>Staking Pools</Text>
-              </Menu.Item>
-              <Divider />
-              <Menu.Item
-                icon={<IconPool size={14} />}
-                onClick={() => router.replace('/staking/my-subpools')}
-              >
-                My Subpools
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-        </Center>
-        <Center className={classes.centerItems}>
-          {!isAuthenticated ? (
-            <Flex direction={'column'}>
-              {' '}
-              <ConnectWalletButton />{' '}
-              <Text
-                mt='sm'
-                align='center'
-                sx={(theme) => ({
-                  a: {
-                    color: theme.colors.dark[0],
-                    textDecoration: 'none',
-                    fontWeight: 600,
-                    fontSize: 14,
-                  },
-                })}
-              >
-                <Link href='/login'>Login</Link>
-              </Text>
-            </Flex>
-          ) : (
-            <NavbarMenu />
-          )}
-        </Center>
-      </>
-    );
-  }
-
-  if (enableDropdown) {
-    return (
-      <>
-        <Center className={classes.centerItems}>
+        {/* <Center className={classes.centerItems}>
           <Menu shadow='md' width={200}>
             <Menu.Target>
               <Button
@@ -269,7 +195,7 @@ const NavbarItems = (props) => {
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
-        </Center>
+        </Center> */}
         <Center className={classes.centerItems}>
           {!isAuthenticated ? (
             <Flex direction={'column'}>
@@ -300,7 +226,7 @@ const NavbarItems = (props) => {
 
   return (
     <>
-      <Menu shadow='md' width={200}>
+      {/* <Menu shadow='md' width={200}>
         <Menu.Target>
           <Button
             sx={(theme) => ({
@@ -340,7 +266,7 @@ const NavbarItems = (props) => {
             My Subpools
           </Menu.Item>
         </Menu.Dropdown>
-      </Menu>
+      </Menu> */}
       {!isAuthenticated ? (
         <>
           <ConnectWalletButton />
