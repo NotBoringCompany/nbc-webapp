@@ -148,7 +148,6 @@ const NavbarItems = (props) => {
         return (
         <>
             <Center className={classes.centerItems}>
-<<<<<<< HEAD
                 <Menu shadow='md' width={200}>
                   <Menu.Target>
                     <Button
@@ -214,58 +213,9 @@ const NavbarItems = (props) => {
       </>
     );
   }
-=======
-              {/* <Menu shadow='md' width={200}>
-                <Menu.Target>
-                  <Button
-                    sx={(theme) => ({
-                      backgroundColor: '#000000',
-                      ':hover': {
-                        backgroundColor: '#000000',
-                      },
-                      ':active': {
-                        backgroundColor: '#000000',
-                      }
-                    })}
-                  >
-                    <Text sx={(theme) => ({
-                      color: theme.colors.dark[0],
-                    })}>Staking</Text>
-                  </Button>
-                </Menu.Target>
-
-                <Menu.Dropdown className={classes.menuDropdown}>
-                  <Menu.Item
-                    onClick={() => router.push('/staking')}
-                    icon={<IconUser size={14} />}
-                  >
-                    <Text>Staking Pools</Text>
-                  </Menu.Item>
-                  <Divider />
-                  <Menu.Item 
-                  icon={<IconLogout size={14} />}
-                  onClick={() => router.replace('/staking/my-subpools')}
-                  >
-                    My Subpools
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu> */}
-            </Center>
-            <Center className={classes.centerItems}>
-                { !isAuthenticated ? (
-                  <ConnectWalletButton />
-                ) : (
-                  <NavbarMenu />
-                )}
-            </Center>
-        </>
-        );
-    }
->>>>>>> main
 
   if (enableDropdown) {
     return (
-<<<<<<< HEAD
       <>
         <Center className={classes.centerItems}>
           <Menu shadow='md' width={200}>
@@ -284,12 +234,6 @@ const NavbarItems = (props) => {
                 })}
               >
                 <Text
-=======
-        <>
-            {/* <Menu shadow='md' width={200}>
-              <Menu.Target>
-                <Button
->>>>>>> main
                   sx={(theme) => ({
                     color: theme.colors.dark[0],
                     marginRight: '2px',
@@ -312,7 +256,6 @@ const NavbarItems = (props) => {
               <Menu.Item
                 icon={<IconPool size={14} />}
                 onClick={() => router.replace('/staking/my-subpools')}
-<<<<<<< HEAD
               >
                 My Subpools
               </Menu.Item>
@@ -344,19 +287,6 @@ const NavbarItems = (props) => {
           )}
         </Center>
       </>
-=======
-                >
-                  My Subpools
-                </Menu.Item>
-              </Menu.Dropdown>
-            </Menu> */}
-            { !isAuthenticated ? (
-              <ConnectWalletButton />
-            ) : (
-              <NavbarMenu />
-            )}
-        </>
->>>>>>> main
     );
   }
 
