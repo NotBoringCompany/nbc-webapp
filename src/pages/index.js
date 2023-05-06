@@ -1,12 +1,6 @@
 import Layout from '@/components/Layout/Layout';
 import { Box, Flex, Text } from '@mantine/core';
-import NBCLogo from '../../public/NBCLogo.png'
-import X0005 from '../../public/x0005.jpeg'
-import Image from 'next/image';
-import AngelKey from '../../public/Angel-P_S-Star_3.mp4'
-import Rokkan from '../../public/Rokkan.png'
-import Rokkan2 from '../../public/Rokkan2.jpeg'
-import { IconAlertOctagon, IconCheck, IconQuestionCircle, IconX } from '@tabler/icons';
+import { IconAlertOctagon, IconCheck, IconX } from '@tabler/icons';
 import { useMoralis } from 'react-moralis';
 import { useEffect, useState } from 'react';
 
