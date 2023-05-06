@@ -46,15 +46,15 @@ const Layout = ({
   withAuth = false,
   mustNotAuth = false,
   pageTitle,
-  description = 'Building immersive Web3-native IP franchises.',
-  keywords = 'realm hunter, multiplayer game, nft gaming, nft', // seo keywords, separated by commas
+  description = 'Not Boring Company\'s official Web App',
+  keywords = 'realm hunter, franchise, web3, ip, free, immerse, blockchainmultiplayer game, nft gaming, nft', // seo keywords, separated by commas
 }) => {
   const { isAuthenticated, isAuthUndefined } = useMoralis();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const authWall = !!authWallComponent ? authWallComponent : AuthWall;
 
-  const title = !!pageTitle ? `${pageTitle} | Not Boring Company` : `Not Boring Company`;
+  const title = !!pageTitle ? `${pageTitle} | Not Boring Company Web App` : `Not Boring Company Web App`;
 
   useEffect(() => {
     if (!isAuthUndefined) {
