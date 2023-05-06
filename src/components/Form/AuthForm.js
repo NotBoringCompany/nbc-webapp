@@ -154,7 +154,7 @@ const AuthForm = ({ forLogin = false }) => {
           ) : (
             <Text size='md'>
               {forLogin ? (
-                'Log in'
+                'Login'
               ) : (
                 <>{hasEmail ? `Change` : `Set`} Email & Password</>
               )}
