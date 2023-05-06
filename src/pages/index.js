@@ -10,16 +10,16 @@ export default function Home() {
   // checks if the user has AT LEAST 1 key of salvation
   const [hasKey, setHasKey] = useState(false);
 
-  const ownsKey = async () => {
+  const ownsKey = useCallback(async () => {
     const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/owner-ids/${user && user.attributes.ethAddress}`);
     const res = await rawRes.json();
 
     setHasKey(res.data?.ownerIds?.length > 0);
-  }
+  }, [user])
 
   useEffect(() => {
     ownsKey();
-  }, [user])
+  }, [ownsKey, user])
 
   return (
     <Layout>
