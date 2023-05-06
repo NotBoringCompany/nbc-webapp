@@ -51,6 +51,11 @@ const useStyles = createStyles((theme) => ({
   dropdown: {
     position: 'absolute',
     top: HEADER_HEIGHT,
+    backgroundColor: '#000000',
+    margin: '0',
+    width: '100%',
+    left: '0',
+    height: '100vh',
     [theme.fn.largerThan('md')]: {
       display: 'none',
     },
@@ -144,30 +149,34 @@ const NavbarItems = (props) => {
 
   const router = useRouter();
 
-    if (enableDropdown) {
-        return (
-        <>
-            <Center className={classes.centerItems}>
-                <Menu shadow='md' width={200}>
-                  <Menu.Target>
-                    <Button
-                      sx={(theme) => ({
-                        backgroundColor: 'transparent',
-                        ':hover': {
-                          backgroundColor: 'transparent',
-                          transform: 'scale(1.01) translate(1px, -3px)',
-                          transitionDuration: '200ms',
-                        },
-                        ':active': {
-                          backgroundColor: 'transparent',
-                        }
-                      })}
-                    >
-                      <Text sx={(theme) => ({
-                        color: theme.colors.dark[0],
-                      })}>Staking</Text>
-                    </Button>
-                  </Menu.Target>
+  if (enableDropdown) {
+    return (
+      <>
+        <Center className={classes.centerItems}>
+          <Menu shadow='md' width={200}>
+            <Menu.Target>
+              <Button
+                sx={(theme) => ({
+                  backgroundColor: 'transparent',
+                  ':hover': {
+                    backgroundColor: 'transparent',
+                    transform: 'scale(1.01) translate(1px, -3px)',
+                    transitionDuration: '200ms',
+                  },
+                  ':active': {
+                    backgroundColor: 'transparent',
+                  },
+                })}
+              >
+                <Text
+                  sx={(theme) => ({
+                    color: theme.colors.dark[0],
+                  })}
+                >
+                  Staking
+                </Text>
+              </Button>
+            </Menu.Target>
 
             <Menu.Dropdown className={classes.menuDropdown}>
               <Menu.Item
@@ -230,7 +239,7 @@ const NavbarItems = (props) => {
                   },
                   ':active': {
                     backgroundColor: 'transparent',
-                  }
+                  },
                 })}
               >
                 <Text
@@ -384,12 +393,7 @@ const MainNavbar = () => {
       />
       <Transition transition='pop-top-right' duration={200} mounted={opened}>
         {(styles) => (
-          <Paper
-            className={classes.dropdown}
-            sx={(theme) => ({
-              backgroundColor: '#000000',
-            })}
-          >
+          <Paper className={classes.dropdown}>
             <NavbarItems isDropdown />
           </Paper>
         )}
