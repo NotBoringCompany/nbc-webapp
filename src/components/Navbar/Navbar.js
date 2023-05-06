@@ -55,7 +55,6 @@ const useStyles = createStyles((theme) => ({
     margin: '0',
     width: '100%',
     left: '0',
-    height: '100vh',
     [theme.fn.largerThan('md')]: {
       display: 'none',
     },
