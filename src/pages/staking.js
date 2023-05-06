@@ -14,7 +14,11 @@ export default function Staking({ stakingPoolData }) {
   const closedPools = stakingPoolData.closedPools;
 
   return (
-    <Layout withAuth>
+    <Layout
+      pageTitle='Staking Pools'
+      description='Stake your Factory NFTs to earn special yields and rewards!'
+      withAuth
+    >
       <Flex
         direction='column'
         align='center'

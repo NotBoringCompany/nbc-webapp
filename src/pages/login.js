@@ -8,7 +8,11 @@ const Login = () => {
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
     useState(false);
   return (
-    <Layout mustNotAuth>
+    <Layout
+      pageTitle={'Log in'}
+      description='Log in to your Realm Hunter account'
+      mustNotAuth
+    >
       <ForgotPasswordRequestModal
         isOpen={isForgotPasswordModalOpen}
         onClose={() => setIsForgotPasswordModalOpen(false)}

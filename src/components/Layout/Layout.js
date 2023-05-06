@@ -76,8 +76,7 @@ const Layout = ({
         <title>{title}</title>
         <meta name='description' content={description} />
         <meta name='keywords' content={keywords} />
-        <link rel='shortcut icon' href='imgs/favicon.ico' />
-        <link rel='shortcut icon' href='/images/favicon.ico' />
+        <link rel='shortcut icon' href='/favicon/favicon.ico' />
       </Head>
       <Flex direction='column'>
         <MainNavbar />

@@ -175,7 +175,11 @@ export default function ResetPasssword({ data }) {
   );
 
   return (
-    <Layout mustNotAuth>
+    <Layout
+      pageTitle='Reset Password'
+      description='Reset your Realm Hunter account password'
+      mustNotAuth
+    >
       <Flex
         direction='column'
         sx={(theme) => ({

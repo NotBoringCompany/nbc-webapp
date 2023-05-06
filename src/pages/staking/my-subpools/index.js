@@ -36,7 +36,11 @@ const MySubpools = () => {
   }, [user, user?.attributes]);
 
   return (
-    <Layout withAuth>
+    <Layout
+      pageTitle={'My Subpools'}
+      description={`All the subpools you've staked will be shown here.`}
+      withAuth
+    >
       <Flex direction='column' align='center' justify='center'>
         <Text
           sx={(theme) => ({

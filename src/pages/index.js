@@ -1,18 +1,10 @@
 import Layout from '@/components/Layout/Layout';
-import { Box, Button, Container, Flex, Text } from '@mantine/core';
-import AngelKey from '../../public/Angel-P_S-Star_3.mp4'
-import NBCLogo from '../../public/NBCLogo.png'
-import Link from 'next/link';
-import Image from 'next/image';
+import { Flex } from '@mantine/core';
 
 export default function Home() {
   return (
     <Layout>
-      <Flex
-        direction='column'
-        align='center'
-        justify='center'
-      >
+      <Flex direction='column' align='center' justify='center'>
         {/* <Box 
           sx={(theme) => ({
             background: 'rgba(0, 0, 0, 0.85)',
@@ -56,5 +48,5 @@ export default function Home() {
         </Box> */}
       </Flex>
     </Layout>
-  )
+  );
 }
