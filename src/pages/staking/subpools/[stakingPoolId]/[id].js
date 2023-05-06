@@ -87,7 +87,7 @@ const MySubpool = ({ subpoolData, subpoolTokenShare, stakingPoolData, backtrackS
     }
 
     return (
-        <Layout withAuth>
+        <Layout pageTitle={`Subpool #${id} - Staking pool #${stakingPoolId}`} withAuth>
             {!subpoolDataExists && (
                     <Flex direction='column' align='center' justify='center'>
                     <Box

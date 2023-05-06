@@ -42,6 +42,7 @@ const StakingPool = ({ stakingPoolData }) => {
       }/${id}`
     );
     const res = await rawRes.json();
+    console.log({ res });
 
     setStakerInventory(res?.data?.inventory ?? null);
     setStakerInventoryLoading(false);
@@ -253,7 +254,7 @@ const StakingPool = ({ stakingPoolData }) => {
     return stakers.length;
   };
   return (
-    <Layout withAuth>
+    <Layout pageTitle={`Staking Pool #${id}`} withAuth>
       <Flex direction='column' align='center' justify='center'>
         <Text
           sx={(theme) => ({
@@ -520,6 +521,7 @@ const StakingPool = ({ stakingPoolData }) => {
 
 export async function getServerSideProps(ctx) {
   const { id } = ctx.params;
+  console.log({ id });
   const stakingPoolDataRawRes = await fetch(
     `https://nbc-webapp-api-production.up.railway.app/kos/staking-pool-data/${id}`,
     {
@@ -530,6 +532,9 @@ export async function getServerSideProps(ctx) {
       },
     }
   );
+  console.log('AAA');
+  console.log({ stakingPoolDataRawRes });
+
   const stakingPoolDataRes = await stakingPoolDataRawRes.json();
 
   // checks if staking pool data exists or not. if yes, check if `data.stakingPoolData` exists. if not, return null.
