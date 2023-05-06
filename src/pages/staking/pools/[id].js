@@ -37,9 +37,10 @@ const StakingPool = ({ stakingPoolData }) => {
 
   const getStakerInventory = async () => {
     const rawRes = await fetch(
-      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${
-        user && user.attributes.ethAddress
-      }/${id}`
+      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${
+      //   user && user.attributes.ethAddress
+      // }/${id}`
+      `https://run.mocky.io/v3/dc316f90-a606-4276-8060-bcaa116fa956`
     );
     const res = await rawRes.json();
     console.log({ res });
@@ -494,7 +495,10 @@ const StakingPool = ({ stakingPoolData }) => {
           <StakingModal
             stakingPoolId={id}
             showStakingModal={showStakingModal}
-            onCloseStakingModal={() => setShowStakingModal(false)}
+            onCloseStakingModal={() => {
+              setShowStakingModal(false);
+              setPreSubpoolData(null);
+            }}
             subpool={comboSelection}
             loadingStakingRewardAndPoints={loadingStakingRewardAndPoints}
             preSubpoolData={preSubpoolData}

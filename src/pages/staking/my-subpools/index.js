@@ -5,7 +5,6 @@ import {
   Button,
   Divider,
   Flex,
-  Popover,
   Text,
   Tooltip,
 } from '@mantine/core';
@@ -43,7 +42,7 @@ const MySubpools = () => {
     >
       <Flex direction='column' align='center' justify='center'>
         <Text
-          sx={(theme) => ({
+          sx={() => ({
             fontSize: 72,
             fontWeight: 700,
             color: '#42ca9f',
