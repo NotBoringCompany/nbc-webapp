@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Modal,
   SimpleGrid,
@@ -54,7 +54,7 @@ const StakingModal = ({
         method: 'POST',
         headers: {
           'session-token': user && user.get('sessionToken'),
-          'Accept': '*/*',
+          Accept: '*/*',
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
@@ -70,15 +70,6 @@ const StakingModal = ({
     ).catch((err) => console.log(err));
     const stakeResponse = await stakeRequest.json();
     console.log('STAKE RESPONSE', stakeResponse);
-    console.log('ADD SUBPOOL BODY: ', JSON.stringify({
-      keyIds: keyIds,
-      stakerWallet: user && user.attributes.ethAddress,
-      stakingPoolId: parseInt(stakingPoolId),
-      keychainIds: keychains.map((k) => k.tokenID),
-      superiorKeychainId: subpool.superiorKeychain
-        ? subpool.superiorKeychain.tokenID
-        : -1,
-    }))
     // TO DO: handle error if it fails.
     setTimeout(() => {
       setSuccessfulStake(true);
@@ -94,7 +85,7 @@ const StakingModal = ({
         textAlign: 'center',
       })}
     >
-      {loadingStakingRewardAndPoints ? (
+      {loadingStakingRewardAndPoints || !preSubpoolData ? (
         <Loader color='#42ca9f' />
       ) : (
         <>

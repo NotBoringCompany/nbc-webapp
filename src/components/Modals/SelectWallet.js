@@ -11,10 +11,9 @@ const useStyles = createStyles((theme) => ({
     backgroundColor: '#42ca9f',
     width: '100%',
     minHeight: '60px',
-
+    transitionDuration: '200ms',
     '&:hover': {
       transform: 'scale(1.01) translate(1px, -3px)',
-      transitionDuration: '200ms',
       backgroundColor: '#42ca9f',
     },
 
@@ -48,7 +47,7 @@ const SelectWallet = ({ showSelectWallet, setShowSelectWallet }) => {
         opened={showSelectWallet}
         centered
         onClose={() => setShowSelectWallet(false)}
-        title="Please select a wallet."
+        title='Please select a wallet.'
       >
         <Center>
           <Button
@@ -72,7 +71,7 @@ const SelectWallet = ({ showSelectWallet, setShowSelectWallet }) => {
                 {' '}
                 <Image
                   src={MetamaskLogo}
-                  alt="metamask logo"
+                  alt='metamask logo'
                   width={48}
                   height={48}
                   className={classes.image}

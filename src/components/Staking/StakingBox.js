@@ -46,7 +46,6 @@ const StakingBox = ({
         borderRadius: theme.radius.md,
         maxHeight: '100vh',
         minWidth: '50%',
-        marginTop: 50,
       })}
     >
       <Text

@@ -37,9 +37,10 @@ const StakingPool = ({ stakingPoolData }) => {
 
   const getStakerInventory = async () => {
     const rawRes = await fetch(
-      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${
-        user && user.attributes.ethAddress
-      }/${id}`
+      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${
+      //   user && user.attributes.ethAddress
+      // }/${id}`
+      `https://run.mocky.io/v3/dc316f90-a606-4276-8060-bcaa116fa956`
     );
     const res = await rawRes.json();
     console.log({ res });
@@ -266,13 +267,13 @@ const StakingPool = ({ stakingPoolData }) => {
           Staking Pool {id}
         </Text>
         <Button
-          h={'5vh'}
+          h={'56px'}
           onClick={() => router.replace('/staking/my-subpools')}
           sx={(theme) => ({
             backgroundColor: '#42ca9f',
+            transitionDuration: '200ms',
             ':hover': {
               transform: 'scale(1.01) translate(1px, -3px)',
-              transitionDuration: '200ms',
               backgroundColor: '#42ca9f',
             },
           })}
@@ -315,11 +316,15 @@ const StakingPool = ({ stakingPoolData }) => {
         </Flex>
       )}
       {stakingPoolDataExists && (
-        <Flex direction='row' align='center' justify='center'>
+        <Flex
+          sx={{ marginTop: 50 }}
+          direction='row'
+          align='start'
+          justify='center'
+        >
           <Box
             sx={(theme) => ({
               border: '3px solid #42ca9f',
-              marginTop: 80,
               borderRadius: theme.radius.md,
               // textAlign: 'center',
               padding: 20,
@@ -494,7 +499,10 @@ const StakingPool = ({ stakingPoolData }) => {
           <StakingModal
             stakingPoolId={id}
             showStakingModal={showStakingModal}
-            onCloseStakingModal={() => setShowStakingModal(false)}
+            onCloseStakingModal={() => {
+              setShowStakingModal(false);
+              setPreSubpoolData(null);
+            }}
             subpool={comboSelection}
             loadingStakingRewardAndPoints={loadingStakingRewardAndPoints}
             preSubpoolData={preSubpoolData}

@@ -1,4 +1,18 @@
-import { createStyles, Header, Group, Center, Burger, Container, Transition, Paper, Menu, Button, Text, Divider, Flex } from '@mantine/core';
+import {
+  createStyles,
+  Header,
+  Group,
+  Center,
+  Burger,
+  Container,
+  Transition,
+  Paper,
+  Menu,
+  Button,
+  Text,
+  Divider,
+  Flex,
+} from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,7 +20,7 @@ import { useMoralis } from 'react-moralis';
 import NBCLogo from '../../../public/NBCLogo.png';
 import ConnectWalletButton from '../Buttons/ConnectWallet';
 import NavbarMenu from '../Dropdowns/NavbarMenu';
-import { IconChevronDown, IconLogout, IconMoneybag, IconPool, IconUser } from '@tabler/icons';
+import { IconChevronDown, IconMoneybag, IconPool } from '@tabler/icons';
 import { useRouter } from 'next/router';
 
 const HEADER_HEIGHT = 60;
@@ -58,10 +72,9 @@ const useStyles = createStyles((theme) => ({
 
   connectButton: {
     backgroundColor: '#42ca9f',
-
+    transitionDuration: '200ms',
     '&:hover': {
       transform: 'scale(1.01) translate(1px, -3px)',
-      transitionDuration: '200ms',
       backgroundColor: '#42ca9f',
     },
 
@@ -72,10 +85,9 @@ const useStyles = createStyles((theme) => ({
 
   connectButton: {
     backgroundColor: '#42ca9f',
-
+    transitionDuration: '200ms',
     '&:hover': {
       transform: 'scale(1.01) translate(1px, -3px)',
-      transitionDuration: '200ms',
       backgroundColor: '#42ca9f',
     },
 
@@ -94,19 +106,29 @@ const useStyles = createStyles((theme) => ({
     padding: '8px 12px',
     borderRadius: theme.radius.sm,
     textDecoration: 'none',
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[0] : theme.colors.gray[7],
+    color:
+      theme.colorScheme === 'dark'
+        ? theme.colors.dark[0]
+        : theme.colors.gray[7],
     fontSize: theme.fontSizes.sm,
     fontWeight: 500,
 
     '&:hover': {
-      backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[6] : theme.colors.gray[0],
+      backgroundColor:
+        theme.colorScheme === 'dark'
+          ? theme.colors.dark[6]
+          : theme.colors.gray[0],
     },
   },
 
   linkActive: {
     '&, &:hover': {
-      backgroundColor: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).background,
-      color: theme.fn.variant({ variant: 'light', color: theme.primaryColor }).color,
+      backgroundColor: theme.fn.variant({
+        variant: 'light',
+        color: theme.primaryColor,
+      }).background,
+      color: theme.fn.variant({ variant: 'light', color: theme.primaryColor })
+        .color,
     },
   },
 
@@ -114,13 +136,13 @@ const useStyles = createStyles((theme) => ({
     marginRight: 5,
   },
 }));
-  
-const NavbarItems = (props) => {
-    const enableDropdown = props.isDropdown;
-    const { classes } = useStyles();
-    const { isAuthenticated } = useMoralis();
 
-    const router = useRouter();
+const NavbarItems = (props) => {
+  const enableDropdown = props.isDropdown;
+  const { classes } = useStyles();
+  const { isAuthenticated } = useMoralis();
+
+  const router = useRouter();
 
     if (enableDropdown) {
         return (
@@ -147,36 +169,55 @@ const NavbarItems = (props) => {
                     </Button>
                   </Menu.Target>
 
-                  <Menu.Dropdown className={classes.menuDropdown}>
-                    <Menu.Item
-                      onClick={() => router.push('/staking')}
-                      icon={<IconMoneybag size={14} />}
-                    >
-                      <Text>Staking Pools</Text>
-                    </Menu.Item>
-                    <Divider />
-                    <Menu.Item 
-                    icon={<IconPool size={14} />}
-                    onClick={() => router.replace('/staking/my-subpools')}
-                    >
-                      My Subpools
-                    </Menu.Item>
-                  </Menu.Dropdown>
-                </Menu>
-            </Center>
-            <Center className={classes.centerItems}>
-                { !isAuthenticated ? (
-                  <ConnectWalletButton />
-                ) : (
-                  <NavbarMenu />
-                )}
-            </Center>
-        </>
-        );
-    }
+            <Menu.Dropdown className={classes.menuDropdown}>
+              <Menu.Item
+                onClick={() => router.push('/staking')}
+                icon={<IconMoneybag size={14} />}
+              >
+                <Text>Staking Pools</Text>
+              </Menu.Item>
+              <Divider />
+              <Menu.Item
+                icon={<IconPool size={14} />}
+                onClick={() => router.replace('/staking/my-subpools')}
+              >
+                My Subpools
+              </Menu.Item>
+            </Menu.Dropdown>
+          </Menu>
+        </Center>
+        <Center className={classes.centerItems}>
+          {!isAuthenticated ? (
+            <Flex direction={'column'}>
+              {' '}
+              <ConnectWalletButton />{' '}
+              <Text
+                mt='sm'
+                align='center'
+                sx={(theme) => ({
+                  a: {
+                    color: theme.colors.dark[0],
+                    textDecoration: 'none',
+                    fontWeight: 600,
+                    fontSize: 14,
+                  },
+                })}
+              >
+                <Link href='/login'>Log in</Link>
+              </Text>
+            </Flex>
+          ) : (
+            <NavbarMenu />
+          )}
+        </Center>
+      </>
+    );
+  }
 
+  if (enableDropdown) {
     return (
-        <>
+      <>
+        <Center className={classes.centerItems}>
           <Menu shadow='md' width={200}>
             <Menu.Target>
               <Button
@@ -192,9 +233,15 @@ const NavbarItems = (props) => {
                   }
                 })}
               >
-                <Text sx={(theme) => ({
-                  color: theme.colors.dark[0],
-                })}>Staking</Text>
+                <Text
+                  sx={(theme) => ({
+                    color: theme.colors.dark[0],
+                    marginRight: '2px',
+                  })}
+                >
+                  Staking
+                </Text>
+                <IconChevronDown size={15} />
               </Button>
             </Menu.Target>
 
@@ -206,55 +253,149 @@ const NavbarItems = (props) => {
                 <Text>Staking Pools</Text>
               </Menu.Item>
               <Divider />
-              <Menu.Item 
-              icon={<IconPool size={14} />}
-              onClick={() => router.replace('/staking/my-subpools')}
+              <Menu.Item
+                icon={<IconPool size={14} />}
+                onClick={() => router.replace('/staking/my-subpools')}
               >
                 My Subpools
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
-          { !isAuthenticated ? (
-            <ConnectWalletButton />
+        </Center>
+        <Center className={classes.centerItems}>
+          {!isAuthenticated ? (
+            <Flex direction={'column'}>
+              {' '}
+              <ConnectWalletButton />{' '}
+              <Text
+                mt='sm'
+                align='center'
+                sx={(theme) => ({
+                  a: {
+                    color: theme.colors.dark[0],
+                    textDecoration: 'none',
+                    fontWeight: 600,
+                    fontSize: 14,
+                  },
+                })}
+              >
+                <Link href='/login'>Log in</Link>
+              </Text>
+            </Flex>
           ) : (
             <NavbarMenu />
           )}
-        </>
+        </Center>
+      </>
     );
-}
+  }
+
+  return (
+    <>
+      <Menu shadow='md' width={200}>
+        <Menu.Target>
+          <Button
+            sx={(theme) => ({
+              backgroundColor: '#000000',
+              ':hover': {
+                backgroundColor: '#000000',
+              },
+              ':active': {
+                backgroundColor: '#000000',
+              },
+            })}
+          >
+            <Text
+              sx={(theme) => ({
+                marginRight: '2px',
+                color: theme.colors.dark[0],
+              })}
+            >
+              Staking
+            </Text>
+            <IconChevronDown size={15} />
+          </Button>
+        </Menu.Target>
+
+        <Menu.Dropdown className={classes.menuDropdown}>
+          <Menu.Item
+            onClick={() => router.push('/staking')}
+            icon={<IconMoneybag size={14} />}
+          >
+            <Text>Staking Pools</Text>
+          </Menu.Item>
+          <Divider />
+          <Menu.Item
+            icon={<IconPool size={14} />}
+            onClick={() => router.replace('/staking/my-subpools')}
+          >
+            My Subpools
+          </Menu.Item>
+        </Menu.Dropdown>
+      </Menu>
+      {!isAuthenticated ? (
+        <>
+          <ConnectWalletButton />
+          <Text
+            sx={(theme) => ({
+              a: {
+                color: theme.colors.dark[0],
+                textDecoration: 'none',
+                fontWeight: 600,
+                fontSize: 14,
+              },
+            })}
+          >
+            <Link href='/login'>Log in</Link>
+          </Text>
+        </>
+      ) : (
+        <NavbarMenu />
+      )}
+    </>
+  );
+};
 
 const MainNavbar = () => {
-    const [ opened, { toggle }] = useDisclosure(false);
-    const { classes } = useStyles();
-    return (
-      <Header 
-        sx={(theme) => ({
-          borderBottom: 0, 
-          backgroundColor: theme.fn.rgba(theme.black, 0)
-        })}
-        height={HEADER_HEIGHT} 
-        mb={20} 
-        className={classes.header}
-      >
-        <Link href='/'>
-          <Image src={NBCLogo} alt='nbc logo' width={40} height={40} priority />
-        </Link>
-        <Group spacing={20} className={classes.links}>
-          <NavbarItems />
-        </Group>
+  const [opened, { toggle }] = useDisclosure(false);
+  const { classes } = useStyles();
+  return (
+    <Header
+      sx={(theme) => ({
+        borderBottom: 0,
+        backgroundColor: theme.fn.rgba(theme.black, 0),
+      })}
+      height={HEADER_HEIGHT}
+      mb={20}
+      className={classes.header}
+    >
+      <Link href='/'>
+        <Image src={NBCLogo} alt='nbc logo' width={40} height={40} priority />
+      </Link>
+      <Group spacing={20} className={classes.links}>
+        <NavbarItems />
+      </Group>
 
-        <Burger opened={opened} onClick={toggle} className={classes.burger} size='sm' />
-        <Transition transition='pop-top-right' duration={200} mounted={opened}>
-          {(styles) => (
-            <Paper className={classes.dropdown} sx={(theme) => ({
+      <Burger
+        opened={opened}
+        onClick={toggle}
+        className={classes.burger}
+        size='sm'
+      />
+      <Transition transition='pop-top-right' duration={200} mounted={opened}>
+        {(styles) => (
+          <Paper
+            className={classes.dropdown}
+            sx={(theme) => ({
               backgroundColor: '#000000',
-            })}>
-              <NavbarItems isDropdown />
-            </Paper>
-          )}
-        </Transition>
-      </Header>
-    )
-}
+            })}
+          >
+            <NavbarItems isDropdown />
+          </Paper>
+        )}
+      </Transition>
+    </Header>
+  );
+};
 
 export default MainNavbar;

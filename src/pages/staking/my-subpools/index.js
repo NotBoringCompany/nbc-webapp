@@ -5,14 +5,12 @@ import {
   Button,
   Divider,
   Flex,
-  Popover,
   Text,
   Tooltip,
 } from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
 import { IconAlertOctagon } from '@tabler/icons';
 import { useRouter } from 'next/router';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
 
 const MySubpools = () => {
@@ -20,7 +18,7 @@ const MySubpools = () => {
   const router = useRouter();
   const [stakerSubpools, setStakerSubpools] = useState(null);
 
-  const fetchStakerSubpools = async () => {
+  const fetchStakerSubpools = useCallback(async () => {
     const subpoolRawRes = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/get-staker-subpools/${
         user && user.attributes.ethAddress
@@ -29,11 +27,13 @@ const MySubpools = () => {
     const subpoolRes = await subpoolRawRes.json();
 
     setStakerSubpools(subpoolRes?.data?.stakerSubpools);
-  };
+  }, [user]);
 
   useEffect(() => {
-    fetchStakerSubpools();
-  }, [user, user?.attributes]);
+    if (user && user.attributes.ethAddress) {
+      fetchStakerSubpools();
+    }
+  }, [fetchStakerSubpools, user, user?.attributes.ethAddress]);
 
   return (
     <Layout
@@ -43,7 +43,7 @@ const MySubpools = () => {
     >
       <Flex direction='column' align='center' justify='center'>
         <Text
-          sx={(theme) => ({
+          sx={() => ({
             fontSize: 72,
             fontWeight: 700,
             color: '#42ca9f',
@@ -69,16 +69,13 @@ const MySubpools = () => {
           <Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
             SUBPOOL LIST
           </Text>
-          <Flex justify='center'>
-            <Divider
-              color='#42ca9f'
-              style={{
-                width: '20%',
-                marginLeft: '40%',
-                marginRight: '40%',
-              }}
-            />
-          </Flex>
+          <Divider
+            color='#42ca9f'
+            style={{
+              width: '20%',
+              margin: '0 auto',
+            }}
+          />
           {!stakerSubpools && (
             <Text size={20} style={{ marginTop: 30, marginBottom: 30 }}>
               You don{"'"}t have any subpools yet. Go to the staking page and
@@ -91,6 +88,7 @@ const MySubpools = () => {
                 <Flex
                   direction='row'
                   align='center'
+                  justify={'space-between'}
                   sx={(theme) => ({
                     padding: '20px 20px',
                   })}
