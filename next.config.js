@@ -14,7 +14,7 @@ module.exports = withVideos(
 				headers: createSecureHeaders({
 				  contentSecurityPolicy: {
 					directives: {
-					  frameAncestors: ["self", "vitals.vercel-insights.com"],
+					  frameAncestors: ["self", "vitals.vercel-insights.com", "https://assets.vercel.com"],
 					  styleSrc: ["'self'", "'unsafe-inline'"],
 					  imgSrc: [
 						"'self'",
@@ -34,6 +34,6 @@ module.exports = withVideos(
 				}),
 			  },
 			];
-		}
+		},
 	})
 );

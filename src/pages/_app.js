@@ -1,11 +1,10 @@
 // import '@/styles/globals.css';
-import Layout from '@/components/Layout/Layout';
 import { MantineProvider, Modal } from '@mantine/core';
 import CustomFonts from '@/components/Globals/CustomFonts';
 import { MoralisProvider } from 'react-moralis';
 import GlobalStyles from '@/components/Globals/Styles';
-import AuthModal from '@/components/AuthModal/AuthModal';
-import{ Analytics } from '@vercel/analytics/react';
+import AuthModal from '@/components/Modals/AuthModal';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -22,6 +21,7 @@ export default function App({ Component, pageProps }) {
           loader: 'oval',
           colors: {
             nbcGreen: ['#42ca9f'],
+            nbcRed: ['#ca4242'],
           },
         }}
       >

@@ -1,13 +1,14 @@
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { Box, Flex, Loader, ScrollArea, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { Container } from '@mantine/core';
 import MainNavbar from '../Navbar/Navbar';
 import { useMoralis } from 'react-moralis';
 import { IconAlertOctagon } from '@tabler/icons';
-import { useRouter } from 'next/router';
 
 const AuthWall = (
-  <Flex direction="column" align="center" justify="center">
+  <Flex direction='column' align='center' justify='center'>
     <Box
       sx={(theme) => ({
         borderRadius: theme.radius.md,
@@ -18,9 +19,9 @@ const AuthWall = (
         marginTop: 30,
       })}
     >
-      <Flex direction="row" align="center" justify="center">
+      <Flex direction='row' align='center' justify='center'>
         <IconAlertOctagon
-          color="#ca4242"
+          color='#ca4242'
           size={40}
           style={{ marginRight: 10 }}
         />
@@ -34,7 +35,7 @@ const AuthWall = (
           YOU ARE NOT LOGGED IN
         </Text>
       </Flex>
-      <Text size="lg">Please connect your wallet to access this page.</Text>
+      <Text size='lg'>Please connect your wallet to access this page.</Text>
     </Box>
   </Flex>
 );
@@ -44,11 +45,16 @@ const Layout = ({
   authWallComponent,
   withAuth = false,
   mustNotAuth = false,
+  pageTitle,
+  description = 'Building immersive Web3-native IP franchises.',
+  keywords = 'realm hunter, multiplayer game, nft gaming, nft', // seo keywords, separated by commas
 }) => {
   const { isAuthenticated, isAuthUndefined } = useMoralis();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const authWall = !!authWallComponent ? authWallComponent : AuthWall;
+
+  const title = !!pageTitle ? `${pageTitle} | Not Boring Company` : `Not Boring Company`;
 
   useEffect(() => {
     if (!isAuthUndefined) {
@@ -65,32 +71,43 @@ const Layout = ({
   }, [isAuthUndefined, isAuthenticated, mustNotAuth, router]);
 
   return (
-    <Flex direction="column">
-      <MainNavbar />
-      <ScrollArea h={'85vh'}>
-        <Container
-          sx={{
-            width: '100%',
-            maxWidth: '100%',
-            position: 'relative',
-          }}
-          px={'40px'}
-        >
-          {loading ? (
-            <Loader sx={{ position: 'absolute', left: '50%' }} color="green" />
-          ) : (
-            <>
-              {' '}
-              {withAuth ? (
-                <>{isAuthenticated ? children : authWall}</>
-              ) : (
-                children
-              )}
-            </>
-          )}
-        </Container>
-      </ScrollArea>
-    </Flex>
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name='description' content={description} />
+        <meta name='keywords' content={keywords} />
+        <link rel='shortcut icon' href='/favicon/favicon.ico' />
+      </Head>
+      <Flex direction='column'>
+        <MainNavbar />
+        <ScrollArea h={'calc(100vh - 80px)'}>
+          <Container
+            sx={{
+              width: '100%',
+              maxWidth: '100%',
+              position: 'relative',
+            }}
+            px={'40px'}
+          >
+            {loading ? (
+              <Loader
+                sx={{ position: 'absolute', left: '50%' }}
+                color='green'
+              />
+            ) : (
+              <>
+                {' '}
+                {withAuth ? (
+                  <>{isAuthenticated ? children : authWall}</>
+                ) : (
+                  children
+                )}
+              </>
+            )}
+          </Container>
+        </ScrollArea>
+      </Flex>
+    </>
   );
 };
 

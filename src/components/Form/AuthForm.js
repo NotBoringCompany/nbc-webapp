@@ -2,7 +2,6 @@ import { useForm } from '@mantine/form';
 import { useMoralis } from 'react-moralis';
 import { Text, TextInput, Button, Loader } from '@mantine/core';
 import moralisErrorMessage from '@/utils/moralisErrorMessage';
-import { randomBytes, sha256 } from 'ethers/lib/utils.js';
 import CryptoJS from 'crypto-js';
 
 /**
@@ -44,17 +43,18 @@ const AuthForm = ({ forLogin = false }) => {
     const { email, password } = formData;
     if (!forLogin) {
       if (isAuthenticated && user) {
-        const uniqueHash = CryptoJS.SHA256(CryptoJS.lib.WordArray.random(64).toString(CryptoJS.enc.Base64));
+        const uniqueHash = CryptoJS.SHA256(
+          CryptoJS.lib.WordArray.random(64).toString(CryptoJS.enc.Base64)
+        );
 
-        await setUserData({ 
-          email: email, 
+        await setUserData({
+          email: email,
           password: password,
           uniqueHash: uniqueHash.toString(),
         });
       }
     } else {
-      const x = await login(email, password);
-      console.log({ x });
+      await login(email, password);
     }
   };
 
@@ -89,7 +89,7 @@ const AuthForm = ({ forLogin = false }) => {
       </Text>
       <form onSubmit={form.onSubmit(handleFormSubmit)}>
         <TextInput
-          my="sm"
+          my='sm'
           sx={(theme) => ({
             input: {
               maxWidth: '400px',
@@ -103,13 +103,13 @@ const AuthForm = ({ forLogin = false }) => {
               },
             },
           })}
-          label="Email"
-          type="email"
-          placeholder="Email"
+          label='Email'
+          type='email'
+          placeholder='Email'
           {...form.getInputProps('email')}
         />
         <TextInput
-          label="Password"
+          label='Password'
           sx={(theme) => ({
             input: {
               maxWidth: '400px',
@@ -123,23 +123,23 @@ const AuthForm = ({ forLogin = false }) => {
               },
             },
           })}
-          type="password"
-          placeholder="Password"
+          type='password'
+          placeholder='Password'
           {...form.getInputProps('password')}
         />
 
         {!!authError && forLogin && (
-          <Text sx={{ color: '#ca4242' }} mt="md">
+          <Text sx={{ color: '#ca4242' }} mt='md'>
             {moralisErrorMessage('auth', authError.code)}
           </Text>
         )}
 
         <Button
-          h="48px"
-          miw="200px"
+          h='48px'
+          miw='200px'
           disabled={loading}
-          type="submit"
-          mt="lg"
+          type='submit'
+          mt='lg'
           sx={{
             background: '#42ca9f',
             transitionDuration: '200ms',
@@ -150,11 +150,11 @@ const AuthForm = ({ forLogin = false }) => {
           }}
         >
           {loading ? (
-            <Loader color="green" />
+            <Loader color='green' />
           ) : (
-            <Text size="md">
+            <Text size='md'>
               {forLogin ? (
-                'Log in'
+                'Login'
               ) : (
                 <>{hasEmail ? `Change` : `Set`} Email & Password</>
               )}

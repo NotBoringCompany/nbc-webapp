@@ -8,7 +8,11 @@ const Accountdashboard = () => {
   const userEthAddress = user && user.attributes.ethAddress;
   const userHasEmail = user && !!user.attributes.email;
   return (
-    <Layout withAuth>
+    <Layout
+      pageTitle='Account Dashboard'
+      description='See your account details here'
+      withAuth
+    >
       <Container maw='1024px' direction='column'>
         <Text
           weight='500'

@@ -11,10 +11,9 @@ const useStyles = createStyles((theme) => ({
 
   connectButton: {
     backgroundColor: '#42ca9f',
-
+    transitionDuration: '200ms',
     '&:hover': {
       transform: 'scale(1.01) translate(1px, -3px)',
-      transitionDuration: '200ms',
       backgroundColor: '#42ca9f',
     },
 

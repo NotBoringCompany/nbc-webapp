@@ -1,12 +1,24 @@
 import AuthForm from '@/components/Form/AuthForm';
 import Layout from '@/components/Layout/Layout';
-import { Flex, Title } from '@mantine/core';
+import ForgotPasswordRequestModal from '@/components/Modals/ForgotPasswordRequestModal';
+import { Flex, Text, Button } from '@mantine/core';
+import { useState } from 'react';
 
 const Login = () => {
+  const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
+    useState(false);
   return (
-    <Layout mustNotAuth>
+    <Layout
+      pageTitle={'Login'}
+      description='Log in to your Realm Hunter account'
+      mustNotAuth
+    >
+      <ForgotPasswordRequestModal
+        isOpen={isForgotPasswordModalOpen}
+        onClose={() => setIsForgotPasswordModalOpen(false)}
+      />
       <Flex
-        direction="column"
+        direction='column'
         sx={(theme) => ({
           margin: 'auto',
           width: '100%',
@@ -17,17 +29,34 @@ const Login = () => {
           border: `2px solid ${theme.colors.nbcGreen[0]}`,
         })}
       >
-        <Title
+        <Text
           sx={(theme) => ({
             margin: 0,
             marginBottom: '8px',
             color: theme.colors.nbcGreen[0],
-            fontWeight: 700,
+            fontWeight: 600,
+            fontSize: 32,
           })}
         >
-          Log In
-        </Title>
+          Login
+        </Text>
         <AuthForm forLogin />
+        <Button
+          onClick={() => setIsForgotPasswordModalOpen(true)}
+          mt='md'
+          variant='subtle'
+          sx={(theme) => ({
+            color: theme.colors.nbcGreen[0],
+            justifyContent: 'flex-start',
+            padding: 0,
+            width: 'fit-content',
+            ':hover': {
+              background: 'transparent',
+            },
+          })}
+        >
+          Forgot password
+        </Button>
       </Flex>
     </Layout>
   );
