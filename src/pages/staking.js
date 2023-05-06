@@ -1,6 +1,5 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Badge, Box, Button, Divider, Flex, Text } from '@mantine/core';
-import maxSelectedKey from '@/utils/kosData';
 import Layout from '@/components/Layout/Layout';
 import RECToken from '../../public/recToken.png';
 import Image from 'next/image';
@@ -42,37 +41,33 @@ export default function Staking({ stakingPoolData }) {
           <Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
             ACTIVE STAKING POOLS
           </Text>
-          <Flex justify='center'>
-            <Divider
-              color='#42ca9f'
-              style={{
-                width: '20%',
-                marginLeft: '40%',
-                marginRight: '40%',
-              }}
-            />
-          </Flex>
+          <Divider
+            color='#42ca9f'
+            style={{
+              width: '20%',
+              margin: '0 auto',
+            }}
+          />
           {!stakeablePools && !ongoingPools && (
             <Text size={20} style={{ marginTop: 30, marginBottom: 30 }}>
               There are currently no active staking pools to stake in.
             </Text>
           )}
+
           {stakeablePools &&
             stakeablePools.map((pool) => (
               <Fragment key={pool.StakingPoolID}>
-                <Flex justify='center' align='center'>
-                  <Divider
-                    color='#42ca9f'
-                    style={{
-                      width: '20%',
-                      marginLeft: '40%',
-                      marginRight: '40%',
-                    }}
-                  />
-                </Flex>
+                <Divider
+                  color='#42ca9f'
+                  style={{
+                    width: '20%',
+                    margin: '0 auto',
+                  }}
+                />
                 <Flex
                   direction='row'
                   align='center'
+                  justify='space-between'
                   sx={(theme) => ({
                     padding: '20px 20px',
                   })}
@@ -218,6 +213,7 @@ export default function Staking({ stakingPoolData }) {
                 <Flex
                   direction='row'
                   align='center'
+                  justify='space-between'
                   sx={(theme) => ({
                     padding: '20px 20px',
                   })}
@@ -370,16 +366,13 @@ export default function Staking({ stakingPoolData }) {
           <Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
             CLOSED STAKING POOLS
           </Text>
-          <Flex justify='center'>
-            <Divider
-              color='grey'
-              style={{
-                width: '20%',
-                marginLeft: '40%',
-                marginRight: '40%',
-              }}
-            />
-          </Flex>
+          <Divider
+            color='grey'
+            style={{
+              width: '20%',
+              margin: '0 auto',
+            }}
+          />
           {!closedPools && (
             <Text size={20} style={{ marginTop: 30, marginBottom: 30 }}>
               There are currently no closed staking pools.
@@ -391,6 +384,7 @@ export default function Staking({ stakingPoolData }) {
                 <Flex
                   direction='row'
                   align='center'
+                  justify='space-between'
                   sx={(theme) => ({
                     padding: '20px 20px',
                   })}
