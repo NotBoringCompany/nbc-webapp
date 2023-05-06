@@ -4,6 +4,7 @@ import CustomFonts from '@/components/Globals/CustomFonts';
 import { MoralisProvider } from 'react-moralis';
 import GlobalStyles from '@/components/Globals/Styles';
 import AuthModal from '@/components/Modals/AuthModal';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App({ Component, pageProps }) {
   return (
