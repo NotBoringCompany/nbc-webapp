@@ -28,6 +28,7 @@ export default function App({ Component, pageProps }) {
         <GlobalStyles />
         <CustomFonts />
         <AuthModal />
+        <Analytics />
         <Component {...pageProps} />
       </MantineProvider>
     </MoralisProvider>
