@@ -86,7 +86,7 @@ export default function Home() {
                   },
               })}
             >
-              ALPHA V1.0: <Link href='https://drive.google.com/uc?export=download&id=1w6bsqIvBPX1Y-YpeLJafxCVL57YIRo9g' download target='_blank'>[Click here to download]</Link>
+              ALPHA V1.0: <Link href='https://drive.google.com/uc?export=download&id=1TsfxoRcNAQWhiRksDamZhx3lG8xHGN3Q' download target='_blank'>[Click here to download]</Link>
             </Text>
           )}
           <Text size={15} mt={30}>*Note: You don{"'t"} need a Key to gain access to the download link, <strong><br />however you are required to own AT LEAST 1 Key to log in and play the alpha.</strong></Text>
