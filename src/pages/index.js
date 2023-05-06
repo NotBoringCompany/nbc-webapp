@@ -84,7 +84,7 @@ export default function Home() {
           {isAuthenticated && emailConnected && (
             <Text size={18} color='#42ca9f' mt={30} weight={700}>ALPHA LINK:  </Text>
           )}
-          <Text size={15} mt={30}>*Note: You don{"'t"} need a Key to gain access to the download link, <strong><br />however you are required to own AT LEAST 1 Key to log in to the game.</strong></Text>
+          <Text size={15} mt={30}>*Note: You don{"'t"} need a Key to gain access to the download link, <strong><br />however you are required to own AT LEAST 1 Key to log in and play the alpha.</strong></Text>
         </Box>
       </Flex>
     </Layout>
