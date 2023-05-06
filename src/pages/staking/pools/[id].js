@@ -267,13 +267,13 @@ const StakingPool = ({ stakingPoolData }) => {
           Staking Pool {id}
         </Text>
         <Button
-          h={'5vh'}
+          h={'56px'}
           onClick={() => router.replace('/staking/my-subpools')}
           sx={(theme) => ({
             backgroundColor: '#42ca9f',
+            transitionDuration: '200ms',
             ':hover': {
               transform: 'scale(1.01) translate(1px, -3px)',
-              transitionDuration: '200ms',
               backgroundColor: '#42ca9f',
             },
           })}
@@ -316,11 +316,15 @@ const StakingPool = ({ stakingPoolData }) => {
         </Flex>
       )}
       {stakingPoolDataExists && (
-        <Flex direction='row' align='center' justify='center'>
+        <Flex
+          sx={{ marginTop: 50 }}
+          direction='row'
+          align='start'
+          justify='center'
+        >
           <Box
             sx={(theme) => ({
               border: '3px solid #42ca9f',
-              marginTop: 80,
               borderRadius: theme.radius.md,
               // textAlign: 'center',
               padding: 20,
