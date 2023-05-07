@@ -265,12 +265,12 @@ const NavbarItems = (props) => {
         <Menu.Target>
           <Button
             sx={(theme) => ({
-              backgroundColor: '#000000',
+              backgroundColor: 'transparent',
               ':hover': {
-                backgroundColor: '#000000',
+                backgroundColor: 'transparent',
               },
               ':active': {
-                backgroundColor: '#000000',
+                backgroundColor: 'transparent',
               },
             })}
           >

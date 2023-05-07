@@ -4,8 +4,9 @@ import { Box, Flex, Loader, ScrollArea, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { Container } from '@mantine/core';
 import MainNavbar from '../Navbar/Navbar';
-import { useMoralis } from 'react-moralis';
+import { useMoralis, useChain } from 'react-moralis';
 import { IconAlertOctagon } from '@tabler/icons';
+import WrongNetwork from '../Modals/WrongNetwork';
 
 const AuthWall = (
   <Flex direction='column' align='center' justify='center'>
@@ -50,9 +51,14 @@ const Layout = ({
   keywords = 'realm hunter, multiplayer game, nft gaming, nft', // seo keywords, separated by commas
 }) => {
   const { isAuthenticated, isAuthUndefined } = useMoralis();
+  const { switchNetwork, chainId } = useChain();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const authWall = !!authWallComponent ? authWallComponent : AuthWall;
+
+  const [showWrongNetworkModal, setShowWrongNetworkModal] = useState(false);
+
+  console.log('chain id: ', chainId);
 
   const title = !!pageTitle ? `${pageTitle} | Not Boring Company` : `Not Boring Company`;
 
@@ -105,6 +111,7 @@ const Layout = ({
               </>
             )}
           </Container>
+          <WrongNetwork setShowWrongNetworkModal={setShowWrongNetworkModal} isAuthenticated={isAuthenticated} chainId={chainId} switchNetwork={switchNetwork} />
         </ScrollArea>
       </Flex>
     </>
