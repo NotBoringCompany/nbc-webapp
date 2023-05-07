@@ -42,7 +42,6 @@ const StakingPool = ({ stakingPoolData }) => {
       }/${id}`
     );
     const res = await rawRes.json();
-    console.log({ res });
 
     setStakerInventory(res?.data?.inventory ?? null);
     setStakerInventoryLoading(false);
@@ -58,6 +57,7 @@ const StakingPool = ({ stakingPoolData }) => {
     const res = await rawRes.json();
 
     setStakerTotalSubpoolPoints(res?.data?.totalSubpoolPoints ?? 0);
+    console.log('staker total subpool points set')
   };
 
   const getTotalTokenShare = async () => {
@@ -69,6 +69,7 @@ const StakingPool = ({ stakingPoolData }) => {
     const res = await rawRes.json();
 
     setTotalTokenShare(res?.data?.totalTokenShare ?? 0);
+    console.log('total token share set')
   };
 
   const checkSubpoolComboEligibility = async () => {
@@ -80,8 +81,8 @@ const StakingPool = ({ stakingPoolData }) => {
     const res = await rawRes.json();
 
     const eligible = res?.data?.isEligible === true ? true : false;
-    console.log('eligible', eligible);
     setSubpoolComboEligible(eligible);
+    console.log('subpool combo eligibility set')
   };
 
   useEffect(() => {
@@ -528,7 +529,6 @@ const StakingPool = ({ stakingPoolData }) => {
 
 export async function getServerSideProps(ctx) {
   const { id } = ctx.params;
-  console.log({ id });
   const stakingPoolDataRawRes = await fetch(
     `https://nbc-webapp-api-production.up.railway.app/kos/staking-pool-data/${id}`,
     {
@@ -539,8 +539,6 @@ export async function getServerSideProps(ctx) {
       },
     }
   );
-  console.log('AAA');
-  console.log({ stakingPoolDataRawRes });
 
   const stakingPoolDataRes = await stakingPoolDataRawRes.json();
 

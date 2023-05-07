@@ -65,8 +65,6 @@ const MySubpool = ({
     );
 
     const res = await rawRes.json();
-    console.log('session token: ', user && user.get('sessionToken'));
-    console.log('unstake res ', res);
 
     setTimeout(() => {
       setUnstakeDone(true);
