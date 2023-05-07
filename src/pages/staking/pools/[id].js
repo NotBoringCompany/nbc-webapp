@@ -40,7 +40,7 @@ const StakingPool = ({ stakingPoolData }) => {
       `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${
         user && user.attributes.ethAddress
       }/${id}`
-    );
+    ).catch((err) => console.log(err));
     const res = await rawRes.json();
 
     setStakerInventory(res?.data?.inventory ?? null);
