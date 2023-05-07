@@ -46,10 +46,14 @@ export default function Home() {
             justify='center'
             direction='column'
           >
-            <Text size={48} weight={700} color='white' mb={20}>
+            <Text size={48} weight={700} color='white' mb={20} sx={(theme) => ({
+              lineHeight: 1,
+            })}>
               REALM HUNTER: ALPHA RELEASE
             </Text>
-            <Text size={24} weight={500}>
+            <Text size={24} weight={500} sx={(theme) => ({
+              lineHeight: 1,
+            })}>
               Alpha V1.0 (PC) is now out for Key Of Salvation holders!
             </Text>
             <Text size={16} weight={500} italic mt={5}>
