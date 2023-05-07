@@ -199,7 +199,7 @@ const MySubpools = () => {
                     >
                       Claimable?
                     </Text>
-                    {!pool.RewardClaimable && (
+                    {!pool.RewardClaimable && !pool.RewardClaimed && (
                       <Tooltip label='Subpool is still ongoing. Cannot claim yet.'>
                         <Badge
                           sx={(theme) => ({
@@ -227,7 +227,7 @@ const MySubpools = () => {
                         </Badge>
                       </Tooltip>
                     )}
-                    {pool.RewardClaimable && pool.RewardClaimed && (
+                    {pool.RewardClaimed && (
                       <Tooltip label='Reward claimed.'>
                         <Badge
                           sx={(theme) => ({
