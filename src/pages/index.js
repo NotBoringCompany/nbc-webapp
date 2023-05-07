@@ -85,7 +85,7 @@ export default function Home() {
               </Button>
             )}
             {emailConnected && (
-              <Link href='https://drive.google.com/uc?export=download&id=1TsfxoRcNAQWhiRksDamZhx3lG8xHGN3Q' download target='_blank'>
+              <Link href='https://drive.google.com/file/d/1ao78WigoaSl3mopr0IBe_ns6i7rKoJvt/view?usp=sharing' download target='_blank'>
                 <Button 
                   sx={(theme) => ({
                     backgroundColor: '#42ca9f',
