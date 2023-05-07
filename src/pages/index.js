@@ -10,7 +10,7 @@ import Image from 'next/image';
 export default function Home() {
   const { isAuthenticated, user } = useMoralis();
   const emailConnected = user && user.get('emailAddress') !== null;
-  // checks if the user has AT LEAST 1 key of salvation
+  // checks if the user has AT LEAST 1 key of salvation.
   const [hasKey, setHasKey] = useState(false);
 
   const ownsKey = useCallback(async () => {
