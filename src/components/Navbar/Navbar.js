@@ -203,7 +203,11 @@ const NavbarItems = (props) => {
   if (enableDropdown) {
     return (
       <>
+<<<<<<< HEAD
         <Center className={classes.centerItems}>
+=======
+        {/* <Center className={classes.centerItems}>
+>>>>>>> main
           <Menu shadow='md' width={200}>
             <Menu.Target>
               <Button
@@ -222,7 +226,11 @@ const NavbarItems = (props) => {
                 <Text
                   sx={(theme) => ({
                     color: theme.colors.dark[0],
+<<<<<<< HEAD
                     marginLeft: '2px',
+=======
+                    marginRight: '2px',
+>>>>>>> main
                   })}
                 >
                   Staking
@@ -247,7 +255,7 @@ const NavbarItems = (props) => {
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
-        </Center>
+        </Center> */}
         <Center className={classes.centerItems}>
           {!isAuthenticated ? (
             <LoginDropdown onShowSelectWallet={props.onShowSelectWallet} />
@@ -261,7 +269,7 @@ const NavbarItems = (props) => {
 
   return (
     <>
-      <Menu shadow='md' width={200}>
+      {/* <Menu shadow='md' width={200}>
         <Menu.Target>
           <Button
             sx={(theme) => ({
@@ -301,12 +309,35 @@ const NavbarItems = (props) => {
             My Subpools
           </Menu.Item>
         </Menu.Dropdown>
+<<<<<<< HEAD
         {!isAuthenticated ? (
           <LoginDropdown onShowSelectWallet={props.onShowSelectWallet} />
         ) : (
           <NavbarMenu />
         )}
       </Menu>
+=======
+      </Menu> */}
+      {!isAuthenticated ? (
+        <>
+          <ConnectWalletButton />
+          <Text
+            sx={(theme) => ({
+              a: {
+                color: theme.colors.dark[0],
+                textDecoration: 'none',
+                fontWeight: 600,
+                fontSize: 14,
+              },
+            })}
+          >
+            <Link href='/login'>Login</Link>
+          </Text>
+        </>
+      ) : (
+        <NavbarMenu />
+      )}
+>>>>>>> main
     </>
   );
 };
