@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import {
   createStyles,
   Header,
   Group,
   Center,
   Burger,
-  Container,
   Transition,
   Paper,
   Menu,
@@ -22,6 +22,7 @@ import ConnectWalletButton from '../Buttons/ConnectWallet';
 import NavbarMenu from '../Dropdowns/NavbarMenu';
 import { IconChevronDown, IconMoneybag, IconPool } from '@tabler/icons';
 import { useRouter } from 'next/router';
+import SelectWallet from '../Modals/SelectWallet';
 
 const HEADER_HEIGHT = 60;
 
@@ -141,16 +142,73 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+const LoginDropdown = ({ onShowSelectWallet }) => {
+  const { classes } = useStyles();
+  return (
+    <Menu shadow='md' width={200}>
+      <Menu.Target>
+        <Button
+          sx={(theme) => ({
+            backgroundColor: '#42ca9f',
+            transitionDuration: '200ms',
+            '&:hover': {
+              transform: 'scale(1.01) translate(1px, -3px)',
+              backgroundColor: '#42ca9f',
+            },
+          })}
+        >
+          <Text
+            sx={(theme) => ({
+              marginLeft: '2px',
+            })}
+          >
+            Log In
+          </Text>
+          <IconChevronDown size={15} />
+        </Button>
+      </Menu.Target>
+      <Menu.Dropdown className={classes.menuDropdown}>
+        <Flex align={'center'} justify={'center'} p='sm'>
+          <ConnectWalletButton onShowSelectWallet={onShowSelectWallet} />
+        </Flex>
+        <Divider />
+        <Menu.Item>
+          <Text
+            mt='sm'
+            align='center'
+            sx={(theme) => ({
+              a: {
+                color: theme.colors.dark[0],
+                textDecoration: 'none',
+                fontWeight: 600,
+                fontSize: 14,
+              },
+            })}
+          >
+            <Link href='/login'>Use your email</Link>
+          </Text>
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+};
+
 const NavbarItems = (props) => {
   const enableDropdown = props.isDropdown;
   const { classes } = useStyles();
   const { isAuthenticated } = useMoralis();
+  const [showSelectWallet, setShowSelectWallet] = useState(false);
 
   const router = useRouter();
 
   if (enableDropdown) {
     return (
       <>
+        {/*Modal*/}
+        <SelectWallet
+          showSelectWallet={showSelectWallet}
+          setShowSelectWallet={setShowSelectWallet}
+        />
         <Center className={classes.centerItems}>
           <Menu shadow='md' width={200}>
             <Menu.Target>
@@ -170,10 +228,12 @@ const NavbarItems = (props) => {
                 <Text
                   sx={(theme) => ({
                     color: theme.colors.dark[0],
+                    marginLeft: '2px',
                   })}
                 >
                   Staking
                 </Text>
+                <IconChevronDown size={15} />
               </Button>
             </Menu.Target>
 
@@ -196,24 +256,7 @@ const NavbarItems = (props) => {
         </Center>
         <Center className={classes.centerItems}>
           {!isAuthenticated ? (
-            <Flex direction={'column'}>
-              {' '}
-              <ConnectWalletButton />{' '}
-              <Text
-                mt='sm'
-                align='center'
-                sx={(theme) => ({
-                  a: {
-                    color: theme.colors.dark[0],
-                    textDecoration: 'none',
-                    fontWeight: 600,
-                    fontSize: 14,
-                  },
-                })}
-              >
-                <Link href='/login'>Login</Link>
-              </Text>
-            </Flex>
+            <LoginDropdown onShowSelectWallet={setShowSelectWallet} />
           ) : (
             <NavbarMenu />
           )}
@@ -270,30 +313,6 @@ const NavbarItems = (props) => {
             </Menu.Dropdown>
           </Menu>
         </Center>
-        <Center className={classes.centerItems}>
-          {!isAuthenticated ? (
-            <Flex direction={'column'}>
-              {' '}
-              <ConnectWalletButton />{' '}
-              <Text
-                mt='sm'
-                align='center'
-                sx={(theme) => ({
-                  a: {
-                    color: theme.colors.dark[0],
-                    textDecoration: 'none',
-                    fontWeight: 600,
-                    fontSize: 14,
-                  },
-                })}
-              >
-                <Link href='/login'>Login</Link>
-              </Text>
-            </Flex>
-          ) : (
-            <NavbarMenu />
-          )}
-        </Center>
       </>
     );
   }
@@ -340,26 +359,12 @@ const NavbarItems = (props) => {
             My Subpools
           </Menu.Item>
         </Menu.Dropdown>
+        {!isAuthenticated ? (
+          <LoginDropdown onShowSelectWallet={setShowSelectWallet} />
+        ) : (
+          <NavbarMenu />
+        )}
       </Menu>
-      {!isAuthenticated ? (
-        <>
-          <ConnectWalletButton />
-          <Text
-            sx={(theme) => ({
-              a: {
-                color: theme.colors.dark[0],
-                textDecoration: 'none',
-                fontWeight: 600,
-                fontSize: 14,
-              },
-            })}
-          >
-            <Link href='/login'>Login</Link>
-          </Text>
-        </>
-      ) : (
-        <NavbarMenu />
-      )}
     </>
   );
 };

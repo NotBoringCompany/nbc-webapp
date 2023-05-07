@@ -1,9 +1,6 @@
-import SelectWallet from '../Modals/SelectWallet';
-
 const { createStyles, Button } = require('@mantine/core');
-const { useState } = require('react');
 
-const useStyles = createStyles((theme) => ({
+const useStyles = createStyles(() => ({
   connectButton: {
     backgroundColor: '#42ca9f',
     transitionDuration: '200ms',
@@ -14,23 +11,17 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const ConnectWalletButton = () => {
-  const [showSelectWallet, setShowSelectWallet] = useState(false);
+const ConnectWalletButton = ({ onShowSelectWallet }) => {
   const { classes } = useStyles();
-
-  const handleShow = () => {
-    setShowSelectWallet(true);
-  };
 
   return (
     <>
-      <Button className={classes.connectButton} onClick={() => handleShow()}>
+      <Button
+        className={classes.connectButton}
+        onClick={() => onShowSelectWallet(true)}
+      >
         Connect Wallet
       </Button>
-      <SelectWallet
-        showSelectWallet={showSelectWallet}
-        setShowSelectWallet={setShowSelectWallet}
-      />
     </>
   );
 };
