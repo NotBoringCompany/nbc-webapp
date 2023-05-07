@@ -2,33 +2,39 @@ import { Button, Flex, Loader, Modal, Text } from "@mantine/core";
 import { IconAlertOctagon } from "@tabler/icons";
 import { useEffect, useState } from "react";
 
-const WrongNetwork = ({ isWeb3Enabled, enableWeb3, setShowWrongNetworkModal, isAuthenticated, chainId, switchNetwork }) => {
-    // for now, we only accept eth mainnet. we check if the user is connected to ETH, otherwise we require them to change.
-    const wrongNetwork = isAuthenticated && chainId !== '0x1';
-    const [switchNetworkLoading, setSwitchNetworkLoading] = useState(false);
+const WrongNetwork = ({ switchNetworkLoading, handleSwitchNetwork, showWrongNetworkModal, setShowWrongNetworkModal }) => {
+    // // for now, we only accept eth mainnet. we check if the user is connected to ETH, otherwise we require them to change.
+    // const wrongNetwork = isAuthenticated && chainId !== '0x1';
+    // const [switchNetworkLoading, setSwitchNetworkLoading] = useState(false);
   
-    const handleSwitchNetwork = async () => {
-        setSwitchNetworkLoading(true);
+    // const handleSwitchNetwork = async () => {
+    //     setSwitchNetworkLoading(true);
 
-        if (isAuthenticated && isWeb3Enabled) {
-            await switchNetwork('0x1');
-          } else {
-            await enableWeb3({ network: 'mainnet' });
-          }
-    }
+    //     if (isAuthenticated && isWeb3Enabled) {
+    //         await switchNetwork('0x1');
+    //     } else {
+    //         await enableWeb3({ network: 'mainnet' });
+    //     }
 
-    useEffect(() => {
-        if (switchNetworkLoading) {
-            if (chainId === '0x1') {
-                setSwitchNetworkLoading(false);
-                setShowWrongNetworkModal(false);
-            }
-        }
-    }, [chainId, switchNetworkLoading, setShowWrongNetworkModal])
+    //     setShowWrongNetworkModal(false);
+    // }
+
+    // useEffect(() => {
+    //     if (switchNetworkLoading) {
+    //         if (chainId === '0x1') {
+    //             setSwitchNetworkLoading(false);
+    //             setShowWrongNetworkModal(false);
+    //         }
+    //     }
+
+    //     if (chainId !== '0x1') {
+    //         setShowWrongNetworkModal(true);
+    //     }
+    // }, [chainId, switchNetworkLoading, setShowWrongNetworkModal])
 
     return (
         <Modal
-            opened={wrongNetwork}
+            opened={showWrongNetworkModal}
             centered
             onClose={() => setShowWrongNetworkModal(false)}
             title={
