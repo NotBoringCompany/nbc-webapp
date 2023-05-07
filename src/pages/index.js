@@ -25,11 +25,14 @@ export default function Home() {
   return (
     <Layout>
       <Flex align='center' justify='center' direction='column' h={'calc(100vh - 150px)'}>
-        <Text size={94} weight={700}>
+        <Text size={48} weight={700} color='#42ca9f' mb={20}>
           REALM HUNTER: ALPHA RELEASE
         </Text>
-        <Text size={36} weight={500}>
-          Alpha V1.0 is now out for Key Of Salvation holders!
+        <Text size={24} weight={500}>
+          Alpha V1.0 (PC) is now out for Key Of Salvation holders!
+        </Text>
+        <Text size={14} weight={500} italic>
+          Mac build will be released soon.
         </Text>
         <Box
           sx={(theme) => ({
