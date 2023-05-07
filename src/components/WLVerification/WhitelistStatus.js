@@ -16,7 +16,7 @@ const WLVerificationWhitelistStatus = ({ whitelistType, setWhitelistType, wallet
                 const { data } = await res.json()
                 setWhitelistType(data.whitelistType)
             } catch (err) {
-                console.log(err)
+                console.log(err);
             }
         }
 

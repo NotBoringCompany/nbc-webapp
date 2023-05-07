@@ -4,7 +4,7 @@ import { Box, Flex, Loader, ScrollArea, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { Container } from '@mantine/core';
 import MainNavbar from '../Navbar/Navbar';
-import { useMoralis } from 'react-moralis';
+import { useMoralis, useChain } from 'react-moralis';
 import { IconAlertOctagon } from '@tabler/icons';
 
 const AuthWall = (
