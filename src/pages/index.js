@@ -46,10 +46,14 @@ export default function Home() {
             justify='center'
             direction='column'
           >
-            <Text size={48} weight={700} color='white' mb={20}>
+            <Text size={48} weight={700} color='white' mb={20} sx={(theme) => ({
+              lineHeight: 1,
+            })}>
               REALM HUNTER: ALPHA RELEASE
             </Text>
-            <Text size={24} weight={500}>
+            <Text size={24} weight={500} sx={(theme) => ({
+              lineHeight: 1,
+            })}>
               Alpha V1.0 (PC) is now out for Key Of Salvation holders!
             </Text>
             <Text size={16} weight={500} italic mt={5}>
@@ -81,7 +85,7 @@ export default function Home() {
               </Button>
             )}
             {emailConnected && (
-              <Link href='https://drive.google.com/uc?export=download&id=1TsfxoRcNAQWhiRksDamZhx3lG8xHGN3Q' download target='_blank'>
+              <Link href='https://drive.google.com/file/d/1ao78WigoaSl3mopr0IBe_ns6i7rKoJvt/view?usp=sharing' download target='_blank'>
                 <Button 
                   sx={(theme) => ({
                     backgroundColor: '#42ca9f',
