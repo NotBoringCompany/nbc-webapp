@@ -46,8 +46,6 @@ const StakingModal = ({
 
     const keyIds = subpool.keys.map((key) => key.tokenID);
 
-    console.log('session token: ', user && user.get('sessionToken'));
-
     const stakeRequest = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/add-subpool`,
       {
@@ -69,7 +67,6 @@ const StakingModal = ({
       }
     ).catch((err) => console.log(err));
     const stakeResponse = await stakeRequest.json();
-    console.log('STAKE RESPONSE', stakeResponse);
     // TO DO: handle error if it fails.
     setTimeout(() => {
       setSuccessfulStake(true);

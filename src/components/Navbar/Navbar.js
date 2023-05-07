@@ -1,10 +1,10 @@
+import { useState } from 'react';
 import {
   createStyles,
   Header,
   Group,
   Center,
   Burger,
-  Container,
   Transition,
   Paper,
   Menu,
@@ -22,6 +22,7 @@ import ConnectWalletButton from '../Buttons/ConnectWallet';
 import NavbarMenu from '../Dropdowns/NavbarMenu';
 import { IconChevronDown, IconMoneybag, IconPool } from '@tabler/icons';
 import { useRouter } from 'next/router';
+import SelectWallet from '../Modals/SelectWallet';
 
 const HEADER_HEIGHT = 60;
 
@@ -141,6 +142,57 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
+const LoginDropdown = ({ onShowSelectWallet }) => {
+  const { classes } = useStyles();
+  return (
+    <Menu shadow='md' width={200}>
+      <Menu.Target>
+        <Button
+          sx={(theme) => ({
+            backgroundColor: '#42ca9f',
+            transitionDuration: '200ms',
+            '&:hover': {
+              transform: 'scale(1.01) translate(1px, -3px)',
+              backgroundColor: '#42ca9f',
+            },
+          })}
+        >
+          <Text
+            sx={(theme) => ({
+              marginLeft: '2px',
+            })}
+          >
+            Log In
+          </Text>
+          <IconChevronDown size={15} />
+        </Button>
+      </Menu.Target>
+      <Menu.Dropdown className={classes.menuDropdown}>
+        <Flex align={'center'} justify={'center'} p='sm'>
+          <ConnectWalletButton onShowSelectWallet={onShowSelectWallet} />
+        </Flex>
+        <Divider />
+        <Menu.Item>
+          <Text
+            mt='sm'
+            align='center'
+            sx={(theme) => ({
+              a: {
+                color: theme.colors.dark[0],
+                textDecoration: 'none',
+                fontWeight: 600,
+                fontSize: 14,
+              },
+            })}
+          >
+            <Link href='/login'>Use your email</Link>
+          </Text>
+        </Menu.Item>
+      </Menu.Dropdown>
+    </Menu>
+  );
+};
+
 const NavbarItems = (props) => {
   const enableDropdown = props.isDropdown;
   const { classes } = useStyles();
@@ -151,7 +203,7 @@ const NavbarItems = (props) => {
   if (enableDropdown) {
     return (
       <>
-        {/* <Center className={classes.centerItems}>
+        <Center className={classes.centerItems}>
           <Menu shadow='md' width={200}>
             <Menu.Target>
               <Button
@@ -170,7 +222,7 @@ const NavbarItems = (props) => {
                 <Text
                   sx={(theme) => ({
                     color: theme.colors.dark[0],
-                    marginRight: '2px',
+                    marginLeft: '2px',
                   })}
                 >
                   Staking
@@ -195,27 +247,10 @@ const NavbarItems = (props) => {
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
-        </Center> */}
+        </Center>
         <Center className={classes.centerItems}>
           {!isAuthenticated ? (
-            <Flex direction={'column'}>
-              {' '}
-              <ConnectWalletButton />{' '}
-              <Text
-                mt='sm'
-                align='center'
-                sx={(theme) => ({
-                  a: {
-                    color: theme.colors.dark[0],
-                    textDecoration: 'none',
-                    fontWeight: 600,
-                    fontSize: 14,
-                  },
-                })}
-              >
-                <Link href='/login'>Login</Link>
-              </Text>
-            </Flex>
+            <LoginDropdown onShowSelectWallet={props.onShowSelectWallet} />
           ) : (
             <NavbarMenu />
           )}
@@ -226,16 +261,16 @@ const NavbarItems = (props) => {
 
   return (
     <>
-      {/* <Menu shadow='md' width={200}>
+      <Menu shadow='md' width={200}>
         <Menu.Target>
           <Button
             sx={(theme) => ({
-              backgroundColor: '#000000',
+              backgroundColor: 'transparent',
               ':hover': {
-                backgroundColor: '#000000',
+                backgroundColor: 'transparent',
               },
               ':active': {
-                backgroundColor: '#000000',
+                backgroundColor: 'transparent',
               },
             })}
           >
@@ -266,26 +301,12 @@ const NavbarItems = (props) => {
             My Subpools
           </Menu.Item>
         </Menu.Dropdown>
-      </Menu> */}
-      {!isAuthenticated ? (
-        <>
-          <ConnectWalletButton />
-          <Text
-            sx={(theme) => ({
-              a: {
-                color: theme.colors.dark[0],
-                textDecoration: 'none',
-                fontWeight: 600,
-                fontSize: 14,
-              },
-            })}
-          >
-            <Link href='/login'>Login</Link>
-          </Text>
-        </>
-      ) : (
-        <NavbarMenu />
-      )}
+        {!isAuthenticated ? (
+          <LoginDropdown onShowSelectWallet={props.onShowSelectWallet} />
+        ) : (
+          <NavbarMenu />
+        )}
+      </Menu>
     </>
   );
 };
@@ -293,6 +314,7 @@ const NavbarItems = (props) => {
 const MainNavbar = () => {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
+  const [showSelectWallet, setShowSelectWallet] = useState(false);
   return (
     <Header
       sx={(theme) => ({
@@ -303,11 +325,15 @@ const MainNavbar = () => {
       mb={20}
       className={classes.header}
     >
+      <SelectWallet
+        showSelectWallet={showSelectWallet}
+        setShowSelectWallet={setShowSelectWallet}
+      />
       <Link href='/'>
         <Image src={NBCLogo} alt='nbc logo' width={40} height={40} priority />
       </Link>
       <Group spacing={20} className={classes.links}>
-        <NavbarItems />
+        <NavbarItems onShowSelectWallet={setShowSelectWallet} />
       </Group>
 
       <Burger
@@ -319,7 +345,7 @@ const MainNavbar = () => {
       <Transition transition='pop-top-right' duration={200} mounted={opened}>
         {(styles) => (
           <Paper className={classes.dropdown}>
-            <NavbarItems isDropdown />
+            <NavbarItems isDropdown onShowSelectWallet={setShowSelectWallet} />
           </Paper>
         )}
       </Transition>
