@@ -197,18 +197,12 @@ const NavbarItems = (props) => {
   const enableDropdown = props.isDropdown;
   const { classes } = useStyles();
   const { isAuthenticated } = useMoralis();
-  const [showSelectWallet, setShowSelectWallet] = useState(false);
 
   const router = useRouter();
 
   if (enableDropdown) {
     return (
       <>
-        {/*Modal*/}
-        <SelectWallet
-          showSelectWallet={showSelectWallet}
-          setShowSelectWallet={setShowSelectWallet}
-        />
         <Center className={classes.centerItems}>
           <Menu shadow='md' width={200}>
             <Menu.Target>
@@ -256,62 +250,10 @@ const NavbarItems = (props) => {
         </Center>
         <Center className={classes.centerItems}>
           {!isAuthenticated ? (
-            <LoginDropdown onShowSelectWallet={setShowSelectWallet} />
+            <LoginDropdown onShowSelectWallet={props.onShowSelectWallet} />
           ) : (
             <NavbarMenu />
           )}
-        </Center>
-      </>
-    );
-  }
-
-  if (enableDropdown) {
-    return (
-      <>
-        <Center className={classes.centerItems}>
-          <Menu shadow='md' width={200}>
-            <Menu.Target>
-              <Button
-                sx={(theme) => ({
-                  backgroundColor: 'transparent',
-                  ':hover': {
-                    backgroundColor: 'transparent',
-                    transform: 'scale(1.01) translate(1px, -3px)',
-                    transitionDuration: '200ms',
-                  },
-                  ':active': {
-                    backgroundColor: 'transparent',
-                  },
-                })}
-              >
-                <Text
-                  sx={(theme) => ({
-                    color: theme.colors.dark[0],
-                    marginRight: '2px',
-                  })}
-                >
-                  Staking
-                </Text>
-                <IconChevronDown size={15} />
-              </Button>
-            </Menu.Target>
-
-            <Menu.Dropdown className={classes.menuDropdown}>
-              <Menu.Item
-                onClick={() => router.push('/staking')}
-                icon={<IconMoneybag size={14} />}
-              >
-                <Text>Staking Pools</Text>
-              </Menu.Item>
-              <Divider />
-              <Menu.Item
-                icon={<IconPool size={14} />}
-                onClick={() => router.replace('/staking/my-subpools')}
-              >
-                My Subpools
-              </Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
         </Center>
       </>
     );
@@ -360,7 +302,7 @@ const NavbarItems = (props) => {
           </Menu.Item>
         </Menu.Dropdown>
         {!isAuthenticated ? (
-          <LoginDropdown onShowSelectWallet={setShowSelectWallet} />
+          <LoginDropdown onShowSelectWallet={props.onShowSelectWallet} />
         ) : (
           <NavbarMenu />
         )}
@@ -372,6 +314,7 @@ const NavbarItems = (props) => {
 const MainNavbar = () => {
   const [opened, { toggle }] = useDisclosure(false);
   const { classes } = useStyles();
+  const [showSelectWallet, setShowSelectWallet] = useState(false);
   return (
     <Header
       sx={(theme) => ({
@@ -382,11 +325,15 @@ const MainNavbar = () => {
       mb={20}
       className={classes.header}
     >
+      <SelectWallet
+        showSelectWallet={showSelectWallet}
+        setShowSelectWallet={setShowSelectWallet}
+      />
       <Link href='/'>
         <Image src={NBCLogo} alt='nbc logo' width={40} height={40} priority />
       </Link>
       <Group spacing={20} className={classes.links}>
-        <NavbarItems />
+        <NavbarItems onShowSelectWallet={setShowSelectWallet} />
       </Group>
 
       <Burger
@@ -398,7 +345,7 @@ const MainNavbar = () => {
       <Transition transition='pop-top-right' duration={200} mounted={opened}>
         {(styles) => (
           <Paper className={classes.dropdown}>
-            <NavbarItems isDropdown />
+            <NavbarItems isDropdown onShowSelectWallet={setShowSelectWallet} />
           </Paper>
         )}
       </Transition>
