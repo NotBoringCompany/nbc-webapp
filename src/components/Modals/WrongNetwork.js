@@ -2,7 +2,7 @@ import { Button, Flex, Loader, Modal, Text } from "@mantine/core";
 import { IconAlertOctagon } from "@tabler/icons";
 import { useEffect, useState } from "react";
 
-const WrongNetwork = ({ setShowWrongNetworkModal, isAuthenticated, chainId, switchNetwork }) => {
+const WrongNetwork = ({ isWeb3Enabled, enableWeb3, setShowWrongNetworkModal, isAuthenticated, chainId, switchNetwork }) => {
     // for now, we only accept eth mainnet. we check if the user is connected to ETH, otherwise we require them to change.
     const wrongNetwork = isAuthenticated && chainId !== '0x1';
     const [switchNetworkLoading, setSwitchNetworkLoading] = useState(false);
@@ -10,7 +10,11 @@ const WrongNetwork = ({ setShowWrongNetworkModal, isAuthenticated, chainId, swit
     const handleSwitchNetwork = async () => {
         setSwitchNetworkLoading(true);
 
-        switchNetwork('0x1');
+        if (isAuthenticated && isWeb3Enabled) {
+            await switchNetwork('0x1');
+          } else {
+            await enableWeb3({ network: 'mainnet' });
+          }
     }
 
     useEffect(() => {

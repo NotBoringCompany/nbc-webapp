@@ -50,7 +50,7 @@ const Layout = ({
   description = 'Building immersive Web3-native IP franchises.',
   keywords = 'realm hunter, multiplayer game, nft gaming, nft', // seo keywords, separated by commas
 }) => {
-  const { isAuthenticated, isAuthUndefined } = useMoralis();
+  const { isAuthenticated, isAuthUndefined, enableWeb3, isWeb3Enabled } = useMoralis();
   const { switchNetwork, chainId } = useChain();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -111,7 +111,7 @@ const Layout = ({
               </>
             )}
           </Container>
-          <WrongNetwork setShowWrongNetworkModal={setShowWrongNetworkModal} isAuthenticated={isAuthenticated} chainId={chainId} switchNetwork={switchNetwork} />
+          <WrongNetwork isWeb3Enabled={isWeb3Enabled} enableWeb3={enableWeb3} setShowWrongNetworkModal={setShowWrongNetworkModal} isAuthenticated={isAuthenticated} chainId={chainId} switchNetwork={switchNetwork} />
         </ScrollArea>
       </Flex>
     </>
