@@ -1,6 +1,6 @@
 import Layout from '@/components/Layout/Layout';
-import { Box, Button, Center, Flex, Text } from '@mantine/core';
-import { IconAlertOctagon, IconCheck, IconCircleX, IconX } from '@tabler/icons';
+import { Box, Button, Flex, Text } from '@mantine/core';
+import { IconAlertOctagon, IconCheck, IconCircleX } from '@tabler/icons';
 import { useMoralis } from 'react-moralis';
 import { useCallback, useEffect, useState } from 'react';
 import XDragon from '../../public/xandrius07-color.png'
@@ -35,10 +35,7 @@ export default function Home() {
       >
         <Box
           sx={(theme) => ({
-            // background: 'rgba(0, 0, 0, 0.5)',
-            // borderRadius: theme.radius.md,
             padding: theme.spacing.md,
-            // justifyContent: 'center',
             textAlign: 'center',
             marginTop: 45,
             width: '60%',
@@ -58,29 +55,57 @@ export default function Home() {
             <Text size={16} weight={500} italic mt={5}>
               Mac build will be released soon.
             </Text>
-            <Button 
-              sx={(theme) => ({
-                backgroundColor: '#42ca9f',
-                marginTop: 50,
-                marginRight: 30,
-                height: '50px',
-                fontSize: 18,
-                ':hover': {
-                  transform: 'scale(1.01) translate(1px, -3px)',
-                  transitionDuration: '200ms',
+            {!emailConnected && (
+              <Button 
+                sx={(theme) => ({
                   backgroundColor: '#42ca9f',
-                },
-                [theme.fn.smallerThan('lg')]: {
-                  fontSize: 16,
-                },
-                [theme.fn.smallerThan('sm')]: {
-                  fontSize: 12,
-                }
-              })}
-              disabled={!emailConnected}
-            >
-              TAKE ME TO THE ALPHA!
-            </Button>
+                  marginTop: 50,
+                  marginRight: 30,
+                  height: '50px',
+                  fontSize: 18,
+                  ':hover': {
+                    transform: 'scale(1.01) translate(1px, -3px)',
+                    transitionDuration: '200ms',
+                    backgroundColor: '#42ca9f',
+                  },
+                  [theme.fn.smallerThan('lg')]: {
+                    fontSize: 16,
+                  },
+                  [theme.fn.smallerThan('sm')]: {
+                    fontSize: 12,
+                  }
+                })}
+                disabled
+              >
+                TAKE ME TO THE ALPHA!
+              </Button>
+            )}
+            {emailConnected && (
+              <Link href='https://drive.google.com/uc?export=download&id=1TsfxoRcNAQWhiRksDamZhx3lG8xHGN3Q' download target='_blank'>
+                <Button 
+                  sx={(theme) => ({
+                    backgroundColor: '#42ca9f',
+                    marginTop: 50,
+                    marginRight: 30,
+                    height: '50px',
+                    fontSize: 18,
+                    ':hover': {
+                      transform: 'scale(1.01) translate(1px, -3px)',
+                      transitionDuration: '200ms',
+                      backgroundColor: '#42ca9f',
+                    },
+                    [theme.fn.smallerThan('lg')]: {
+                      fontSize: 16,
+                    },
+                    [theme.fn.smallerThan('sm')]: {
+                      fontSize: 12,
+                    }
+                  })}
+                >
+                  TAKE ME TO THE ALPHA!
+                </Button>
+              </Link>
+            )}
           </Flex>
         </Box>
         <Box

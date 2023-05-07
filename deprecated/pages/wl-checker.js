@@ -1,5 +1,5 @@
 import MainNavbar from '@/components/Navbar/Navbar';
-import { createStyles, Center, Container, Flex, Button, BackgroundImage, Box, TextInput, Input } from '@mantine/core';
+import { createStyles, Flex, Button, Box, TextInput } from '@mantine/core';
 import Image from 'next/image';
 import XandLamox from '../../public/XandLamox.png';
 import TestKey from '../../public/TestKey.png';
