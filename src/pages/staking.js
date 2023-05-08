@@ -254,13 +254,15 @@ export default function Staking({ stakingPoolData }) {
                       Entry Until
                     </Text>
                     <Text>
-                      {new Date(pool.StartTime).toLocaleString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: false,
-                      })}
+                      {new Date(pool.EndTime)
+                        .toLocaleString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          hour12: false,
+                        })
+                        .replace(/24/, '00')}
                     </Text>
                   </Flex>
                   <Flex direction='column' align='center'>
@@ -425,13 +427,15 @@ export default function Staking({ stakingPoolData }) {
                       Entry Until
                     </Text>
                     <Text>
-                      {new Date(pool.StartTime).toLocaleString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric',
-                        hour12: false,
-                      })}
+                      {new Date(pool.EndTime)
+                        .toLocaleString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          hour12: false,
+                        })
+                        .replace(/24/, '00')}
                     </Text>
                   </Flex>
                   <Flex direction='column' align='center'>
