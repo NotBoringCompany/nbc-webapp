@@ -254,7 +254,7 @@ export default function Staking({ stakingPoolData }) {
                       Entry Until
                     </Text>
                     <Text>
-                      {new Date(pool.EndTime)
+                      {new Date(pool.StartTime)
                         .toLocaleString('en-US', {
                           month: 'short',
                           day: 'numeric',
@@ -427,7 +427,7 @@ export default function Staking({ stakingPoolData }) {
                       Entry Until
                     </Text>
                     <Text>
-                      {new Date(pool.EndTime)
+                      {new Date(pool.StartTime)
                         .toLocaleString('en-US', {
                           month: 'short',
                           day: 'numeric',
