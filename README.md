@@ -1,5 +1,4 @@
 # NBC Webapp, built for the latest features.
-### Dev version with V1 staking enabled: https://nbc-webapp-git-dev-not-boring-company.vercel.app
 ### Please note that this is still a work-in-progress and that changes will be made until a stable deployment phase has been reached.
 
 ## Architecture and threat model
