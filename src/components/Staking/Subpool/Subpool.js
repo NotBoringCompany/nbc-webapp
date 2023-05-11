@@ -1,18 +1,12 @@
 import {
     Box,
     Button,
-    Divider,
     Flex,
-    HoverCard,
-    List,
     Loader,
     Modal,
-    SimpleGrid,
     Text,
 } from '@mantine/core';
-import { IconAlertOctagon, IconQuestionCircle } from '@tabler/icons';
-import MathJax from 'react-mathjax2';
-import NFTCard from '../NFTCard';
+import { IconAlertOctagon } from '@tabler/icons';
 import { cardColumnsBreakpoints } from '@/components/Breakpoints/CardColumns';
 import SubpoolWarning from './SubpoolWarning';
 import SubpoolData from './SubpoolData';
