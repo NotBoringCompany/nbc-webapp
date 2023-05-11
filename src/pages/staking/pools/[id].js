@@ -7,6 +7,7 @@ import { useMoralis } from 'react-moralis';
 import { maxSelectedKey } from '@/utils/kosData';
 import StakingBox from '@/components/Staking/StakingBox';
 import StakingModal from '@/components/Staking/StakingModal';
+import { IndividualPoolDataText } from '@/components/Staking/StakingPool/IndividualPool';
 
 const StakingPool = ({ stakingPoolData }) => {
   const router = useRouter();
@@ -57,7 +58,7 @@ const StakingPool = ({ stakingPoolData }) => {
     const res = await rawRes.json();
 
     setStakerTotalSubpoolPoints(res?.data?.totalSubpoolPoints ?? 0);
-    console.log('staker total subpool points set')
+    console.log('staker total subpool points set');
   };
 
   const getTotalTokenShare = async () => {
@@ -69,7 +70,7 @@ const StakingPool = ({ stakingPoolData }) => {
     const res = await rawRes.json();
 
     setTotalTokenShare(res?.data?.totalTokenShare ?? 0);
-    console.log('total token share set')
+    console.log('total token share set');
   };
 
   const checkSubpoolComboEligibility = async () => {
@@ -82,7 +83,7 @@ const StakingPool = ({ stakingPoolData }) => {
 
     const eligible = res?.data?.isEligible === true ? true : false;
     setSubpoolComboEligible(eligible);
-    console.log('subpool combo eligibility set')
+    console.log('subpool combo eligibility set');
   };
 
   useEffect(() => {
@@ -184,7 +185,7 @@ const StakingPool = ({ stakingPoolData }) => {
     }
 
     // remove any extra selected keychain except one, if
-    // previously user selected more than 1 keychains.
+    // previously user selected more than 1 keychain
     // (this is possible if user had selected 'flush'
     // before changing their combo type to something lower)
     if (comboSelection.keychains.length > 1 && e !== 'flush') {
@@ -293,30 +294,30 @@ const StakingPool = ({ stakingPoolData }) => {
       {stakingPoolDataExists && (
         <>
           <Flex direction='column' align='center' justify='center'>
-          <Text
-            sx={(theme) => ({
-              fontSize: 72,
-              fontWeight: 700,
-              color: '#42ca9f',
-            })}
-          >
-            Staking Pool {id}
-          </Text>
-          <Button
-            h={'56px'}
-            onClick={() => router.replace('/staking/my-subpools')}
-            sx={(theme) => ({
-              backgroundColor: '#42ca9f',
-              transitionDuration: '200ms',
-              ':hover': {
-                transform: 'scale(1.01) translate(1px, -3px)',
+            <Text
+              sx={(theme) => ({
+                fontSize: 72,
+                fontWeight: 700,
+                color: '#42ca9f',
+              })}
+            >
+              Staking Pool {id}
+            </Text>
+            <Button
+              h={'56px'}
+              onClick={() => router.replace('/staking/my-subpools')}
+              sx={(theme) => ({
                 backgroundColor: '#42ca9f',
-              },
-            })}
-          >
-            <Text size={24}>View my subpools</Text>
-          </Button>
-        </Flex>
+                transitionDuration: '200ms',
+                ':hover': {
+                  transform: 'scale(1.01) translate(1px, -3px)',
+                  backgroundColor: '#42ca9f',
+                },
+              })}
+            >
+              <Text size={24}>View my subpools</Text>
+            </Button>
+          </Flex>
           <Flex
             sx={{ marginTop: 50 }}
             direction='row'
@@ -370,132 +371,12 @@ const StakingPool = ({ stakingPoolData }) => {
                   ENDS: {new Date(stakingPoolData.EndTime).toLocaleString()}
                 </Text>
               </Flex>
-              <Flex
-                direction='column'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Flex direction='row' align='center'>
-                  <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-                  <Text size={20} weight={600}>
-                    TOTAL POOL REWARD
-                  </Text>
-                </Flex>
-                <Flex style={{ marginBottom: 10 }}>
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '80%', marginRight: '10%' }}
-                  />
-                </Flex>
-                <Text>
-                  {stakingPoolData.Reward.Amount} {stakingPoolData.Reward.Name}
-                </Text>
-              </Flex>
-              <Flex
-                direction='column'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Flex direction='row' align='center'>
-                  <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-                  <Text size={20} weight={600}>
-                    TOTAL SUBPOOL POINTS
-                  </Text>
-                </Flex>
-                <Flex style={{ marginBottom: 10 }}>
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '80%', marginRight: '10%' }}
-                  />
-                </Flex>
-                <Text>{stakingPoolData.TotalYieldPoints} points</Text>
-              </Flex>
-              <Flex
-                direction='column'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Flex direction='row' align='center'>
-                  <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-                  <Text size={20} weight={600}>
-                    TOTAL SUBPOOLS
-                  </Text>
-                </Flex>
-                <Flex style={{ marginBottom: 10 }}>
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '80%', marginRight: '10%' }}
-                  />
-                </Flex>
-                <Text>
-                  {activeSubpoolsLength + closedSubpoolsLength} subpool(s)
-                </Text>
-              </Flex>
-              <Flex
-                direction='column'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Flex direction='row' align='center'>
-                  <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-                  <Text size={20} weight={600}>
-                    TOTAL STAKERS
-                  </Text>
-                </Flex>
-                <Flex style={{ marginBottom: 10 }}>
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '80%', marginRight: '10%' }}
-                  />
-                </Flex>
-                <Text>{stakerCount()} staker(s)</Text>
-              </Flex>
-              <Flex
-                direction='column'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Flex direction='row' align='center'>
-                  <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-                  <Text size={20} weight={600}>
-                    YOUR SUBPOOL POINTS
-                  </Text>
-                </Flex>
-                <Flex style={{ marginBottom: 10 }}>
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '80%', marginRight: '10%' }}
-                  />
-                </Flex>
-                <Text>{stakerTotalSubpoolPoints} points</Text>
-              </Flex>
-              <Flex
-                direction='column'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Flex direction='row' align='center'>
-                  <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-                  <Text size={20} weight={600}>
-                    YOUR TOTAL REWARD SHARE
-                  </Text>
-                </Flex>
-                <Flex style={{ marginBottom: 10 }}>
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '80%', marginRight: '10%' }}
-                  />
-                </Flex>
-                <Text>
-                  {totalTokenShare} {stakingPoolData.Reward.Name}
-                </Text>
-              </Flex>
+              <IndividualPoolDataText title='TOTAL POOL REWARD' text={`${stakingPoolData.Reward.Amount} ${stakingPoolData.Reward.Name}`} />
+              <IndividualPoolDataText title='TOTAL SUBPOOL POINTS' text={`${stakingPoolData.TotalYieldPoints} points`} />
+              <IndividualPoolDataText title='TOTAL SUBPOOLS' text={`${activeSubpoolsLength + closedSubpoolsLength} subpool(s)`} />
+              <IndividualPoolDataText title='TOTAL STAKERS' text={`${stakerCount()} staker(s)`}/>
+              <IndividualPoolDataText title='YOUR SUBPOOL POINTS' text={`${stakerTotalSubpoolPoints} points`}/>
+              <IndividualPoolDataText title='YOUR TOTAL REWARD SHARE' text={`${totalTokenShare} ${stakingPoolData.Reward.Name}`}/>
             </Box>
             <StakingModal
               stakingPoolId={id}
