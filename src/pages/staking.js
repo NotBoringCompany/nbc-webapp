@@ -1,8 +1,5 @@
-import { Fragment } from 'react';
-import { Badge, Box, Button, Divider, Flex, Text } from '@mantine/core';
+import { Flex, Text } from '@mantine/core';
 import Layout from '@/components/Layout/Layout';
-import RECToken from '../../public/recToken.png';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import StakingPool from '@/components/Staking/StakingPool/StakingPool';
 

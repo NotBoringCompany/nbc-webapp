@@ -22,7 +22,12 @@ const MySubpools = () => {
     const subpoolRawRes = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/get-staker-subpools/${
         user && user.attributes.ethAddress
-      }`
+      }`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      }
     );
     const subpoolRes = await subpoolRawRes.json();
 
