@@ -4,6 +4,7 @@ import Layout from '@/components/Layout/Layout';
 import RECToken from '../../public/recToken.png';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import StakingPool from '@/components/Staking/StakingPool/StakingPool';
 
 export default function Staking({ stakingPoolData }) {
   const router = useRouter();
@@ -29,7 +30,16 @@ export default function Staking({ stakingPoolData }) {
           STAKING POOLS
         </Text>
         <Text size={24}>Stake your Factory NFTs to earn special yields.</Text>
-        <Box
+        <StakingPool 
+          isActive
+          stakeablePools={stakeablePools}
+          ongoingPools={ongoingPools}
+        />
+        <StakingPool
+          isClosed
+          closedPools={closedPools}
+        />
+        {/* <Box
           sx={(theme) => ({
             border: '3px solid #42ca9f',
             marginTop: 80,
@@ -525,7 +535,7 @@ export default function Staking({ stakingPoolData }) {
                 </Flex>
               </Fragment>
             ))}
-        </Box>
+        </Box> */}
       </Flex>
     </Layout>
   );
