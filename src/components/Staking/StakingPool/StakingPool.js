@@ -1,8 +1,7 @@
-import { Box, Divider, Flex, Text } from '@mantine/core';
-import Image from 'next/image';
+import { Divider, Text } from '@mantine/core';
 import RECToken from '../../../../public/recToken.png';
-import { Fragment } from 'react';
 import StakingPoolData from './StakingPoolData';
+import BorderedBox from '@/components/BorderedBox/BorderedBox';
 
 const StakingPool = ({
   isActive,
@@ -17,16 +16,10 @@ const StakingPool = ({
   const hasNoClosedStakingPools = isClosed && !closedPools;
   const hasClosedStakingPools = isClosed && closedPools;
 
+  const variant = isActive ? 'green' : 'grey';
+
   return (
-    <Box
-      sx={(theme) => ({
-        border: `3px solid ${isActive ? '#42ca9f' : 'grey'}`,
-        marginTop: 80,
-        borderRadius: theme.radius.xl,
-        textAlign: 'center',
-        minWidth: '50%',
-      })}
-    >
+    <BorderedBox sx={{ marginTop: 80 }} variant={variant}>
       <Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
         {isActive ? 'ACTIVE STAKING POOLS' : 'CLOSED STAKING POOLS'}
       </Text>
@@ -80,7 +73,7 @@ const StakingPool = ({
             closed
           />
         ))}
-    </Box>
+    </BorderedBox>
   );
 };
 

@@ -2,7 +2,7 @@ import { Badge, Button, Flex, Text } from '@mantine/core';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 
-const PoolComponent = ({
+export const PoolComponent = ({
   title,
   text,
   badgeContent,
@@ -25,9 +25,12 @@ const PoolComponent = ({
       {badgeContent && (
         <Badge
           c={badgeColor}
-          sx={(theme) => ({
+          sx={{
             backgroundColor: badgeBgColor,
-          })}
+            marginTop: 5,
+            color: 'white',
+            textAlign: 'center',
+          }}
         >
           {badgeContent}
         </Badge>

@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/Layout';
-import { Box, Button, Divider, Flex, Text } from '@mantine/core';
+import { Button, Flex, Text } from '@mantine/core';
 import { IconAlertOctagon } from '@tabler/icons';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -7,7 +7,8 @@ import { useMoralis } from 'react-moralis';
 import { maxSelectedKey } from '@/utils/kosData';
 import StakingBox from '@/components/Staking/StakingBox';
 import StakingModal from '@/components/Staking/StakingModal';
-import { IndividualPoolDataText } from '@/components/Staking/StakingPool/IndividualPool';
+import BorderedBox from '@/components/BorderedBox/BorderedBox';
+import StakingPoolDataDetail from '@/components/Staking/StakingPool/StakingPoolDataDetail';
 
 const StakingPool = ({ stakingPoolData }) => {
   const router = useRouter();
@@ -235,6 +236,7 @@ const StakingPool = ({ stakingPoolData }) => {
 
   const stakerCount = () => {
     const stakers = [];
+
     // filter through both active and closed subpools and add stakers to stakers array
     // if staker is already in stakers array, don't add them
     if (activeSubpoolsLength > 0) {
@@ -259,15 +261,10 @@ const StakingPool = ({ stakingPoolData }) => {
     <Layout pageTitle={`Staking Pool #${id}`} withAuth>
       {!stakingPoolDataExists && (
         <Flex direction='column' align='center' justify='center'>
-          <Box
-            sx={(theme) => ({
-              borderRadius: theme.radius.md,
-              minWidth: '50%',
-              border: '2px solid #ca4242',
-              padding: '20px',
-              textAlign: 'center',
-              marginTop: 15,
-            })}
+          <BorderedBox
+            sx={{ marginTop: 15, borderWidth: '2px', padding: '20px' }}
+            borderRadiusSize='md'
+            variant='red'
           >
             <Flex direction='row' align='center' justify='center'>
               <IconAlertOctagon
@@ -288,7 +285,7 @@ const StakingPool = ({ stakingPoolData }) => {
             <Text size='lg'>
               This staking pool might not exist or is not available.
             </Text>
-          </Box>
+          </BorderedBox>
         </Flex>
       )}
       {stakingPoolDataExists && (
@@ -324,60 +321,14 @@ const StakingPool = ({ stakingPoolData }) => {
             align='start'
             justify='center'
           >
-            <Box
-              sx={(theme) => ({
-                border: '3px solid #42ca9f',
-                borderRadius: theme.radius.md,
-                // textAlign: 'center',
-                padding: 20,
-                minWidth: '30%',
-                marginRight: 50,
-              })}
-            >
-              <Flex
-                direction='row'
-                align='center'
-                justify='center'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Text
-                  sx={(theme) => ({
-                    fontSize: 40,
-                    fontWeight: 700,
-                    color: '#42ca9f',
-                  })}
-                >
-                  STAKING POOL DATA
-                </Text>
-              </Flex>
-              <Flex
-                direction='column'
-                align='center'
-                justify='center'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Text c='#42ca9f' size={20} weight={600}>
-                  ENTRY:{' '}
-                  {new Date(stakingPoolData.EntryAllowance).toLocaleString()}
-                </Text>
-                <Text c='#42ca9f' size={20} weight={600}>
-                  STARTS: {new Date(stakingPoolData.StartTime).toLocaleString()}
-                </Text>
-                <Text c='#42ca9f' size={20} weight={600}>
-                  ENDS: {new Date(stakingPoolData.EndTime).toLocaleString()}
-                </Text>
-              </Flex>
-              <IndividualPoolDataText title='TOTAL POOL REWARD' text={`${stakingPoolData.Reward.Amount} ${stakingPoolData.Reward.Name}`} />
-              <IndividualPoolDataText title='TOTAL SUBPOOL POINTS' text={`${stakingPoolData.TotalYieldPoints} points`} />
-              <IndividualPoolDataText title='TOTAL SUBPOOLS' text={`${activeSubpoolsLength + closedSubpoolsLength} subpool(s)`} />
-              <IndividualPoolDataText title='TOTAL STAKERS' text={`${stakerCount()} staker(s)`}/>
-              <IndividualPoolDataText title='YOUR SUBPOOL POINTS' text={`${stakerTotalSubpoolPoints} points`}/>
-              <IndividualPoolDataText title='YOUR TOTAL REWARD SHARE' text={`${totalTokenShare} ${stakingPoolData.Reward.Name}`}/>
-            </Box>
+            <StakingPoolDataDetail
+              stakingPoolData={stakingPoolData}
+              activeSubpoolsLength={activeSubpoolsLength}
+              closedSubpoolsLength={closedSubpoolsLength}
+              stakerTotalSubpoolPoints={stakerTotalSubpoolPoints}
+              totalTokenShare={totalTokenShare}
+              stakerCount={stakerCount()}
+            />
             <StakingModal
               stakingPoolId={id}
               showStakingModal={showStakingModal}

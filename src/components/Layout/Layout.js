@@ -1,23 +1,23 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Box, Flex, Loader, ScrollArea, Text } from '@mantine/core';
+import { Flex, Loader, ScrollArea, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { Container } from '@mantine/core';
 import MainNavbar from '../Navbar/Navbar';
-import { useMoralis, useChain } from 'react-moralis';
+import { useMoralis } from 'react-moralis';
 import { IconAlertOctagon } from '@tabler/icons';
+import BorderedBox from '../BorderedBox/BorderedBox';
 
 const AuthWall = (
   <Flex direction='column' align='center' justify='center'>
-    <Box
-      sx={(theme) => ({
-        borderRadius: theme.radius.md,
-        width: '50%',
-        border: '2px solid #ca4242',
-        padding: '20px',
-        textAlign: 'center',
+    <BorderedBox
+      borderRadiusSize='md'
+      withPadding
+      sx={{
+        borderWidth: '2px',
         marginTop: 30,
-      })}
+      }}
+      variant='red'
     >
       <Flex direction='row' align='center' justify='center'>
         <IconAlertOctagon
@@ -36,7 +36,7 @@ const AuthWall = (
         </Text>
       </Flex>
       <Text size='lg'>Please connect your wallet to access this page.</Text>
-    </Box>
+    </BorderedBox>
   </Flex>
 );
 
@@ -54,7 +54,9 @@ const Layout = ({
   const router = useRouter();
   const authWall = !!authWallComponent ? authWallComponent : AuthWall;
 
-  const title = !!pageTitle ? `${pageTitle} | Not Boring Company` : `Not Boring Company`;
+  const title = !!pageTitle
+    ? `${pageTitle} | Not Boring Company`
+    : `Not Boring Company`;
 
   useEffect(() => {
     if (!isAuthUndefined) {

@@ -1,18 +1,26 @@
+import BorderedBox from '@/components/BorderedBox/BorderedBox';
+import { COLORS } from '@/components/Globals/colors';
 import Layout from '@/components/Layout/Layout';
-import { MySubpool, MySubpoolText, MySubpoolTooltip } from '@/components/Staking/Subpool/MySubpools';
-import {
-  Badge,
-  Box,
-  Button,
-  Divider,
-  Flex,
-  Text,
-  Tooltip,
-} from '@mantine/core';
+import { PoolComponent } from '@/components/Staking/StakingPool/StakingPoolData';
+import { Button, Divider, Flex, Text } from '@mantine/core';
 import { IconAlertOctagon } from '@tabler/icons';
 import { useRouter } from 'next/router';
 import { Fragment, useCallback, useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
+
+const claimableBadge = (claimable, claimed) => {
+  if (!claimable) {
+    return { text: 'NOT AVAILABLE', backgroundColor: COLORS.red };
+  }
+
+  if (claimable && !claimed) {
+    return { text: 'CLAIMABLE', backgroundColor: COLORS.green };
+  }
+
+  if (claimed) {
+    return { text: 'CLAIMED', backgroundColor: COLORS.grey };
+  }
+};
 
 const MySubpools = () => {
   const { user } = useMoralis();
@@ -23,11 +31,12 @@ const MySubpools = () => {
     const subpoolRawRes = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/get-staker-subpools/${
         user && user.attributes.ethAddress
-      }`, {
+      }`,
+      {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-        }
+        },
       }
     );
     const subpoolRes = await subpoolRawRes.json();
@@ -63,15 +72,7 @@ const MySubpools = () => {
             All the subpools you{"'"}ve staked will be shown here.
           </Text>
         </Flex>
-        <Box
-          sx={(theme) => ({
-            border: '3px solid #42ca9f',
-            marginTop: 80,
-            borderRadius: theme.radius.xl,
-            textAlign: 'center',
-            minWidth: '90%',
-          })}
-        >
+        <BorderedBox sx={{ marginTop: 80 }} minWidth='100%'>
           <Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
             SUBPOOL LIST
           </Text>
@@ -99,15 +100,53 @@ const MySubpools = () => {
                     padding: '20px 20px',
                   })}
                 >
-                  <MySubpoolText pool={pool} title='Staking Pool ID' text={pool.StakingPoolID} />
-                  <MySubpoolText pool={pool} title='Subpool ID' text={pool.SubpoolID} />
-                  <MySubpoolText pool={pool} title='Enter Time' text={new Date(pool.EnterTime).toLocaleString()} />
-                  <MySubpoolText pool={pool} title='Subpool Points' text={pool.SubpoolPoints} />
-                  <MySubpoolText pool={pool} title='Keys Staked' text={pool.StakedKeys.length} />
-                  <MySubpoolText pool={pool} title='Keychain(s) Staked?' text={pool.StakedKeychainIDs?.length > 0 ? 'Yes' : 'No'} />
-                  <MySubpoolText pool={pool} title='Sup. Keychain Staked?' text={pool.StakedSuperiorKeychainID !== -1 ? 'Yes' : 'No'} />
-                  <MySubpoolText pool={pool} title='Claimable?' text={pool.RewardClaimed ? 'Yes' : 'No'} />
-                  <MySubpoolTooltip rewardClaimable={pool.RewardClaimable} rewardClaimed={pool.RewardClaimed} />
+                  <PoolComponent
+                    pool={pool}
+                    title='Staking Pool ID'
+                    text={pool.StakingPoolID}
+                  />
+                  <PoolComponent
+                    pool={pool}
+                    title='Subpool ID'
+                    text={pool.SubpoolID}
+                  />
+                  <PoolComponent
+                    pool={pool}
+                    title='Enter Time'
+                    text={new Date(pool.EnterTime).toLocaleString()}
+                  />
+                  <PoolComponent
+                    pool={pool}
+                    title='Subpool Points'
+                    text={pool.SubpoolPoints}
+                  />
+                  <PoolComponent
+                    pool={pool}
+                    title='Keys Staked'
+                    text={pool.StakedKeys.length}
+                  />
+                  <PoolComponent
+                    pool={pool}
+                    title='Keychain(s) Staked?'
+                    text={pool.StakedKeychainIDs?.length > 0 ? 'Yes' : 'No'}
+                  />
+                  <PoolComponent
+                    pool={pool}
+                    title='Sup. Keychain Staked?'
+                    text={pool.StakedSuperiorKeychainID !== -1 ? 'Yes' : 'No'}
+                  />
+                  <PoolComponent
+                    pool={pool}
+                    title='Claimable?'
+                    badgeContent={
+                      claimableBadge(pool.RewardClaimable, pool.RewardClaimed)
+                        .text
+                    }
+                    badgeBgColor={
+                      claimableBadge(pool.RewardClaimable, pool.RewardClaimed)
+                        .backgroundColor
+                    }
+                  />
                   <Button
                     size='md'
                     radius='md'
@@ -134,7 +173,7 @@ const MySubpools = () => {
                 )}
               </Fragment>
             ))}
-        </Box>
+        </BorderedBox>
       </Flex>
     </Layout>
   );
