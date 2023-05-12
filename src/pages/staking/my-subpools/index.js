@@ -72,7 +72,7 @@ const MySubpools = () => {
             All the subpools you{"'"}ve staked will be shown here.
           </Text>
         </Flex>
-        <BorderedBox sx={{ marginTop: 80 }} minWidth='100%'>
+        <BorderedBox sx={{ marginTop: 80, minWidth: '100%' }}>
           <Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
             SUBPOOL LIST
           </Text>
