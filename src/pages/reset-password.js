@@ -1,12 +1,5 @@
 import { useState } from 'react';
-import {
-  Text,
-  PasswordInput,
-  Button,
-  Loader,
-  Flex,
-  Anchor,
-} from '@mantine/core';
+import { Text, PasswordInput, Button, Loader, Flex } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import Layout from '@/components/Layout/Layout';
 import { apiGet, apiPost } from '@/utils/apiRequests';

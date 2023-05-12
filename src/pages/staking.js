@@ -1,11 +1,8 @@
 import { Flex, Text } from '@mantine/core';
 import Layout from '@/components/Layout/Layout';
-import { useRouter } from 'next/router';
 import StakingPool from '@/components/Staking/StakingPool/StakingPool';
 
 export default function Staking({ stakingPoolData }) {
-  const router = useRouter();
-
   const stakeablePools = stakingPoolData.stakeablePools;
   const ongoingPools = stakingPoolData.ongoingPools;
   const closedPools = stakingPoolData.closedPools;
@@ -27,15 +24,12 @@ export default function Staking({ stakingPoolData }) {
           STAKING POOLS
         </Text>
         <Text size={24}>Stake your Factory NFTs to earn special yields.</Text>
-        <StakingPool 
+        <StakingPool
           isActive
           stakeablePools={stakeablePools}
           ongoingPools={ongoingPools}
         />
-        <StakingPool
-          isClosed
-          closedPools={closedPools}
-        />
+        <StakingPool isClosed closedPools={closedPools} />
       </Flex>
     </Layout>
   );
