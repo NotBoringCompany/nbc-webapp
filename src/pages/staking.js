@@ -16,9 +16,9 @@ export default function Staking({ stakingPoolData }) {
       <Flex
         direction='column'
         align='center'
-        sx={(theme) => ({
+        sx={{
           marginTop: 40,
-        })}
+        }}
       >
         <Text c='#42ca9f' size={60} weight={700}>
           STAKING POOLS

@@ -1,10 +1,12 @@
-import { Box, Button, Flex, Loader, Modal, Text } from '@mantine/core';
+import { Button, Flex, Loader, Modal, Text } from '@mantine/core';
 import { IconAlertOctagon } from '@tabler/icons';
 import { cardColumnsBreakpoints } from '@/components/Breakpoints/CardColumns';
 import SubpoolWarning from './SubpoolWarning';
 import SubpoolData from './SubpoolData';
 import NFTStaked from './NFTStaked';
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
+import ClaimModal from '@/components/Modals/ClaimModal';
+import UnstakeModal from '@/components/Modals/UnstakeModal';
 
 const Subpool = ({
   subpoolDataExists,
@@ -89,120 +91,23 @@ const Subpool = ({
           />
         </>
       )}
-      <Modal
-        opened={showClaimModal}
-        centered
+      <ClaimModal
+        handleClaimReward={handleClaimReward}
         onClose={() => setShowClaimModal(false)}
-        title={
-          <Text size={24}>
-            {!claimDone ? 'Claim Reward' : 'Reward Claimed'}
-          </Text>
-        }
-        withCloseButton={false}
-      >
-        {!claimDone && (
-          <>
-            <Flex direction='row'>
-              <IconAlertOctagon size={30} style={{ marginRight: 10 }} />
-              <Text size={16}>
-                Claiming {subpoolTokenShare} {stakingPoolData.Reward.Name}.
-                Proceed?
-              </Text>
-            </Flex>
-            <Flex direction='row' align='center' justify='center' mt={15}>
-              <Button
-                size='sm'
-                sx={(theme) => ({
-                  backgroundColor: '#42ca9f',
-                  minHeight: '40px',
-                  minWidth: '5vw',
+        opened={showClaimModal}
+        claimDone={claimDone}
+        claimLoading={claimLoading}
+        rewardName={stakingPoolData.Reward.Name}
+        loading={subpoolTokenShare}
+      />
 
-                  '&:hover': {
-                    transform: 'scale(1.01) translate(1px, -3px)',
-                    transitionDuration: '200ms',
-                    backgroundColor: '#42ca9f',
-                  },
-
-                  '&:active': {
-                    transform: 'translateY(2px)',
-                  },
-                })}
-                onClick={handleClaimReward}
-              >
-                {claimLoading ? <Loader color='white' /> : <Text>Confirm</Text>}
-              </Button>
-            </Flex>
-          </>
-        )}
-        {claimDone && (
-          <>
-            <Flex direction='row'>
-              <Text size={16}>Reward claimed successfully! Redirecting...</Text>
-            </Flex>
-          </>
-        )}
-      </Modal>
-      <Modal
+      <UnstakeModal
         opened={showUnstakeModal}
-        centered
+        unstakeDone={unstakeDone}
         onClose={() => setShowUnstakeModal(false)}
-        title={
-          <Text size={24}>
-            {!unstakeDone ? 'Confirm Unstake' : 'Unstake Successful'}
-          </Text>
-        }
-        withCloseButton={false}
-      >
-        {!unstakeDone && (
-          <>
-            <Flex direction='row'>
-              <IconAlertOctagon
-                size={30}
-                color='#ca4242'
-                style={{ marginRight: 10 }}
-              />
-              <Text c='#ca4242' size={16}>
-                WARNING: Unstaking will remove this subpool. Are you sure you
-                want to continue?
-              </Text>
-            </Flex>
-            <Flex direction='row' align='center' justify='center' mt={15}>
-              <Button
-                size='sm'
-                sx={(theme) => ({
-                  backgroundColor: '#ca4242',
-                  minHeight: '40px',
-                  minWidth: '5vw',
-
-                  '&:hover': {
-                    transform: 'scale(1.01) translate(1px, -3px)',
-                    transitionDuration: '200ms',
-                    backgroundColor: '#ca4242',
-                  },
-
-                  '&:active': {
-                    transform: 'translateY(2px)',
-                  },
-                })}
-                onClick={handleUnstake}
-              >
-                {unstakeLoading ? (
-                  <Loader color='white' />
-                ) : (
-                  <Text>Confirm</Text>
-                )}
-              </Button>
-            </Flex>
-          </>
-        )}
-        {unstakeDone && (
-          <>
-            <Flex direction='row'>
-              <Text size={16}>Unstake successful! Redirecting...</Text>
-            </Flex>
-          </>
-        )}
-      </Modal>
+        handleUnstake={handleUnstake}
+        loading={unstakeLoading}
+      />
     </Flex>
   );
 };
