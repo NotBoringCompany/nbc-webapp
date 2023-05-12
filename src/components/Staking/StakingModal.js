@@ -57,7 +57,7 @@ const StakingModal = ({
         },
         body: JSON.stringify({
           keyIds: keyIds,
-          stakerWallet: user && user.attributes.ethAddress,
+          stakerWallet: user?.attributes?.ethAddress,
           stakingPoolId: parseInt(stakingPoolId),
           keychainIds: keychains.map((k) => k.tokenID),
           superiorKeychainId: subpool.superiorKeychain

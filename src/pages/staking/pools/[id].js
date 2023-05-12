@@ -40,7 +40,7 @@ const StakingPool = ({ stakingPoolData }) => {
   const getStakerInventory = async () => {
     const rawRes = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${
-        user && user.attributes.ethAddress
+        user?.attributes?.ethAddress
       }/${id}`
     ).catch((err) => console.log(err));
     const res = await rawRes.json();
@@ -53,7 +53,7 @@ const StakingPool = ({ stakingPoolData }) => {
   const getStakerTotalSubpoolPoints = async () => {
     const rawRes = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/staker-total-subpool-points/${
-        user && user.attributes.ethAddress
+        user?.attributes?.ethAddress
       }/${id}`
     );
     const res = await rawRes.json();
@@ -65,7 +65,7 @@ const StakingPool = ({ stakingPoolData }) => {
   const getTotalTokenShare = async () => {
     const rawRes = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/calculate-total-token-share/${
-        user && user.attributes.ethAddress
+        user?.attributes?.ethAddress
       }/${id}`
     );
     const res = await rawRes.json();
@@ -77,7 +77,7 @@ const StakingPool = ({ stakingPoolData }) => {
   const checkSubpoolComboEligibility = async () => {
     const rawRes = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/check-subpool-combo-eligiblity/${
-        user && user.attributes.ethAddress
+        user?.attributes?.ethAddress
       }/${id}/${comboCount}`
     );
     const res = await rawRes.json();

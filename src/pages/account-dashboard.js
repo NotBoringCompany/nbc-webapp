@@ -5,7 +5,7 @@ import Layout from '@/components/Layout/Layout';
 
 const Accountdashboard = () => {
   const { user } = useMoralis();
-  const userEthAddress = user && user.attributes.ethAddress;
+  const userEthAddress = user?.attributes?.ethAddress;
   const userHasEmail = user && !!user.attributes.email;
   return (
     <Layout

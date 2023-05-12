@@ -30,7 +30,7 @@ const MySubpools = () => {
   const fetchStakerSubpools = useCallback(async () => {
     const subpoolRawRes = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/get-staker-subpools/${
-        user && user.attributes.ethAddress
+        user?.attributes?.ethAddress
       }`,
       {
         method: 'GET',
@@ -45,7 +45,7 @@ const MySubpools = () => {
   }, [user]);
 
   useEffect(() => {
-    if (user && user.attributes.ethAddress) {
+    if (user?.attributes?.ethAddress) {
       fetchStakerSubpools();
     }
   }, [fetchStakerSubpools, user, user?.attributes.ethAddress]);
