@@ -1,22 +1,23 @@
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import Layout from '@/components/Layout/Layout';
-import { Flex, Text, Avatar, Divider } from '@mantine/core';
+import { Flex, Text, Avatar, Divider, CopyButton, Tooltip, ActionIcon } from '@mantine/core';
 import NBCLogo from '../../public/NBCLogo.png'
 import { useMoralis } from 'react-moralis';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { IconCheck, IconCopy } from '@tabler/icons';
 
 const Inventory = () => {
     const { user } = useMoralis();
     const [email, setEmail] = useState(null);
-    const getEmail = () => {
-        if (user && user.attributes.email) {
+    const getEmail = useCallback(() => {
+        if (user?.attributes?.email) {
             setEmail(user.attributes.email);
         }
-    }
+    }, [user])
 
     useEffect(() => {
         getEmail();
-    }, [user])
+    }, [user, getEmail])
 
     return (
         <Layout
@@ -30,7 +31,7 @@ const Inventory = () => {
             >
                 <BorderedBox
                     borderRadiusSize='xl'
-                    minWidth='25%'
+                    minWidth='20%'
                     padding='sm'
                 >
                     <Flex
@@ -42,27 +43,44 @@ const Inventory = () => {
                         <Avatar radius='md' size='xl' sx={(theme) => ({
                         backgroundColor: '#42ca9f',
                     })}>
-                        {user.attributes.email ? user.attributes.email[0].toUpperCase() : <NBCLogo />}
+                        {user?.attributes?.email[0]?.toUpperCase() ?? <NBCLogo />}
                     </Avatar>
                     <Flex
                         direction='column'
                         mt={20}
                         px={20}
                     >
-                        <Text>{`${user?.attributes?.ethAddress.slice(0, 7)}...${user?.attributes.ethAddress.slice(-5)}`}</Text>
+                        <Flex
+                            direction='row'
+                            align='center'
+                            justify='space-between'
+                        >
+                            <Text>
+                                {`${user?.attributes?.ethAddress.slice(0, 7)}...${user?.attributes.ethAddress.slice(-5)}`}
+                            </Text>
+                            <CopyButton value={user?.attributes?.ethAddress} timeout={3000}>
+                                {({copied, copy}) => (
+                                    <Tooltip label={copied ? 'Copied' : 'Copy'} withArrow position='right'>
+                                        <ActionIcon color={copied ? '#42ca9f' : 'white'} onClick={copy}>
+                                            {copied ? <IconCheck color='#42ca9f' /> : <IconCopy color='#42ca9f' />}
+                                        </ActionIcon>
+                                    </Tooltip>
+                                )}
+                            </CopyButton>
+                        </Flex>
                         <Divider color='#42ca9f' size='xs' variant='dashed' />
                         <Text>{email ?? 'No email provided.'}</Text>
                     </Flex>
                     </Flex>
                 </BorderedBox>
-                <BorderedBox
-                    borderRadiusSize='xl'
-                    minWidth='50%'
-                    padding='sm'
-                    sx={{marginTop: 20}}
+                <Flex
+                    direction='column'
+                    align='center'
+                    justify='center'
                 >
-
-                </BorderedBox>
+                    <Text>Hey</Text>
+                    <Text>S</Text>
+                </Flex>
             </Flex>
         </Layout>
     )
