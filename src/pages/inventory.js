@@ -12,6 +12,7 @@ import Image from 'next/image';
 const Inventory = () => {
     const { user } = useMoralis();
     const [email, setEmail] = useState(null);
+    const [nfts, setNfts] = useState(null);
     const { getBalances, data: balance, nativeToken, error: nativeBalanceError, isLoading: nativeBalanceLoading } = useNativeBalance();
     const { getNFTBalances, data: nftBalance, error: nftBalanceError, isLoading: nftBalanceLoading, isFetching: nftBalanceFetching } = useNFTBalances();
     // const { fetchTokenPrice, data: tokenPrice, error: tokenPriceError, isLoading: tokenPriceLoading, isFetching: tokenpriceFetching } = useTokenPrice();
@@ -29,7 +30,26 @@ const Inventory = () => {
 
     const returnNftBalances = async () => {
         if (!nftBalance) {
-            await getNFTBalances({params: {chain: '0x1'}}); // only ETH for now
+            const check = await getNFTBalances({params: {chain: '0x1'}}); // only ETH for now
+            const ownedKOS = check.result.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KOS_ADDRESS.toLowerCase());
+            const ownedKeychains = check.result.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KEYCHAIN_ADDRESS.toLowerCase());
+            const ownedSupKeychains = check.result.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_SUPERIOR_KEYCHAIN_ADDRESS.toLowerCase());
+
+            setNfts({
+                ownedKOS,
+                ownedKeychains,
+                ownedSupKeychains
+            })
+        } else {
+            const ownedKOS = nftBalance.result.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KOS_ADDRESS.toLowerCase());
+            const ownedKeychains = nftBalance.result.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KEYCHAIN_ADDRESS.toLowerCase());
+            const ownedSupKeychains = nftBalance.result.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_SUPERIOR_KEYCHAIN_ADDRESS.toLowerCase());
+
+            setNfts({
+                ownedKOS,
+                ownedKeychains,
+                ownedSupKeychains
+            })
         }
     }
 
@@ -47,6 +67,12 @@ const Inventory = () => {
         returnNftBalances();
         // returnTokenPrice();
     }, [user, getEmail])
+
+    // useEffect(() => {
+    //     if (nftBalance && !nfts) {
+    //         getNfts();
+    //     }
+    // }, [nftBalance, nfts, getNfts])
 
     return (
         <Layout
@@ -107,6 +133,7 @@ const Inventory = () => {
                     justify='start'
                     sx={(theme) => ({
                         minWidth: '50%',
+                        maxWidth: '50%',
                     })}
                 >
                     <Flex
@@ -124,7 +151,7 @@ const Inventory = () => {
                             maxWidth: '100%'
                         })}
                     >
-                        <SimpleGrid cols={2}>
+                        <SimpleGrid cols={4}>
                             <Box
                                 py={30}
                                 px={30} 
@@ -139,8 +166,8 @@ const Inventory = () => {
                                     justify='center'
                                     mb={15}
                                 >
-                                    <Image src={ETHLogo} alt='ETH Logo' width={50} height={50} />
-                                    <Text size={30} ml={15} weight={700}>ETH</Text>
+                                    <Image src={ETHLogo} alt='ETH Logo' width={30} />
+                                    <Text size={24} ml={15} weight={700}>ETH</Text>
                                 </Flex>
                                 <Divider color='grey' size='xs' variant='dashed' />
                                 <Flex
@@ -149,7 +176,7 @@ const Inventory = () => {
                                     justify='center'
                                     mt={15}
                                 >
-                                    <Text size={30} weight={700}>{balance ? parseFloat(balance.balance/10**18).toFixed(3) : '0'}</Text>
+                                    <Text size={24} weight={700}>{balance ? parseFloat(balance.balance/10**18).toFixed(3) : '0'}</Text>
                                 </Flex>
                             </Box>
                             <Box
@@ -166,8 +193,8 @@ const Inventory = () => {
                                     justify='center'
                                     mb={15}
                                 >
-                                    <Image src={RECToken} alt='REC Logo' width={90} />
-                                    <Text size={30} weight={700}>REC</Text>
+                                    <Image src={RECToken} alt='REC Logo' width={50} />
+                                    <Text size={24} weight={700}>REC</Text>
                                 </Flex>
                                 <Divider color='grey' size='xs' variant='dashed' />
                                 <Flex
@@ -176,7 +203,7 @@ const Inventory = () => {
                                     justify='center'
                                     mt={15}
                                 >
-                                    <Text size={30} weight={700}>TO DO</Text>
+                                    <Text size={24} weight={700}>TO DO</Text>
                                 </Flex>
                             </Box>
                         </SimpleGrid>
@@ -189,6 +216,97 @@ const Inventory = () => {
                         <Text size={38} ml={15}>NFTs</Text>
                     </Flex>
                     <Divider color='#42ca9f' size='sm' variant='dashed' />
+                    <Flex
+                        direction='column'
+                        mb={30}
+                        sx={(theme) => ({
+                            maxWidth: '100%'
+                        })}
+                    >
+                        <SimpleGrid cols={4}>
+                            <Box
+                                py={30}
+                                px={30} 
+                                mt={30} 
+                                sx={(theme) => ({
+                                    backgroundColor: theme.colors.dark[7],
+                                })}
+                            >
+                                <Flex
+                                    direction='row'
+                                    align='center'
+                                    justify='center'
+                                    mb={15}
+                                >
+                                    <Image src={ETHLogo} alt='ETH Logo' width={30} />
+                                    <Text size={24} ml={15} weight={700}>KOS</Text>
+                                </Flex>
+                                <Divider color='grey' size='xs' variant='dashed' />
+                                <Flex
+                                    direction='column'
+                                    align='center'
+                                    justify='center'
+                                    mt={15}
+                                >
+                                    <Text size={24} weight={700}>{nfts?.ownedKOS?.length ?? 0}</Text>
+                                </Flex>
+                            </Box>
+                            <Box
+                                py={30}
+                                px={30} 
+                                mt={30} 
+                                sx={(theme) => ({
+                                    backgroundColor: theme.colors.dark[7],
+                                })}
+                            >
+                                <Flex
+                                    direction='row'
+                                    align='center'
+                                    justify='center'
+                                    mb={15}
+                                >
+                                    <Image src={RECToken} alt='REC Logo' width={50} />
+                                    <Text size={24} weight={700}>KCH</Text>
+                                </Flex>
+                                <Divider color='grey' size='xs' variant='dashed' />
+                                <Flex
+                                    direction='column'
+                                    align='center'
+                                    justify='center'
+                                    mt={15}
+                                >
+                                    <Text size={24} weight={700}>{nfts?.ownedKeychains?.length ?? 0}</Text>
+                                </Flex>
+                            </Box>
+                            <Box
+                                py={30}
+                                px={30} 
+                                mt={30} 
+                                sx={(theme) => ({
+                                    backgroundColor: theme.colors.dark[7],
+                                })}
+                            >
+                                <Flex
+                                    direction='row'
+                                    align='center'
+                                    justify='center'
+                                    mb={15}
+                                >
+                                    <Image src={RECToken} alt='REC Logo' width={50} />
+                                    <Text size={24} weight={700}>SKCH</Text>
+                                </Flex>
+                                <Divider color='grey' size='xs' variant='dashed' />
+                                <Flex
+                                    direction='column'
+                                    align='center'
+                                    justify='center'
+                                    mt={15}
+                                >
+                                    <Text size={24} weight={700}>{nfts.ownedSupKeychains?.length ?? 0}</Text>
+                                </Flex>
+                            </Box>
+                        </SimpleGrid>
+                    </Flex>
                 </Flex>
             </Flex>
         </Layout>
