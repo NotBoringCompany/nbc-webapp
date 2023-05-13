@@ -6,6 +6,7 @@ import GlobalStyles from '@/components/Globals/Styles';
 import AuthModal from '@/components/Modals/AuthModal';
 import { Analytics } from '@vercel/analytics/react';
 import { COLORS } from '@/components/Globals/colors';
+import WrongNetwork from '@/components/Modals/WrongNetwork';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -29,6 +30,7 @@ export default function App({ Component, pageProps }) {
         <GlobalStyles />
         <CustomFonts />
         <AuthModal />
+        <WrongNetwork />
         <Analytics />
         <Component {...pageProps} />
       </MantineProvider>

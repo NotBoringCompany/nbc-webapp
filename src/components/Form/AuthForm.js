@@ -21,7 +21,7 @@ const AuthForm = ({ forLogin = false }) => {
     isAuthenticating,
     authError,
   } = useMoralis();
-  const hasEmail = user && user.attributes.email;
+  const hasEmail = user?.attributes?.email;
 
   const loading = isUserUpdating || isAuthenticating;
 
