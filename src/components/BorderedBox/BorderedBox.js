@@ -6,9 +6,9 @@ const BorderedBox = ({
   children,
   sx = {},
   borderRadiusSize = 'xl',
-  padding,
+  ...props
 }) => {
-  const color = COLORS[variant] || COLORS.green;
+  const color = COLORS[variant] || variant;
   return (
     <Box
       sx={(theme) => ({
@@ -16,9 +16,9 @@ const BorderedBox = ({
         borderRadius: theme.radius[borderRadiusSize],
         textAlign: 'center',
         minWidth: minWidth || '50%',
-        padding: padding ? theme.spacing[padding] : 0,
         ...sx,
       })}
+      {...props}
     >
       {children}
     </Box>

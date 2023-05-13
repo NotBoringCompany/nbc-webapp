@@ -1,5 +1,6 @@
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
-import { Box, Flex, List, Text } from '@mantine/core';
+import { HeadingFive, HeadingSix } from '@/components/Typography/Headings';
+import { Flex, List, Text } from '@mantine/core';
 import { IconAlertOctagon } from '@tabler/icons';
 
 const SubpoolWarning = ({ stakingPoolData }) => {
@@ -7,13 +8,13 @@ const SubpoolWarning = ({ stakingPoolData }) => {
     <BorderedBox
       variant='red'
       sx={{ marginTop: 10, maxWidth: '50%', marginLeft: 50 }}
-      withPadding
+      p='lg'
     >
       <Flex gap='md' direction='row' align='center' justify='center' mb={10}>
         <IconAlertOctagon size={30} color='#ca4242' />
-        <Text size={26} weight={600} c='#ca4242'>
+        <HeadingSix order={2} color='red'>
           PLEASE PAY ATTENTION TO THE FOLLOWING
-        </Text>
+        </HeadingSix>
       </Flex>
       <Text size={22}>
         STAKING POOL START TIME:{' '}

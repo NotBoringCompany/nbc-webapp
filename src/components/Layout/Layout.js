@@ -1,42 +1,18 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Flex, Loader, ScrollArea, Text } from '@mantine/core';
+import { Flex, Loader, ScrollArea } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { Container } from '@mantine/core';
 import MainNavbar from '../Navbar/Navbar';
 import { useMoralis } from 'react-moralis';
-import { IconAlertOctagon } from '@tabler/icons';
-import BorderedBox from '../BorderedBox/BorderedBox';
+import WarningBox from './WarningBox';
 
 const AuthWall = (
-  <Flex direction='column' align='center' justify='center'>
-    <BorderedBox
-      borderRadiusSize='md'
-      withPadding
-      sx={{
-        borderWidth: '2px',
-        marginTop: 30,
-      }}
-      variant='red'
-    >
-      <Flex direction='row' align='center' justify='center'>
-        <IconAlertOctagon
-          color='#ca4242'
-          size={40}
-          style={{ marginRight: 10 }}
-        />
-        <Text
-          sx={(theme) => ({
-            fontSize: 40,
-            color: '#ca4242',
-            fontWeight: 700,
-          })}
-        >
-          YOU ARE NOT LOGGED IN
-        </Text>
-      </Flex>
-      <Text size='lg'>Please connect your wallet to access this page.</Text>
-    </BorderedBox>
+  <Flex justify='center'>
+    <WarningBox
+      title='YOU ARE NOT LOGGED IN'
+      description='Please connect your wallet to access this page.'
+    />
   </Flex>
 );
 

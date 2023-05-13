@@ -1,32 +1,18 @@
 import { Flex, SimpleGrid, Text } from '@mantine/core';
 import NFTCard from '../NFTCard';
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
+import { HeadingFour } from '@/components/Typography/Headings';
 
 const NFTStaked = ({ cardColumnsBreakpoints, subpoolData }) => {
   return (
     <BorderedBox
       borderRadiusSize='md'
       sx={{ marignTop: 80, minWidth: '30%' }}
-      withPadding
+      p='lg'
     >
-      <Flex
-        direction='row'
-        align='center'
-        justify='center'
-        sx={(theme) => ({
-          marginBottom: 20,
-        })}
-      >
-        <Text
-          sx={(theme) => ({
-            fontSize: 40,
-            fontWeight: 700,
-            color: '#42ca9f',
-          })}
-        >
-          NFTS STAKED
-        </Text>
-      </Flex>
+      <HeadingFour order={2} my={40}>
+        NFTS STAKED
+      </HeadingFour>
       <Flex
         direction='column'
         align='center'

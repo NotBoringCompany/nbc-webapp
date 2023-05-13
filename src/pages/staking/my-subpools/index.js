@@ -2,7 +2,8 @@ import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import { COLORS } from '@/components/Globals/colors';
 import Layout from '@/components/Layout/Layout';
 import { PoolComponent } from '@/components/Staking/StakingPool/StakingPoolData';
-import { Button, Divider, Flex, Text } from '@mantine/core';
+import { HeadingOne } from '@/components/Typography/Headings';
+import { Button, Divider, Flex, Text, Title } from '@mantine/core';
 import { IconAlertOctagon } from '@tabler/icons';
 import { useRouter } from 'next/router';
 import { Fragment, useCallback, useEffect, useState } from 'react';
@@ -18,7 +19,7 @@ const claimableBadge = (claimable, claimed) => {
   }
 
   if (claimed) {
-    return { text: 'CLAIMED', backgroundColor: COLORS.grey };
+    return { text: 'CLAIMED', backgroundColor: 'grey' };
   }
 };
 
@@ -29,9 +30,7 @@ const MySubpools = () => {
 
   const fetchStakerSubpools = useCallback(async () => {
     const subpoolRawRes = await fetch(
-      `https://nbc-webapp-api-production.up.railway.app/kos/get-staker-subpools/${
-        user?.attributes?.ethAddress
-      }`,
+      `https://nbc-webapp-api-production.up.railway.app/kos/get-staker-subpools/${user?.attributes?.ethAddress}`,
       {
         method: 'GET',
         headers: {
@@ -57,15 +56,7 @@ const MySubpools = () => {
       withAuth
     >
       <Flex direction='column' align='center' justify='center'>
-        <Text
-          sx={() => ({
-            fontSize: 72,
-            fontWeight: 700,
-            color: '#42ca9f',
-          })}
-        >
-          MY SUBPOOLS
-        </Text>
+        <HeadingOne mb={24}>MY SUBPOOLS</HeadingOne>
         <Flex gap='md' px={10} py={10} align='center'>
           <IconAlertOctagon size={30} />
           <Text size={24}>

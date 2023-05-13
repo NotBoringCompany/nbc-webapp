@@ -1,5 +1,6 @@
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import { MediumButton } from '@/components/Buttons/Universals';
+import { HeadingFour } from '@/components/Typography/Headings';
 import { Box, Button, Divider, Flex, HoverCard, Text } from '@mantine/core';
 import { IconAlertOctagon, IconQuestionCircle } from '@tabler/icons';
 import MathJax from 'react-mathjax2';
@@ -16,25 +17,10 @@ const SubpoolData = ({
   const now = new Date().getTime();
 
   return (
-    <BorderedBox withPadding sx={{ minWidth: '30%', textAlign: 'left' }}>
-      <Flex
-        direction='row'
-        align='center'
-        justify='center'
-        sx={(theme) => ({
-          marginBottom: 20,
-        })}
-      >
-        <Text
-          sx={(theme) => ({
-            fontSize: 40,
-            fontWeight: 700,
-            color: '#42ca9f',
-          })}
-        >
-          SUBPOOL DATA
-        </Text>
-      </Flex>
+    <BorderedBox p='lg' sx={{ minWidth: '30%', textAlign: 'left' }}>
+      <HeadingFour order={2} align='center' my='lg'>
+        SUBPOOL DATA
+      </HeadingFour>
       <Flex
         direction='column'
         align='center'

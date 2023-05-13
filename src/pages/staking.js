@@ -1,6 +1,7 @@
 import { Flex, Text } from '@mantine/core';
 import Layout from '@/components/Layout/Layout';
 import StakingPool from '@/components/Staking/StakingPool/StakingPool';
+import { HeadingOne } from '@/components/Typography/Headings';
 
 export default function Staking({ stakingPoolData }) {
   const stakeablePools = stakingPoolData.stakeablePools;
@@ -20,9 +21,7 @@ export default function Staking({ stakingPoolData }) {
           marginTop: 40,
         }}
       >
-        <Text c='#42ca9f' size={60} weight={700}>
-          STAKING POOLS
-        </Text>
+        <HeadingOne mb={24}>STAKING POOLS</HeadingOne>
         <Text size={24}>Stake your Factory NFTs to earn special yields.</Text>
         <StakingPool
           isActive

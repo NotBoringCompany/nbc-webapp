@@ -13,7 +13,7 @@ const StakingPoolDataDetail = ({
   return (
     <BorderedBox
       borderRadiusSize='md'
-      withPadding
+      p='lg'
       sx={{
         minWidth: '30%',
         marginRight: 50,

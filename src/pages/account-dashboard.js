@@ -2,6 +2,7 @@ import { useMoralis } from 'react-moralis';
 import { Container, Text, Divider } from '@mantine/core';
 import AuthForm from '@/components/Form/AuthForm';
 import Layout from '@/components/Layout/Layout';
+import { HeadingFour } from '@/components/Typography/Headings';
 
 const Accountdashboard = () => {
   const { user } = useMoralis();
@@ -14,17 +15,7 @@ const Accountdashboard = () => {
       withAuth
     >
       <Container maw='1024px' direction='column'>
-        <Text
-          weight='500'
-          size='32px'
-          mb='32px'
-          sx={(theme) => ({
-            color: theme.colors.nbcGreen[0],
-          })}
-        >
-          Account Dashboard
-        </Text>
-
+        <HeadingFour mb={32}>Account Dashboard</HeadingFour>
         <Text
           weight='300'
           size='24px'

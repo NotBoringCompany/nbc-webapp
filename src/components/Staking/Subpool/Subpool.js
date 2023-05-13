@@ -1,12 +1,12 @@
-import { Button, Flex, Loader, Modal, Text } from '@mantine/core';
-import { IconAlertOctagon } from '@tabler/icons';
+import { Flex, Text } from '@mantine/core';
 import { cardColumnsBreakpoints } from '@/components/Breakpoints/CardColumns';
 import SubpoolWarning from './SubpoolWarning';
 import SubpoolData from './SubpoolData';
 import NFTStaked from './NFTStaked';
-import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import ClaimModal from '@/components/Modals/ClaimModal';
 import UnstakeModal from '@/components/Modals/UnstakeModal';
+import WarningBox from '@/components/Layout/WarningBox';
+import { HeadingOne } from '@/components/Typography/Headings';
 
 const Subpool = ({
   subpoolDataExists,
@@ -33,46 +33,16 @@ const Subpool = ({
   return (
     <Flex direction='column' align='center' justify='center'>
       {!subpoolDataExists && (
-        <BorderedBox
-          variant='red'
-          borderRadiusSize='md'
-          withPadding
-          sx={{
-            marginTop: 15,
-          }}
-        >
-          <Flex direction='row' align='center' justify='center'>
-            <IconAlertOctagon
-              color='#ca4242'
-              size={40}
-              style={{ marginRight: 10 }}
-            />
-            <Text
-              sx={(theme) => ({
-                fontSize: 40,
-                color: '#ca4242',
-                fontWeight: 700,
-              })}
-            >
-              SUBPOOL PAGE NOT AVAILABLE
-            </Text>
-          </Flex>
-          <Text size='lg'>
-            This subpool might not exist or is not available.
-          </Text>
-        </BorderedBox>
+        <WarningBox
+          title='SUBPOOL PAGE NOT AVAILABLE'
+          description='This subpool might not exist or is not available'
+        />
       )}
       {subpoolDataExists && (
         <>
-          <Text
-            sx={{
-              fontSize: 72,
-              fontWeight: 700,
-              color: '#42ca9f',
-            }}
-          >
+          <HeadingOne mb='lg' align='center'>
             Staking Pool {stakingPoolId} {'<>'} Subpool {subpoolId}
-          </Text>
+          </HeadingOne>
           <Flex direction='row' align='center' justify='center' my={25}>
             <SubpoolData
               subpoolData={subpoolData}
