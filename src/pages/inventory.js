@@ -1,6 +1,6 @@
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import Layout from '@/components/Layout/Layout';
-import { Flex, Text, Avatar, Divider, CopyButton, Tooltip, ActionIcon, SimpleGrid, Card, Box } from '@mantine/core';
+import { Flex, Text, Avatar, Divider, CopyButton, Tooltip, ActionIcon, SimpleGrid, Card, Box, Button } from '@mantine/core';
 import NBCLogo from '../../public/NBCLogo.png'
 import { useMoralis, useNativeBalance, useNFTBalances, useTokenPrice } from 'react-moralis';
 import { useCallback, useEffect, useState } from 'react';
@@ -8,6 +8,7 @@ import { IconCheck, IconCopy, IconDiamond, IconWallet } from '@tabler/icons';
 import ETHLogo from '../../public/ethLogo.png'
 import RECToken from '../../public/recToken.png'
 import Image from 'next/image';
+import { MediumButton } from '@/components/Buttons/Universals';
 
 const Inventory = () => {
     const { user } = useMoralis();
@@ -87,7 +88,8 @@ const Inventory = () => {
                 <BorderedBox
                     borderRadiusSize='xl'
                     minWidth='20%'
-                    padding='sm'
+                    sx={{border: '3px solid #42ca9f'}}
+                    py={15}
                 >
                     <Flex
                         direction='column'
@@ -248,7 +250,8 @@ const Inventory = () => {
                                     justify='center'
                                     mt={15}
                                 >
-                                    <Text size={24} weight={700}>{nfts?.ownedKOS?.length ?? 0}</Text>
+                                    <Text size={24} weight={700} mb={30}>{nfts?.ownedKOS?.length ?? 0}</Text>
+                                    <MediumButton text='View' color='#42ca9f' />
                                 </Flex>
                             </Box>
                             <Box
@@ -275,7 +278,8 @@ const Inventory = () => {
                                     justify='center'
                                     mt={15}
                                 >
-                                    <Text size={24} weight={700}>{nfts?.ownedKeychains?.length ?? 0}</Text>
+                                    <Text size={24} weight={700} mb={30}>{nfts?.ownedKeychains?.length ?? 0}</Text>
+                                    <MediumButton text='View' color='#42ca9f' />
                                 </Flex>
                             </Box>
                             <Box
@@ -302,7 +306,8 @@ const Inventory = () => {
                                     justify='center'
                                     mt={15}
                                 >
-                                    <Text size={24} weight={700}>{nfts.ownedSupKeychains?.length ?? 0}</Text>
+                                    <Text size={24} weight={700} mb={30}>{nfts?.ownedSupKeychains?.length ?? 0}</Text>
+                                    <MediumButton text='View' color='#42ca9f' />
                                 </Flex>
                             </Box>
                         </SimpleGrid>

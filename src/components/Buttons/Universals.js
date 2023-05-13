@@ -4,7 +4,7 @@ export const MediumButton = ({ color, hoverColor, margin, padding, onClick, disa
     return (
         <Button
             sx={(theme) => ({
-                backgroundColor: color ? color : theme.colors.grey[2],
+                backgroundColor: color ? color : theme.colors.dark[7],
                 margin: margin,
                 padding: padding,
                 ':hover': {
