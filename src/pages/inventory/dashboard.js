@@ -1,18 +1,20 @@
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import Layout from '@/components/Layout/Layout';
-import { Flex, Text, Avatar, Divider, CopyButton, Tooltip, ActionIcon, SimpleGrid, Card, Box, Button } from '@mantine/core';
+import { Flex, Text, Avatar, Divider, CopyButton, Tooltip, ActionIcon, SimpleGrid, Card, Box, Button, Collapse } from '@mantine/core';
 import NBCLogo from '../../../public/NBCLogo.png'
 import { useMoralis, useNativeBalance, useNFTBalances, useTokenPrice } from 'react-moralis';
 import { useCallback, useEffect, useState } from 'react';
-import { IconBriefcase, IconCheck, IconCopy, IconDashboard, IconDiamond, IconLayoutDashboard, IconLetterCase, IconWallet } from '@tabler/icons';
+import { IconArrowBarDown, IconArrowDown, IconBriefcase, IconCheck, IconCopy, IconDashboard, IconDiamond, IconDotsVertical, IconGripVertical, IconLayoutDashboard, IconLetterCase, IconWallet } from '@tabler/icons';
 import ETHLogo from '../../../public/ethLogo.png'
 import RECToken from '../../../public/recToken.png'
 import Image from 'next/image';
 import { MediumButton } from '@/components/Buttons/Universals';
 import Link from 'next/link';
+import { useDisclosure } from '@mantine/hooks';
 
 const Inventory = () => {
     const { user } = useMoralis();
+    const [openedOverviewCollapse, { toggle: toggleOverviewCollapse }] = useDisclosure(false);
     const [email, setEmail] = useState(null);
     const [nfts, setNfts] = useState(null);
     const { getBalances, data: balance, nativeToken, error: nativeBalanceError, isLoading: nativeBalanceLoading } = useNativeBalance();
@@ -129,20 +131,33 @@ const Inventory = () => {
                             <Divider color='#42ca9f' size='xs' variant='dashed' />
                             <Text>{email ?? 'No email provided.'}</Text>
                         </Flex>
-                        <Flex
-                            direction='column'
-                            // align='baseline'
-                            // justify='start'
-                        >
-                            <MediumButton color='transparent' margin='50px 0px 0px 0px'>
-                                <IconLayoutDashboard size={20} />
-                                <Text ml={20} size={20}>Dashboard</Text>
-                            </MediumButton>
-                            <MediumButton color='transparent' margin='10px 0px 0px 0px'>
-                                <IconBriefcase size={20} />
-                                <Text ml={20} size={20}>Overview</Text>
-                            </MediumButton>
-                        </Flex>
+                    </Flex>
+                    <Flex
+                        direction='column'
+                        align='start'
+                        justify='start'
+                    >
+                        <MediumButton color='transparent' margin='50px 0px 0px 0px'>
+                            <IconLayoutDashboard size={20} />
+                            <Text ml={20} size={20}>Dashboard</Text>
+                        </MediumButton>
+                        <MediumButton color='transparent' margin='10px 0px 0px 0px' onClick={toggleOverviewCollapse}>
+                            <IconBriefcase size={20} />
+                            <Text ml={20} mr={30} size={20}>Overview</Text>
+                            <IconArrowBarDown size={20} />
+                        </MediumButton>
+                        <Collapse in={openedOverviewCollapse}>
+                            <Flex
+                                direction='column'
+                                align='start'
+                                justify='start'
+                            >
+                                <MediumButton color='transparent'><Text weight={200}>Key Of Salvation</Text></MediumButton>
+                                <MediumButton color='transparent'><Text weight={200}>Keychain</Text></MediumButton>
+                                <MediumButton color='transparent'><Text weight={200}>Superior Keychain</Text></MediumButton>
+                            </Flex>
+                        </Collapse>
+                        
                     </Flex>
                 </BorderedBox>
                 <Flex
