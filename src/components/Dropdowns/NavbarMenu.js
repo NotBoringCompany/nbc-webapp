@@ -49,7 +49,7 @@ const NavbarMenu = () => {
           <Text>Account Dashboard</Text>
         </Menu.Item>
         <Menu.Item
-          onClick={() => router.push('/inventory')}
+          onClick={() => router.push('/inventory/dashboard')}
           icon={<IconBox size={14} />}
         >
           <Text>Inventory</Text>

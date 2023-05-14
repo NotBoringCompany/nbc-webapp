@@ -1,14 +1,15 @@
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import Layout from '@/components/Layout/Layout';
 import { Flex, Text, Avatar, Divider, CopyButton, Tooltip, ActionIcon, SimpleGrid, Card, Box, Button } from '@mantine/core';
-import NBCLogo from '../../public/NBCLogo.png'
+import NBCLogo from '../../../public/NBCLogo.png'
 import { useMoralis, useNativeBalance, useNFTBalances, useTokenPrice } from 'react-moralis';
 import { useCallback, useEffect, useState } from 'react';
-import { IconCheck, IconCopy, IconDiamond, IconWallet } from '@tabler/icons';
-import ETHLogo from '../../public/ethLogo.png'
-import RECToken from '../../public/recToken.png'
+import { IconBriefcase, IconCheck, IconCopy, IconDashboard, IconDiamond, IconLayoutDashboard, IconLetterCase, IconWallet } from '@tabler/icons';
+import ETHLogo from '../../../public/ethLogo.png'
+import RECToken from '../../../public/recToken.png'
 import Image from 'next/image';
 import { MediumButton } from '@/components/Buttons/Universals';
+import Link from 'next/link';
 
 const Inventory = () => {
     const { user } = useMoralis();
@@ -32,9 +33,9 @@ const Inventory = () => {
     const returnNftBalances = async () => {
         if (!nftBalance) {
             const check = await getNFTBalances({params: {chain: '0x1'}}); // only ETH for now
-            const ownedKOS = check.result.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KOS_ADDRESS.toLowerCase());
-            const ownedKeychains = check.result.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KEYCHAIN_ADDRESS.toLowerCase());
-            const ownedSupKeychains = check.result.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_SUPERIOR_KEYCHAIN_ADDRESS.toLowerCase());
+            const ownedKOS = check?.result?.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KOS_ADDRESS.toLowerCase());
+            const ownedKeychains = check?.result?.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KEYCHAIN_ADDRESS.toLowerCase());
+            const ownedSupKeychains = check?.result?.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_SUPERIOR_KEYCHAIN_ADDRESS.toLowerCase());
 
             setNfts({
                 ownedKOS,
@@ -42,9 +43,9 @@ const Inventory = () => {
                 ownedSupKeychains
             })
         } else {
-            const ownedKOS = nftBalance.result.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KOS_ADDRESS.toLowerCase());
-            const ownedKeychains = nftBalance.result.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KEYCHAIN_ADDRESS.toLowerCase());
-            const ownedSupKeychains = nftBalance.result.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_SUPERIOR_KEYCHAIN_ADDRESS.toLowerCase());
+            const ownedKOS = nftBalance?.result?.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KOS_ADDRESS.toLowerCase());
+            const ownedKeychains = nftBalance?.result?.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KEYCHAIN_ADDRESS.toLowerCase());
+            const ownedSupKeychains = nftBalance?.result?.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_SUPERIOR_KEYCHAIN_ADDRESS.toLowerCase());
 
             setNfts({
                 ownedKOS,
@@ -94,7 +95,7 @@ const Inventory = () => {
                     <Flex
                         direction='column'
                         align='center'
-                        justify='space-evenly'
+                        justify='center'
                         mt={10}
                     >
                         <Avatar radius='md' size='xl' sx={(theme) => ({
@@ -127,6 +128,20 @@ const Inventory = () => {
                             </Flex>
                             <Divider color='#42ca9f' size='xs' variant='dashed' />
                             <Text>{email ?? 'No email provided.'}</Text>
+                        </Flex>
+                        <Flex
+                            direction='column'
+                            // align='baseline'
+                            // justify='start'
+                        >
+                            <MediumButton color='transparent' margin='50px 0px 0px 0px'>
+                                <IconLayoutDashboard size={20} />
+                                <Text ml={20} size={20}>Dashboard</Text>
+                            </MediumButton>
+                            <MediumButton color='transparent' margin='10px 0px 0px 0px'>
+                                <IconBriefcase size={20} />
+                                <Text ml={20} size={20}>Overview</Text>
+                            </MediumButton>
                         </Flex>
                     </Flex>
                 </BorderedBox>
@@ -205,7 +220,7 @@ const Inventory = () => {
                                     justify='center'
                                     mt={15}
                                 >
-                                    <Text size={24} weight={700}>TO DO</Text>
+                                    <Text size={24} weight={700} mb={30}>TO DO</Text>
                                 </Flex>
                             </Box>
                         </SimpleGrid>
@@ -251,7 +266,7 @@ const Inventory = () => {
                                     mt={15}
                                 >
                                     <Text size={24} weight={700} mb={30}>{nfts?.ownedKOS?.length ?? 0}</Text>
-                                    <MediumButton text='View' color='#42ca9f' />
+                                    <MediumButton color='#42ca9f'>View</MediumButton>
                                 </Flex>
                             </Box>
                             <Box
@@ -279,7 +294,7 @@ const Inventory = () => {
                                     mt={15}
                                 >
                                     <Text size={24} weight={700} mb={30}>{nfts?.ownedKeychains?.length ?? 0}</Text>
-                                    <MediumButton text='View' color='#42ca9f' />
+                                    <MediumButton color='#42ca9f'>View</MediumButton>
                                 </Flex>
                             </Box>
                             <Box
@@ -307,7 +322,7 @@ const Inventory = () => {
                                     mt={15}
                                 >
                                     <Text size={24} weight={700} mb={30}>{nfts?.ownedSupKeychains?.length ?? 0}</Text>
-                                    <MediumButton text='View' color='#42ca9f' />
+                                    <MediumButton color='#42ca9f'>View</MediumButton>
                                 </Flex>
                             </Box>
                         </SimpleGrid>

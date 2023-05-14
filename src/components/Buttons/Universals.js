@@ -1,6 +1,6 @@
 import { Button } from '@mantine/core'
 
-export const MediumButton = ({ color, hoverColor, margin, padding, onClick, disabled, text }) => {
+export const MediumButton = ({ color, hoverColor, margin, padding, onClick, disabled, children }) => {
     return (
         <Button
             sx={(theme) => ({
@@ -16,7 +16,7 @@ export const MediumButton = ({ color, hoverColor, margin, padding, onClick, disa
             onClick={onClick}
             disabled={disabled}
         >
-            {text}
+            {children}
         </Button>
     )
 }

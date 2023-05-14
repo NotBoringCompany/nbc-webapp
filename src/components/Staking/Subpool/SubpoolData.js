@@ -17,7 +17,7 @@ const SubpoolData = ({
   const now = new Date().getTime();
 
   return (
-    <BorderedBox p='lg' sx={{ minWidth: '30%', textAlign: 'left' }}>
+    <BorderedBox p='lg' sx={{ minWidth: '30%', textAlign: 'left' }} variant='green'>
       <HeadingFour order={2} align='center' my='lg'>
         SUBPOOL DATA
       </HeadingFour>
@@ -44,22 +44,16 @@ const SubpoolData = ({
         {userOwnsThisSubpool && (
           <>
             <MediumButton
-              text='Unstake'
               color='#42ca9f'
               hoverColor='#42ca9f'
               onClick={handleUnstakeModal}
               disabled={
                 now > new Date(stakingPoolData.StartTime).getTime() || !user
               }
-            />
+            >
+              Unstake
+            </MediumButton>
             <MediumButton
-              text={
-                subpoolData.rewardClaimable
-                  ? subpoolData.rewardClaimed
-                    ? 'Reward Claimed'
-                    : 'Claim Reward'
-                  : 'Not Claimable'
-              }
               color='#42ca9f'
               hoverColor='#42ca9f'
               margin='0 0 0 10px'
@@ -67,7 +61,14 @@ const SubpoolData = ({
               disabled={
                 !subpoolData.rewardClaimable || subpoolData.rewardClaimed
               }
-            />
+            >
+              {subpoolData.rewardClaimable
+                  ? subpoolData.rewardClaimed
+                    ? 'Reward Claimed'
+                    : 'Claim Reward'
+                  : 'Not Claimable'
+              }
+            </MediumButton>
           </>
         )}
       </Flex>

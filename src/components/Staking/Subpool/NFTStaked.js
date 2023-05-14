@@ -9,6 +9,7 @@ const NFTStaked = ({ cardColumnsBreakpoints, subpoolData }) => {
       borderRadiusSize='md'
       sx={{ marignTop: 80, minWidth: '30%' }}
       p='lg'
+      variant='green'
     >
       <HeadingFour order={2} my={40}>
         NFTS STAKED

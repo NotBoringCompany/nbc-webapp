@@ -19,6 +19,7 @@ const StakingPoolDataDetail = ({
         marginRight: 50,
         textAlign: 'left',
       }}
+      variant='green'
     >
       <Flex
         direction='row'
