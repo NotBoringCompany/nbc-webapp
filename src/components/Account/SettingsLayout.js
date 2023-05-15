@@ -18,54 +18,53 @@ const SettingsLayout = () => {
             })}
         >
             <HeadingFour mb={32}>Account Settings</HeadingFour>
-        <Text
-          weight='300'
-          size='24px'
-          mb='12px'
-          sx={(theme) => ({
-            color: theme.colors.nbcGreen[0],
-          })}
-        >
-          Details
-        </Text>
-
-        {!!user && (
-          <Text
-            sx={(theme) => ({
-              span: {
-                color: theme.colors.nbcGreen[0],
-                fontWeight: 500,
-              },
-            })}
-          >
-            Connected Wallet: <span>{userEthAddress}</span>
-          </Text>
-        )}
-        {!!user && (
-          <Text
-            sx={(theme) => ({
-              span: {
-                color: theme.colors.nbcGreen[0],
-                fontWeight: 500,
-              },
-            })}
-          >
-            Connected Email:{' '}
-            {userHasEmail ? <span>{user.attributes.email}</span> : '-'}
-          </Text>
-        )}
-        <Divider my='md' />
-        <Text
-          weight='300'
-          size='24px'
-          mb='12px'
-          sx={(theme) => ({
-            color: theme.colors.nbcGreen[0],
-          })}
-        >
-          Email & Password
-        </Text>
-        <AuthForm />
+            <Text
+                weight='300'
+                size='24px'
+                mb='12px'
+                sx={(theme) => ({
+                    color: theme.colors.nbcGreen[0],
+                })}
+            >
+                Details
+            </Text>
+            {!!user && (
+                <Text
+                    sx={(theme) => ({
+                        span: {
+                            color: theme.colors.nbcGreen[0],
+                            fontWeight: 500,
+                        },
+                    })}
+                >
+                    Connected Wallet: <span>{userEthAddress}</span>
+                </Text>
+            )}
+            {!!user && (
+                <Text
+                    sx={(theme) => ({
+                        span: {
+                            color: theme.colors.nbcGreen[0],
+                            fontWeight: 500,
+                        },
+                    })}
+                >
+                    Connected Email:{' '}
+                    {userHasEmail ? <span>{user.attributes.email}</span> : '-'}
+                </Text>
+            )}
+            <Divider my='md' />
+            <Text
+                weight='300'
+                size='24px'
+                mb='12px'
+                sx={(theme) => ({
+                    color: theme.colors.nbcGreen[0],
+                })}
+            >
+                Email & Password
+            </Text>
+            <AuthForm />
         </Flex>
     )
 }

@@ -1,9 +1,10 @@
+import InventoryLayout from '@/components/Account/InventoryLayout'
 import AccountMainLayout from '@/components/Account/MainLayout'
 
 const Inventory = () => {
     return (
-        <AccountMainLayout pageTitle='Inventory'>
-
+        <AccountMainLayout pageTitle='Inventory' pageName='INVENTORY'>
+            <InventoryLayout />
         </AccountMainLayout>
     )
 }
