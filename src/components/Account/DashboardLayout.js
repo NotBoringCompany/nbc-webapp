@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { MediumButton } from '../Buttons/Universals'
 import ETHLogo from '../../../public/ethLogo.png'
 import RECToken from '../../../public/recToken.png'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNFTBalances, useNativeBalance } from 'react-moralis'
 
 const DashboardLayout = () => {

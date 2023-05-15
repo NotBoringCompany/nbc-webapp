@@ -6,7 +6,7 @@ import { IconBox, IconCheck, IconChevronDown, IconCopy, IconLayoutDashboard, Ico
 import { useRouter } from 'next/router'
 import { useDisclosure } from '@mantine/hooks'
 
-const AccountOverviewBox = ({ethAddress, email}) => {
+const AccountOverviewBox = ({pageName, ethAddress, email}) => {
     const router = useRouter();
     const [openedOverviewCollapse, { toggle: toggleOverviewCollapse }] = useDisclosure(false);
 
@@ -14,11 +14,11 @@ const AccountOverviewBox = ({ethAddress, email}) => {
         <Flex
             direction='column'
             align='center'
+            maw={'25%'}
         >
-            <HeadingOne sx={{ marginBottom: 50 }}>DASHBOARD</HeadingOne>
+            <HeadingOne sx={{ marginBottom: 50 }}>{pageName}</HeadingOne>
             <BorderedBox
                 borderRadiusSize='xl'
-                minWidth='50%'
                 sx={{ border: '3px solid #42ca9f' }}
                 py={15}
             >
