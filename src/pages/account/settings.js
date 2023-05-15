@@ -10,12 +10,12 @@ const Accountdashboard = () => {
   const userHasEmail = user && !!user.attributes.email;
   return (
     <Layout
-      pageTitle='Account Dashboard'
+      pageTitle='Account Settings'
       description='See your account details here'
       withAuth
     >
       <Container maw='1024px' direction='column'>
-        <HeadingFour mb={32}>Account Dashboard</HeadingFour>
+        <HeadingFour mb={32}>Account Settings</HeadingFour>
         <Text
           weight='300'
           size='24px'

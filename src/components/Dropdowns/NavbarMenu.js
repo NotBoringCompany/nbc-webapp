@@ -1,5 +1,5 @@
 import { createStyles, Menu, Button, Divider, Text } from '@mantine/core';
-import { IconUser, IconChevronDown, IconLogout, IconBox } from '@tabler/icons';
+import { IconUser, IconChevronDown, IconLogout, IconLayoutDashboard } from '@tabler/icons';
 import { useRouter } from 'next/router';
 import { useMoralis } from 'react-moralis';
 
@@ -43,16 +43,16 @@ const NavbarMenu = () => {
 
       <Menu.Dropdown className={classes.menuDropdown}>
         <Menu.Item
-          onClick={() => router.push('/account-settings')}
+          onClick={() => router.push('/account/dashboard')}
+          icon={<IconLayoutDashboard size={14} />}
+        >
+          <Text>Account Dashboard</Text>
+        </Menu.Item>
+        <Menu.Item
+          onClick={() => router.push('/account/settings')}
           icon={<IconUser size={14} />}
         >
           <Text>Account Settings</Text>
-        </Menu.Item>
-        <Menu.Item
-          onClick={() => router.push('/inventory/dashboard')}
-          icon={<IconBox size={14} />}
-        >
-          <Text>Inventory</Text>
         </Menu.Item>
         <Divider />
         <Menu.Item onClick={handleLogout} icon={<IconLogout size={14} />}>
