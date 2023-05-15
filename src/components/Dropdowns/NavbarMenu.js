@@ -43,10 +43,10 @@ const NavbarMenu = () => {
 
       <Menu.Dropdown className={classes.menuDropdown}>
         <Menu.Item
-          onClick={() => router.push('/account-dashboard')}
+          onClick={() => router.push('/account-settings')}
           icon={<IconUser size={14} />}
         >
-          <Text>Account Dashboard</Text>
+          <Text>Account Settings</Text>
         </Menu.Item>
         <Menu.Item
           onClick={() => router.push('/inventory/dashboard')}

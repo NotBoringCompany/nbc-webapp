@@ -1,10 +1,10 @@
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import Layout from '@/components/Layout/Layout';
-import { Flex, Text, Avatar, Divider, CopyButton, Tooltip, ActionIcon, SimpleGrid, Card, Box, Button, Collapse } from '@mantine/core';
+import { Flex, Text, Avatar, Divider, CopyButton, Tooltip, ActionIcon, SimpleGrid, Box, Collapse } from '@mantine/core';
 import NBCLogo from '../../../public/NBCLogo.png'
 import { useMoralis, useNativeBalance, useNFTBalances, useTokenPrice } from 'react-moralis';
 import { useCallback, useEffect, useState } from 'react';
-import { IconArrowBarDown, IconArrowDown, IconBriefcase, IconCheck, IconCopy, IconDashboard, IconDiamond, IconDotsVertical, IconGripVertical, IconLayoutDashboard, IconLetterCase, IconWallet } from '@tabler/icons';
+import { IconBriefcase, IconCheck, IconChevronDown, IconCopy, IconDiamond, IconLayoutDashboard, IconWallet } from '@tabler/icons';
 import ETHLogo from '../../../public/ethLogo.png'
 import RECToken from '../../../public/recToken.png'
 import Image from 'next/image';
@@ -26,13 +26,13 @@ const Inventory = () => {
         }
     }, [user])
 
-    const returnBalances = async () => {
+    const returnBalances = useCallback(async () => {
         if (!balance.balance) {
             await getBalances({params: {chain: '0x1'}}); // only ETH for now
         }
-    }
+    }, [balance.balance, getBalances])
 
-    const returnNftBalances = async () => {
+    const returnNftBalances = useCallback(async () => {
         if (!nftBalance) {
             const check = await getNFTBalances({params: {chain: '0x1'}}); // only ETH for now
             const ownedKOS = check?.result?.filter(nft => nft.token_address === process.env.NEXT_PUBLIC_KOS_ADDRESS.toLowerCase());
@@ -55,7 +55,7 @@ const Inventory = () => {
                 ownedSupKeychains
             })
         }
-    }
+    }, [getNFTBalances, nftBalance])
 
     // const returnTokenPrice = useCallback(async () => {
     //     if (!tokenPrice) {
@@ -70,7 +70,7 @@ const Inventory = () => {
         returnBalances();
         returnNftBalances();
         // returnTokenPrice();
-    }, [user, getEmail])
+    }, [user, getEmail, returnBalances, returnNftBalances])
 
     // useEffect(() => {
     //     if (nftBalance && !nfts) {
@@ -143,21 +143,21 @@ const Inventory = () => {
                         </MediumButton>
                         <MediumButton color='transparent' margin='10px 0px 0px 0px' onClick={toggleOverviewCollapse}>
                             <IconBriefcase size={20} />
-                            <Text ml={20} mr={30} size={20}>Overview</Text>
-                            <IconArrowBarDown size={20} />
+                            <Text ml={20} mr={15} size={20}>Overview</Text>
+                            <IconChevronDown size={20} />
                         </MediumButton>
                         <Collapse in={openedOverviewCollapse}>
                             <Flex
                                 direction='column'
                                 align='start'
                                 justify='start'
+                                ml={40}
                             >
                                 <MediumButton color='transparent'><Text weight={200}>Key Of Salvation</Text></MediumButton>
                                 <MediumButton color='transparent'><Text weight={200}>Keychain</Text></MediumButton>
                                 <MediumButton color='transparent'><Text weight={200}>Superior Keychain</Text></MediumButton>
                             </Flex>
                         </Collapse>
-                        
                     </Flex>
                 </BorderedBox>
                 <Flex
