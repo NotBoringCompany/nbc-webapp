@@ -73,23 +73,10 @@ const AccountOverviewBox = ({pageName, ethAddress, email}) => {
                         <IconSettings size={20} />
                         <Text ml={20} size={18}>Account Settings</Text>
                     </MediumButton>
-                    <MediumButton color='transparent' margin='10px 0px 0px 0px' onClick={toggleOverviewCollapse}>
+                    <MediumButton color='transparent' margin='10px 0px 0px 0px' onClick={() => router.replace('/account/inventory')}>
                         <IconBox size={20} />
                         <Text ml={20} mr={15} size={18}>Inventory</Text>
-                        <IconChevronDown size={20} />
                     </MediumButton>
-                    <Collapse in={openedOverviewCollapse}>
-                        <Flex
-                            direction='column'
-                            align='start'
-                            justify='start'
-                            ml={40}
-                        >
-                            <MediumButton color='transparent'><Text weight={200}>Key Of Salvation</Text></MediumButton>
-                            <MediumButton color='transparent'><Text weight={200}>Keychain</Text></MediumButton>
-                            <MediumButton color='transparent'><Text weight={200}>Superior Keychain</Text></MediumButton>
-                        </Flex>
-                    </Collapse>
                 </Flex>
             </BorderedBox>
         </Flex>
