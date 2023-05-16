@@ -1,8 +1,8 @@
-import { Flex, Loader, SimpleGrid, Tabs, Text } from '@mantine/core'
+import { Flex, Loader, ScrollArea, SimpleGrid, Tabs, Text } from '@mantine/core'
 import { useCallback, useEffect, useState } from 'react';
 import NFTCard from '../Staking/NFTCard';
 import { useMoralis } from 'react-moralis';
-import { cardColumnsBreakpoints } from '../Breakpoints/CardColumns';
+import { cardColumnsBreakpoints, inventoryColumnsBreakpoints } from '../Breakpoints/CardColumns';
 
 const InventoryLayout = () => {
     const [stakerInventory, setStakerInventory] = useState(null);
@@ -40,66 +40,73 @@ const InventoryLayout = () => {
                     maxWidth: '50%',
                 })}
             >
-                <Tabs defaultValue='kos' mt={50}>
+                <Tabs defaultValue='kos'>
                     <Tabs.List grow>
                         <Tabs.Tab value='kos'><Text size={22}>Key Of Salvation</Text></Tabs.Tab>
                         <Tabs.Tab value='keychain'><Text size={22}>Keychain</Text></Tabs.Tab>
                         <Tabs.Tab value='supKeychain'><Text size={22}>Superior Keychain</Text></Tabs.Tab>
                     </Tabs.List>
                     <Tabs.Panel value='kos' pt='xs'>
-                        <SimpleGrid
-                            my={20}
-                            spacing={'md'}
-                            breakpoints={cardColumnsBreakpoints}
-                            mah={'calc(100vh - 100px)'}
-                        >
-                            {stakerInventory.keyData
-                                ?.sort(
-                                    (a, b) => b.metadata.luckTrait - a.metadata.luckTrait
-                                )
-                                .map((k) => (
-                                    <NFTCard
-                                        key={k.name}
-                                        nft={k}
-                                    />
-                                ))}
-                        </SimpleGrid>
+                        <ScrollArea h={'calc(100vh-100px)'}>
+                            <SimpleGrid
+                                my={20}
+                                spacing={'md'}
+                                breakpoints={inventoryColumnsBreakpoints}
+                                mah={'calc(100vh - 200px)'}
+                            >
+                                {stakerInventory.keyData
+                                    ?.sort(
+                                        (a, b) => b.metadata.luckTrait - a.metadata.luckTrait
+                                    )
+                                    .map((k) => (
+                                        <NFTCard
+                                            key={k.name}
+                                            nft={k}
+
+                                        />
+                                    ))}
+                            </SimpleGrid>
+                        </ScrollArea>
                     </Tabs.Panel>
 
                     <Tabs.Panel value='keychain' pt='xs'>
-                        <SimpleGrid
-                            my={20}
-                            spacing={'md'}
-                            breakpoints={cardColumnsBreakpoints}
-                            mah={'calc(100vh - 100px)'}
-                        >
-                            {stakerInventory.keychainData
-                                ?.sort((a, b) => a.tokenID - b.tokenID)
-                                .map((keychain) => (
-                                    <NFTCard
-                                        key={keychain.name}
-                                        nft={keychain}
-                                    />
-                                ))}
-                        </SimpleGrid>
+                        <ScrollArea h={'calc(100vh-100px)'}>
+                            <SimpleGrid
+                                my={20}
+                                spacing={'md'}
+                                breakpoints={inventoryColumnsBreakpoints}
+                                mah={'calc(100vh - 200px)'}
+                            >
+                                {stakerInventory.keychainData
+                                    ?.sort((a, b) => a.tokenID - b.tokenID)
+                                    .map((keychain) => (
+                                        <NFTCard
+                                            key={keychain.name}
+                                            nft={keychain}
+                                        />
+                                    ))}
+                            </SimpleGrid>
+                        </ScrollArea>
                     </Tabs.Panel>
 
                     <Tabs.Panel value='supKeychain' pt='xs'>
-                        <SimpleGrid
-                            my={20}
-                            spacing={'md'}
-                            breakpoints={cardColumnsBreakpoints}
-                            mah={'calc(100vh - 100px)'}
-                        >
-                            {stakerInventory.superiorKeychainData
-                                ?.sort((a, b) => a.tokenID - b.tokenID)
-                                .map((superiorKeychain) => (
-                                    <NFTCard
-                                        key={superiorKeychain.name}
-                                        nft={superiorKeychain}
-                                    />
-                                ))}
-                        </SimpleGrid>
+                        <ScrollArea h={'calc(100vh-100px)'}>
+                            <SimpleGrid
+                                my={20}
+                                spacing={'md'}
+                                breakpoints={inventoryColumnsBreakpoints}
+                                mah={'calc(100vh - 200px)'}
+                            >
+                                {stakerInventory.superiorKeychainData
+                                    ?.sort((a, b) => a.tokenID - b.tokenID)
+                                    .map((superiorKeychain) => (
+                                        <NFTCard
+                                            key={superiorKeychain.name}
+                                            nft={superiorKeychain}
+                                        />
+                                    ))}
+                            </SimpleGrid>
+                        </ScrollArea>
                     </Tabs.Panel>
                 </Tabs>
             </Flex>
