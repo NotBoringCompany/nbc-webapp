@@ -1,14 +1,12 @@
-import { ActionIcon, Avatar, Collapse, CopyButton, Divider, Flex, Text, Tooltip } from '@mantine/core'
+import { ActionIcon, Avatar, CopyButton, Divider, Flex, Text, Tooltip } from '@mantine/core'
 import { HeadingOne } from '../Typography/Headings'
 import BorderedBox from '../BorderedBox/BorderedBox'
 import { MediumButton } from '../Buttons/Universals'
-import { IconBox, IconCheck, IconChevronDown, IconCopy, IconLayoutDashboard, IconSettings } from '@tabler/icons'
+import { IconBox, IconCheck, IconCopy, IconLayoutDashboard, IconSettings } from '@tabler/icons'
 import { useRouter } from 'next/router'
-import { useDisclosure } from '@mantine/hooks'
 
 const AccountOverviewBox = ({pageName, ethAddress, email}) => {
     const router = useRouter();
-    const [openedOverviewCollapse, { toggle: toggleOverviewCollapse }] = useDisclosure(false);
 
     return (
         <Flex

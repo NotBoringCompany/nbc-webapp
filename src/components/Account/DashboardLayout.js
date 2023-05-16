@@ -6,12 +6,14 @@ import ETHLogo from '../../../public/ethLogo.png'
 import RECToken from '../../../public/recToken.png'
 import { useEffect, useState } from 'react'
 import { useNFTBalances, useNativeBalance } from 'react-moralis'
+import { useRouter } from 'next/router'
 
 const DashboardLayout = () => {
     const [nfts, setNfts] = useState(null);
     const [ nativeBalances, setNativeBalances ] = useState(null);
     const { getBalances } = useNativeBalance();
     const { getNFTBalances } = useNFTBalances(); 
+    const router = useRouter();
 
     useEffect(() => {
         const fetchNativeBalances = async () => {
@@ -162,7 +164,7 @@ const DashboardLayout = () => {
                             mt={15}
                         >
                             <Text size={24} weight={700} mb={30}>{nfts?.ownedKOS?.length ?? 0}</Text>
-                            <MediumButton color='#42ca9f'>View</MediumButton>
+                            <MediumButton color='#42ca9f' onClick={() => router.replace('/account/inventory')}>View</MediumButton>
                         </Flex>
                     </Box>
                     <Box
@@ -189,7 +191,7 @@ const DashboardLayout = () => {
                             mt={15}
                         >
                             <Text size={24} weight={700} mb={30}>{nfts?.ownedKeychains?.length ?? 0}</Text>
-                            <MediumButton color='#42ca9f'>View</MediumButton>
+                            <MediumButton color='#42ca9f' onClick={() => router.replace('/account/inventory')}>View</MediumButton>
                         </Flex>
                     </Box>
                     <Box
@@ -216,7 +218,7 @@ const DashboardLayout = () => {
                             mt={15}
                         >
                             <Text size={24} weight={700} mb={30}>{nfts?.ownedSupKeychains?.length ?? 0}</Text>
-                            <MediumButton color='#42ca9f'>View</MediumButton>
+                            <MediumButton color='#42ca9f' onClick={() => router.replace('/account/inventory')}>View</MediumButton>
                         </Flex>
                     </Box>
                 </SimpleGrid>
