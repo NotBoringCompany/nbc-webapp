@@ -20,6 +20,7 @@ export default function Staking({ stakingPoolData }) {
         sx={{
           marginTop: 40,
         }}
+        w='100%'
       >
         <HeadingOne mb={24}>STAKING POOLS</HeadingOne>
         <Text size={24}>Stake your Factory NFTs to earn special yields.</Text>

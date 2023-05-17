@@ -1,18 +1,37 @@
 import Layout from '@/components/Layout/Layout';
-import { Box, Button, Flex, Text } from '@mantine/core';
+import Link from 'next/link';
+import { Box, Button, Flex, Text, createStyles } from '@mantine/core';
 import { IconAlertOctagon, IconCheck, IconCircleX } from '@tabler/icons';
 import { useMoralis } from 'react-moralis';
 import { useCallback, useEffect, useState } from 'react';
-import XDragon from '../../public/xandrius07-color.png';
-import Link from 'next/link';
-import Image from 'next/image';
 import { HeadingThree } from '@/components/Typography/Headings';
+
+const useStyles = createStyles((theme) => ({
+  container: {
+    margin: 'auto',
+    width: '100%',
+    justifyContent: 'center',
+    [theme.fn.smallerThan('md')]: {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+  },
+  ctaContainer: {
+    marginRight: '64px',
+    textAlign: 'center',
+    padding: theme.spacing.md,
+    [theme.fn.smallerThan('md')]: {
+      marginRight: 0,
+    },
+  },
+}));
 
 export default function Home() {
   const { isAuthenticated, user } = useMoralis();
-  const emailConnected = user && user.get('emailAddress') !== null;
+  const emailConnected = !!(user && user.get('emailAddress'));
   // checks if the user has AT LEAST 1 key of salvation
   const [hasKey, setHasKey] = useState(false);
+  const { classes } = useStyles();
 
   const ownsKey = useCallback(async () => {
     const rawRes = await fetch(
@@ -29,21 +48,9 @@ export default function Home() {
 
   return (
     <>
-      <Layout>
-        <Flex
-          align='center'
-          justify='space-between'
-          direction='row'
-          h={'calc(100vh - 150px)'}
-        >
-          <Box
-            sx={(theme) => ({
-              padding: theme.spacing.md,
-              textAlign: 'center',
-              marginTop: 45,
-              width: '60%',
-            })}
-          >
+      <Layout dragonBackground>
+        <Flex className={classes.container}>
+          <Box className={classes.ctaContainer}>
             <Flex align='center' justify='center' direction='column'>
               <HeadingThree color='white' mb={20} order={1}>
                 REALM HUNTER: ALPHA RELEASE
@@ -60,18 +67,34 @@ export default function Home() {
               <Text size={16} weight={500} italic mt={5}>
                 Mac build will be released soon.
               </Text>
-              {!emailConnected && (
+
+              <Link
+                href={`${
+                  emailConnected
+                    ? `https://drive.google.com/uc?export=download&id=1pwUtL1zikJYm6Tt_Iv36E7qI2FHJrU9X`
+                    : `#`
+                }`}
+                download={emailConnected ? true : false}
+                target={emailConnected ? '_blank' : '_self'}
+              >
                 <Button
                   sx={(theme) => ({
-                    backgroundColor: '#42ca9f',
-                    marginTop: 50,
-                    marginRight: 30,
+                    backgroundColor: emailConnected
+                      ? theme.colors.nbcGreen
+                      : theme.colors.gray[7],
+                    cursor: emailConnected ? 'pointer' : 'not-allowed',
+                    marginTop: 24,
                     height: '50px',
                     fontSize: 18,
+                    color: emailConnected ? '#fff' : '#000',
+                    transitionDuration: '200ms',
                     ':hover': {
-                      transform: 'scale(1.01) translate(1px, -3px)',
-                      transitionDuration: '200ms',
-                      backgroundColor: '#42ca9f',
+                      transform: emailConnected
+                        ? 'scale(1.01) translate(1px, -3px)'
+                        : 'none',
+                      backgroundColor: emailConnected
+                        ? theme.colors.nbcGreen
+                        : theme.colors.gray[7],
                     },
                     [theme.fn.smallerThan('lg')]: {
                       fontSize: 16,
@@ -80,56 +103,19 @@ export default function Home() {
                       fontSize: 12,
                     },
                   })}
-                  disabled
                 >
                   TAKE ME TO THE ALPHA!
                 </Button>
-              )}
-              {emailConnected && (
-                <Link
-                  href='https://drive.google.com/uc?export=download&id=1pwUtL1zikJYm6Tt_Iv36E7qI2FHJrU9X'
-                  download
-                  target='_blank'
-                >
-                  <Button
-                    sx={(theme) => ({
-                      backgroundColor: '#42ca9f',
-                      marginTop: 50,
-                      marginRight: 30,
-                      height: '50px',
-                      fontSize: 18,
-                      ':hover': {
-                        transform: 'scale(1.01) translate(1px, -3px)',
-                        transitionDuration: '200ms',
-                        backgroundColor: '#42ca9f',
-                      },
-                      [theme.fn.smallerThan('lg')]: {
-                        fontSize: 16,
-                      },
-                      [theme.fn.smallerThan('sm')]: {
-                        fontSize: 12,
-                      },
-                    })}
-                  >
-                    TAKE ME TO THE ALPHA!
-                  </Button>
-                </Link>
-              )}
+              </Link>
             </Flex>
           </Box>
           <Box
-            px={50}
-            py={30}
             sx={(theme) => ({
               background: 'rgba(0, 0, 0, 0.5)',
               borderRadius: theme.radius.md,
               padding: theme.spacing.md,
-              justifyContent: 'center',
               textAlign: 'center',
-              marginTop: 45,
-              width: '50%',
             })}
-            ml={30}
           >
             <Flex direction='row' align='center' justify='center'>
               <IconAlertOctagon size={30} style={{ marginRight: 15 }} />
@@ -207,12 +193,13 @@ export default function Home() {
           </Box>
         </Flex>
       </Layout>
-      <Image
+
+      {/* <Image
         src={XDragon}
         alt='XDragon'
         fill
         style={{ zIndex: -999, opacity: '75%' }}
-      />
+      /> */}
     </>
   );
 }

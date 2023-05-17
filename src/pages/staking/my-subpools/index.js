@@ -58,7 +58,7 @@ const MySubpools = () => {
       <Flex direction='column' align='center' justify='center'>
         <HeadingOne mb={24}>MY SUBPOOLS</HeadingOne>
         <Flex gap='md' px={10} py={10} align='center'>
-          <IconAlertOctagon size={30} />
+          <IconAlertOctagon style={{ flexShrink: 0 }} size={30} />
           <Text size={24}>
             All the subpools you{"'"}ve staked will be shown here.
           </Text>

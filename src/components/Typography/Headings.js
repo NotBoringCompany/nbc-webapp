@@ -18,7 +18,7 @@ export const HeadingOne = ({
       sx={(theme) => ({
         ...sx,
         color: COLORS[color] || color,
-        lineHeight: 0.7,
+        lineHeight: 1,
         [theme.fn.smallerThan('md')]: {
           fontSize: 40,
         },

@@ -17,7 +17,7 @@ const WarningBox = ({ title, description }) => {
         <IconAlertOctagon
           color={COLORS.red}
           size={40}
-          style={{ marginRight: 10 }}
+          style={{ marginRight: 10, flexShrink: 0 }}
         />
         <Text sx={{ fontSize: 40, color: '#ca4242', fontWeight: 700 }}>
           {title}

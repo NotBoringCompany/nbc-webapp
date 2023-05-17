@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Flex, Loader, ScrollArea } from '@mantine/core';
+import { Box, Flex, Loader, ScrollArea, createStyles } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { Container } from '@mantine/core';
 import MainNavbar from '../Navbar/Navbar';
@@ -8,13 +8,22 @@ import { useMoralis } from 'react-moralis';
 import WarningBox from './WarningBox';
 
 const AuthWall = (
-  <Flex justify='center'>
+  <Box mx='auto' w='100%' maw='720px' justify='center'>
     <WarningBox
       title='YOU ARE NOT LOGGED IN'
       description='Please connect your wallet to access this page.'
     />
-  </Flex>
+  </Box>
 );
+
+const useStyles = createStyles({
+  dragon: {
+    background: 'url(./xandrius07-color.png)',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+  },
+});
 
 const Layout = ({
   children,
@@ -22,6 +31,7 @@ const Layout = ({
   withAuth = false,
   mustNotAuth = false,
   pageTitle,
+  dragonBackground = false,
   description = 'Building immersive Web3-native IP franchises.',
   keywords = 'realm hunter, multiplayer game, nft gaming, nft', // seo keywords, separated by commas
 }) => {
@@ -29,6 +39,7 @@ const Layout = ({
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const authWall = !!authWallComponent ? authWallComponent : AuthWall;
+  const { classes } = useStyles();
 
   const title = !!pageTitle
     ? `${pageTitle} | Not Boring Company`
@@ -56,16 +67,31 @@ const Layout = ({
         <meta name='keywords' content={keywords} />
         <link rel='shortcut icon' href='/favicon/favicon.ico' />
       </Head>
-      <Flex direction='column'>
+      <Flex
+        className={`${dragonBackground ? classes.dragon : ''}`}
+        direction='column'
+      >
         <MainNavbar />
-        <ScrollArea h={'calc(100vh - 80px)'}>
+        <ScrollArea
+          sx={{
+            '.mantine-ScrollArea-viewport > div': {
+              height: '100%',
+            },
+          }}
+          pos='relative'
+          margi
+          h={'calc(100vh - 80px)'}
+        >
           <Container
+            pos='relative'
+            w='100%'
+            h='100%'
+            maw='100%'
             sx={{
-              width: '100%',
-              maxWidth: '100%',
-              position: 'relative',
+              display: 'flex',
             }}
             px={'40px'}
+            pb={'24px'}
           >
             {loading ? (
               <Loader

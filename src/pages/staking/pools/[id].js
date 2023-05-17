@@ -250,104 +250,106 @@ const StakingPool = ({ stakingPoolData }) => {
   };
   return (
     <Layout pageTitle={`Staking Pool #${id}`} withAuth>
-      {!stakingPoolDataExists && (
-        <Flex direction='column' align='center' justify='center'>
-          <BorderedBox
-            sx={{ marginTop: 15, borderWidth: '2px', padding: '20px' }}
-            borderRadiusSize='md'
-            variant='red'
-          >
-            <Flex direction='row' align='center' justify='center'>
-              <IconAlertOctagon
-                color='#ca4242'
-                size={40}
-                style={{ marginRight: 10 }}
-              />
+      <Flex direction={'column'} w='100%'>
+        {!stakingPoolDataExists && (
+          <Flex direction='column' align='center' justify='center'>
+            <BorderedBox
+              sx={{ marginTop: 15, borderWidth: '2px', padding: '20px' }}
+              borderRadiusSize='md'
+              variant='red'
+            >
+              <Flex direction='row' align='center' justify='center'>
+                <IconAlertOctagon
+                  color='#ca4242'
+                  size={40}
+                  style={{ marginRight: 10, flexShrink: 0 }}
+                />
+                <Text
+                  sx={(theme) => ({
+                    fontSize: 40,
+                    color: '#ca4242',
+                    fontWeight: 700,
+                  })}
+                >
+                  STAKING PAGE NOT AVAILABLE
+                </Text>
+              </Flex>
+              <Text size='lg'>
+                This staking pool might not exist or is not available.
+              </Text>
+            </BorderedBox>
+          </Flex>
+        )}
+        {stakingPoolDataExists && (
+          <>
+            <Flex direction='column' align='center' justify='center'>
               <Text
                 sx={(theme) => ({
-                  fontSize: 40,
-                  color: '#ca4242',
+                  fontSize: 72,
                   fontWeight: 700,
+                  color: '#42ca9f',
                 })}
               >
-                STAKING PAGE NOT AVAILABLE
+                Staking Pool {id}
               </Text>
-            </Flex>
-            <Text size='lg'>
-              This staking pool might not exist or is not available.
-            </Text>
-          </BorderedBox>
-        </Flex>
-      )}
-      {stakingPoolDataExists && (
-        <>
-          <Flex direction='column' align='center' justify='center'>
-            <Text
-              sx={(theme) => ({
-                fontSize: 72,
-                fontWeight: 700,
-                color: '#42ca9f',
-              })}
-            >
-              Staking Pool {id}
-            </Text>
-            <Button
-              h={'56px'}
-              onClick={() => router.replace('/staking/my-subpools')}
-              sx={(theme) => ({
-                backgroundColor: '#42ca9f',
-                transitionDuration: '200ms',
-                ':hover': {
-                  transform: 'scale(1.01) translate(1px, -3px)',
+              <Button
+                h={'56px'}
+                onClick={() => router.replace('/staking/my-subpools')}
+                sx={(theme) => ({
                   backgroundColor: '#42ca9f',
-                },
-              })}
+                  transitionDuration: '200ms',
+                  ':hover': {
+                    transform: 'scale(1.01) translate(1px, -3px)',
+                    backgroundColor: '#42ca9f',
+                  },
+                })}
+              >
+                <Text size={24}>View my subpools</Text>
+              </Button>
+            </Flex>
+            <Flex
+              sx={{ marginTop: 50 }}
+              direction='row'
+              align='start'
+              justify='center'
             >
-              <Text size={24}>View my subpools</Text>
-            </Button>
-          </Flex>
-          <Flex
-            sx={{ marginTop: 50 }}
-            direction='row'
-            align='start'
-            justify='center'
-          >
-            <StakingPoolDataDetail
-              stakingPoolData={stakingPoolData}
-              activeSubpoolsLength={activeSubpoolsLength}
-              closedSubpoolsLength={closedSubpoolsLength}
-              stakerTotalSubpoolPoints={stakerTotalSubpoolPoints}
-              totalTokenShare={totalTokenShare}
-              stakerCount={stakerCount()}
-            />
-            <StakingModal
-              stakingPoolId={id}
-              showStakingModal={showStakingModal}
-              onCloseStakingModal={() => {
-                setShowStakingModal(false);
-                setPreSubpoolData(null);
-              }}
-              subpool={comboSelection}
-              loadingStakingRewardAndPoints={loadingStakingRewardAndPoints}
-              preSubpoolData={preSubpoolData}
-            />
-            <StakingBox
-              selectedKeyCombo={selectedKeyComboType}
-              onSelectKey={handleSelectKey}
-              onSelectKeychain={handleSelectKeychain}
-              onSelectKeyComboType={handleSelectKeyComboType}
-              currentComboAllowed={subpoolComboEligible}
-              stakerInventoryLoading={stakerInventoryLoading}
-              stakerInventory={stakerInventory}
-              comboSelection={comboSelection}
-              confirmButtonClick={handleConfirmButton}
-              confirmButtonDisabled={confirmButtonDisabled}
-              stakingOngoing={stakingOngoing}
-              stakingClosed={stakingClosed}
-            />
-          </Flex>
-        </>
-      )}
+              <StakingPoolDataDetail
+                stakingPoolData={stakingPoolData}
+                activeSubpoolsLength={activeSubpoolsLength}
+                closedSubpoolsLength={closedSubpoolsLength}
+                stakerTotalSubpoolPoints={stakerTotalSubpoolPoints}
+                totalTokenShare={totalTokenShare}
+                stakerCount={stakerCount()}
+              />
+              <StakingModal
+                stakingPoolId={id}
+                showStakingModal={showStakingModal}
+                onCloseStakingModal={() => {
+                  setShowStakingModal(false);
+                  setPreSubpoolData(null);
+                }}
+                subpool={comboSelection}
+                loadingStakingRewardAndPoints={loadingStakingRewardAndPoints}
+                preSubpoolData={preSubpoolData}
+              />
+              <StakingBox
+                selectedKeyCombo={selectedKeyComboType}
+                onSelectKey={handleSelectKey}
+                onSelectKeychain={handleSelectKeychain}
+                onSelectKeyComboType={handleSelectKeyComboType}
+                currentComboAllowed={subpoolComboEligible}
+                stakerInventoryLoading={stakerInventoryLoading}
+                stakerInventory={stakerInventory}
+                comboSelection={comboSelection}
+                confirmButtonClick={handleConfirmButton}
+                confirmButtonDisabled={confirmButtonDisabled}
+                stakingOngoing={stakingOngoing}
+                stakingClosed={stakingClosed}
+              />
+            </Flex>
+          </>
+        )}
+      </Flex>
     </Layout>
   );
 };

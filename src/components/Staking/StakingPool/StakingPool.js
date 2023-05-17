@@ -1,7 +1,15 @@
-import { Divider, Text } from '@mantine/core';
+import { Divider, Text, createStyles } from '@mantine/core';
 import RECToken from '../../../../public/recToken.png';
 import StakingPoolData from './StakingPoolData';
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
+
+const useStyles = createStyles((theme) => ({
+  borderedBox: {
+    [theme.fn.smallerThan('md')]: {
+      padding: '16px',
+    },
+  },
+}));
 
 const StakingPool = ({
   isActive,
@@ -10,6 +18,7 @@ const StakingPool = ({
   ongoingPools,
   closedPools,
 }) => {
+  const { classes } = useStyles();
   const noActiveStakingPool = isActive && !stakeablePools && !ongoingPools;
   const hasStakablePools = isActive && stakeablePools;
   const hasOngoingStakingPools = isActive && ongoingPools;
@@ -19,7 +28,11 @@ const StakingPool = ({
   const variant = isActive ? 'green' : 'grey';
 
   return (
-    <BorderedBox sx={{ marginTop: 80 }} variant={variant}>
+    <BorderedBox
+      sx={{ marginTop: 40 }}
+      className={classes.borderedBox}
+      variant={variant}
+    >
       <Text sx={{ marginTop: 25, marginBottom: 5 }} size={24} weight={600}>
         {isActive ? 'ACTIVE STAKING POOLS' : 'CLOSED STAKING POOLS'}
       </Text>

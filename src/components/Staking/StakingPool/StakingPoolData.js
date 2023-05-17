@@ -1,6 +1,28 @@
-import { Badge, Button, Flex, Text } from '@mantine/core';
+import { Badge, Button, Flex, Text, createStyles } from '@mantine/core';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
+
+const useStyles = createStyles((theme) => ({
+  stakingPoolsContainer: {
+    [theme.fn.smallerThan('md')]: {
+      flexDirection: 'column',
+      padding: '16px',
+    },
+  },
+  poolComponent: {
+    margin: '0 20px',
+    fontWeight: 700,
+    fontSize: 18,
+    [theme.fn.smallerThan('md')]: {
+      margin: 0,
+    },
+  },
+  withMarginTop: {
+    [theme.fn.smallerThan('md')]: {
+      marginTop: '20px',
+    },
+  },
+}));
 
 export const PoolComponent = ({
   title,
@@ -9,16 +31,10 @@ export const PoolComponent = ({
   badgeColor,
   badgeBgColor,
 }) => {
+  const { classes } = useStyles();
   return (
     <Flex direction='column' align='center'>
-      <Text
-        size={18}
-        weight={700}
-        sx={{
-          marginRight: 20,
-          marginLeft: 20,
-        }}
-      >
+      <Text className={[classes.poolComponent, classes.withMarginTop]}>
         {title}
       </Text>
       {text && <Text>{text}</Text>}
@@ -48,12 +64,14 @@ const StakingPoolData = ({
   ongoing,
   closed,
 }) => {
+  const { classes } = useStyles();
   const router = useRouter();
   return (
     <Flex
       direction='row'
       align='center'
       justify='space-between'
+      className={classes.stakingPoolsContainer}
       sx={(theme) => ({
         padding: '20px 20px',
       })}
@@ -110,8 +128,9 @@ const StakingPoolData = ({
         text={pool.TotalYieldPoints}
       />
       <Button
+        className={classes.withMarginTop}
         sx={(theme) => ({
-          backgroundColor: '#42ca9f',
+          backgroundColor: theme.colors.nbcGreen,
           ':hover': {
             transform: 'scale(1.01) translate(1px, -3px)',
             transitionDuration: '200ms',
