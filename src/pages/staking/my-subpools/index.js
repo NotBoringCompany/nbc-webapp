@@ -55,7 +55,7 @@ const MySubpools = () => {
       description={`All the subpools you've staked will be shown here.`}
       withAuth
     >
-      <Flex direction='column' align='center' justify='center'>
+      <Flex w='100%' direction='column' align='center'>
         <HeadingOne mb={24}>MY SUBPOOLS</HeadingOne>
         <Flex gap='md' px={10} py={10} align='center'>
           <IconAlertOctagon style={{ flexShrink: 0 }} size={30} />

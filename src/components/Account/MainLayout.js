@@ -8,7 +8,7 @@ const { default: AccountOverviewBox } = require('./OverviewBox');
 const useStyles = createStyles((theme) => ({
   container: {
     display: 'flex',
-    maxWidth: '1200px',
+    maxWidth: '1400px',
     margin: '0 auto',
     width: '100%',
     padding: '24px 0',

@@ -86,7 +86,7 @@ const Layout = ({
             pos='relative'
             w='100%'
             h='100%'
-            maw='100%'
+            maw='1400px'
             sx={{
               display: 'flex',
             }}
