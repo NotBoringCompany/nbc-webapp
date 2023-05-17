@@ -148,7 +148,7 @@ const StakingPool = ({ stakingPoolData }) => {
       //user already selects this key (exists in the user's selected keychain)
       const keyChainAlreadySelected = keyChainIndex >= 0;
       if (!keyChainAlreadySelected) {
-        //appending selectedNFT into the "keychains" array
+        //appending selectedNFT into the `keychains` array
         setComboSelection({
           ...comboSelection,
           keychains: [...alreadySelectedKeychainIds, selectedNFT],
