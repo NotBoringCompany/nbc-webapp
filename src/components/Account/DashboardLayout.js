@@ -5,13 +5,15 @@ import { MediumButton } from '../Buttons/Universals';
 import ETHLogo from '../../../public/ethLogo.png';
 import RECToken from '../../../public/recToken.png';
 import { useEffect, useState } from 'react';
-import { useNFTBalances, useNativeBalance } from 'react-moralis';
+import { useMoralis, useNFTBalances, useNativeBalance } from 'react-moralis';
 import { useRouter } from 'next/router';
 import { dashboardGridBreakpoints } from '../Breakpoints/DashboardGrid';
 
 const DashboardLayout = () => {
+  const { user } = useMoralis();
   const [nfts, setNfts] = useState(null);
   const [nativeBalances, setNativeBalances] = useState(null);
+  const [recToken, setRecToken] = useState(null);
   const { getBalances } = useNativeBalance();
   const { getNFTBalances } = useNFTBalances();
   const router = useRouter();
@@ -47,6 +49,14 @@ const DashboardLayout = () => {
       });
     };
 
+    const fetchStakerRECBalance = async () => {
+      const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-rec-balance/${user && user.attributes.ethAddress}`)
+        .catch(err => console.log(err));
+      const res = await rawRes.json();
+
+      setRecToken(res?.data?.stakerRecBalance);
+    }
+
     if (!nativeBalances) {
       fetchNativeBalances();
     }
@@ -54,7 +64,11 @@ const DashboardLayout = () => {
     if (!nfts) {
       fetchNftBalances();
     }
-  }, [nativeBalances, getBalances, getNFTBalances, nfts]);
+
+    if (!recToken) {
+      fetchStakerRECBalance();
+    }
+  }, [nativeBalances, getBalances, getNFTBalances, nfts, recToken, user]);
 
   return (
     <Flex w='100%' direction='column' justify='start'>
@@ -114,7 +128,7 @@ const DashboardLayout = () => {
             <Divider color='grey' size='xs' variant='dashed' />
             <Flex direction='column' align='center' justify='center' mt={15}>
               <Text size={24} weight={700} mb={30}>
-                TO DO
+                {recToken ? parseFloat(recToken).toFixed(2) : '0'}
               </Text>
             </Flex>
           </Box>

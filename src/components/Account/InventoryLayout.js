@@ -18,9 +18,7 @@ const InventoryLayout = () => {
 
   const getStakerInventory = useCallback(async () => {
     const rawRes = await fetch(
-      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user?.attributes?.ethAddress}/1`
-      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/0x8FbFE537A211d81F90774EE7002ff784E352024a/1`
-      `https://run.mocky.io/v3/61d4dab1-3f91-4977-b474-83b50305799b`
+      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user?.attributes?.ethAddress}/1`
     ).catch((err) => console.log(err));
     const res = await rawRes.json();
 
