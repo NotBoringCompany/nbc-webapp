@@ -1,44 +1,29 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Box, Flex, Loader, ScrollArea, Text } from '@mantine/core';
+import { Box, Flex, Loader, ScrollArea, createStyles } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { Container } from '@mantine/core';
 import MainNavbar from '../Navbar/Navbar';
-import { useMoralis, useChain } from 'react-moralis';
-import { IconAlertOctagon } from '@tabler/icons';
+import { useMoralis } from 'react-moralis';
+import WarningBox from './WarningBox';
 
 const AuthWall = (
-  <Flex direction='column' align='center' justify='center'>
-    <Box
-      sx={(theme) => ({
-        borderRadius: theme.radius.md,
-        width: '50%',
-        border: '2px solid #ca4242',
-        padding: '20px',
-        textAlign: 'center',
-        marginTop: 30,
-      })}
-    >
-      <Flex direction='row' align='center' justify='center'>
-        <IconAlertOctagon
-          color='#ca4242'
-          size={40}
-          style={{ marginRight: 10 }}
-        />
-        <Text
-          sx={(theme) => ({
-            fontSize: 40,
-            color: '#ca4242',
-            fontWeight: 700,
-          })}
-        >
-          YOU ARE NOT LOGGED IN
-        </Text>
-      </Flex>
-      <Text size='lg'>Please connect your wallet to access this page.</Text>
-    </Box>
-  </Flex>
+  <Box mx='auto' w='100%' maw='720px' justify='center'>
+    <WarningBox
+      title='YOU ARE NOT LOGGED IN'
+      description='Please connect your wallet to access this page.'
+    />
+  </Box>
 );
+
+const useStyles = createStyles({
+  dragon: {
+    background: 'url(./xandrius07-color.png)',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+  },
+});
 
 const Layout = ({
   children,
@@ -46,6 +31,7 @@ const Layout = ({
   withAuth = false,
   mustNotAuth = false,
   pageTitle,
+  dragonBackground = false,
   description = 'Building immersive Web3-native IP franchises.',
   keywords = 'realm hunter, multiplayer game, nft gaming, nft', // seo keywords, separated by commas
 }) => {
@@ -53,8 +39,11 @@ const Layout = ({
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const authWall = !!authWallComponent ? authWallComponent : AuthWall;
+  const { classes } = useStyles();
 
-  const title = !!pageTitle ? `${pageTitle} | Not Boring Company` : `Not Boring Company`;
+  const title = !!pageTitle
+    ? `${pageTitle} | Not Boring Company`
+    : `Not Boring Company`;
 
   useEffect(() => {
     if (!isAuthUndefined) {
@@ -78,16 +67,31 @@ const Layout = ({
         <meta name='keywords' content={keywords} />
         <link rel='shortcut icon' href='/favicon/favicon.ico' />
       </Head>
-      <Flex direction='column'>
+      <Flex
+        className={`${dragonBackground ? classes.dragon : ''}`}
+        direction='column'
+      >
         <MainNavbar />
-        <ScrollArea h={'calc(100vh - 80px)'}>
+        <ScrollArea
+          sx={{
+            '.mantine-ScrollArea-viewport > div': {
+              height: '100%',
+            },
+          }}
+          pos='relative'
+          margi
+          h={'calc(100vh - 80px)'}
+        >
           <Container
+            pos='relative'
+            w='100%'
+            h='100%'
+            maw='1400px'
             sx={{
-              width: '100%',
-              maxWidth: '100%',
-              position: 'relative',
+              display: 'flex',
             }}
             px={'40px'}
+            pb={'24px'}
           >
             {loading ? (
               <Loader

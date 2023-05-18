@@ -21,7 +21,7 @@ const AuthForm = ({ forLogin = false }) => {
     isAuthenticating,
     authError,
   } = useMoralis();
-  const hasEmail = user && user.attributes.email;
+  const hasEmail = user?.attributes?.email;
 
   const loading = isUserUpdating || isAuthenticating;
 
@@ -87,12 +87,14 @@ const AuthForm = ({ forLogin = false }) => {
       >
         {forLogin ? forLoginLeadText : updateEmailPasswordLeadText}
       </Text>
-      <form onSubmit={form.onSubmit(handleFormSubmit)}>
+      <form
+        style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+        onSubmit={form.onSubmit(handleFormSubmit)}
+      >
         <TextInput
           my='sm'
           sx={(theme) => ({
             input: {
-              maxWidth: '400px',
               width: '100%',
               marginTop: '4px',
               padding: '24px 16px',
@@ -112,7 +114,6 @@ const AuthForm = ({ forLogin = false }) => {
           label='Password'
           sx={(theme) => ({
             input: {
-              maxWidth: '400px',
               width: '100%',
               marginTop: '4px',
               padding: '24px 16px',

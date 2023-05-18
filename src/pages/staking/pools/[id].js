@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/Layout';
-import { Box, Button, Divider, Flex, Text } from '@mantine/core';
+import { Button, Flex, Text } from '@mantine/core';
 import { IconAlertOctagon } from '@tabler/icons';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,8 @@ import { useMoralis } from 'react-moralis';
 import { maxSelectedKey } from '@/utils/kosData';
 import StakingBox from '@/components/Staking/StakingBox';
 import StakingModal from '@/components/Staking/StakingModal';
+import BorderedBox from '@/components/BorderedBox/BorderedBox';
+import StakingPoolDataDetail from '@/components/Staking/StakingPool/StakingPoolDataDetail';
 
 const StakingPool = ({ stakingPoolData }) => {
   const router = useRouter();
@@ -37,9 +39,7 @@ const StakingPool = ({ stakingPoolData }) => {
 
   const getStakerInventory = async () => {
     const rawRes = await fetch(
-      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${
-        user && user.attributes.ethAddress
-      }/${id}`
+      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user?.attributes?.ethAddress}/${id}`
     ).catch((err) => console.log(err));
     const res = await rawRes.json();
 
@@ -50,39 +50,32 @@ const StakingPool = ({ stakingPoolData }) => {
 
   const getStakerTotalSubpoolPoints = async () => {
     const rawRes = await fetch(
-      `https://nbc-webapp-api-production.up.railway.app/kos/staker-total-subpool-points/${
-        user && user.attributes.ethAddress
-      }/${id}`
+      `https://nbc-webapp-api-production.up.railway.app/kos/staker-total-subpool-points/${user?.attributes?.ethAddress}/${id}`
     );
     const res = await rawRes.json();
 
     setStakerTotalSubpoolPoints(res?.data?.totalSubpoolPoints ?? 0);
-    console.log('staker total subpool points set')
+    console.log('staker total subpool points set');
   };
 
   const getTotalTokenShare = async () => {
     const rawRes = await fetch(
-      `https://nbc-webapp-api-production.up.railway.app/kos/calculate-total-token-share/${
-        user && user.attributes.ethAddress
-      }/${id}`
+      `https://nbc-webapp-api-production.up.railway.app/kos/calculate-total-token-share/${user?.attributes?.ethAddress}/${id}`
     );
     const res = await rawRes.json();
 
     setTotalTokenShare(res?.data?.totalTokenShare ?? 0);
-    console.log('total token share set')
+    console.log('total token share set');
   };
 
   const checkSubpoolComboEligibility = async () => {
     const rawRes = await fetch(
-      `https://nbc-webapp-api-production.up.railway.app/kos/check-subpool-combo-eligiblity/${
-        user && user.attributes.ethAddress
-      }/${id}/${comboCount}`
+      `https://nbc-webapp-api-production.up.railway.app/kos/check-subpool-combo-eligiblity/${user?.attributes?.ethAddress}/${id}/${comboCount}`
     );
     const res = await rawRes.json();
 
     const eligible = res?.data?.isEligible === true ? true : false;
     setSubpoolComboEligible(eligible);
-    console.log('subpool combo eligibility set')
   };
 
   useEffect(() => {
@@ -155,7 +148,7 @@ const StakingPool = ({ stakingPoolData }) => {
       //user already selects this key (exists in the user's selected keychain)
       const keyChainAlreadySelected = keyChainIndex >= 0;
       if (!keyChainAlreadySelected) {
-        //appending selectedNFT into the "keychains" array
+        //appending selectedNFT into the `keychains` array
         setComboSelection({
           ...comboSelection,
           keychains: [...alreadySelectedKeychainIds, selectedNFT],
@@ -184,7 +177,7 @@ const StakingPool = ({ stakingPoolData }) => {
     }
 
     // remove any extra selected keychain except one, if
-    // previously user selected more than 1 keychains.
+    // previously user selected more than 1 keychain
     // (this is possible if user had selected 'flush'
     // before changing their combo type to something lower)
     if (comboSelection.keychains.length > 1 && e !== 'flush') {
@@ -234,6 +227,7 @@ const StakingPool = ({ stakingPoolData }) => {
 
   const stakerCount = () => {
     const stakers = [];
+
     // filter through both active and closed subpools and add stakers to stakers array
     // if staker is already in stakers array, don't add them
     if (activeSubpoolsLength > 0) {
@@ -256,275 +250,106 @@ const StakingPool = ({ stakingPoolData }) => {
   };
   return (
     <Layout pageTitle={`Staking Pool #${id}`} withAuth>
-      {!stakingPoolDataExists && (
-        <Flex direction='column' align='center' justify='center'>
-          <Box
-            sx={(theme) => ({
-              borderRadius: theme.radius.md,
-              minWidth: '50%',
-              border: '2px solid #ca4242',
-              padding: '20px',
-              textAlign: 'center',
-              marginTop: 15,
-            })}
-          >
-            <Flex direction='row' align='center' justify='center'>
-              <IconAlertOctagon
-                color='#ca4242'
-                size={40}
-                style={{ marginRight: 10 }}
-              />
-              <Text
-                sx={(theme) => ({
-                  fontSize: 40,
-                  color: '#ca4242',
-                  fontWeight: 700,
-                })}
-              >
-                STAKING PAGE NOT AVAILABLE
-              </Text>
-            </Flex>
-            <Text size='lg'>
-              This staking pool might not exist or is not available.
-            </Text>
-          </Box>
-        </Flex>
-      )}
-      {stakingPoolDataExists && (
-        <>
+      <Flex direction={'column'} w='100%'>
+        {!stakingPoolDataExists && (
           <Flex direction='column' align='center' justify='center'>
-          <Text
-            sx={(theme) => ({
-              fontSize: 72,
-              fontWeight: 700,
-              color: '#42ca9f',
-            })}
-          >
-            Staking Pool {id}
-          </Text>
-          <Button
-            h={'56px'}
-            onClick={() => router.replace('/staking/my-subpools')}
-            sx={(theme) => ({
-              backgroundColor: '#42ca9f',
-              transitionDuration: '200ms',
-              ':hover': {
-                transform: 'scale(1.01) translate(1px, -3px)',
-                backgroundColor: '#42ca9f',
-              },
-            })}
-          >
-            <Text size={24}>View my subpools</Text>
-          </Button>
-        </Flex>
-          <Flex
-            sx={{ marginTop: 50 }}
-            direction='row'
-            align='start'
-            justify='center'
-          >
-            <Box
-              sx={(theme) => ({
-                border: '3px solid #42ca9f',
-                borderRadius: theme.radius.md,
-                // textAlign: 'center',
-                padding: 20,
-                minWidth: '30%',
-                marginRight: 50,
-              })}
+            <BorderedBox
+              sx={{ marginTop: 15, borderWidth: '2px', padding: '20px' }}
+              borderRadiusSize='md'
+              variant='red'
             >
-              <Flex
-                direction='row'
-                align='center'
-                justify='center'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
+              <Flex direction='row' align='center' justify='center'>
+                <IconAlertOctagon
+                  color='#ca4242'
+                  size={40}
+                  style={{ marginRight: 10, flexShrink: 0 }}
+                />
                 <Text
                   sx={(theme) => ({
                     fontSize: 40,
+                    color: '#ca4242',
                     fontWeight: 700,
-                    color: '#42ca9f',
                   })}
                 >
-                  STAKING POOL DATA
+                  STAKING PAGE NOT AVAILABLE
                 </Text>
               </Flex>
-              <Flex
-                direction='column'
-                align='center'
-                justify='center'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Text c='#42ca9f' size={20} weight={600}>
-                  ENTRY:{' '}
-                  {new Date(stakingPoolData.EntryAllowance).toLocaleString()}
-                </Text>
-                <Text c='#42ca9f' size={20} weight={600}>
-                  STARTS: {new Date(stakingPoolData.StartTime).toLocaleString()}
-                </Text>
-                <Text c='#42ca9f' size={20} weight={600}>
-                  ENDS: {new Date(stakingPoolData.EndTime).toLocaleString()}
-                </Text>
-              </Flex>
-              <Flex
-                direction='column'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Flex direction='row' align='center'>
-                  <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-                  <Text size={20} weight={600}>
-                    TOTAL POOL REWARD
-                  </Text>
-                </Flex>
-                <Flex style={{ marginBottom: 10 }}>
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '80%', marginRight: '10%' }}
-                  />
-                </Flex>
-                <Text>
-                  {stakingPoolData.Reward.Amount} {stakingPoolData.Reward.Name}
-                </Text>
-              </Flex>
-              <Flex
-                direction='column'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Flex direction='row' align='center'>
-                  <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-                  <Text size={20} weight={600}>
-                    TOTAL SUBPOOL POINTS
-                  </Text>
-                </Flex>
-                <Flex style={{ marginBottom: 10 }}>
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '80%', marginRight: '10%' }}
-                  />
-                </Flex>
-                <Text>{stakingPoolData.TotalYieldPoints} points</Text>
-              </Flex>
-              <Flex
-                direction='column'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Flex direction='row' align='center'>
-                  <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-                  <Text size={20} weight={600}>
-                    TOTAL SUBPOOLS
-                  </Text>
-                </Flex>
-                <Flex style={{ marginBottom: 10 }}>
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '80%', marginRight: '10%' }}
-                  />
-                </Flex>
-                <Text>
-                  {activeSubpoolsLength + closedSubpoolsLength} subpool(s)
-                </Text>
-              </Flex>
-              <Flex
-                direction='column'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Flex direction='row' align='center'>
-                  <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-                  <Text size={20} weight={600}>
-                    TOTAL STAKERS
-                  </Text>
-                </Flex>
-                <Flex style={{ marginBottom: 10 }}>
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '80%', marginRight: '10%' }}
-                  />
-                </Flex>
-                <Text>{stakerCount()} staker(s)</Text>
-              </Flex>
-              <Flex
-                direction='column'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Flex direction='row' align='center'>
-                  <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-                  <Text size={20} weight={600}>
-                    YOUR SUBPOOL POINTS
-                  </Text>
-                </Flex>
-                <Flex style={{ marginBottom: 10 }}>
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '80%', marginRight: '10%' }}
-                  />
-                </Flex>
-                <Text>{stakerTotalSubpoolPoints} points</Text>
-              </Flex>
-              <Flex
-                direction='column'
-                sx={(theme) => ({
-                  marginBottom: 20,
-                })}
-              >
-                <Flex direction='row' align='center'>
-                  <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-                  <Text size={20} weight={600}>
-                    YOUR TOTAL REWARD SHARE
-                  </Text>
-                </Flex>
-                <Flex style={{ marginBottom: 10 }}>
-                  <Divider
-                    color='#42ca9f'
-                    style={{ width: '80%', marginRight: '10%' }}
-                  />
-                </Flex>
-                <Text>
-                  {totalTokenShare} {stakingPoolData.Reward.Name}
-                </Text>
-              </Flex>
-            </Box>
-            <StakingModal
-              stakingPoolId={id}
-              showStakingModal={showStakingModal}
-              onCloseStakingModal={() => {
-                setShowStakingModal(false);
-                setPreSubpoolData(null);
-              }}
-              subpool={comboSelection}
-              loadingStakingRewardAndPoints={loadingStakingRewardAndPoints}
-              preSubpoolData={preSubpoolData}
-            />
-            <StakingBox
-              selectedKeyCombo={selectedKeyComboType}
-              onSelectKey={handleSelectKey}
-              onSelectKeychain={handleSelectKeychain}
-              onSelectKeyComboType={handleSelectKeyComboType}
-              currentComboAllowed={subpoolComboEligible}
-              stakerInventoryLoading={stakerInventoryLoading}
-              stakerInventory={stakerInventory}
-              comboSelection={comboSelection}
-              confirmButtonClick={handleConfirmButton}
-              confirmButtonDisabled={confirmButtonDisabled}
-              stakingOngoing={stakingOngoing}
-              stakingClosed={stakingClosed}
-            />
+              <Text size='lg'>
+                This staking pool might not exist or is not available.
+              </Text>
+            </BorderedBox>
           </Flex>
-        </>
-      )}
+        )}
+        {stakingPoolDataExists && (
+          <>
+            <Flex direction='column' align='center' justify='center'>
+              <Text
+                sx={(theme) => ({
+                  fontSize: 72,
+                  fontWeight: 700,
+                  color: '#42ca9f',
+                })}
+              >
+                Staking Pool {id}
+              </Text>
+              <Button
+                h={'56px'}
+                onClick={() => router.replace('/staking/my-subpools')}
+                sx={(theme) => ({
+                  backgroundColor: '#42ca9f',
+                  transitionDuration: '200ms',
+                  ':hover': {
+                    transform: 'scale(1.01) translate(1px, -3px)',
+                    backgroundColor: '#42ca9f',
+                  },
+                })}
+              >
+                <Text size={24}>View my subpools</Text>
+              </Button>
+            </Flex>
+            <Flex
+              sx={{ marginTop: 50 }}
+              direction='row'
+              align='start'
+              justify='center'
+            >
+              <StakingPoolDataDetail
+                stakingPoolData={stakingPoolData}
+                activeSubpoolsLength={activeSubpoolsLength}
+                closedSubpoolsLength={closedSubpoolsLength}
+                stakerTotalSubpoolPoints={stakerTotalSubpoolPoints}
+                totalTokenShare={totalTokenShare}
+                stakerCount={stakerCount()}
+              />
+              <StakingModal
+                stakingPoolId={id}
+                showStakingModal={showStakingModal}
+                onCloseStakingModal={() => {
+                  setShowStakingModal(false);
+                  setPreSubpoolData(null);
+                }}
+                subpool={comboSelection}
+                loadingStakingRewardAndPoints={loadingStakingRewardAndPoints}
+                preSubpoolData={preSubpoolData}
+              />
+              <StakingBox
+                selectedKeyCombo={selectedKeyComboType}
+                onSelectKey={handleSelectKey}
+                onSelectKeychain={handleSelectKeychain}
+                onSelectKeyComboType={handleSelectKeyComboType}
+                currentComboAllowed={subpoolComboEligible}
+                stakerInventoryLoading={stakerInventoryLoading}
+                stakerInventory={stakerInventory}
+                comboSelection={comboSelection}
+                confirmButtonClick={handleConfirmButton}
+                confirmButtonDisabled={confirmButtonDisabled}
+                stakingOngoing={stakingOngoing}
+                stakingClosed={stakingClosed}
+              />
+            </Flex>
+          </>
+        )}
+      </Flex>
     </Layout>
   );
 };

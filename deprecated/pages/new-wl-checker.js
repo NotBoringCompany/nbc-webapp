@@ -12,7 +12,7 @@ const WLVerification = () => {
     const [wallet, setWallet] = useState('');
 
     useEffect(() => {
-        setWallet(user && user.attributes.ethAddress)
+        setWallet(user?.attributes?.ethAddress)
     }, [user])
 
     return (
