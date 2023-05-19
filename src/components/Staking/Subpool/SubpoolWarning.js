@@ -1,17 +1,24 @@
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import { HeadingFive, HeadingSix } from '@/components/Typography/Headings';
-import { Flex, List, Text } from '@mantine/core';
+import { Flex, List, Text, createStyles } from '@mantine/core';
 import { IconAlertOctagon } from '@tabler/icons';
 
+const useStyles = createStyles((theme) => ({
+  borderedContainer: {
+    marginTop: 10,
+    marginLeft: 50,
+    [theme.fn.smallerThan('md')]: {
+      marginLeft: 0,
+    },
+  },
+}));
+
 const SubpoolWarning = ({ stakingPoolData }) => {
+  const { classes } = useStyles();
   return (
-    <BorderedBox
-      variant='red'
-      sx={{ marginTop: 10, maxWidth: '50%', marginLeft: 50 }}
-      p='lg'
-    >
+    <BorderedBox variant='red' className={classes.borderedContainer} p='lg'>
       <Flex gap='md' direction='row' align='center' justify='center' mb={10}>
-        <IconAlertOctagon size={30} color='#ca4242' />
+        <IconAlertOctagon size={30} style={{ flexShrink: 0 }} color='#ca4242' />
         <HeadingSix order={2} color='red'>
           PLEASE PAY ATTENTION TO THE FOLLOWING
         </HeadingSix>

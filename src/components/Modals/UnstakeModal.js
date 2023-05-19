@@ -3,10 +3,10 @@ import {
   Modal,
   Text,
   Flex,
-  IconAlertOctagon,
   Button,
   Loader,
 } from '@mantine/core';
+import { IconAlertOctagon } from '@tabler/icons';
 
 const UnstakeModal = ({
   opened,

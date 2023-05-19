@@ -1,4 +1,4 @@
-import { Flex, Text } from '@mantine/core';
+import { Flex, createStyles } from '@mantine/core';
 import { cardColumnsBreakpoints } from '@/components/Breakpoints/CardColumns';
 import SubpoolWarning from './SubpoolWarning';
 import SubpoolData from './SubpoolData';
@@ -7,6 +7,15 @@ import ClaimModal from '@/components/Modals/ClaimModal';
 import UnstakeModal from '@/components/Modals/UnstakeModal';
 import WarningBox from '@/components/Layout/WarningBox';
 import { HeadingOne } from '@/components/Typography/Headings';
+
+const useStyles = createStyles((theme) => ({
+  flexContainer: {
+    display: 'row',
+    [theme.fn.smallerThan('md')]: {
+      flexDirection: 'column',
+    },
+  },
+}));
 
 const Subpool = ({
   subpoolDataExists,
@@ -30,6 +39,7 @@ const Subpool = ({
   handleClaimModal,
   handleUnstakeModal,
 }) => {
+  const { classes } = useStyles();
   return (
     <Flex direction='column' align='center' justify='center'>
       {!subpoolDataExists && (
@@ -43,7 +53,13 @@ const Subpool = ({
           <HeadingOne mb='lg' align='center'>
             Staking Pool {stakingPoolId} {'<>'} Subpool {subpoolId}
           </HeadingOne>
-          <Flex direction='row' align='center' justify='center' my={25}>
+          <Flex
+            direction='row'
+            className={classes.flexContainer}
+            align='center'
+            justify='center'
+            my={25}
+          >
             <SubpoolData
               subpoolData={subpoolData}
               stakingPoolData={stakingPoolData}
