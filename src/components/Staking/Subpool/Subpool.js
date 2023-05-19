@@ -78,7 +78,6 @@ const Subpool = ({
         claimDone={claimDone}
         claimLoading={claimLoading}
         rewardName={stakingPoolData.Reward.Name}
-        loading={subpoolTokenShare}
       />
 
       <UnstakeModal
