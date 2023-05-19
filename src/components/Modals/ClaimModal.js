@@ -8,7 +8,7 @@ const ClaimModal = ({
   claimDone,
   subpoolTokenShare,
   rewardName,
-  loading,
+  claimLoading,
 }) => {
   return (
     <Modal
@@ -48,7 +48,7 @@ const ClaimModal = ({
               })}
               onClick={handleClaimReward}
             >
-              {loading ? <Loader color='white' /> : <Text>Confirm</Text>}
+              {claimLoading ? <Loader color='white' /> : <Text>Confirm</Text>}
             </Button>
           </Flex>
         </>
