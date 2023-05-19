@@ -97,6 +97,9 @@ const MySubpool = ({
     <Layout
       pageTitle={`Subpool #${id} - Staking pool #${stakingPoolId}`}
       withAuth
+      showNotFound={!subpoolDataExists}
+      notFoundTitle='SUBPOOL PAGE NOT AVAILABLE'
+      notFoundDescription='This subpool might not exist or is not available'
     >
       <Subpool
         subpoolDataExists={subpoolDataExists}

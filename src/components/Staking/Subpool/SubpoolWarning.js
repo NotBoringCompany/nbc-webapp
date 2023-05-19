@@ -1,14 +1,25 @@
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
-import { HeadingFive, HeadingSix } from '@/components/Typography/Headings';
+import { HeadingSix } from '@/components/Typography/Headings';
 import { Flex, List, Text, createStyles } from '@mantine/core';
 import { IconAlertOctagon } from '@tabler/icons';
+
+// const useStyles = createStyles((theme) => ({
+//   borderedBox: {
+//     width: '60%',
+//     [theme.fn.smallerThan('lg')]: {
+//       width: '100%',
+//     },
+//   },
+// }));
 
 const useStyles = createStyles((theme) => ({
   borderedContainer: {
     marginTop: 10,
     marginLeft: 50,
-    [theme.fn.smallerThan('md')]: {
+    [theme.fn.smallerThan('lg')]: {
+      width: '100%',
       marginLeft: 0,
+      marginTop: 24,
     },
   },
 }));

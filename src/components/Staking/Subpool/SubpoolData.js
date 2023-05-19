@@ -1,10 +1,27 @@
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import { MediumButton } from '@/components/Buttons/Universals';
 import { HeadingFour } from '@/components/Typography/Headings';
-import { Button, Divider, Flex, HoverCard, Text } from '@mantine/core';
+import {
+  Button,
+  Divider,
+  Flex,
+  HoverCard,
+  Text,
+  createStyles,
+} from '@mantine/core';
 import { IconAlertOctagon, IconQuestionCircle } from '@tabler/icons';
 import MathJax from 'react-mathjax2';
 import { useMoralis } from 'react-moralis';
+import { IndividualPoolDataText } from '../StakingPool/IndividualPool';
+
+const useStyles = createStyles((theme) => ({
+  borderedBox: {
+    width: '50%',
+    [theme.fn.smallerThan('lg')]: {
+      width: '100%',
+    },
+  },
+}));
 
 const SubpoolData = ({
   subpoolData,
@@ -17,13 +34,10 @@ const SubpoolData = ({
 }) => {
   const now = new Date().getTime();
   const { user } = useMoralis();
+  const { classes } = useStyles();
 
   return (
-    <BorderedBox
-      p='lg'
-      sx={{ minWidth: '30%', textAlign: 'left' }}
-      variant='green'
-    >
+    <BorderedBox className={classes.borderedBox} p='lg' variant='green'>
       <HeadingFour order={2} align='center' my='lg'>
         SUBPOOL DATA
       </HeadingFour>
@@ -77,91 +91,63 @@ const SubpoolData = ({
           </>
         )}
       </Flex>
-      <Flex
-        direction='column'
-        sx={(theme) => ({
-          marginBottom: 20,
-        })}
-      >
-        <Flex direction='row' align='center'>
-          <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-          <Text size={20} weight={600}>
-            SUBPOOL POINTS
-          </Text>
-          <HoverCard width={350} shadow='md'>
-            <HoverCard.Target>
-              <Button
-                sx={() => ({
-                  backgroundColor: '#000000',
-                  ':hover': {
+      <IndividualPoolDataText
+        text={`${subpoolData.subpoolPoints} POINTS`}
+        title='SUBPOOL POINTS'
+        extraComponent={
+          <>
+            <HoverCard width={350} shadow='md'>
+              <HoverCard.Target>
+                <Button
+                  sx={() => ({
                     backgroundColor: '#000000',
-                  },
-                })}
-                size='xs'
-              >
-                <IconQuestionCircle />
-              </Button>
-            </HoverCard.Target>
-            <HoverCard.Dropdown>
-              <Flex direction='column' align='center' justify='center'>
-                <Text>
-                  Luck/Luck Boost Bonus:{' '}
-                  {backtrackSubpoolPoints.luckAndLuckBoostSum}
-                </Text>
-                <Text>
-                  Angel Multiplier: {backtrackSubpoolPoints.angelMultiplier}
-                </Text>
-                <Text>Key Combo Bonus: {backtrackSubpoolPoints.keyCombo}</Text>
-                <Text>
-                  Keychain Combo Bonus: {backtrackSubpoolPoints.keychainCombo}
-                </Text>
-                <Text mt={20} mb={10} size={20} weight={600} underline>
-                  TOTAL SUBPOOL POINTS
-                </Text>
-                <MathJax.Context input='tex'>
-                  <MathJax.Node
-                    inline
-                  >{`\\left(100\\ +\\ \\left(${backtrackSubpoolPoints.luckAndLuckBoostSum}\\right)^{${backtrackSubpoolPoints.angelMultiplier}}\\ +\\ ${backtrackSubpoolPoints.keyCombo}\\right)\\ \\cdot\\ ${backtrackSubpoolPoints.keychainCombo}`}</MathJax.Node>
-                </MathJax.Context>
-                <MathJax.Context input='tex'>
-                  <MathJax.Node
-                    inline
-                  >{`=${backtrackSubpoolPoints.totalSubpoolPoints}`}</MathJax.Node>
-                </MathJax.Context>
-              </Flex>
-            </HoverCard.Dropdown>
-          </HoverCard>
-        </Flex>
-        <Flex style={{ marginBottom: 10 }}>
-          <Divider
-            color='#42ca9f'
-            style={{ width: '80%', marginRight: '10%' }}
-          />
-        </Flex>
-        <Text>{subpoolData.subpoolPoints} POINTS</Text>
-      </Flex>
-      <Flex
-        direction='column'
-        sx={(theme) => ({
-          marginBottom: 20,
-        })}
-      >
-        <Flex direction='row' align='center'>
-          <IconAlertOctagon color='#42ca9f' style={{ marginRight: 10 }} />
-          <Text size={20} weight={600}>
-            SUBPOOL REWARD SHARE
-          </Text>
-        </Flex>
-        <Flex style={{ marginBottom: 10 }}>
-          <Divider
-            color='#42ca9f'
-            style={{ width: '80%', marginRight: '10%' }}
-          />
-        </Flex>
-        <Text>
-          {subpoolTokenShare} {stakingPoolData.Reward.Name}
-        </Text>
-      </Flex>
+                    ':hover': {
+                      backgroundColor: '#000000',
+                    },
+                  })}
+                  size='xs'
+                >
+                  <IconQuestionCircle />
+                </Button>
+              </HoverCard.Target>
+              <HoverCard.Dropdown>
+                <Flex direction='column' align='center' justify='center'>
+                  <Text>
+                    Luck/Luck Boost Bonus:{' '}
+                    {backtrackSubpoolPoints.luckAndLuckBoostSum}
+                  </Text>
+                  <Text>
+                    Angel Multiplier: {backtrackSubpoolPoints.angelMultiplier}
+                  </Text>
+                  <Text>
+                    Key Combo Bonus: {backtrackSubpoolPoints.keyCombo}
+                  </Text>
+                  <Text>
+                    Keychain Combo Bonus: {backtrackSubpoolPoints.keychainCombo}
+                  </Text>
+                  <Text mt={20} mb={10} size={20} weight={600} underline>
+                    TOTAL SUBPOOL POINTS
+                  </Text>
+                  <MathJax.Context input='tex'>
+                    <MathJax.Node
+                      inline
+                    >{`\\left(100\\ +\\ \\left(${backtrackSubpoolPoints.luckAndLuckBoostSum}\\right)^{${backtrackSubpoolPoints.angelMultiplier}}\\ +\\ ${backtrackSubpoolPoints.keyCombo}\\right)\\ \\cdot\\ ${backtrackSubpoolPoints.keychainCombo}`}</MathJax.Node>
+                  </MathJax.Context>
+                  <MathJax.Context input='tex'>
+                    <MathJax.Node
+                      inline
+                    >{`=${backtrackSubpoolPoints.totalSubpoolPoints}`}</MathJax.Node>
+                  </MathJax.Context>
+                </Flex>
+              </HoverCard.Dropdown>
+            </HoverCard>
+          </>
+        }
+      />
+      <IndividualPoolDataText
+        text={`${subpoolTokenShare} ${stakingPoolData.Reward.Name}`}
+        title='SUBPOOL REWARD SHARE'
+      />
     </BorderedBox>
   );
 };

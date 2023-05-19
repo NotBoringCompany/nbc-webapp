@@ -8,13 +8,15 @@ import { useMoralis } from 'react-moralis';
 import WarningBox from './WarningBox';
 
 const AuthWall = (
-  <Box mx='auto' w='100%' maw='720px' justify='center'>
-    <WarningBox
-      title='YOU ARE NOT LOGGED IN'
-      description='Please connect your wallet to access this page.'
-    />
-  </Box>
+  <WarningBox
+    title='YOU ARE NOT LOGGED IN'
+    description='Please connect your wallet to access this page.'
+  />
 );
+
+const NotFoundComponent = ({ title, description }) => {
+  return <WarningBox title={title} description={description} />;
+};
 
 const useStyles = createStyles({
   dragon: {
@@ -34,12 +36,24 @@ const Layout = ({
   dragonBackground = false,
   description = 'Building immersive Web3-native IP franchises.',
   keywords = 'realm hunter, multiplayer game, nft gaming, nft', // seo keywords, separated by commas
+  showNotFound = false,
+  notFoundTitle = '',
+  notFoundDescription = '',
 }) => {
   const { isAuthenticated, isAuthUndefined } = useMoralis();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const authWall = !!authWallComponent ? authWallComponent : AuthWall;
   const { classes } = useStyles();
+
+  const renderedComponent = showNotFound ? (
+    <NotFoundComponent
+      title={notFoundTitle}
+      description={notFoundDescription}
+    />
+  ) : (
+    <>{children}</>
+  );
 
   const title = !!pageTitle
     ? `${pageTitle} | Not Boring Company`
@@ -101,9 +115,9 @@ const Layout = ({
               <>
                 {' '}
                 {withAuth ? (
-                  <>{isAuthenticated ? children : authWall}</>
+                  <>{isAuthenticated ? renderedComponent : authWall}</>
                 ) : (
-                  children
+                  renderedComponent
                 )}
               </>
             )}

@@ -5,13 +5,12 @@ import SubpoolData from './SubpoolData';
 import NFTStaked from './NFTStaked';
 import ClaimModal from '@/components/Modals/ClaimModal';
 import UnstakeModal from '@/components/Modals/UnstakeModal';
-import WarningBox from '@/components/Layout/WarningBox';
 import { HeadingOne } from '@/components/Typography/Headings';
 
 const useStyles = createStyles((theme) => ({
   flexContainer: {
     display: 'row',
-    [theme.fn.smallerThan('md')]: {
+    [theme.fn.smallerThan('lg')]: {
       flexDirection: 'column',
     },
   },
@@ -40,14 +39,9 @@ const Subpool = ({
   handleUnstakeModal,
 }) => {
   const { classes } = useStyles();
+
   return (
     <Flex direction='column' align='center' justify='center'>
-      {!subpoolDataExists && (
-        <WarningBox
-          title='SUBPOOL PAGE NOT AVAILABLE'
-          description='This subpool might not exist or is not available'
-        />
-      )}
       {subpoolDataExists && (
         <>
           <HeadingOne mb='lg' align='center'>

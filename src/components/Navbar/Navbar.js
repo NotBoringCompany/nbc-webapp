@@ -32,9 +32,8 @@ const useStyles = createStyles((theme) => ({
     flex: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: HEADER_HEIGHT,
     borderBottom: 0,
-    margin: '0px 50px 0px 50px',
+    margin: '0 20px',
   },
 
   links: {
@@ -44,18 +43,26 @@ const useStyles = createStyles((theme) => ({
   },
 
   burger: {
+    zIndex: 1,
     [theme.fn.largerThan('md')]: {
       display: 'none',
     },
   },
 
+  logo: {
+    zIndex: 1,
+  },
+
   dropdown: {
+    borderRadius: 0,
     position: 'absolute',
-    top: HEADER_HEIGHT,
+    top: 0,
     backgroundColor: '#000000',
     margin: '0',
     width: '100%',
     left: '0',
+    padding: '32px',
+    paddingTop: '48px',
     [theme.fn.largerThan('md')]: {
       display: 'none',
     },
@@ -221,7 +228,7 @@ const NavbarItems = (props) => {
               >
                 <Text
                   sx={(theme) => ({
-                    color: theme.colors.dark[0],
+                    color: '#fff',
                     marginLeft: '2px',
                   })}
                 >
@@ -277,7 +284,7 @@ const NavbarItems = (props) => {
             <Text
               sx={(theme) => ({
                 marginRight: '2px',
-                color: theme.colors.dark[0],
+                color: '#fff',
               })}
             >
               Staking
@@ -322,14 +329,13 @@ const MainNavbar = () => {
         backgroundColor: theme.fn.rgba(theme.black, 0),
       })}
       height={HEADER_HEIGHT}
-      mb={20}
       className={classes.header}
     >
       <SelectWallet
         showSelectWallet={showSelectWallet}
         setShowSelectWallet={setShowSelectWallet}
       />
-      <Link href='/'>
+      <Link href='/' className={classes.logo}>
         <Image src={NBCLogo} alt='nbc logo' width={40} height={40} priority />
       </Link>
       <Group spacing={20} className={classes.links}>
