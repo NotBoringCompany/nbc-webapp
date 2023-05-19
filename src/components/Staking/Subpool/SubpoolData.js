@@ -4,6 +4,7 @@ import { HeadingFour } from '@/components/Typography/Headings';
 import { Box, Button, Divider, Flex, HoverCard, Text } from '@mantine/core';
 import { IconAlertOctagon, IconQuestionCircle } from '@tabler/icons';
 import MathJax from 'react-mathjax2';
+import { useMoralis } from 'react-moralis';
 
 const SubpoolData = ({
   subpoolData,
@@ -15,6 +16,7 @@ const SubpoolData = ({
   handleUnstakeModal,
 }) => {
   const now = new Date().getTime();
+  const { user } = useMoralis();
 
   return (
     <BorderedBox p='lg' sx={{ minWidth: '30%', textAlign: 'left' }} variant='green'>
