@@ -5,6 +5,7 @@ import BorderedBox from '@/components/BorderedBox/BorderedBox';
 
 const useStyles = createStyles((theme) => ({
   borderedBox: {
+    width: '100%',
     [theme.fn.smallerThan('md')]: {
       padding: '16px',
     },

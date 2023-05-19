@@ -28,7 +28,7 @@ const NFTStaked = ({ cardColumnsBreakpoints, subpoolData }) => {
             <SimpleGrid
               sx={(theme) => ({
                 justifyItems: 'center',
-                alignItems: 'center',
+                alignItems: 'start',
               })}
               breakpoints={cardColumnsBreakpoints}
             >

@@ -1,5 +1,5 @@
 import Layout from '@/components/Layout/Layout';
-import { Button, Flex, Text } from '@mantine/core';
+import { Button, Flex, Text, createStyles } from '@mantine/core';
 import { IconAlertOctagon } from '@tabler/icons';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -9,9 +9,33 @@ import StakingBox from '@/components/Staking/StakingBox';
 import StakingModal from '@/components/Staking/StakingModal';
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import StakingPoolDataDetail from '@/components/Staking/StakingPool/StakingPoolDataDetail';
+import { HeadingOne } from '@/components/Typography/Headings';
+import WarningBox from '@/components/Layout/WarningBox';
+
+const useStyles = createStyles((theme) => ({
+  container: {
+    marginTop: 48,
+    alignItems: 'start',
+    justifyContent: 'center',
+    [theme.fn.smallerThan('md')]: {
+      flexDirection: 'column-reverse',
+      alignItems: 'center',
+    },
+  },
+  stakingPoolDetailBox: {
+    marginRight: 48,
+    width: '40%',
+    [theme.fn.smallerThan('md')]: {
+      width: '100%',
+      marginRight: 0,
+      marginTop: 32,
+    },
+  },
+}));
 
 const StakingPool = ({ stakingPoolData }) => {
   const router = useRouter();
+  const { classes } = useStyles();
   const { id } = router.query;
   const { user } = useMoralis();
 
@@ -248,50 +272,20 @@ const StakingPool = ({ stakingPoolData }) => {
 
     return stakers.length;
   };
+
   return (
-    <Layout pageTitle={`Staking Pool #${id}`} withAuth>
+    <Layout
+      pageTitle={`Staking Pool #${id}`}
+      withAuth
+      showNotFound={!stakingPoolDataExists}
+      notFoundTitle='STAKING PAGE NOT AVAILABLE'
+      notFoundDescription='This staking pool might not exist or is not available.'
+    >
       <Flex direction={'column'} w='100%'>
-        {!stakingPoolDataExists && (
-          <Flex direction='column' align='center' justify='center'>
-            <BorderedBox
-              sx={{ marginTop: 15, borderWidth: '2px', padding: '20px' }}
-              borderRadiusSize='md'
-              variant='red'
-            >
-              <Flex direction='row' align='center' justify='center'>
-                <IconAlertOctagon
-                  color='#ca4242'
-                  size={40}
-                  style={{ marginRight: 10, flexShrink: 0 }}
-                />
-                <Text
-                  sx={(theme) => ({
-                    fontSize: 40,
-                    color: '#ca4242',
-                    fontWeight: 700,
-                  })}
-                >
-                  STAKING PAGE NOT AVAILABLE
-                </Text>
-              </Flex>
-              <Text size='lg'>
-                This staking pool might not exist or is not available.
-              </Text>
-            </BorderedBox>
-          </Flex>
-        )}
         {stakingPoolDataExists && (
           <>
             <Flex direction='column' align='center' justify='center'>
-              <Text
-                sx={(theme) => ({
-                  fontSize: 72,
-                  fontWeight: 700,
-                  color: '#42ca9f',
-                })}
-              >
-                Staking Pool {id}
-              </Text>
+              <HeadingOne mb='md'>Staking Pool {id}</HeadingOne>
               <Button
                 h={'56px'}
                 onClick={() => router.replace('/staking/my-subpools')}
@@ -307,12 +301,7 @@ const StakingPool = ({ stakingPoolData }) => {
                 <Text size={24}>View my subpools</Text>
               </Button>
             </Flex>
-            <Flex
-              sx={{ marginTop: 50 }}
-              direction='row'
-              align='start'
-              justify='center'
-            >
+            <Flex className={classes.container}>
               <StakingPoolDataDetail
                 stakingPoolData={stakingPoolData}
                 activeSubpoolsLength={activeSubpoolsLength}
@@ -320,6 +309,7 @@ const StakingPool = ({ stakingPoolData }) => {
                 stakerTotalSubpoolPoints={stakerTotalSubpoolPoints}
                 totalTokenShare={totalTokenShare}
                 stakerCount={stakerCount()}
+                className={classes.stakingPoolDetailBox}
               />
               <StakingModal
                 stakingPoolId={id}

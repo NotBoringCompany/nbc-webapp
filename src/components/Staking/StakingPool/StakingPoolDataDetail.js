@@ -2,6 +2,8 @@ import React from 'react';
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import { Flex, Text } from '@mantine/core';
 import { IndividualPoolDataText } from './IndividualPool';
+import { HeadingFour } from '@/components/Typography/Headings';
+
 const StakingPoolDataDetail = ({
   stakingPoolData,
   activeSubpoolsLength,
@@ -9,17 +11,15 @@ const StakingPoolDataDetail = ({
   stakerTotalSubpoolPoints,
   totalTokenShare,
   stakerCount,
+  ...props
 }) => {
   return (
     <BorderedBox
       borderRadiusSize='md'
       p='lg'
-      sx={{
-        minWidth: '30%',
-        marginRight: 50,
-        textAlign: 'left',
-      }}
+      sx={{ textAlign: 'left' }}
       variant='green'
+      {...props}
     >
       <Flex
         direction='row'
@@ -29,15 +29,7 @@ const StakingPoolDataDetail = ({
           marginBottom: 20,
         })}
       >
-        <Text
-          sx={(theme) => ({
-            fontSize: 40,
-            fontWeight: 700,
-            color: '#42ca9f',
-          })}
-        >
-          STAKING POOL DATA
-        </Text>
+        <HeadingFour order={2}>STAKING POOL DATA</HeadingFour>
       </Flex>
       <Flex
         direction='column'

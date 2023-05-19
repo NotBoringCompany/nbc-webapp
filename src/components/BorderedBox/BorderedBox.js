@@ -2,7 +2,6 @@ import { Box } from '@mantine/core';
 import { COLORS } from '../Globals/colors';
 const BorderedBox = ({
   variant,
-  minWidth,
   children,
   sx = {},
   borderRadiusSize = 'xl',
@@ -15,7 +14,6 @@ const BorderedBox = ({
         border: `3px solid ${color}`,
         borderRadius: theme.radius[borderRadiusSize],
         textAlign: 'center',
-        minWidth: minWidth || '50%',
         ...sx,
       })}
       {...props}

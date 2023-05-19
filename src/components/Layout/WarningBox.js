@@ -10,7 +10,9 @@ const WarningBox = ({ title, description }) => {
       borderRadiusSize='md'
       p='lg'
       sx={{
-        marginTop: 15,
+        margin: '0 auto',
+        marginTop: 64,
+        height: 'fit-content',
       }}
     >
       <Flex direction='row' align='center' justify='center'>

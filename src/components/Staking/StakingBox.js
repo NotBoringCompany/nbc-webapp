@@ -4,7 +4,6 @@ import {
   Select,
   SimpleGrid,
   Button,
-  Box,
   Loader,
   ScrollArea,
 } from '@mantine/core';
@@ -12,6 +11,7 @@ import { keyCombos, maxSelectedKey } from '@/utils/kosData';
 import NFTCard from '@/components/Staking/NFTCard';
 import { IconAlertOctagon } from '@tabler/icons';
 import { cardColumnsBreakpoints } from '../Breakpoints/CardColumns';
+import { HeadingFive, HeadingFour } from '../Typography/Headings';
 
 const StakingBox = ({
   onSelectKeyComboType,
@@ -41,21 +41,16 @@ const StakingBox = ({
       direction='column'
       align='center'
       justify='center'
+      w='100%'
       sx={(theme) => ({
         border: stakingOngoing ? '2px solid grey' : '2px solid #42ca9f',
         borderRadius: theme.radius.md,
         maxHeight: '100vh',
-        minWidth: '50%',
       })}
     >
-      <Text
-        size={40}
-        weight={'800'}
-        mb={'md'}
-        color={stakingOngoing ? 'grey' : '#42ca9f'}
-      >
+      <HeadingFour color={stakingOngoing ? 'grey' : 'green'} mb='md' order={2}>
         STAKING
-      </Text>
+      </HeadingFour>
       {stakingOngoing && !stakingClosed && (
         <Flex style={{ marginBottom: 15 }} align='center' justify='center'>
           <IconAlertOctagon style={{ marginRight: 10 }} color='grey' />
@@ -134,9 +129,9 @@ const StakingBox = ({
                       textAlign: 'center',
                     })}
                   >
-                    <Text size={30} weight={'600'} mt={50} c='#42ca9f'>
+                    <HeadingFive order={3} mt={48}>
                       YOUR KEYS (SORTED BY DESCENDING LUCK)
-                    </Text>
+                    </HeadingFive>
                     {stakerInventory.keychainData &&
                       stakerInventory.keychainData.length === 0 && (
                         <Text>
@@ -178,9 +173,9 @@ const StakingBox = ({
                           />
                         ))}
                     </SimpleGrid>
-                    <Text size={30} weight={'600'} mt={50} c='#42ca9f'>
+                    <HeadingFive order={3} mt={48}>
                       YOUR KEYCHAINS
-                    </Text>
+                    </HeadingFive>
                     {stakerInventory.keychainData &&
                       stakerInventory.keychainData.length === 0 && (
                         <Text>
@@ -218,9 +213,9 @@ const StakingBox = ({
                           />
                         ))}
                     </SimpleGrid>
-                    <Text size={30} weight={'600'} mt={50} c='#42ca9f'>
+                    <HeadingFive order={3} mt={48}>
                       YOUR SUPERIOR KEYCHAINS
-                    </Text>
+                    </HeadingFive>
                     {stakerInventory.superiorKeychainData &&
                       stakerInventory.superiorKeychainData.length === 0 && (
                         <Text>
