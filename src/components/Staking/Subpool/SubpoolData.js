@@ -47,14 +47,6 @@ const SubpoolData = ({
           marginBottom: 20,
         })}
       >
-        <MediumButton
-          color='#42ca9f'
-          hoverColor='#42ca9f'
-          onClick={handleUnstakeModal}
-          disabled={false}
-        >
-          Unstake
-        </MediumButton>
         {userOwnsThisSubpool && (
           <>
             <MediumButton
