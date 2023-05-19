@@ -25,7 +25,7 @@ const MySubpool = ({
   const userOwnsThisSubpool =
     user &&
     user.attributes.ethAddress.toLowerCase() ===
-    subpoolData?.stakerWallet?.toLowerCase();
+      subpoolData?.stakerWallet?.toLowerCase();
 
   const handleUnstake = async () => {
     setUnstakeLoading(true);

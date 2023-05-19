@@ -1,7 +1,7 @@
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import { MediumButton } from '@/components/Buttons/Universals';
 import { HeadingFour } from '@/components/Typography/Headings';
-import { Box, Button, Divider, Flex, HoverCard, Text } from '@mantine/core';
+import { Button, Divider, Flex, HoverCard, Text } from '@mantine/core';
 import { IconAlertOctagon, IconQuestionCircle } from '@tabler/icons';
 import MathJax from 'react-mathjax2';
 import { useMoralis } from 'react-moralis';
@@ -19,7 +19,11 @@ const SubpoolData = ({
   const { user } = useMoralis();
 
   return (
-    <BorderedBox p='lg' sx={{ minWidth: '30%', textAlign: 'left' }} variant='green'>
+    <BorderedBox
+      p='lg'
+      sx={{ minWidth: '30%', textAlign: 'left' }}
+      variant='green'
+    >
       <HeadingFour order={2} align='center' my='lg'>
         SUBPOOL DATA
       </HeadingFour>
@@ -43,6 +47,14 @@ const SubpoolData = ({
           marginBottom: 20,
         })}
       >
+        <MediumButton
+          color='#42ca9f'
+          hoverColor='#42ca9f'
+          onClick={handleUnstakeModal}
+          disabled={false}
+        >
+          Unstake
+        </MediumButton>
         {userOwnsThisSubpool && (
           <>
             <MediumButton
@@ -65,11 +77,10 @@ const SubpoolData = ({
               }
             >
               {subpoolData.rewardClaimable
-                  ? subpoolData.rewardClaimed
-                    ? 'Reward Claimed'
-                    : 'Claim Reward'
-                  : 'Not Claimable'
-              }
+                ? subpoolData.rewardClaimed
+                  ? 'Reward Claimed'
+                  : 'Claim Reward'
+                : 'Not Claimable'}
             </MediumButton>
           </>
         )}

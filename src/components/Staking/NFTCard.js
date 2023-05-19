@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image, Button, Group, Text } from '@mantine/core';
+import { Card, Image, Button, Group, Text, Flex } from '@mantine/core';
 
 const NFTCard = ({
   showButton,
@@ -56,12 +56,12 @@ const NFTCard = ({
           {name}
         </Text>
         {metadata && name.includes('Key Of Salvation') && (
-          <>
+          <Flex direction='column' align={'start'}>
             <Text weight={500}>House: {metadata.houseTrait}</Text>
             <Text weight={500}>Type: {metadata.typeTrait}</Text>
             <Text weight={500}>Luck Rating: {metadata.luckTrait}</Text>
             <Text weight={500}>Luck Boost: {metadata.luckBoostTrait}</Text>
-          </>
+          </Flex>
         )}
       </Group>
       {showButton && (
@@ -84,14 +84,13 @@ const NFTCard = ({
           disabled={noActionAllowed}
         >
           {/* {noActionAllowed ? 'Staked' : selected ? 'Unselect' : 'Select'} */}
-          {noActionAllowed 
-            ? nftStakeable 
-              ? 'Select' 
-              : 'Staked' 
-            : selected 
-              ? 'Unselect' 
-              : 'Select'
-          }
+          {noActionAllowed
+            ? nftStakeable
+              ? 'Select'
+              : 'Staked'
+            : selected
+            ? 'Unselect'
+            : 'Select'}
         </Button>
       )}
     </Card>
