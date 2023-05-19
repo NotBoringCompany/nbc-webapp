@@ -3,15 +3,6 @@ import { HeadingSix } from '@/components/Typography/Headings';
 import { Flex, List, Text, createStyles } from '@mantine/core';
 import { IconAlertOctagon } from '@tabler/icons';
 
-// const useStyles = createStyles((theme) => ({
-//   borderedBox: {
-//     width: '60%',
-//     [theme.fn.smallerThan('lg')]: {
-//       width: '100%',
-//     },
-//   },
-// }));
-
 const useStyles = createStyles((theme) => ({
   borderedContainer: {
     marginTop: 10,
