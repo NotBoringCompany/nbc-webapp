@@ -1,6 +1,7 @@
 import {
   ActionIcon,
   Avatar,
+  Collapse,
   CopyButton,
   Divider,
   Flex,
@@ -13,14 +14,18 @@ import { MediumButton } from '../Buttons/Universals';
 import {
   IconBox,
   IconCheck,
+  IconChevronDown,
   IconCopy,
   IconLayoutDashboard,
   IconSettings,
 } from '@tabler/icons';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@mantine/hooks';
 
 const AccountOverviewBox = ({ pageName, ethAddress, email }) => {
   const router = useRouter();
+
+  const [openOverview, { toggle: toggleOpenOverview }] = useDisclosure(false);
 
   return (
     <Flex direction='column' align='center'>
@@ -69,8 +74,16 @@ const AccountOverviewBox = ({ pageName, ethAddress, email }) => {
             <Divider color='#42ca9f' size='xs' variant='dashed' />
             <Text>{email ?? 'No email provided.'}</Text>
           </Flex>
+          <IconChevronDown onClick={toggleOpenOverview} style={{
+            ':hover': {
+              cursor: 'pointer'
+            }
+          }}/>
         </Flex>
-        <Flex direction='column' align='start' justify='start'>
+        <Collapse in={openOverview}>
+          <p>Kontol</p>
+        </Collapse>
+        {/* <Flex direction='column' align='start' justify='start'>
           <MediumButton
             color='transparent'
             margin='50px 0px 0px 0px'
@@ -101,7 +114,7 @@ const AccountOverviewBox = ({ pageName, ethAddress, email }) => {
               Inventory
             </Text>
           </MediumButton>
-        </Flex>
+        </Flex> */}
       </BorderedBox>
     </Flex>
   );
