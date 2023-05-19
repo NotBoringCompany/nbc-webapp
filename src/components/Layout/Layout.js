@@ -79,7 +79,6 @@ const Layout = ({
             },
           }}
           pos='relative'
-          margi
           h={'calc(100vh - 80px)'}
         >
           <Container

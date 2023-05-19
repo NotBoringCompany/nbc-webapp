@@ -20,6 +20,7 @@ const AuthForm = ({ forLogin = false }) => {
     login,
     isAuthenticating,
     authError,
+    userError,
   } = useMoralis();
   const hasEmail = user?.attributes?.email;
 
@@ -129,12 +130,6 @@ const AuthForm = ({ forLogin = false }) => {
           {...form.getInputProps('password')}
         />
 
-        {!!authError && forLogin && (
-          <Text sx={{ color: '#ca4242' }} mt='md'>
-            {moralisErrorMessage('auth', authError.code)}
-          </Text>
-        )}
-
         <Button
           h='48px'
           miw='200px'
@@ -162,6 +157,18 @@ const AuthForm = ({ forLogin = false }) => {
             </Text>
           )}
         </Button>
+
+        {!!authError && forLogin && (
+          <Text sx={{ color: '#ca4242' }} mt='md'>
+            {moralisErrorMessage('auth', authError.code)}
+          </Text>
+        )}
+
+        {!!userError && (
+          <Text sx={{ color: '#ca4242' }} mt='md'>
+            {userError.message}
+          </Text>
+        )}
       </form>
     </>
   );

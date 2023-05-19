@@ -29,26 +29,14 @@ const useStyles = createStyles((theme) => ({
 
 const AccountMainLayout = ({ pageName, children, pageTitle, description }) => {
   const { user } = useMoralis();
-  const [email, setEmail] = useState(null);
   const { classes } = useStyles();
-  const getEmail = useCallback(() => {
-    if (user?.attributes?.email) {
-      setEmail(user.attributes.email);
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (!email) {
-      getEmail();
-    }
-  }, [email, getEmail]);
   return (
     <Layout withAuth pageTitle={pageTitle} description={description}>
       <Flex className={classes.container} direction='row'>
         <Flex className={classes.accountOverviewBoxContainer}>
           <AccountOverviewBox
             pageName={pageName ?? pageTitle}
-            email={email}
+            email={user?.attributes?.email}
             ethAddress={user?.attributes?.ethAddress}
           />
         </Flex>

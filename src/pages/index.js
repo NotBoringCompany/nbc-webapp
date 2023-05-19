@@ -28,7 +28,7 @@ const useStyles = createStyles((theme) => ({
 
 export default function Home() {
   const { isAuthenticated, user } = useMoralis();
-  const emailConnected = !!(user && user.get('emailAddress'));
+  const emailConnected = !!(user && user.get('email'));
   // checks if the user has AT LEAST 1 key of salvation
   const [hasKey, setHasKey] = useState(false);
   const { classes } = useStyles();
