@@ -15,6 +15,7 @@ import {
   IconBox,
   IconCheck,
   IconChevronDown,
+  IconChevronUp,
   IconCopy,
   IconLayoutDashboard,
   IconSettings,
@@ -74,47 +75,44 @@ const AccountOverviewBox = ({ pageName, ethAddress, email }) => {
             <Divider color='#42ca9f' size='xs' variant='dashed' />
             <Text>{email ?? 'No email provided.'}</Text>
           </Flex>
-          <IconChevronDown onClick={toggleOpenOverview} style={{
-            ':hover': {
-              cursor: 'pointer'
-            }
-          }}/>
+          <Collapse in={openOverview}>
+            <Flex direction='column' align='start' justify='start'>
+              <MediumButton
+                color='transparent'
+                margin='50px 0px 0px 0px'
+                onClick={() => router.replace('/account/dashboard')}
+              >
+                <IconLayoutDashboard size={20} />
+                <Text ml={20} size={18}>
+                  Account Dashboard
+                </Text>
+              </MediumButton>
+              <MediumButton
+                color='transparent'
+                margin='10px 0px 0px 0px'
+                onClick={() => router.replace('/account/settings')}
+              >
+                <IconSettings size={20} />
+                <Text ml={20} size={18}>
+                  Account Settings
+                </Text>
+              </MediumButton>
+              <MediumButton
+                color='transparent'
+                margin='10px 0px 0px 0px'
+                onClick={() => router.replace('/account/inventory')}
+              >
+                <IconBox size={20} />
+                <Text ml={20} mr={15} size={18}>
+                  Inventory
+                </Text>
+              </MediumButton>
+            </Flex>
+          </Collapse>
+          <MediumButton onClick={toggleOpenOverview} color='transparent'>
+            {openOverview ? <IconChevronUp /> : <IconChevronDown />}
+          </MediumButton>
         </Flex>
-        <Collapse in={openOverview}>
-          <p>Kontol</p>
-        </Collapse>
-        {/* <Flex direction='column' align='start' justify='start'>
-          <MediumButton
-            color='transparent'
-            margin='50px 0px 0px 0px'
-            onClick={() => router.replace('/account/dashboard')}
-          >
-            <IconLayoutDashboard size={20} />
-            <Text ml={20} size={18}>
-              Account Dashboard
-            </Text>
-          </MediumButton>
-          <MediumButton
-            color='transparent'
-            margin='10px 0px 0px 0px'
-            onClick={() => router.replace('/account/settings')}
-          >
-            <IconSettings size={20} />
-            <Text ml={20} size={18}>
-              Account Settings
-            </Text>
-          </MediumButton>
-          <MediumButton
-            color='transparent'
-            margin='10px 0px 0px 0px'
-            onClick={() => router.replace('/account/inventory')}
-          >
-            <IconBox size={20} />
-            <Text ml={20} mr={15} size={18}>
-              Inventory
-            </Text>
-          </MediumButton>
-        </Flex> */}
       </BorderedBox>
     </Flex>
   );
