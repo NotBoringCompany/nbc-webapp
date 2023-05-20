@@ -82,7 +82,6 @@ const NFTCard = ({
           radius='md'
           disabled={noActionAllowed}
         >
-          {/* {noActionAllowed ? 'Staked' : selected ? 'Unselect' : 'Select'} */}
           {noActionAllowed
             ? nftStakeable
               ? 'Select'
