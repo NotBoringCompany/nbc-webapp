@@ -19,16 +19,18 @@ import { useState } from 'react';
 
 const { default: BorderedBox } = require('../BorderedBox/BorderedBox');
 
-const InventoryFilter = () => {
-    const [openHouse, { toggle: toggleOpenHouse }] = useDisclosure(false);
-    const [houses, setHouses] = useState([]);
-    const [types, setTypes] = useState([]);
-    const [openType, { toggle: toggleOpenType }] = useDisclosure(false);
-    const [luckRating, setLuckRating] = useState(100);
-    const [endLuckRating, setEndLuckRating] = useState(100);
-    const [luckBoost, setLuckBoost] = useState(100);
-    const [endLuckBoost, setEndLuckBoost] = useState(100);
-
+const InventoryFilter = ({
+    openHouse,
+    toggleOpenHouse,
+    setHouses,
+    setTypes,
+    openType,
+    toggleOpenType,
+    luckRating,
+    setLuckRating,
+    setEndLuckRating,
+    setLuckBoost,
+}) => {
     const handleHouseChange = (e) => {
         const { checked, id } = e.target;
         if (checked) {
@@ -36,7 +38,7 @@ const InventoryFilter = () => {
         } else {
             setHouses((prev) => prev.filter((house) => house !== id));
         }
-    }
+    };
 
     const handleTypeChange = (e) => {
         const { checked, id } = e.target;
@@ -45,8 +47,19 @@ const InventoryFilter = () => {
         } else {
             setTypes((prev) => prev.filter((house) => house !== id));
         }
+    };
+
+    const handleLuckBoostChange = (e) => {
+        const { checked, id } = e.target;
+        // the id should be something like "LuckBoost1". we need to split to get the "1"
+        const boost = id.split('LuckBoost')[1];
+        if (checked) {
+            setLuckBoost((prev) => [...prev, boost]);
+        } else {
+            setLuckBoost((prev) => prev.filter((house) => house !== boost));
+        }
     }
-    
+
     return (
         <BorderedBox
             sx={{ marginTop: 25, padding: '10px 20px 10px 20px' }}
@@ -74,9 +87,9 @@ const InventoryFilter = () => {
             <Collapse in={openHouse}>
                 <Flex direction='column' mb={20}>
                     <Group mb='xs'>
-                        <Checkbox label='Tradition' id='Tradition' onClick={(e) => handleHouseChange(e)} />
-                        <Checkbox label='Chaos' id='Chaos' onClick={(e) => handleHouseChange(e)} />
-                        <Checkbox label='Glory' id='Glory' onClick={(e) => handleHouseChange(e)} />
+                        <Checkbox label='Tradition' id='Tradition' defaultChecked onClick={(e) => handleHouseChange(e)} />
+                        <Checkbox label='Chaos' id='Chaos' defaultChecked onClick={(e) => handleHouseChange(e)} />
+                        <Checkbox label='Glory' id='Glory' defaultChecked onClick={(e) => handleHouseChange(e)} />
                     </Group>
                 </Flex>
             </Collapse>
@@ -93,29 +106,29 @@ const InventoryFilter = () => {
             <Collapse in={openType}>
                 <Flex mb={20} direction='column'>
                     <Group mb='xs' grow>
-                        <Checkbox label='Brawler' id='Brawler' onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Crystal' id='Crystal' onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Earth' id='Earth' onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Brawler' id='Brawler' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Crystal' id='Crystal' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Earth' id='Earth' defaultChecked onClick={(e) => handleTypeChange(e)} />
                     </Group>
                     <Group mb='xs' grow>
-                        <Checkbox label='Electric' id='Electric' onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Fire' id='Fire' onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Frost' id='Frost' onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Electric' id='Electric' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Fire' id='Fire' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Frost' id='Frost' defaultChecked onClick={(e) => handleTypeChange(e)} />
                     </Group>
                     <Group mb='xs' grow>
-                        <Checkbox label='Magic' id='Magic' onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Nature' id='Nature' onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Ordinary' id='Ordinary' onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Magic' id='Magic' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Nature' id='Nature' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Ordinary' id='Ordinary' defaultChecked onClick={(e) => handleTypeChange(e)} />
                     </Group>
                     <Group mb='xs' grow>
-                        <Checkbox label='Psychic' id='Psychic' onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Reptile' id='Reptile' onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Spirit' id='Spirit' onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Psychic' id='Psychic' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Reptile' id='Reptile' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Spirit' id='Spirit' defaultChecked onClick={(e) => handleTypeChange(e)} />
                     </Group>
                     <Group mb='xs' grow>
-                        <Checkbox label='Toxic' id='Toxic' onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Water' id='Water' onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Wind' id='Wind' onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Toxic' id='Toxic' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Water' id='Water' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Wind' id='Wind' defaultChecked onClick={(e) => handleTypeChange(e)} />
                     </Group>
                 </Flex>
             </Collapse>
@@ -140,17 +153,11 @@ const InventoryFilter = () => {
                 <HeadingSix>Luck Boost</HeadingSix>
             </Flex>
             <Flex direction='column'>
-                <Slider
-                    value={luckBoost}
-                    onChange={setLuckBoost}
-                    onChangeEnd={setEndLuckBoost}
-                    labelAlwaysOn
-                    sx={(theme) => ({
-                        '& .mantine-Slider-bar': {
-                            backgroundColor: theme.colors.nbcGreen,
-                        },
-                    })}
-                />
+                <Group mb='xs' grow>
+                    <Checkbox label='1' id='LuckBoost1' defaultChecked onClick={(e) => handleLuckBoostChange(e)} />
+                    <Checkbox label='1.05' id='LuckBoost1.05' defaultChecked onClick={(e) => handleLuckBoostChange(e)} />
+                    <Checkbox label='1.2' id='LuckBoost1.2' defaultChecked onClick={(e) => handleLuckBoostChange(e)} />
+                </Group>
             </Flex>
         </BorderedBox>
     );
