@@ -87,9 +87,27 @@ const InventoryFilter = ({
             <Collapse in={openHouse}>
                 <Flex direction='column' mb={20}>
                     <Group mb='xs'>
-                        <Checkbox label='Tradition' id='Tradition' defaultChecked onClick={(e) => handleHouseChange(e)} />
-                        <Checkbox label='Chaos' id='Chaos' defaultChecked onClick={(e) => handleHouseChange(e)} />
-                        <Checkbox label='Glory' id='Glory' defaultChecked onClick={(e) => handleHouseChange(e)} />
+                        <Checkbox label='Tradition' id='Tradition' defaultChecked onClick={(e) => handleHouseChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                        <Checkbox label='Chaos' id='Chaos' defaultChecked onClick={(e) => handleHouseChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                        <Checkbox label='Glory' id='Glory' defaultChecked onClick={(e) => handleHouseChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
                     </Group>
                 </Flex>
             </Collapse>
@@ -106,29 +124,119 @@ const InventoryFilter = ({
             <Collapse in={openType}>
                 <Flex mb={20} direction='column'>
                     <Group mb='xs' grow>
-                        <Checkbox label='Brawler' id='Brawler' defaultChecked onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Crystal' id='Crystal' defaultChecked onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Earth' id='Earth' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Brawler' id='Brawler' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                        <Checkbox label='Crystal' id='Crystal' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                        <Checkbox label='Earth' id='Earth' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
                     </Group>
                     <Group mb='xs' grow>
-                        <Checkbox label='Electric' id='Electric' defaultChecked onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Fire' id='Fire' defaultChecked onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Frost' id='Frost' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Electric' id='Electric' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                        <Checkbox label='Fire' id='Fire' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                        <Checkbox label='Frost' id='Frost' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
                     </Group>
                     <Group mb='xs' grow>
-                        <Checkbox label='Magic' id='Magic' defaultChecked onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Nature' id='Nature' defaultChecked onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Ordinary' id='Ordinary' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Magic' id='Magic' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                        <Checkbox label='Nature' id='Nature' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                        <Checkbox label='Ordinary' id='Ordinary' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
                     </Group>
                     <Group mb='xs' grow>
-                        <Checkbox label='Psychic' id='Psychic' defaultChecked onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Reptile' id='Reptile' defaultChecked onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Spirit' id='Spirit' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Psychic' id='Psychic' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                        <Checkbox label='Reptile' id='Reptile' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                        <Checkbox label='Spirit' id='Spirit' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
                     </Group>
                     <Group mb='xs' grow>
-                        <Checkbox label='Toxic' id='Toxic' defaultChecked onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Water' id='Water' defaultChecked onClick={(e) => handleTypeChange(e)} />
-                        <Checkbox label='Wind' id='Wind' defaultChecked onClick={(e) => handleTypeChange(e)} />
+                        <Checkbox label='Toxic' id='Toxic' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                        <Checkbox label='Water' id='Water' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                        <Checkbox label='Wind' id='Wind' defaultChecked onClick={(e) => handleTypeChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
                     </Group>
                 </Flex>
             </Collapse>
@@ -154,9 +262,27 @@ const InventoryFilter = ({
             </Flex>
             <Flex direction='column'>
                 <Group mb='xs' grow>
-                    <Checkbox label='1' id='LuckBoost1' defaultChecked onClick={(e) => handleLuckBoostChange(e)} />
-                    <Checkbox label='1.05' id='LuckBoost1.05' defaultChecked onClick={(e) => handleLuckBoostChange(e)} />
-                    <Checkbox label='1.2' id='LuckBoost1.2' defaultChecked onClick={(e) => handleLuckBoostChange(e)} />
+                    <Checkbox label='1' id='LuckBoost1' defaultChecked onClick={(e) => handleLuckBoostChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                    <Checkbox label='1.05' id='LuckBoost1.05' defaultChecked onClick={(e) => handleLuckBoostChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
+                    <Checkbox label='1.2' id='LuckBoost1.2' defaultChecked onClick={(e) => handleLuckBoostChange(e)} sx={(theme) => ({
+                            '.mantine-Checkbox-input': {
+                                ':checked': {
+                                    backgroundColor: '#42ca9f',
+                                }
+                            }
+                        })}/>
                 </Group>
             </Flex>
         </BorderedBox>
