@@ -32,7 +32,7 @@ export const HeadingOne = ({
 export const HeadingTwo = ({
   sx = {},
   order = 2,
-  color = 'green,',
+  color = 'green',
   children,
   ...props
 }) => {
