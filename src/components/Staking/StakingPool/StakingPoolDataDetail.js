@@ -17,7 +17,7 @@ const StakingPoolDataDetail = ({
     <BorderedBox
       borderRadiusSize='md'
       p='lg'
-      sx={{ textAlign: 'left' }}
+      sx={{ textAlign: 'center' }}
       variant='green'
       {...props}
     >
