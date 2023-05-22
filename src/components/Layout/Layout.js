@@ -35,7 +35,7 @@ const Layout = ({
   pageTitle,
   dragonBackground = false,
   description = 'Building immersive Web3-native IP franchises.',
-  keywords = 'realm hunter, multiplayer game, nft gaming, nft', // seo keywords, separated by commas
+  keywords = 'nbc, ip, web3, franchise, realm hunter, multiplayer game, nft gaming, nft', // seo keywords, separated by commas
   showNotFound = false,
   notFoundTitle = '',
   notFoundDescription = '',
@@ -66,7 +66,7 @@ const Layout = ({
       }
 
       //Preventing "blip" screen / race condition. Hacky for now, should be polished next.
-      // "Blip" here means showing the screen it's not supposed to show for a split second (1 seocnd or a bit less)
+      // "Blip" here means showing the screen it's not supposed to show for a split second (1 second or a bit less)
       setTimeout(() => {
         setLoading(false);
       }, 150);
