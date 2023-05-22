@@ -74,7 +74,7 @@ const InventoryLayout = ({
                 my={20}
                 spacing={'md'}
                 breakpoints={inventoryColumnsBreakpoints}
-                mah={'calc(100vh - 200px)'}
+                mah={'100vh'}
               >
                 {stakerInventory.keyData
                   ?.sort((a, b) => b.metadata.luckTrait - a.metadata.luckTrait)
