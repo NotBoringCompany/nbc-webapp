@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Video = ({ imageUrl, name }) => {
+const Video = ({ imageUrl, name, show = true }) => {
   return (
     <video
       alt={name}

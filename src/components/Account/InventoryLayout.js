@@ -11,12 +11,7 @@ import NFTCard from '../Staking/NFTCard';
 import { useMoralis } from 'react-moralis';
 import { inventoryColumnsBreakpoints } from '../Breakpoints/CardColumns';
 
-const InventoryLayout = ({
-  houses,
-  types,
-  endLuckRating,
-  luckBoost,
-}) => {
+const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
   const [stakerInventory, setStakerInventory] = useState(null);
   const [stakerInventoryLoading, setStakerInventoryLoading] = useState(true);
   const { user } = useMoralis();
@@ -39,7 +34,7 @@ const InventoryLayout = ({
 
   const highestLuckBoost = () => {
     return luckBoost.sort((a, b) => b - a)[0];
-  }
+  };
 
   if (stakerInventoryLoading) {
     return <Loader color='#42ca9f' />;
@@ -81,7 +76,9 @@ const InventoryLayout = ({
                   .filter((k) => houses.includes(k.metadata.houseTrait))
                   .filter((k) => types.includes(k.metadata.typeTrait))
                   .filter((k) => k.metadata.luckTrait <= endLuckRating)
-                  .filter((k) => k.metadata.luckBoostTrait <= highestLuckBoost())
+                  .filter(
+                    (k) => k.metadata.luckBoostTrait <= highestLuckBoost()
+                  )
                   .map((k) => (
                     <NFTCard key={k.name} nft={k} />
                   ))}

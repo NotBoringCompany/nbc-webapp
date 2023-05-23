@@ -15,7 +15,7 @@ const NFTCard = ({
   const ref = useRef();
 
   //at least 100 px visible on the screen
-  const onScreen = useOnScreen(ref, '-100px');
+  const onScreen = useOnScreen(ref, '-80px');
 
   const { name, imageUrl, metadata } = nft;
   const noActionAllowed = (absolutelyDisabled && !selected) || !nftStakeable;
@@ -27,7 +27,6 @@ const NFTCard = ({
 
   return (
     <Card
-      ref={ref}
       onClick={handleSelectNFT}
       sx={{
         ':hover': {
@@ -43,7 +42,7 @@ const NFTCard = ({
       withBorder
       w={'100%'}
     >
-      <Card.Section>
+      <Card.Section ref={ref} sx={{ height: '250px' }}>
         {imageUrl.includes('mp4') && onScreen && (
           <LazyLoadedVideo imageUrl={imageUrl} name={name} />
         )}
