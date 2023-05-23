@@ -1,4 +1,3 @@
-import { useCallback, useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
 import InventoryFilter from '../Filters/InventoryFilter';
 

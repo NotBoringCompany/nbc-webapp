@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Card, Image, Button, Group, Text, Flex } from '@mantine/core';
 import dynamic from 'next/dynamic';
 import { useOnScreen } from '../../utils/useOnScreen';

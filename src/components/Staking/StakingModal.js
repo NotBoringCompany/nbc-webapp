@@ -9,7 +9,6 @@ import {
   Collapse,
   Loader,
   Divider,
-  Center,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import NFTCardPreview from './NFTCardPreview';

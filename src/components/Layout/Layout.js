@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { Box, Flex, Loader, ScrollArea, createStyles } from '@mantine/core';
+import { Flex, Loader, ScrollArea, createStyles } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { Container } from '@mantine/core';
 import MainNavbar from '../Navbar/Navbar';

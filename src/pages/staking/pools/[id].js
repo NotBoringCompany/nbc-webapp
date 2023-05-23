@@ -1,16 +1,13 @@
 import Layout from '@/components/Layout/Layout';
 import { Button, Flex, Text, createStyles } from '@mantine/core';
-import { IconAlertOctagon } from '@tabler/icons';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
 import { maxSelectedKey } from '@/utils/kosData';
 import StakingBox from '@/components/Staking/StakingBox';
 import StakingModal from '@/components/Staking/StakingModal';
-import BorderedBox from '@/components/BorderedBox/BorderedBox';
 import StakingPoolDataDetail from '@/components/Staking/StakingPool/StakingPoolDataDetail';
 import { HeadingOne } from '@/components/Typography/Headings';
-import WarningBox from '@/components/Layout/WarningBox';
 
 const useStyles = createStyles((theme) => ({
   container: {

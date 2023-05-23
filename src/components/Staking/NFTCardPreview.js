@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Image, Button, Group, Text } from '@mantine/core';
+import { Card, Image, Text } from '@mantine/core';
 
 const NFTCardPreview = ({ nft }) => {
 	const { name, imageUrl, metadata } = nft;
