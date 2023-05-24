@@ -1,8 +1,7 @@
 import { useRef } from 'react';
 import { Card, Image, Button, Group, Text, Flex } from '@mantine/core';
-import dynamic from 'next/dynamic';
 import { useOnScreen } from '../../utils/useOnScreen';
-const LazyLoadedVideo = dynamic(() => import('./Video'), { ssr: false });
+import Video from '../Video';
 
 const NFTCard = ({
   showButton,
@@ -43,9 +42,7 @@ const NFTCard = ({
       w={'100%'}
     >
       <Card.Section ref={ref} sx={{ height: '250px' }}>
-        {imageUrl.includes('mp4') && onScreen && (
-          <LazyLoadedVideo imageUrl={imageUrl} name={name} />
-        )}
+        {imageUrl.includes('mp4') && <Video imageUrl={imageUrl} name={name} />}
         {!imageUrl.includes('mp4') && <Image src={imageUrl} alt={imageUrl} />}
       </Card.Section>
 

@@ -10,6 +10,7 @@ import { useCallback, useEffect, useState } from 'react';
 import NFTCard from '../Staking/NFTCard';
 import { useMoralis } from 'react-moralis';
 import { inventoryColumnsBreakpoints } from '../Breakpoints/CardColumns';
+import NewNFTCard from '../Cards/NewNFTCard';
 
 const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
   const [stakerInventory, setStakerInventory] = useState(null);
@@ -80,7 +81,7 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
                     (k) => k.metadata.luckBoostTrait <= highestLuckBoost()
                   )
                   .map((k) => (
-                    <NFTCard key={k.name} nft={k} />
+                    <NewNFTCard key={k.name} nft={k} />
                   ))}
               </SimpleGrid>
             </ScrollArea>

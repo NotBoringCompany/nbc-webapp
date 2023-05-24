@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Video = ({ imageUrl, name, show = true }) => {
+const Video = ({ imageUrl, name }) => {
   return (
     <video
       alt={name}
@@ -8,6 +8,7 @@ const Video = ({ imageUrl, name, show = true }) => {
       loop
       playsInline
       muted
+      style={{ objectFit: 'cover' }}
       width={'100%'}
       height={'100%'}
     >
