@@ -76,10 +76,10 @@ const StakingPool = ({ stakingPoolData }) => {
   const [selectedKeyComboType, setSelectedKeyComboType] = useState(null);
   const [comboCount, setComboCount] = useState(0);
 
-  const stakingOngoing =
-    new Date().getTime() >= new Date(stakingPoolData?.StartTime).getTime();
-  const stakingClosed =
-    new Date().getTime() >= new Date(stakingPoolData?.EndTime).getTime();
+  const stakingOngoing = false;
+  //new Date().getTime() >= new Date(stakingPoolData?.StartTime).getTime();
+  const stakingClosed = false;
+  //new Date().getTime() >= new Date(stakingPoolData?.EndTime).getTime();
   const stakingPoolDataExists = stakingPoolData !== null;
   let activeSubpoolsLength;
   let closedSubpoolsLength;
@@ -91,8 +91,8 @@ const StakingPool = ({ stakingPoolData }) => {
 
   const getStakerInventory = async () => {
     const rawRes = await fetch(
-      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user?.attributes?.ethAddress}/${id}`
-      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/0x8FbFE537A211d81F90774EE7002ff784E352024a/1`
+      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user?.attributes?.ethAddress}/${id}`
+      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/0x8FbFE537A211d81F90774EE7002ff784E352024a/1`
     ).catch((err) => console.log(err));
     const res = await rawRes.json();
 
