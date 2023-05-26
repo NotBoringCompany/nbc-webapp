@@ -3,18 +3,18 @@ import { useRef } from 'react';
 import { useOnScreen } from '../../utils/useOnScreen';
 import { Card, Image, Button, Group, Text, Flex } from '@mantine/core';
 import TypeMetadataBadge from '../Badges/TypeMetadataBadge';
-import LuckRatingMetadataBadge from '../Badges/LuckRatingMetadataBadge';
+import LuckRatingMetadataBadge from '../Badges/LuckBoostMetadataBadge';
 import HouseTraitMetadataBadge from '../Badges/HouseTraitMetadataBadge';
 import { nbmonColorSchemes } from '@/constants/keyColorSchemes';
 const LazyLoadedVideo = dynamic(() => import('../Video'), { ssr: false });
 import getLuckRating from '@/utils/getLuckRating';
-import LuckBoostMetadataBadge from '../Badges/LuckRatingMetadataBadge';
+import LuckBoostMetadataBadge from '../Badges/LuckBoostMetadataBadge';
 
 const LuckRatingBox = ({ calculatedRating = 0, luckRating = '' }) => {
   return (
     <Flex
-      align={'center'}
-      justify={'center'}
+      align='center'
+      justify='center'
       sx={{
         color: nbmonColorSchemes.colors.luckRating[calculatedRating].text,
         fontWeight: '600',
@@ -85,7 +85,7 @@ const NewNFTCard = ({
       }}
       shadow='sm'
       radius='lg'
-      w={'100%'}
+      w='100%'
     >
       {metadata && (
         <LuckRatingBox
@@ -110,8 +110,8 @@ const NewNFTCard = ({
           {name}
         </Text>
         {metadata && name.includes('Key Of Salvation') && (
-          <Flex direction='column' align={'center'} justify={'center'}>
-            <Flex direction='row' align={'center'} justify={'center'}>
+          <Flex direction='column' align='center' justify='center'>
+            <Flex direction='row' align='center' justify='center' wrap='wrap'>
               <TypeMetadataBadge
                 type={metadata.typeTrait}
                 sx={{ marginRight: 8 }}
@@ -133,10 +133,10 @@ const NewNFTCard = ({
           }}
           sx={(theme) => ({
             backgroundColor: selected ? '#ca4242' : '#42ca9f',
+            transitionDuration: '200ms',
             ':hover': {
               backgroundColor: selected ? '#ca4242' : '#42ca9f',
               transform: 'scale(1.01) translate(1px, -3px)',
-              transitionDuration: '200ms',
             },
           })}
           fullWidth

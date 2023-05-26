@@ -10,6 +10,7 @@ import { useCallback, useEffect, useState } from 'react';
 import NFTCard from '../Staking/NFTCard';
 import { useMoralis } from 'react-moralis';
 import { inventoryColumnsBreakpoints } from '../Breakpoints/CardColumns';
+import highestLuckBoost from '@/utils/highestLuckBoost';
 import NewNFTCard from '../Cards/NewNFTCard';
 
 const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
@@ -20,7 +21,7 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
   const getStakerInventory = useCallback(async () => {
     const rawRes = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user?.attributes?.ethAddress}/1`
-      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/0x8FbFE537A211d81F90774EE7002ff784E352024a/2`
+      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/0x8FbFE537A211d81F90774EE7002ff784E352024a/1`
     ).catch((err) => console.log(err));
     const res = await rawRes.json();
 
@@ -33,10 +34,6 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
       getStakerInventory();
     }
   }, [user, stakerInventory, getStakerInventory]);
-
-  const highestLuckBoost = () => {
-    return luckBoost.sort((a, b) => b - a)[0];
-  };
 
   if (stakerInventoryLoading) {
     return <Loader color='#42ca9f' />;
@@ -79,7 +76,8 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
                   .filter((k) => types.includes(k.metadata.typeTrait))
                   .filter((k) => k.metadata.luckTrait <= endLuckRating)
                   .filter(
-                    (k) => k.metadata.luckBoostTrait <= highestLuckBoost()
+                    (k) =>
+                      k.metadata.luckBoostTrait <= highestLuckBoost(luckBoost)
                   )
                   .map((k) => (
                     <NewNFTCard key={k.name} nft={k} />

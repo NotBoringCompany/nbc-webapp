@@ -8,6 +8,7 @@ import StakingBox from '@/components/Staking/StakingBox';
 import StakingModal from '@/components/Staking/StakingModal';
 import StakingPoolDataDetail from '@/components/Staking/StakingPool/StakingPoolDataDetail';
 import { HeadingOne } from '@/components/Typography/Headings';
+import InventoryFilter from '@/components/Filters/InventoryFilter';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -15,17 +16,25 @@ const useStyles = createStyles((theme) => ({
     alignItems: 'start',
     justifyContent: 'center',
     [theme.fn.smallerThan('md')]: {
-      flexDirection: 'column-reverse',
       alignItems: 'center',
+      flexDirection: 'column',
     },
   },
   stakingPoolDetailBox: {
-    marginRight: 48,
-    width: '40%',
+    width: '100%',
     [theme.fn.smallerThan('md')]: {
       width: '100%',
       marginRight: 0,
       marginTop: 32,
+    },
+  },
+  sideContainer: {
+    width: '40%',
+    marginRight: 32,
+    [theme.fn.smallerThan('md')]: {
+      width: '100%',
+      marginRight: 0,
+      marginBottom: 32,
     },
   },
 }));
@@ -35,6 +44,28 @@ const StakingPool = ({ stakingPoolData }) => {
   const { classes } = useStyles();
   const { id } = router.query;
   const { user } = useMoralis();
+
+  const [houses, setHouses] = useState(['Tradition', 'Glory', 'Chaos']);
+  const [types, setTypes] = useState([
+    'Brawler',
+    'Crystal',
+    'Earth',
+    'Electric',
+    'Fire',
+    'Frost',
+    'Magic',
+    'Nature',
+    'Ordinary',
+    'Psychic',
+    'Reptile',
+    'Spirit',
+    'Toxic',
+    'Water',
+    'Wind',
+  ]);
+  const [luckRating, setLuckRating] = useState(100);
+  const [endLuckRating, setEndLuckRating] = useState(100);
+  const [luckBoost, setLuckBoost] = useState(['1', '1.05', '1.2']);
 
   const [stakerInventory, setStakerInventory] = useState(null);
   const [stakerInventoryLoading, setStakerInventoryLoading] = useState(true);
@@ -61,6 +92,7 @@ const StakingPool = ({ stakingPoolData }) => {
   const getStakerInventory = async () => {
     const rawRes = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user?.attributes?.ethAddress}/${id}`
+      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/0x8FbFE537A211d81F90774EE7002ff784E352024a/1`
     ).catch((err) => console.log(err));
     const res = await rawRes.json();
 
@@ -299,15 +331,30 @@ const StakingPool = ({ stakingPoolData }) => {
               </Button>
             </Flex>
             <Flex className={classes.container}>
-              <StakingPoolDataDetail
-                stakingPoolData={stakingPoolData}
-                activeSubpoolsLength={activeSubpoolsLength}
-                closedSubpoolsLength={closedSubpoolsLength}
-                stakerTotalSubpoolPoints={stakerTotalSubpoolPoints}
-                totalTokenShare={totalTokenShare}
-                stakerCount={stakerCount()}
-                className={classes.stakingPoolDetailBox}
-              />
+              <Flex direction={'column'} className={classes.sideContainer}>
+                <StakingPoolDataDetail
+                  stakingPoolData={stakingPoolData}
+                  activeSubpoolsLength={activeSubpoolsLength}
+                  closedSubpoolsLength={closedSubpoolsLength}
+                  stakerTotalSubpoolPoints={stakerTotalSubpoolPoints}
+                  totalTokenShare={totalTokenShare}
+                  stakerCount={stakerCount()}
+                  className={classes.stakingPoolDetailBox}
+                />
+
+                {!stakingOngoing && !stakingClosed && (
+                  <InventoryFilter
+                    mt='md'
+                    setHouses={setHouses}
+                    setTypes={setTypes}
+                    luckRating={luckRating}
+                    setLuckRating={setLuckRating}
+                    setEndLuckRating={setEndLuckRating}
+                    setLuckBoost={setLuckBoost}
+                  />
+                )}
+              </Flex>
+
               <StakingModal
                 stakingPoolId={id}
                 showStakingModal={showStakingModal}
@@ -319,6 +366,7 @@ const StakingPool = ({ stakingPoolData }) => {
                 loadingStakingRewardAndPoints={loadingStakingRewardAndPoints}
                 preSubpoolData={preSubpoolData}
               />
+
               <StakingBox
                 selectedKeyCombo={selectedKeyComboType}
                 onSelectKey={handleSelectKey}
@@ -332,6 +380,10 @@ const StakingPool = ({ stakingPoolData }) => {
                 confirmButtonDisabled={confirmButtonDisabled}
                 stakingOngoing={stakingOngoing}
                 stakingClosed={stakingClosed}
+                houses={houses}
+                types={types}
+                endLuckRating={endLuckRating}
+                luckBoost={luckBoost}
               />
             </Flex>
           </>

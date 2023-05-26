@@ -9,13 +9,13 @@ const LuckBoostMetadataBadge = ({ luckBoost = '', ...props }) => {
         span: {
           color: nbmonColorSchemes.colors.luckBoost[luckBoost].text,
           fontWeight: 680,
-          fontSize: 14,
+          fontSize: 13,
           textTransform: 'capitalize',
         },
       }}
       {...props}
     >
-      Luck Rating: {luckBoost}
+      Luck Boost: {luckBoost}
     </Badge>
   );
 };
