@@ -10,6 +10,7 @@ import { useCallback, useEffect, useState } from 'react';
 import NFTCard from '../Staking/NFTCard';
 import { useMoralis } from 'react-moralis';
 import { inventoryColumnsBreakpoints } from '../Breakpoints/CardColumns';
+import highestLuckBoost from '@/utils/highestLuckBoost';
 import NewNFTCard from '../Cards/NewNFTCard';
 
 const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
@@ -33,10 +34,6 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
       getStakerInventory();
     }
   }, [user, stakerInventory, getStakerInventory]);
-
-  const highestLuckBoost = () => {
-    return luckBoost.sort((a, b) => b - a)[0];
-  };
 
   if (stakerInventoryLoading) {
     return <Loader color='#42ca9f' />;
@@ -74,6 +71,7 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
                 mah={'100vh'}
               >
                 {stakerInventory.keyData
+<<<<<<< HEAD
                   // ?.sort((a, b) => b.metadata.luckTrait - a.metadata.luckTrait)
                   // .filter((k) => houses.includes(k.metadata.houseTrait))
                   // .filter((k) => types.includes(k.metadata.typeTrait))
@@ -81,6 +79,16 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
                   // .filter(
                   //   (k) => k.metadata.luckBoostTrait <= highestLuckBoost()
                   // )
+=======
+                  ?.sort((a, b) => b.metadata.luckTrait - a.metadata.luckTrait)
+                  .filter((k) => houses.includes(k.metadata.houseTrait))
+                  .filter((k) => types.includes(k.metadata.typeTrait))
+                  .filter((k) => k.metadata.luckTrait <= endLuckRating)
+                  .filter(
+                    (k) =>
+                      k.metadata.luckBoostTrait <= highestLuckBoost(luckBoost)
+                  )
+>>>>>>> dev
                   .map((k) => (
                     <NewNFTCard key={k.name} nft={k} />
                   ))}

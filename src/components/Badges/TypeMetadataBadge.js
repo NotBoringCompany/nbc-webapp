@@ -30,7 +30,7 @@ const TypeMetadataBadge = ({ type = 'brawler', ...props }) => {
         height={15}
         style={{ marginRight: 4 }}
       />
-      <Text sx={{ textTransform: 'capitalize' }} m={0} size={14}>
+      <Text sx={{ textTransform: 'capitalize' }} m={0} size={13}>
         {type}
       </Text>
     </Badge>

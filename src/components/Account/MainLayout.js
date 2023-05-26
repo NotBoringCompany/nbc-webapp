@@ -27,44 +27,40 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const AccountMainLayout = ({ 
-  pageName, 
-  children, 
-  pageTitle, 
-  description, 
+const AccountMainLayout = ({
+  pageName,
+  children,
+  pageTitle,
+  description,
   showFilters,
-  openHouse,
-  toggleOpenHouse,
   setHouses,
   setTypes,
-  openType,
-  toggleOpenType,
   luckRating,
   setLuckRating,
   setEndLuckRating,
   luckBoost,
   setLuckBoost,
- }) => {
+}) => {
   const { user } = useMoralis();
   const { classes } = useStyles();
 
   return (
     <Layout withAuth pageTitle={pageTitle} description={description}>
       <Flex className={classes.container} direction='row'>
-        <Flex className={classes.accountOverviewBoxContainer} direction='column'>
+        <Flex
+          className={classes.accountOverviewBoxContainer}
+          direction='column'
+        >
           <AccountOverviewBox
             pageName={pageName ?? pageTitle}
             email={user?.attributes?.email}
             ethAddress={user?.attributes?.ethAddress}
           />
           {showFilters && (
-            <InventoryFilter 
-              openHouse={openHouse}
-              toggleOpenHouse={toggleOpenHouse}
+            <InventoryFilter
+              mt='xl'
               setHouses={setHouses}
               setTypes={setTypes}
-              openType={openType}
-              toggleOpenType={toggleOpenType}
               luckRating={luckRating}
               setLuckRating={setLuckRating}
               setEndLuckRating={setEndLuckRating}
