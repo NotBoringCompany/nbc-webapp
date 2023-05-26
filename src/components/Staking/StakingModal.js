@@ -14,6 +14,7 @@ import { useDisclosure } from '@mantine/hooks';
 import NFTCardPreview from './NFTCardPreview';
 import { useRouter } from 'next/router';
 import { useMoralis } from 'react-moralis';
+import { COLORS } from '../Globals/colors';
 
 const StakingModal = ({
   stakingPoolId,
@@ -32,10 +33,12 @@ const StakingModal = ({
     { maxWidth: 'xs', cols: 3, spacing: 'md' },
   ];
 
-  const { reload, push } = useRouter();
+  const { reload } = useRouter();
   const [opened, { toggle }] = useDisclosure(false);
   const [loadingStaking, setLoadingStaking] = useState(false);
   const [successfulStake, setSuccessfulStake] = useState(false);
+
+  const [stakeError, setStakeError] = useState(undefined);
 
   const keychains = subpool.keychains;
   const superiorKeychain = subpool.superiorKeychain;
@@ -65,11 +68,13 @@ const StakingModal = ({
         }),
       }
     ).catch((err) => console.log(err));
-    const stakeResponse = await stakeRequest.json();
-    // TO DO: handle error if it fails.
-    setTimeout(() => {
-      setSuccessfulStake(true);
-    }, 2800);
+    if (!stakeRequest.ok) {
+      setStakeError(true);
+      setLoadingStaking(false);
+      return;
+    }
+    await stakeRequest.json();
+    setSuccessfulStake(false); // staking is successful
   };
 
   const stakingPreview = (
@@ -88,6 +93,7 @@ const StakingModal = ({
           <Text color='#42ca9f' size={24}>
             STAKING POOL TOTAL REWARD
           </Text>
+
           <Divider
             color='#42ca9f'
             size='xs'
@@ -139,6 +145,7 @@ const StakingModal = ({
 
       <Box>
         <Text
+          mb='md'
           sx={{
             textDecoration: 'underline',
             ':hover': {
@@ -177,18 +184,22 @@ const StakingModal = ({
             </SimpleGrid>
           </Flex>
         </Collapse>
+        {stakeError === true && (
+          <Text color={COLORS.red} weight={600} mb='md'>
+            Oops! There was an error during staking. Please try again.
+          </Text>
+        )}
         <Button
           w='160px'
           h='50px'
-          mt='md'
           radius='md'
           onClick={handleStakingButtonClick}
           disabled={loadingStakingRewardAndPoints || loadingStaking}
           sx={(theme) => ({
             backgroundColor: '#42ca9f',
+            transitionDuration: '200ms',
             ':hover': {
               transform: 'scale(1.01) translate(1px, -3px)',
-              transitionDuration: '200ms',
               backgroundColor: '#42ca9f',
             },
           })}
@@ -257,7 +268,7 @@ const StakingModal = ({
           : 'Preview of Your Staking Subpool'
       }
     >
-      {successfulStake ? successContent : stakingPreview}
+      {stakeError === false ? successContent : stakingPreview}
     </Modal>
   );
 };
