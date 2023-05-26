@@ -19,7 +19,8 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
 
   const getStakerInventory = useCallback(async () => {
     const rawRes = await fetch(
-      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user?.attributes?.ethAddress}/1`
+      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user?.attributes?.ethAddress}/1`
+      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/0x8FbFE537A211d81F90774EE7002ff784E352024a/2`
     ).catch((err) => console.log(err));
     const res = await rawRes.json();
 

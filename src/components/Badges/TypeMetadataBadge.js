@@ -5,7 +5,9 @@ import React from 'react';
 const TypeMetadataBadge = ({ type = 'brawler', ...props }) => {
   return (
     <Badge
+      {...props}
       sx={{
+        ...props.sx,
         padding: '14px 16px',
         background:
           nbmonColorSchemes.colors.type[type.toLowerCase()]?.background ||
@@ -19,7 +21,6 @@ const TypeMetadataBadge = ({ type = 'brawler', ...props }) => {
           textTransform: 'capitalize',
         },
       }}
-      {...props}
     >
       {type}
     </Badge>

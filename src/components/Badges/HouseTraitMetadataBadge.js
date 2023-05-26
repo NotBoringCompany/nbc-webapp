@@ -1,14 +1,14 @@
 import { Badge } from '@mantine/core';
 import { nbmonColorSchemes } from '@/constants/keyColorSchemes';
 
-const LuckBoostMetadataBadge = ({ luckBoost = '1.2', ...props }) => {
+const HouseTraitMetadataBadge = ({ houseName = '', ...props }) => {
   return (
     <Badge
       sx={{
         padding: '14px 16px',
-        background: nbmonColorSchemes.colors.luckBoost[luckBoost].background,
+        background: nbmonColorSchemes.colors.house[houseName].background,
         span: {
-          color: nbmonColorSchemes.colors.luckBoost[luckBoost].text,
+          color: nbmonColorSchemes.colors.house[houseName].text,
           fontWeight: 680,
           fontSize: 14,
           textTransform: 'capitalize',
@@ -16,9 +16,9 @@ const LuckBoostMetadataBadge = ({ luckBoost = '1.2', ...props }) => {
       }}
       {...props}
     >
-      Luck Boost: {luckBoost}
+      House: {houseName}
     </Badge>
   );
 };
 
-export default LuckBoostMetadataBadge;
+export default HouseTraitMetadataBadge;

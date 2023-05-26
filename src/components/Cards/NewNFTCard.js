@@ -4,31 +4,31 @@ import { Card, Image, Button, Group, Text, Flex } from '@mantine/core';
 import dynamic from 'next/dynamic';
 import TypeMetadataBadge from '../Badges/TypeMetadataBadge';
 import LuckRatingMetadataBadge from '../Badges/LuckRatingMetadataBadge';
-import LuckBoostMetadataBadge from '../Badges/LuckBoostMetadataBadge';
+import HouseTraitMetadataBadge from '../Badges/HouseTraitMetadataBadge';
 import { nbmonColorSchemes } from '@/constants/keyColorSchemes';
 const LazyLoadedVideo = dynamic(() => import('../Video'), { ssr: false });
 
-const HouseNameBox = ({ houseName = '' }) => {
+const LuckBoostBox = ({ luckBoost = '' }) => {
   return (
     <Flex
       align={'center'}
       justify={'center'}
       sx={{
-        color: nbmonColorSchemes.colors.house[houseName.toLowerCase()].text,
+        color: nbmonColorSchemes.colors.luckBoost[luckBoost].text,
         fontWeight: '600',
         height: '30px',
-        width: '140px',
+        minWidth: '140px',
         position: 'absolute',
-        background:
-          nbmonColorSchemes.colors.house[houseName.toLowerCase()].background,
+        background: nbmonColorSchemes.colors.luckBoost[luckBoost].background,
         top: 0,
         left: '50%',
         transform: 'translateX(-50%)',
         borderBottomLeftRadius: '8px',
         borderBottomRightRadius: '8px',
+        fontSize: 14,
       }}
     >
-      {houseName}
+      Luck Boost: {luckBoost}
     </Flex>
   );
 };
@@ -66,7 +66,7 @@ const NewNFTCard = ({
         },
         background: 'transparent',
         border: `2px solid ${
-          nbmonColorSchemes.colors.house[metadata.houseTrait.toLowerCase()]
+          nbmonColorSchemes.colors.luckBoost[metadata.luckBoostTrait]
             ?.background || '#fff'
         }`,
         minHeight: showButton ? '380px' : '280px',
@@ -77,10 +77,10 @@ const NewNFTCard = ({
         paddingTop: '0',
       }}
       shadow='sm'
-      radius='md'
+      radius='lg'
       w={'100%'}
     >
-      {metadata && <HouseNameBox houseName={metadata.houseTrait} />}
+      {metadata && <LuckBoostBox luckBoost={metadata.luckBoostTrait} />}
       <Card.Section sx={{ height: '250px', marginTop: '-16px' }}>
         {imageUrl.includes('mp4') && onScreen && (
           <LazyLoadedVideo imageUrl={imageUrl} name={name} />
@@ -88,19 +88,29 @@ const NewNFTCard = ({
         {!imageUrl.includes('mp4') && <Image src={imageUrl} alt={imageUrl} />}
       </Card.Section>
 
-      <Group position='center' mt='md' mb='auto'>
+      <Group
+        sx={{ flexDirection: 'column' }}
+        position='center'
+        mt='md'
+        mb='auto'
+      >
         <Text weight={600} size={18}>
           {name}
         </Text>
         {metadata && name.includes('Key Of Salvation') && (
-          <Flex direction='column' align={'center'} wrap='wrap'>
-            <TypeMetadataBadge type={metadata.typeTrait} />
-            <LuckRatingMetadataBadge
-              my='sm'
-              luckRating={Number(metadata.luckTrait)}
-            />
-            <LuckBoostMetadataBadge
-              luckBoost={Number(metadata.luckBoostTrait)}
+          <Flex direction='column' align={'center'} justify={'center'}>
+            <Flex direction='row' align={'center'} justify={'center'}>
+              <TypeMetadataBadge
+                type={metadata.typeTrait}
+                sx={{ marginRight: 8 }}
+              />
+              <LuckRatingMetadataBadge
+                my='sm'
+                luckRating={Number(metadata.luckTrait)}
+              />
+            </Flex>
+            <HouseTraitMetadataBadge
+              houseName={metadata.houseTrait.toLowerCase()}
             />
           </Flex>
         )}
