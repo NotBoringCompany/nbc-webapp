@@ -19,8 +19,8 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
 
   const getStakerInventory = useCallback(async () => {
     const rawRes = await fetch(
-      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user?.attributes?.ethAddress}/1`
-      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/0x8FbFE537A211d81F90774EE7002ff784E352024a/2`
+      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user?.attributes?.ethAddress}/1`
+      `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/0x8FbFE537A211d81F90774EE7002ff784E352024a/2`
     ).catch((err) => console.log(err));
     const res = await rawRes.json();
 
@@ -74,13 +74,13 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
                 mah={'100vh'}
               >
                 {stakerInventory.keyData
-                  ?.sort((a, b) => b.metadata.luckTrait - a.metadata.luckTrait)
-                  .filter((k) => houses.includes(k.metadata.houseTrait))
-                  .filter((k) => types.includes(k.metadata.typeTrait))
-                  .filter((k) => k.metadata.luckTrait <= endLuckRating)
-                  .filter(
-                    (k) => k.metadata.luckBoostTrait <= highestLuckBoost()
-                  )
+                  // ?.sort((a, b) => b.metadata.luckTrait - a.metadata.luckTrait)
+                  // .filter((k) => houses.includes(k.metadata.houseTrait))
+                  // .filter((k) => types.includes(k.metadata.typeTrait))
+                  // .filter((k) => k.metadata.luckTrait <= endLuckRating)
+                  // .filter(
+                  //   (k) => k.metadata.luckBoostTrait <= highestLuckBoost()
+                  // )
                   .map((k) => (
                     <NewNFTCard key={k.name} nft={k} />
                   ))}
