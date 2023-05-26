@@ -106,12 +106,10 @@ const NewNFTCard = ({
               />
               <LuckRatingMetadataBadge
                 my='sm'
-                luckRating={Number(metadata.luckTrait)}
+                luckRating={metadata.luckTrait}
               />
             </Flex>
-            <HouseTraitMetadataBadge
-              houseName={metadata.houseTrait.toLowerCase()}
-            />
+            <HouseTraitMetadataBadge houseName={metadata.houseTrait} />
           </Flex>
         )}
       </Group>

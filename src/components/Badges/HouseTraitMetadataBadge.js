@@ -6,9 +6,10 @@ const HouseTraitMetadataBadge = ({ houseName = '', ...props }) => {
     <Badge
       sx={{
         padding: '14px 16px',
-        background: nbmonColorSchemes.colors.house[houseName].background,
+        background:
+          nbmonColorSchemes.colors.house[houseName.toLowerCase()].background,
         span: {
-          color: nbmonColorSchemes.colors.house[houseName].text,
+          color: nbmonColorSchemes.colors.house[houseName.toLowerCase()].text,
           fontWeight: 680,
           fontSize: 14,
           textTransform: 'capitalize',

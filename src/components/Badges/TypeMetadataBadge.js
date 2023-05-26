@@ -1,8 +1,10 @@
-import { Badge } from '@mantine/core';
+import { Badge, Text } from '@mantine/core';
 import { nbmonColorSchemes } from '@/constants/keyColorSchemes';
 
 import React from 'react';
+import Image from 'next/image';
 const TypeMetadataBadge = ({ type = 'brawler', ...props }) => {
+  type = type.toLowerCase();
   return (
     <Badge
       {...props}
@@ -10,19 +12,27 @@ const TypeMetadataBadge = ({ type = 'brawler', ...props }) => {
         ...props.sx,
         padding: '14px 16px',
         background:
-          nbmonColorSchemes.colors.type[type.toLowerCase()]?.background ||
+          nbmonColorSchemes.colors.type[type]?.background ||
           nbmonColorSchemes.colors.default.background,
         span: {
           color:
-            nbmonColorSchemes.colors.type[type.toLowerCase()]?.text ||
+            nbmonColorSchemes.colors.type[type]?.text ||
             nbmonColorSchemes.colors.default.text,
-          fontWeight: 680,
-          fontSize: 14,
-          textTransform: 'capitalize',
+          display: 'flex',
+          alignItems: 'center',
         },
       }}
     >
-      {type}
+      <Image
+        src={`/badges/type/${type}.svg`}
+        alt={type.toLowerCase()}
+        width={15}
+        height={15}
+        style={{ marginRight: 4 }}
+      />
+      <Text sx={{ textTransform: 'capitalize' }} m={0} size={14}>
+        {type}
+      </Text>
     </Badge>
   );
 };

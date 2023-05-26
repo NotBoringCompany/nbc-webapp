@@ -30,7 +30,7 @@ const getLuckRating = (luckRating = 0) => {
 };
 
 const LuckRatingMetadataBadge = ({ luckRating = 0, ...props }) => {
-  const classifiedLuckRating = getLuckRating(luckRating);
+  const classifiedLuckRating = getLuckRating(Number(luckRating));
   return (
     <Badge
       sx={{
