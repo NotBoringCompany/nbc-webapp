@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, Text } from '@mantine/core';
+import { Divider, Flex, Text } from '@mantine/core';
 import { IconAlertOctagon } from '@tabler/icons';
 
 export const IndividualPoolDataText = ({

@@ -1,6 +1,7 @@
 import {
   ActionIcon,
   Avatar,
+  Collapse,
   CopyButton,
   Divider,
   Flex,
@@ -13,14 +14,19 @@ import { MediumButton } from '../Buttons/Universals';
 import {
   IconBox,
   IconCheck,
+  IconChevronDown,
+  IconChevronUp,
   IconCopy,
   IconLayoutDashboard,
   IconSettings,
 } from '@tabler/icons';
 import { useRouter } from 'next/router';
+import { useDisclosure } from '@mantine/hooks';
 
 const AccountOverviewBox = ({ pageName, ethAddress, email }) => {
   const router = useRouter();
+
+  const [openOverview, { toggle: toggleOpenOverview }] = useDisclosure(false);
 
   return (
     <Flex direction='column' align='center'>
@@ -69,37 +75,42 @@ const AccountOverviewBox = ({ pageName, ethAddress, email }) => {
             <Divider color='#42ca9f' size='xs' variant='dashed' />
             <Text>{email ?? 'No email provided.'}</Text>
           </Flex>
-        </Flex>
-        <Flex direction='column' align='start' justify='start'>
-          <MediumButton
-            color='transparent'
-            margin='50px 0px 0px 0px'
-            onClick={() => router.replace('/account/dashboard')}
-          >
-            <IconLayoutDashboard size={20} />
-            <Text ml={20} size={18}>
-              Account Dashboard
-            </Text>
-          </MediumButton>
-          <MediumButton
-            color='transparent'
-            margin='10px 0px 0px 0px'
-            onClick={() => router.replace('/account/settings')}
-          >
-            <IconSettings size={20} />
-            <Text ml={20} size={18}>
-              Account Settings
-            </Text>
-          </MediumButton>
-          <MediumButton
-            color='transparent'
-            margin='10px 0px 0px 0px'
-            onClick={() => router.replace('/account/inventory')}
-          >
-            <IconBox size={20} />
-            <Text ml={20} mr={15} size={18}>
-              Inventory
-            </Text>
+          <Collapse in={openOverview}>
+            <Flex direction='column' align='start' justify='start'>
+              <MediumButton
+                color='transparent'
+                margin='50px 0px 0px 0px'
+                onClick={() => router.replace('/account/dashboard')}
+              >
+                <IconLayoutDashboard size={20} />
+                <Text ml={20} size={18}>
+                  Account Dashboard
+                </Text>
+              </MediumButton>
+              <MediumButton
+                color='transparent'
+                margin='10px 0px 0px 0px'
+                onClick={() => router.replace('/account/settings')}
+              >
+                <IconSettings size={20} />
+                <Text ml={20} size={18}>
+                  Account Settings
+                </Text>
+              </MediumButton>
+              <MediumButton
+                color='transparent'
+                margin='10px 0px 0px 0px'
+                onClick={() => router.replace('/account/inventory')}
+              >
+                <IconBox size={20} />
+                <Text ml={20} mr={15} size={18}>
+                  Inventory
+                </Text>
+              </MediumButton>
+            </Flex>
+          </Collapse>
+          <MediumButton onClick={toggleOpenOverview} color='transparent'>
+            {openOverview ? <IconChevronUp /> : <IconChevronDown />}
           </MediumButton>
         </Flex>
       </BorderedBox>

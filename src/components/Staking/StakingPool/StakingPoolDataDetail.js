@@ -1,8 +1,10 @@
-import React from 'react';
 import BorderedBox from '@/components/BorderedBox/BorderedBox';
-import { Flex, Text } from '@mantine/core';
+import { Flex, Text, Collapse } from '@mantine/core';
+import { IconChevronDown, IconChevronUp } from '@tabler/icons';
 import { IndividualPoolDataText } from './IndividualPool';
 import { HeadingFour } from '@/components/Typography/Headings';
+import { MediumButton } from '@/components/Buttons/Universals';
+import { useDisclosure } from '@mantine/hooks';
 
 const StakingPoolDataDetail = ({
   stakingPoolData,
@@ -13,11 +15,13 @@ const StakingPoolDataDetail = ({
   stakerCount,
   ...props
 }) => {
+  const [openDetail, { toggle: toggleOpenDetail }] = useDisclosure(false);
+
   return (
     <BorderedBox
       borderRadiusSize='md'
       p='lg'
-      sx={{ textAlign: 'left' }}
+      sx={{ textAlign: 'center' }}
       variant='green'
       {...props}
     >
@@ -49,30 +53,42 @@ const StakingPoolDataDetail = ({
           ENDS: {new Date(stakingPoolData.EndTime).toLocaleString()}
         </Text>
       </Flex>
-      <IndividualPoolDataText
-        title='TOTAL POOL REWARD'
-        text={`${stakingPoolData.Reward.Amount} ${stakingPoolData.Reward.Name}`}
-      />
-      <IndividualPoolDataText
-        title='TOTAL SUBPOOL POINTS'
-        text={`${stakingPoolData.TotalYieldPoints} points`}
-      />
-      <IndividualPoolDataText
-        title='TOTAL SUBPOOLS'
-        text={`${activeSubpoolsLength + closedSubpoolsLength} subpool(s)`}
-      />
-      <IndividualPoolDataText
-        title='TOTAL STAKERS'
-        text={`${stakerCount} staker(s)`}
-      />
-      <IndividualPoolDataText
-        title='YOUR SUBPOOL POINTS'
-        text={`${stakerTotalSubpoolPoints} points`}
-      />
-      <IndividualPoolDataText
-        title='YOUR TOTAL REWARD SHARE'
-        text={`${totalTokenShare} ${stakingPoolData.Reward.Name}`}
-      />
+      <MediumButton onClick={toggleOpenDetail} color='transparent'>
+        <Text size={14} color='#42ca9f'>
+          {openDetail ? 'Hide' : 'Show'} staking pool data
+        </Text>
+        {openDetail ? (
+          <IconChevronUp color='#42ca9f' />
+        ) : (
+          <IconChevronDown color='#42ca9f' />
+        )}
+      </MediumButton>
+      <Collapse in={openDetail}>
+        <IndividualPoolDataText
+          title='TOTAL POOL REWARD'
+          text={`${stakingPoolData.Reward.Amount} ${stakingPoolData.Reward.Name}`}
+        />
+        <IndividualPoolDataText
+          title='TOTAL SUBPOOL POINTS'
+          text={`${stakingPoolData.TotalYieldPoints} points`}
+        />
+        <IndividualPoolDataText
+          title='TOTAL SUBPOOLS'
+          text={`${activeSubpoolsLength + closedSubpoolsLength} subpool(s)`}
+        />
+        <IndividualPoolDataText
+          title='TOTAL STAKERS'
+          text={`${stakerCount} staker(s)`}
+        />
+        <IndividualPoolDataText
+          title='YOUR SUBPOOL POINTS'
+          text={`${stakerTotalSubpoolPoints} points`}
+        />
+        <IndividualPoolDataText
+          title='YOUR TOTAL REWARD SHARE'
+          text={`${totalTokenShare} ${stakingPoolData.Reward.Name}`}
+        />
+      </Collapse>
     </BorderedBox>
   );
 };

@@ -1,0 +1,17 @@
+<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="6.20898" y="20.9409" width="19.5935" height="2.06248" rx="1.03124" transform="rotate(-60 6.20898 20.9409)" fill="white"/>
+<rect x="16.0059" y="21.9724" width="19.5935" height="2.06248" rx="1.03124" transform="rotate(-120 16.0059 21.9724)" fill="white"/>
+<rect width="19.5935" height="2.06248" rx="1.03124" transform="matrix(-1 1.95451e-07 1.95451e-07 1 21.7969 11.9419)" fill="white"/>
+<rect x="14.2012" y="7.09912" width="4.12495" height="2.06248" rx="1.03124" fill="white"/>
+<rect width="4.12495" height="2.06248" rx="1.03124" transform="matrix(-0.5 -0.866025 -0.866025 0.5 15.9902 8.13013)" fill="white"/>
+<rect x="18.1895" y="11.9407" width="4.12495" height="2.06248" rx="1.03124" transform="rotate(60 18.1895 11.9407)" fill="white"/>
+<rect width="4.12495" height="2.06248" rx="1.03124" transform="matrix(0.5 -0.866026 -0.866026 -0.5 18.1895 14.0032)" fill="white"/>
+<rect x="15.9902" y="17.8162" width="4.12495" height="2.06248" rx="1.03124" transform="rotate(120 15.9902 17.8162)" fill="white"/>
+<rect width="4.12495" height="2.06248" rx="1.03124" transform="matrix(1 -8.82201e-08 -8.82201e-08 -1 14.2031 18.8477)" fill="white"/>
+<rect x="9.79883" y="18.8472" width="4.12495" height="2.06248" rx="1.03124" transform="rotate(180 9.79883 18.8472)" fill="white"/>
+<rect width="4.12495" height="2.06248" rx="1.03124" transform="matrix(0.5 0.866025 0.866025 -0.5 8.01367 17.8162)" fill="white"/>
+<rect x="5.8125" y="14.0044" width="4.12495" height="2.06248" rx="1.03124" transform="rotate(-120 5.8125 14.0044)" fill="white"/>
+<rect width="4.12495" height="2.06248" rx="1.03124" transform="matrix(-0.5 0.866025 0.866025 0.5 5.8125 11.9419)" fill="white"/>
+<rect x="8.00977" y="8.12988" width="4.12495" height="2.06248" rx="1.03124" transform="rotate(-60 8.00977 8.12988)" fill="white"/>
+<rect width="4.12495" height="2.06248" rx="1.03124" transform="matrix(-1 6.79865e-09 6.79865e-09 1 9.79883 7.09888)" fill="white"/>
+</svg>

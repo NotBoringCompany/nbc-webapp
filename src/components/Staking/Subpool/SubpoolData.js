@@ -3,7 +3,6 @@ import { MediumButton } from '@/components/Buttons/Universals';
 import { HeadingFour } from '@/components/Typography/Headings';
 import {
   Button,
-  Divider,
   Flex,
   HoverCard,
   Text,

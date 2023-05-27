@@ -8,10 +8,12 @@ import {
   ScrollArea,
 } from '@mantine/core';
 import { keyCombos, maxSelectedKey } from '@/utils/kosData';
+import highestLuckBoost from '@/utils/highestLuckBoost';
 import NFTCard from '@/components/Staking/NFTCard';
 import { IconAlertOctagon } from '@tabler/icons';
 import { cardColumnsBreakpoints } from '../Breakpoints/CardColumns';
 import { HeadingFive, HeadingFour } from '../Typography/Headings';
+import NewNFTCard from '../Cards/NewNFTCard';
 
 const StakingBox = ({
   onSelectKeyComboType,
@@ -26,6 +28,10 @@ const StakingBox = ({
   stakingOngoing,
   stakingClosed,
   currentComboAllowed,
+  houses,
+  types,
+  endLuckRating,
+  luckBoost,
 }) => {
   const maxSelectedKeys = maxSelectedKey(selectedKeyCombo);
   const selectedKeychains = comboSelection.keychains;
@@ -148,6 +154,14 @@ const StakingBox = ({
                         ?.sort(
                           (a, b) => b.metadata.luckTrait - a.metadata.luckTrait
                         )
+                        .filter((k) => houses.includes(k.metadata.houseTrait))
+                        .filter((k) => types.includes(k.metadata.typeTrait))
+                        .filter((k) => k.metadata.luckTrait <= endLuckRating)
+                        .filter(
+                          (k) =>
+                            k.metadata.luckBoostTrait <=
+                            highestLuckBoost(luckBoost)
+                        )
                         .map((k) => (
                           // 'key' is a reserved keyword
                           // by React. We have to use it, when
@@ -156,7 +170,8 @@ const StakingBox = ({
 
                           //'rhKey' is the key that we are
                           //displaying.
-                          <NFTCard
+
+                          <NewNFTCard
                             showButton={true}
                             key={k.name}
                             nft={k}

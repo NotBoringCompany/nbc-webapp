@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
+import InventoryFilter from '../Filters/InventoryFilter';
 
 const { Flex, createStyles } = require('@mantine/core');
 const { default: Layout } = require('../Layout/Layout');
@@ -27,18 +27,47 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const AccountMainLayout = ({ pageName, children, pageTitle, description }) => {
+const AccountMainLayout = ({
+  pageName,
+  children,
+  pageTitle,
+  description,
+  showFilters,
+  setHouses,
+  setTypes,
+  luckRating,
+  setLuckRating,
+  setEndLuckRating,
+  luckBoost,
+  setLuckBoost,
+}) => {
   const { user } = useMoralis();
   const { classes } = useStyles();
+
   return (
     <Layout withAuth pageTitle={pageTitle} description={description}>
       <Flex className={classes.container} direction='row'>
-        <Flex className={classes.accountOverviewBoxContainer}>
+        <Flex
+          className={classes.accountOverviewBoxContainer}
+          direction='column'
+        >
           <AccountOverviewBox
             pageName={pageName ?? pageTitle}
             email={user?.attributes?.email}
             ethAddress={user?.attributes?.ethAddress}
           />
+          {showFilters && (
+            <InventoryFilter
+              mt='xl'
+              setHouses={setHouses}
+              setTypes={setTypes}
+              luckRating={luckRating}
+              setLuckRating={setLuckRating}
+              setEndLuckRating={setEndLuckRating}
+              luckBoost={luckBoost}
+              setLuckBoost={setLuckBoost}
+            />
+          )}
         </Flex>
         <div style={{ width: '100%' }}>{children}</div>
       </Flex>

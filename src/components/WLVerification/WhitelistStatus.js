@@ -1,6 +1,5 @@
-import { Box, Button, Flex, Text } from '@mantine/core'
-import { useEffect, useState } from 'react'
-import { useMoralis } from 'react-moralis'
+import { Box, Flex, Text } from '@mantine/core'
+import { useEffect } from 'react'
 
 const WLVerificationWhitelistStatus = ({ whitelistType, setWhitelistType, wallet, setWallet }) => {
     useEffect(() => {

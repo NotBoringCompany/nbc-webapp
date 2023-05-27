@@ -10,8 +10,10 @@ import { useCallback, useEffect, useState } from 'react';
 import NFTCard from '../Staking/NFTCard';
 import { useMoralis } from 'react-moralis';
 import { inventoryColumnsBreakpoints } from '../Breakpoints/CardColumns';
+import highestLuckBoost from '@/utils/highestLuckBoost';
+import NewNFTCard from '../Cards/NewNFTCard';
 
-const InventoryLayout = () => {
+const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
   const [stakerInventory, setStakerInventory] = useState(null);
   const [stakerInventoryLoading, setStakerInventoryLoading] = useState(true);
   const { user } = useMoralis();
@@ -19,6 +21,7 @@ const InventoryLayout = () => {
   const getStakerInventory = useCallback(async () => {
     const rawRes = await fetch(
       `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/${user?.attributes?.ethAddress}/1`
+      // `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-inventory/0x8FbFE537A211d81F90774EE7002ff784E352024a/1`
     ).catch((err) => console.log(err));
     const res = await rawRes.json();
 
@@ -65,12 +68,19 @@ const InventoryLayout = () => {
                 my={20}
                 spacing={'md'}
                 breakpoints={inventoryColumnsBreakpoints}
-                mah={'calc(100vh - 200px)'}
+                mah={'100vh'}
               >
                 {stakerInventory.keyData
                   ?.sort((a, b) => b.metadata.luckTrait - a.metadata.luckTrait)
+                  .filter((k) => houses.includes(k.metadata.houseTrait))
+                  .filter((k) => types.includes(k.metadata.typeTrait))
+                  .filter((k) => k.metadata.luckTrait <= endLuckRating)
+                  .filter(
+                    (k) =>
+                      k.metadata.luckBoostTrait <= highestLuckBoost(luckBoost)
+                  )
                   .map((k) => (
-                    <NFTCard key={k.name} nft={k} />
+                    <NewNFTCard key={k.name} nft={k} />
                   ))}
               </SimpleGrid>
             </ScrollArea>
