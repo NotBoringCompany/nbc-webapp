@@ -68,13 +68,15 @@ const StakingModal = ({
         }),
       }
     ).catch((err) => console.log(err));
+
     if (!stakeRequest.ok) {
       setStakeError(true);
       setLoadingStaking(false);
       return;
     }
+
     await stakeRequest.json();
-    setSuccessfulStake(false); // staking is successful
+    setSuccessfulStake(true); // staking is successful
   };
 
   const stakingPreview = (
@@ -268,7 +270,7 @@ const StakingModal = ({
           : 'Preview of Your Staking Subpool'
       }
     >
-      {stakeError === false ? successContent : stakingPreview}
+      {stakeError === true ? stakingPreview : (successfulStake ? successContent : stakingPreview)}
     </Modal>
   );
 };

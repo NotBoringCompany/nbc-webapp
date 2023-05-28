@@ -140,8 +140,10 @@ const StakingPool = ({ stakingPoolData }) => {
   }, [user]);
 
   useEffect(() => {
-    checkSubpoolComboEligibility();
-  }, [comboCount]);
+    if (user && comboCount !== 0) {
+      checkSubpoolComboEligibility();
+    }
+  }, [user, comboCount]);
 
   const [comboSelection, setComboSelection] = useState({
     keys: [],
