@@ -4,11 +4,11 @@ import { useMoralis } from 'react-moralis';
 import AuthForm from '../Form/AuthForm';
 
 const AuthModal = () => {
-  const { user, isUserUpdating } = useMoralis();
+  const { user, isUserUpdating, isAuthenticated } = useMoralis();
   const [opened, setOpened] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    if (user && isAuthenticated) {
       if (!isUserUpdating && !user.attributes.email) {
         setOpened(true);
         return;
@@ -18,7 +18,7 @@ const AuthModal = () => {
         setOpened(false);
       }
     }
-  }, [user, isUserUpdating, user?.attributes.email]);
+  }, [user, isUserUpdating, user?.attributes.email, isAuthenticated]);
 
   return (
     <Modal
