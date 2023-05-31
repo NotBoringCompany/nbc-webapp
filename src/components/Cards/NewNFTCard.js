@@ -47,9 +47,10 @@ const NewNFTCard = ({
   const ref = useRef();
 
   //at least 10px visible on the screen
-  const onScreen = useOnScreen(ref, '-10px');
 
   const { name, imageUrl, metadata } = nft;
+  const onScreen = useOnScreen(ref, '-10px', 900, name);
+
   const noActionAllowed = (absolutelyDisabled && !selected) || !nftStakeable;
   const handleSelectNFT = () => {
     if (!noActionAllowed) {

@@ -64,7 +64,6 @@ const AccountMainLayout = ({
               luckRating={luckRating}
               setLuckRating={setLuckRating}
               setEndLuckRating={setEndLuckRating}
-              luckBoost={luckBoost}
               setLuckBoost={setLuckBoost}
             />
           )}
