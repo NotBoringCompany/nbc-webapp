@@ -1,4 +1,4 @@
-import { Box, Divider, Flex, SimpleGrid, Text } from '@mantine/core';
+import { Box, Divider, Flex, Loader, SimpleGrid, Text } from '@mantine/core';
 import { IconDiamond, IconWallet } from '@tabler/icons';
 import Image from 'next/image';
 import { MediumButton } from '../Buttons/Universals';
@@ -8,14 +8,15 @@ import { useEffect, useState } from 'react';
 import { useMoralis, useNFTBalances, useNativeBalance } from 'react-moralis';
 import { useRouter } from 'next/router';
 import { dashboardGridBreakpoints } from '../Breakpoints/DashboardGrid';
+import { COLORS } from '../Globals/colors';
 
 const DashboardLayout = () => {
   const { user } = useMoralis();
   const [nfts, setNfts] = useState(null);
   const [nativeBalances, setNativeBalances] = useState(null);
   const [recToken, setRecToken] = useState(null);
-  const { getBalances } = useNativeBalance();
-  const { getNFTBalances } = useNFTBalances();
+  const { getBalances, isLoading: nativeBalanceLoading } = useNativeBalance();
+  const { getNFTBalances, isLoading: nftBalancesLoading } = useNFTBalances();
   const router = useRouter();
 
   useEffect(() => {
@@ -25,7 +26,10 @@ const DashboardLayout = () => {
     };
 
     const fetchNftBalances = async () => {
-      const balances = await getNFTBalances({ params: { chain: '0x1' } });
+      const balances = await getNFTBalances({
+        params: { chain: '0x1', address: user.attributes?.ethAddress || '' },
+      });
+      console.log({ balances });
       const ownedKOS = balances?.result?.filter(
         (nft) =>
           nft.token_address ===
@@ -50,12 +54,15 @@ const DashboardLayout = () => {
     };
 
     const fetchStakerRECBalance = async () => {
-      const rawRes = await fetch(`https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-rec-balance/${user && user.attributes.ethAddress}`)
-        .catch(err => console.log(err));
+      const rawRes = await fetch(
+        `https://nbc-webapp-api-production.up.railway.app/kos/fetch-staker-rec-balance/${
+          user && user.attributes.ethAddress
+        }`
+      ).catch((err) => console.log(err));
       const res = await rawRes.json();
 
       setRecToken(res?.data?.stakerRecBalance);
-    }
+    };
 
     if (!nativeBalances) {
       fetchNativeBalances();
@@ -104,11 +111,15 @@ const DashboardLayout = () => {
             </Flex>
             <Divider color='grey' size='xs' variant='dashed' />
             <Flex direction='column' align='center' justify='center' mt={15}>
-              <Text size={24} weight={700}>
-                {nativeBalances
-                  ? parseFloat(nativeBalances.balance / 10 ** 18).toFixed(3)
-                  : '0'}
-              </Text>
+              {nativeBalanceLoading ? (
+                <Loader color={COLORS.green} mb={30} />
+              ) : (
+                <Text size={24} weight={700}>
+                  {nativeBalances
+                    ? parseFloat(nativeBalances.balance / 10 ** 18).toFixed(3)
+                    : '0'}
+                </Text>
+              )}
             </Flex>
           </Box>
           <Box
@@ -127,9 +138,13 @@ const DashboardLayout = () => {
             </Flex>
             <Divider color='grey' size='xs' variant='dashed' />
             <Flex direction='column' align='center' justify='center' mt={15}>
-              <Text size={24} weight={700} mb={30}>
-                {recToken ? parseFloat(recToken).toFixed(2) : '0'}
-              </Text>
+              {nativeBalanceLoading ? (
+                <Loader color={COLORS.green} mb={30} />
+              ) : (
+                <Text size={24} weight={700} mb={30}>
+                  {recToken ? parseFloat(recToken).toFixed(2) : '0'}
+                </Text>
+              )}
             </Flex>
           </Box>
         </SimpleGrid>
@@ -164,9 +179,13 @@ const DashboardLayout = () => {
             </Flex>
             <Divider color='grey' size='xs' variant='dashed' />
             <Flex direction='column' align='center' justify='center' mt={15}>
-              <Text size={24} weight={700} mb={30}>
-                {nfts?.ownedKOS?.length ?? 0}
-              </Text>
+              {nftBalancesLoading ? (
+                <Loader color={COLORS.green} mb={30} />
+              ) : (
+                <Text size={24} weight={700} mb={30}>
+                  {nfts?.ownedKOS?.length ?? 0}
+                </Text>
+              )}
               <MediumButton
                 color='#42ca9f'
                 onClick={() => router.replace('/account/inventory')}
@@ -190,9 +209,13 @@ const DashboardLayout = () => {
             </Flex>
             <Divider color='grey' size='xs' variant='dashed' />
             <Flex direction='column' align='center' justify='center' mt={15}>
-              <Text size={24} weight={700} mb={30}>
-                {nfts?.ownedKeychains?.length ?? 0}
-              </Text>
+              {nftBalancesLoading ? (
+                <Loader mb={30} color={COLORS.green} />
+              ) : (
+                <Text size={24} weight={700} mb={30}>
+                  {nfts?.ownedKeychains?.length ?? 0}
+                </Text>
+              )}
               <MediumButton
                 color='#42ca9f'
                 onClick={() => router.replace('/account/inventory')}
@@ -216,9 +239,13 @@ const DashboardLayout = () => {
             </Flex>
             <Divider color='grey' size='xs' variant='dashed' />
             <Flex direction='column' align='center' justify='center' mt={15}>
-              <Text size={24} weight={700} mb={30}>
-                {nfts?.ownedSupKeychains?.length ?? 0}
-              </Text>
+              {nftBalancesLoading ? (
+                <Loader mb={30} color={COLORS.green} />
+              ) : (
+                <Text size={24} weight={700} mb={30}>
+                  {nfts?.ownedSupKeychains?.length ?? 0}
+                </Text>
+              )}
               <MediumButton
                 color='#42ca9f'
                 onClick={() => router.replace('/account/inventory')}
