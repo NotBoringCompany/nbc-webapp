@@ -29,16 +29,18 @@ const NFTKeysSorter = ({ sort, onSort }) => {
   };
 
   const handleSortBy = (by) => {
-    const update = {
-      ...sort,
-      by,
-      loading: true,
-    };
-    onSort({ ...update });
-    setTimeout(() => {
-      //Same reason as above as to why we need this loading time
-      onSort({ ...update, loading: false });
-    }, 100);
+    if (by !== sort.by) {
+      const update = {
+        ...sort,
+        by,
+        loading: true,
+      };
+      onSort({ ...update });
+      setTimeout(() => {
+        //Same reason as above as to why we need this loading time
+        onSort({ ...update, loading: false });
+      }, 100);
+    }
   };
 
   return (
@@ -53,7 +55,7 @@ const NFTKeysSorter = ({ sort, onSort }) => {
         onChange={(sortByVal) => handleSortBy(sortByVal)}
         mr={10}
       />
-      <MediumButton onClick={() => handleSortMode()}>
+      <MediumButton onClick={handleSortMode}>
         {sort.mode === DESC ? <IconArrowDown /> : <IconArrowUp />}
       </MediumButton>
     </Flex>

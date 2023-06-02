@@ -9,6 +9,7 @@ import StakingModal from '@/components/Staking/StakingModal';
 import StakingPoolDataDetail from '@/components/Staking/StakingPool/StakingPoolDataDetail';
 import { HeadingOne } from '@/components/Typography/Headings';
 import InventoryFilter from '@/components/Filters/InventoryFilter';
+import { NFT_KEY_SORT_BY, SORT_MODE } from '@/constants/sort';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -29,7 +30,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
   sideContainer: {
-    width: '40%',
+    width: '30%',
     marginRight: 32,
     [theme.fn.smallerThan('md')]: {
       width: '100%',
@@ -75,6 +76,11 @@ const StakingPool = ({ stakingPoolData }) => {
   const [subpoolComboEligible, setSubpoolComboEligible] = useState(false);
   const [selectedKeyComboType, setSelectedKeyComboType] = useState(null);
   const [comboCount, setComboCount] = useState(0);
+  const [sort, setSort] = useState({
+    by: NFT_KEY_SORT_BY.LUCK_TRAIT,
+    mode: SORT_MODE.DESC,
+    loading: false,
+  });
 
   const stakingOngoing =
     new Date().getTime() >= new Date(stakingPoolData?.StartTime).getTime();
@@ -384,6 +390,8 @@ const StakingPool = ({ stakingPoolData }) => {
                 types={types}
                 endLuckRating={endLuckRating}
                 luckBoost={luckBoost}
+                sort={sort}
+                onSort={setSort}
               />
             </Flex>
           </>

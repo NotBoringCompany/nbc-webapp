@@ -86,7 +86,7 @@ const InventoryLayout = ({
                     <Loader color={COLORS.green} />
                   ) : (
                     <>
-                      {[...stakerInventory.keyData]
+                      {stakerInventory.keyData
                         ?.sort((a, b) =>
                           sort.mode === SORT_MODE.DESC
                             ? b.metadata[sort.by] - a.metadata[sort.by]

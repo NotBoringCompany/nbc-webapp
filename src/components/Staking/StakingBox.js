@@ -14,6 +14,9 @@ import { IconAlertOctagon } from '@tabler/icons';
 import { cardColumnsBreakpoints } from '../Breakpoints/CardColumns';
 import { HeadingFive, HeadingFour } from '../Typography/Headings';
 import NewNFTCard from '../Cards/NewNFTCard';
+import NFTKeysSorter from '../NFTKeysSorter';
+import { COLORS } from '../Globals/colors';
+import { SORT_MODE } from '@/constants/sort';
 
 const StakingBox = ({
   onSelectKeyComboType,
@@ -32,6 +35,8 @@ const StakingBox = ({
   types,
   endLuckRating,
   luckBoost,
+  sort,
+  onSort,
 }) => {
   const maxSelectedKeys = maxSelectedKey(selectedKeyCombo);
   const selectedKeychains = comboSelection.keychains;
@@ -47,11 +52,14 @@ const StakingBox = ({
       direction='column'
       align='center'
       justify='center'
-      w='100%'
+      w='70%'
       sx={(theme) => ({
         border: stakingOngoing ? '2px solid grey' : '2px solid #42ca9f',
         borderRadius: theme.radius.md,
         maxHeight: '100vh',
+        [theme.fn.smallerThan('md')]: {
+          width: '100%',
+        },
       })}
     >
       <HeadingFour color={stakingOngoing ? 'grey' : 'green'} mb='md' order={2}>
@@ -129,15 +137,17 @@ const StakingBox = ({
                     NOTE: If you chose {'Flush'} as your combo, you can only
                     stake along a Superior Keychain or 3 Keychains.
                   </Text>
+                  <HeadingFive order={3} my={48}>
+                    YOUR KEYS (SORTED BY DESCENDING LUCK)
+                  </HeadingFive>
+                  <NFTKeysSorter sort={sort} onSort={onSort} />
                   <ScrollArea
                     h={'80vh'}
+                    mt='md'
                     sx={(theme) => ({
                       textAlign: 'center',
                     })}
                   >
-                    <HeadingFive order={3} mt={48}>
-                      YOUR KEYS (SORTED BY DESCENDING LUCK)
-                    </HeadingFive>
                     {stakerInventory.keychainData &&
                       stakerInventory.keychainData.length === 0 && (
                         <Text>
@@ -150,43 +160,62 @@ const StakingBox = ({
                       spacing={'md'}
                       breakpoints={cardColumnsBreakpoints}
                     >
-                      {stakerInventory.keyData
-                        ?.sort(
-                          (a, b) => b.metadata.luckTrait - a.metadata.luckTrait
-                        )
-                        .filter((k) => houses.includes(k.metadata.houseTrait))
-                        .filter((k) => types.includes(k.metadata.typeTrait))
-                        .filter((k) => k.metadata.luckTrait <= endLuckRating)
-                        .filter(
-                          (k) =>
-                            k.metadata.luckBoostTrait <=
-                            highestLuckBoost(luckBoost)
-                        )
-                        .map((k) => (
-                          // 'key' is a reserved keyword
-                          // by React. We have to use it, when
-                          // rendering arrays. But, it can't
-                          // be used for our rendering purposes.
+                      <>
+                        {sort.loading ? (
+                          <div style={{ width: '100%', position: 'absolute' }}>
+                            <Loader color={COLORS.green} />
+                          </div>
+                        ) : (
+                          <>
+                            {stakerInventory.keyData
+                              ?.sort((a, b) =>
+                                sort.mode === SORT_MODE.DESC
+                                  ? b.metadata[sort.by] - a.metadata[sort.by]
+                                  : a.metadata[sort.by] - b.metadata[sort.by]
+                              )
+                              .filter((k) =>
+                                houses.includes(k.metadata.houseTrait)
+                              )
+                              .filter((k) =>
+                                types.includes(k.metadata.typeTrait)
+                              )
+                              .filter(
+                                (k) => k.metadata.luckTrait <= endLuckRating
+                              )
+                              .filter(
+                                (k) =>
+                                  k.metadata.luckBoostTrait <=
+                                  highestLuckBoost(luckBoost)
+                              )
+                              .map((k) => (
+                                // 'key' is a reserved keyword
+                                // by React. We have to use it, when
+                                // rendering arrays. But, it can't
+                                // be used for our rendering purposes.
 
-                          //'rhKey' is the key that we are
-                          //displaying.
+                                //'rhKey' is the key that we are
+                                //displaying.
 
-                          <NewNFTCard
-                            showButton={true}
-                            key={k.name}
-                            nft={k}
-                            onSelect={onSelectKey}
-                            selected={
-                              comboSelection.keys.findIndex(
-                                (key) => key.name === k.name
-                              ) >= 0
-                            }
-                            absolutelyDisabled={
-                              comboSelection.keys.length === maxSelectedKeys
-                            }
-                            nftStakeable={k.stakeable}
-                          />
-                        ))}
+                                <NewNFTCard
+                                  showButton={true}
+                                  key={k.name}
+                                  nft={k}
+                                  onSelect={onSelectKey}
+                                  selected={
+                                    comboSelection.keys.findIndex(
+                                      (key) => key.name === k.name
+                                    ) >= 0
+                                  }
+                                  absolutelyDisabled={
+                                    comboSelection.keys.length ===
+                                    maxSelectedKeys
+                                  }
+                                  nftStakeable={k.stakeable}
+                                />
+                              ))}
+                          </>
+                        )}
+                      </>
                     </SimpleGrid>
                     <HeadingFive order={3} mt={48}>
                       YOUR KEYCHAINS

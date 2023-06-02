@@ -80,7 +80,7 @@ const NewNFTCard = ({
         minHeight: showButton ? '380px' : '280px',
         display: 'flex',
         flexDirection: 'column',
-        padding: '16px',
+        padding: '0',
         position: 'relative',
         paddingTop: '0',
       }}
@@ -94,7 +94,9 @@ const NewNFTCard = ({
           luckRating={metadata.luckTrait}
         />
       )}
-      <Card.Section sx={{ height: '250px', marginTop: '-16px' }}>
+      <Card.Section
+        sx={{ height: '250px', minWidth: '270px', marginTop: '-16px' }}
+      >
         {imageUrl.includes('mp4') && onScreen && (
           <LazyLoadedVideo imageUrl={imageUrl} name={name} />
         )}
