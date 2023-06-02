@@ -29,6 +29,7 @@ const LuckRatingBox = ({ calculatedRating = 0, luckRating = '' }) => {
         borderBottomLeftRadius: '8px',
         borderBottomRightRadius: '8px',
         fontSize: 14,
+        zIndex: 999,
       }}
     >
       Luck Rating: {luckRating}
