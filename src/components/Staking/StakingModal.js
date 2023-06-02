@@ -74,7 +74,8 @@ const StakingModal = ({
       return;
     }
     await stakeRequest.json();
-    setSuccessfulStake(false); // staking is successful
+    setSuccessfulStake(true); // staking is successful
+    setStakeError(false);
   };
 
   const stakingPreview = (
