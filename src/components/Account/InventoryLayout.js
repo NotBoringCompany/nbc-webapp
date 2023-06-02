@@ -5,80 +5,27 @@ import {
   SimpleGrid,
   Tabs,
   Text,
-  Select,
-  Button,
 } from '@mantine/core';
 import { useCallback, useEffect, useState } from 'react';
-import { IconArrowDown, IconArrowUp } from '@tabler/icons';
 import NFTCard from '../Staking/NFTCard';
 import { useMoralis } from 'react-moralis';
 import { inventoryColumnsBreakpoints } from '../Breakpoints/CardColumns';
 import highestLuckBoost from '@/utils/highestLuckBoost';
 import NewNFTCard from '../Cards/NewNFTCard';
 import { COLORS } from '../Globals/colors';
-import { MediumButton } from '../Buttons/Universals';
+import NFTKeysSorter from '../NFTKeysSorter';
+import { SORT_MODE } from '@/constants/sort';
 
-const Sort = ({ sort, onSort, onLoading }) => {
-  const data = [
-    { value: 'luckTrait', label: 'Luck Rating' },
-    { value: 'luckBoostTrait', label: 'Luck Boost' },
-    { value: 'tokenID', label: 'ID' },
-  ];
-  const handleChange = (change = 'by', val) => {
-    onLoading(true);
-    //by could be sort by luckTrait, luckBoostTrait, etc
-    if (change === 'by' && val) {
-      onSort({
-        ...sort,
-        by: val,
-      });
-    } else {
-      onSort({
-        ...sort,
-        mode: sort.mode === 'DESC' ? 'ASC' : 'DESC',
-      });
-    }
-
-    //Due to our lazy loaded videos in the Cards, we need this
-    //"artifical" loading time.
-
-    setTimeout(() => {
-      onLoading(false);
-    }, 100);
-
-    //This loading time makes gives the NewNFTCard / NFTCard sufficient time to run `useOnScreen` properly during re-render.
-    //Otherwise, `useOnScreen` hook will always return `false` and the video won't show after sorting.
-  };
-
-  return (
-    <Flex direction='row' align='center'>
-      <Text size={16} mr={10}>
-        Sort:
-      </Text>
-      <Select
-        w={140}
-        data={data}
-        value={sort.by}
-        onChange={(val) => handleChange('by', val)}
-        mr={10}
-      />
-      <MediumButton onClick={() => handleChange('mode')}>
-        {sort.mode === 'DESC' ? <IconArrowDown /> : <IconArrowUp />}
-      </MediumButton>
-    </Flex>
-  );
-};
-
-const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
+const InventoryLayout = ({
+  houses,
+  types,
+  endLuckRating,
+  luckBoost,
+  sort,
+  onSort,
+}) => {
   const [stakerInventory, setStakerInventory] = useState(null);
   const [stakerInventoryLoading, setStakerInventoryLoading] = useState(true);
-
-  const [sort, setSort] = useState({
-    by: 'luckTrait',
-    mode: 'DESC',
-  });
-
-  const [loadingSorting, setLoadingSorting] = useState(false);
   const { user } = useMoralis();
 
   const getStakerInventory = useCallback(async () => {
@@ -127,11 +74,7 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
           </Tabs.List>
           <Tabs.Panel value='kos' pt='xs'>
             <ScrollArea h={'calc(100vh-100px)'}>
-              <Sort
-                sort={sort}
-                onSort={setSort}
-                onLoading={setLoadingSorting}
-              />
+              <NFTKeysSorter sort={sort} onSort={onSort} />
               <SimpleGrid
                 my={20}
                 spacing={'md'}
@@ -139,13 +82,13 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
                 mah={'100vh'}
               >
                 <>
-                  {loadingSorting ? (
+                  {sort.loading ? (
                     <Loader color={COLORS.green} />
                   ) : (
                     <>
                       {[...stakerInventory.keyData]
                         ?.sort((a, b) =>
-                          sort.mode === 'DESC'
+                          sort.mode === SORT_MODE.DESC
                             ? b.metadata[sort.by] - a.metadata[sort.by]
                             : a.metadata[sort.by] - b.metadata[sort.by]
                         )

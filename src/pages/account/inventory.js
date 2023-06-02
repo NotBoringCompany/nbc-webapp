@@ -1,5 +1,6 @@
 import InventoryLayout from '@/components/Account/InventoryLayout';
 import AccountMainLayout from '@/components/Account/MainLayout';
+import { NFT_KEY_SORT_BY, SORT_MODE } from '@/constants/sort';
 import { useState } from 'react';
 
 const Inventory = () => {
@@ -24,6 +25,11 @@ const Inventory = () => {
   const [luckRating, setLuckRating] = useState(100);
   const [endLuckRating, setEndLuckRating] = useState(100);
   const [luckBoost, setLuckBoost] = useState(['1', '1.05', '1.2']);
+  const [sort, setSort] = useState({
+    by: NFT_KEY_SORT_BY.LUCK_TRAIT,
+    mode: SORT_MODE.DESC,
+    loading: false,
+  });
 
   return (
     <AccountMainLayout
@@ -39,6 +45,8 @@ const Inventory = () => {
       setLuckBoost={setLuckBoost}
     >
       <InventoryLayout
+        sort={sort}
+        onSort={setSort}
         houses={houses}
         types={types}
         endLuckRating={endLuckRating}
