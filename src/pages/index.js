@@ -71,7 +71,7 @@ export default function Home() {
               <Link
                 href={`${
                   emailConnected
-                    ? `https://drive.google.com/uc?export=download&id=1pwUtL1zikJYm6Tt_Iv36E7qI2FHJrU9X`
+                    ? `https://docsend.com/view/tagec29a4mvuwwy5`
                     : `#`
                 }`}
                 download={emailConnected ? true : false}
