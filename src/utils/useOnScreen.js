@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export function useOnScreen(ref, margin = '0px', debounceTime = 900) {
+export function useOnScreen(ref, margin = '0px', debounceTime = 900, name) {
   const [isIntersecting, setIntersecting] = useState(false);
 
   useEffect(() => {

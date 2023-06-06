@@ -12,8 +12,18 @@ import { useMoralis } from 'react-moralis';
 import { inventoryColumnsBreakpoints } from '../Breakpoints/CardColumns';
 import highestLuckBoost from '@/utils/highestLuckBoost';
 import NewNFTCard from '../Cards/NewNFTCard';
+import { COLORS } from '../Globals/colors';
+import NFTKeysSorter from '../NFTKeysSorter';
+import { SORT_MODE } from '@/constants/sort';
 
-const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
+const InventoryLayout = ({
+  houses,
+  types,
+  endLuckRating,
+  luckBoost,
+  sort,
+  onSort,
+}) => {
   const [stakerInventory, setStakerInventory] = useState(null);
   const [stakerInventoryLoading, setStakerInventoryLoading] = useState(true);
   const { user } = useMoralis();
@@ -64,24 +74,38 @@ const InventoryLayout = ({ houses, types, endLuckRating, luckBoost }) => {
           </Tabs.List>
           <Tabs.Panel value='kos' pt='xs'>
             <ScrollArea h={'calc(100vh-100px)'}>
+              <NFTKeysSorter sort={sort} onSort={onSort} />
               <SimpleGrid
                 my={20}
                 spacing={'md'}
                 breakpoints={inventoryColumnsBreakpoints}
                 mah={'100vh'}
               >
-                {stakerInventory.keyData
-                  ?.sort((a, b) => b.metadata.luckTrait - a.metadata.luckTrait)
-                  .filter((k) => houses.includes(k.metadata.houseTrait))
-                  .filter((k) => types.includes(k.metadata.typeTrait))
-                  .filter((k) => k.metadata.luckTrait <= endLuckRating)
-                  .filter(
-                    (k) =>
-                      k.metadata.luckBoostTrait <= highestLuckBoost(luckBoost)
-                  )
-                  .map((k) => (
-                    <NewNFTCard key={k.name} nft={k} />
-                  ))}
+                <>
+                  {sort.loading ? (
+                    <Loader color={COLORS.green} />
+                  ) : (
+                    <>
+                      {stakerInventory.keyData
+                        ?.sort((a, b) =>
+                          sort.mode === SORT_MODE.DESC
+                            ? b.metadata[sort.by] - a.metadata[sort.by]
+                            : a.metadata[sort.by] - b.metadata[sort.by]
+                        )
+                        .filter((k) => houses.includes(k.metadata.houseTrait))
+                        .filter((k) => types.includes(k.metadata.typeTrait))
+                        .filter((k) => k.metadata.luckTrait <= endLuckRating)
+                        .filter(
+                          (k) =>
+                            k.metadata.luckBoostTrait <=
+                            highestLuckBoost(luckBoost)
+                        )
+                        .map((k) => (
+                          <NewNFTCard key={k.name} nft={k} />
+                        ))}
+                    </>
+                  )}
+                </>
               </SimpleGrid>
             </ScrollArea>
           </Tabs.Panel>
