@@ -169,7 +169,7 @@ const LoginDropdown = ({ onShowSelectWallet }) => {
               marginLeft: '2px',
             })}
           >
-            Log In
+            Login
           </Text>
           <IconChevronDown size={15} />
         </Button>

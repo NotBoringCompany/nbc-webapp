@@ -1,12 +1,14 @@
 import AuthForm from '@/components/Form/AuthForm';
 import Layout from '@/components/Layout/Layout';
 import ForgotPasswordRequestModal from '@/components/Modals/ForgotPasswordRequestModal';
+import SignupModal from '@/components/Modals/SignupModal';
 import { Flex, Text, Button } from '@mantine/core';
 import { useState } from 'react';
 
 const Login = () => {
   const [isForgotPasswordModalOpen, setIsForgotPasswordModalOpen] =
     useState(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   return (
     <Layout
       pageTitle={'Login'}
@@ -16,6 +18,10 @@ const Login = () => {
       <ForgotPasswordRequestModal
         isOpen={isForgotPasswordModalOpen}
         onClose={() => setIsForgotPasswordModalOpen(false)}
+      />
+      <SignupModal 
+        isOpen={isSignupModalOpen}
+        onClose={() => setIsSignupModalOpen(false)}
       />
       <Flex
         direction='column'
@@ -41,22 +47,43 @@ const Login = () => {
           Login
         </Text>
         <AuthForm forLogin />
-        <Button
-          onClick={() => setIsForgotPasswordModalOpen(true)}
-          mt='md'
-          variant='subtle'
-          sx={(theme) => ({
-            color: theme.colors.nbcGreen[0],
-            justifyContent: 'flex-start',
-            padding: 0,
-            width: 'fit-content',
-            ':hover': {
-              background: 'transparent',
-            },
-          })}
+        <Flex
+          direction='row'
+          justify='space-between'
         >
-          Forgot password
-        </Button>
+          <Button
+            onClick={() => setIsForgotPasswordModalOpen(true)}
+            mt='md'
+            variant='subtle'
+            sx={(theme) => ({
+              color: theme.colors.nbcGreen[0],
+              justifyContent: 'flex-start',
+              padding: 0,
+              width: 'fit-content',
+              ':hover': {
+                background: 'transparent',
+              },
+            })}
+          >
+            Forgot password
+          </Button>
+          <Button
+            onClick={() => setIsSignupModalOpen(true)}
+            mt='md'
+            variant='subtle'
+            sx={(theme) => ({
+              color: theme.colors.nbcGreen[0],
+              justifyContent: 'flex-start',
+              padding: 0,
+              width: 'fit-content',
+              ':hover': {
+                background: 'transparent',
+              },
+            })}
+          >
+            Sign up
+          </Button>
+        </Flex>
       </Flex>
     </Layout>
   );

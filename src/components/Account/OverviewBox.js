@@ -49,7 +49,7 @@ const AccountOverviewBox = ({ pageName, ethAddress, email }) => {
           <Flex direction='column' mt={20} px={20}>
             <Flex direction='row' align='center' justify='space-between'>
               <Text>
-                {`${ethAddress.slice(0, 7)}...${ethAddress.slice(-5)}`}
+                {ethAddress ? `${ethAddress?.slice(0, 7)}...${ethAddress?.slice(-5)}` : `No Web3 Wallet linked`}
               </Text>
               <CopyButton value={ethAddress ?? ''} timeout={3000}>
                 {({ copied, copy }) => (

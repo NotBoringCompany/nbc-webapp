@@ -86,7 +86,7 @@ const InventoryLayout = ({
                     <Loader color={COLORS.green} />
                   ) : (
                     <>
-                      {stakerInventory.keyData
+                      {stakerInventory?.keyData
                         ?.sort((a, b) =>
                           sort.mode === SORT_MODE.DESC
                             ? b.metadata[sort.by] - a.metadata[sort.by]
@@ -118,7 +118,7 @@ const InventoryLayout = ({
                 breakpoints={inventoryColumnsBreakpoints}
                 mah={'calc(100vh - 200px)'}
               >
-                {stakerInventory.keychainData
+                {stakerInventory?.keychainData
                   ?.sort((a, b) => a.tokenID - b.tokenID)
                   .map((keychain) => (
                     <NFTCard key={keychain.name} nft={keychain} />
@@ -135,7 +135,7 @@ const InventoryLayout = ({
                 breakpoints={inventoryColumnsBreakpoints}
                 mah={'calc(100vh - 200px)'}
               >
-                {stakerInventory.superiorKeychainData
+                {stakerInventory?.superiorKeychainData
                   ?.sort((a, b) => a.tokenID - b.tokenID)
                   .map((superiorKeychain) => (
                     <NFTCard

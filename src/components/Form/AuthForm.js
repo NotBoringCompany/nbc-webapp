@@ -72,7 +72,7 @@ const AuthForm = ({ forLogin = false }) => {
     : hasEmailLeadText;
 
   const forLoginLeadText = (
-    <>Sign in into your account using your email and password</>
+    <>Sign in to your account using your email and password OR create an account by clicking the &quot;Sign up&quot; button below.</>
   );
 
   return (
