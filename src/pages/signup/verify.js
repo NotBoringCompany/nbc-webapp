@@ -207,7 +207,7 @@ const SignupVerification = () => {
                                 },
                             })}
                         >
-                            You have entered an invalid page.
+                            Token is either invalid or expired.
                         </Text>
                     </Flex>
                 )}
