@@ -7,6 +7,7 @@ module.exports = withVideos(
     webpack(config, options) {
       return config;
     },
+    reactStrictMode: false,
     async headers() {
       return [
         {

@@ -16,14 +16,13 @@ const SignupSuccess = () => {
             if (email) {
                 try {
                     const response = await fetch(`https://nbc-webapp-api-ts-production.up.railway.app/webapp/check-if-verified/${email}`);
-                    const { error, message, data } = await response.json();
+                    const { status, error, message, data } = await response.json();
     
-                    if (error) {
-                        setErrorMsg(message);
-                    }
-                    
-                    if (message === 'User has already verified their email') {
+                    if (error || status === 500) {
+                      if (message === 'User has already verified their email') {
                         setAlreadyVerified(true);
+                      }
+                        setErrorMsg(message);
                     }
                 } catch (err) {
                     setErrorMsg('An error occurred while fetching data: ', err);
@@ -38,8 +37,8 @@ const SignupSuccess = () => {
     // we don't have to worry about an expired token, as the scheduler from the backend will delete any expired tokens and thus data with it automatically.
     return (
         <Layout
-          pageTitle='Signup successful'
-          description='Thank you for signing up on our web app!'
+          pageTitle={errorMsg ? 'Invalid page' : 'Signup successful'}
+          description={errorMsg ? 'Invalid page' : 'Thank you for signing up on our web app!'}
         >
           <Flex
             direction='column'
