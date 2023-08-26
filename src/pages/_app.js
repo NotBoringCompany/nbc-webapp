@@ -7,6 +7,7 @@ import AuthModal from '@/components/Modals/AuthModal';
 import { Analytics } from '@vercel/analytics/react';
 import { COLORS } from '@/components/Globals/colors';
 import WrongNetwork from '@/components/Modals/WrongNetwork';
+import AuthProvider from '@/components/Auth/AuthProvider';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -33,7 +34,9 @@ export default function App({ Component, pageProps }) {
         <AuthModal />
         <WrongNetwork />
         <Analytics />
-        <Component {...pageProps} />
+        <AuthProvider>
+          <Component {...pageProps} />
+        </AuthProvider>
       </MantineProvider>
     </MoralisProvider>
   );

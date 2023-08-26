@@ -1,11 +1,12 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { Flex, Loader, ScrollArea, createStyles } from '@mantine/core';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Container } from '@mantine/core';
 import MainNavbar from '../Navbar/Navbar';
 import { useMoralis } from 'react-moralis';
 import WarningBox from './WarningBox';
+import AuthContext from '../Auth/AuthContext';
 
 const AuthWall = (
   <WarningBox
@@ -41,8 +42,10 @@ const Layout = ({
   notFoundDescription = '',
 }) => {
   const { isAuthenticated, isAuthUndefined } = useMoralis();
+  const { isEmailAuthenticated } = useContext(AuthContext);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+
   const authWall = !!authWallComponent ? authWallComponent : AuthWall;
   const { classes } = useStyles();
 
@@ -61,7 +64,7 @@ const Layout = ({
 
   useEffect(() => {
     if (!isAuthUndefined) {
-      if (isAuthenticated && mustNotAuth) {
+      if ((isAuthenticated || isEmailAuthenticated) && mustNotAuth) {
         router.replace('/');
       }
 
@@ -71,7 +74,7 @@ const Layout = ({
         setLoading(false);
       }, 150);
     }
-  }, [isAuthUndefined, isAuthenticated, mustNotAuth, router]);
+  }, [isAuthUndefined, isEmailAuthenticated, isAuthenticated, mustNotAuth, router]);
 
   return (
     <>
@@ -115,7 +118,7 @@ const Layout = ({
               <>
                 {' '}
                 {withAuth ? (
-                  <>{isAuthenticated ? renderedComponent : authWall}</>
+                  <>{(isAuthenticated || isEmailAuthenticated) ? renderedComponent : authWall}</>
                 ) : (
                   renderedComponent
                 )}

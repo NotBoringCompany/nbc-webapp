@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { Box, Button, Flex, Text, createStyles } from '@mantine/core';
 import { IconAlertOctagon, IconCheck, IconCircleX } from '@tabler/icons';
 import { useMoralis } from 'react-moralis';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { HeadingThree } from '@/components/Typography/Headings';
+import AuthContext from '@/components/Auth/AuthContext';
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -32,6 +33,10 @@ export default function Home() {
   // checks if the user has AT LEAST 1 key of salvation
   const [hasKey, setHasKey] = useState(false);
   const { classes } = useStyles();
+
+  const { isEmailAuthenticated, emailUser } = useContext(AuthContext);
+  console.log('emailUser', emailUser)
+  console.log('isEmailAuthenticated', isEmailAuthenticated)
 
   const ownsKey = useCallback(async () => {
     const rawRes = await fetch(

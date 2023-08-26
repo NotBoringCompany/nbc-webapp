@@ -12,7 +12,7 @@ const Login = () => {
   return (
     <Layout
       pageTitle={'Login'}
-      description='Log in to your Realm Hunter account'
+      description='Log in to your Not Boring Company account'
       mustNotAuth
     >
       <ForgotPasswordRequestModal

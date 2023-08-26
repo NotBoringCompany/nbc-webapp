@@ -3,6 +3,9 @@ import { useMoralis } from 'react-moralis';
 import { Text, TextInput, Button, Loader } from '@mantine/core';
 import moralisErrorMessage from '@/utils/moralisErrorMessage';
 import CryptoJS from 'crypto-js';
+import { useContext, useState } from 'react';
+import AuthContext from '../Auth/AuthContext';
+import { useRouter } from 'next/router';
 
 /**
  * `AuthForm` renders in 3 different "styles" with 2 different "behaviours":
@@ -22,9 +25,17 @@ const AuthForm = ({ forLogin = false }) => {
     authError,
     userError,
   } = useMoralis();
-  const hasEmail = user?.attributes?.email;
 
-  const loading = isUserUpdating || isAuthenticating;
+  const [emailLoginError, setEmailLoginError] = useState(null);
+  const [isEmailUserAuthenticating, setIsEmailUserAuthenticating] = useState(false);
+
+  const router = useRouter();
+
+  const { login: authContextLogin, emailUser } = useContext(AuthContext);
+
+  const hasEmail = user?.attributes?.email || emailUser;
+
+  const loading = isUserUpdating || isAuthenticating || isEmailUserAuthenticating;
 
   const form = useForm({
     initialValues: { email: '', password: '' },
@@ -55,7 +66,39 @@ const AuthForm = ({ forLogin = false }) => {
         });
       }
     } else {
-      await login(email, password);
+      setIsEmailUserAuthenticating(true);
+      // CHANGE THIS TO USE OUR LOGIN INSTEAD.
+      // this is our emailLogin from the backend (not moralis' login)
+      const emailLogin = async () => {
+        const getLogin = await fetch(`https://nbc-webapp-api-ts-production.up.railway.app/webapp/email-login`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          })
+        }).catch((err) => console.log(err));
+
+        const { status, message, error, data } = await getLogin.json();
+
+        if (status === 500) {
+          console.log('error: ', message);
+          setEmailLoginError(message);
+          setIsEmailUserAuthenticating(false);
+          // ADD ERROR MODAL HERE (DONT REFRESH PAGE!)
+        } else if (status === 200 && message.includes('Login successful')) {
+          authContextLogin({email});
+          // ADD MODAL FIRST TELLING THAT THEYLL BE REDIRECTED BEFORE REDIRECTING
+          router.replace('/');
+          setIsEmailUserAuthenticating(false);
+        }
+      }
+
+      await emailLogin();
+      // // this is using moralis's login
+      // await login(email, password);
     }
   };
 

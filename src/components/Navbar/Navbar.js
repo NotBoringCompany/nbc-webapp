@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   createStyles,
   Header,
@@ -23,6 +23,7 @@ import NavbarMenu from '../Dropdowns/NavbarMenu';
 import { IconChevronDown, IconMoneybag, IconPool } from '@tabler/icons';
 import { useRouter } from 'next/router';
 import SelectWallet from '../Modals/SelectWallet';
+import AuthContext from '../Auth/AuthContext';
 
 const HEADER_HEIGHT = 60;
 
@@ -204,6 +205,7 @@ const NavbarItems = (props) => {
   const enableDropdown = props.isDropdown;
   const { classes } = useStyles();
   const { isAuthenticated } = useMoralis();
+  const { isEmailAuthenticated } = useContext(AuthContext);
 
   const router = useRouter();
 
@@ -256,7 +258,7 @@ const NavbarItems = (props) => {
           </Menu>
         </Center>
         <Center className={classes.centerItems}>
-          {!isAuthenticated ? (
+          {(!isAuthenticated && !isEmailAuthenticated) ? (
             <LoginDropdown onShowSelectWallet={props.onShowSelectWallet} />
           ) : (
             <NavbarMenu />
@@ -308,7 +310,7 @@ const NavbarItems = (props) => {
             My Subpools
           </Menu.Item>
         </Menu.Dropdown>
-        {!isAuthenticated ? (
+        {(!isAuthenticated && !isEmailAuthenticated) ? (
           <LoginDropdown onShowSelectWallet={props.onShowSelectWallet} />
         ) : (
           <NavbarMenu />

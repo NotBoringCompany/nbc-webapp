@@ -70,6 +70,7 @@ const SignupModal = ({ isOpen = false, onClose }) => {
             if (!error) {
                 setSignedUp(true);
                 setTimeout(() => {
+                    // CHANGE THIS TO REDIRECT THEM TO A PAGE CALLED 'SUCCESSFUL-SIGNUP'
                     router.replace('/');
                 }, 2000);
             } else {
