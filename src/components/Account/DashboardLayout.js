@@ -27,7 +27,7 @@ const DashboardLayout = () => {
 
     const fetchNftBalances = async () => {
       const balances = await getNFTBalances({
-        params: { chain: '0x1', address: user.attributes?.ethAddress || '' },
+        params: { chain: '0x1', address: user?.attributes?.ethAddress || '' },
       });
       console.log({ balances });
       const ownedKOS = balances?.result?.filter(

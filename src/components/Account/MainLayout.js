@@ -1,5 +1,7 @@
 import { useMoralis } from 'react-moralis';
 import InventoryFilter from '../Filters/InventoryFilter';
+import { useContext } from 'react';
+import AuthContext from '../Auth/AuthContext';
 
 const { Flex, createStyles } = require('@mantine/core');
 const { default: Layout } = require('../Layout/Layout');
@@ -44,6 +46,8 @@ const AccountMainLayout = ({
   const { user } = useMoralis();
   const { classes } = useStyles();
 
+  const { emailUser } = useContext(AuthContext);
+
   return (
     <Layout withAuth pageTitle={pageTitle} description={description}>
       <Flex className={classes.container} direction='row'>
@@ -53,7 +57,7 @@ const AccountMainLayout = ({
         >
           <AccountOverviewBox
             pageName={pageName ?? pageTitle}
-            email={user?.attributes?.email}
+            email={emailUser}
             ethAddress={user?.attributes?.ethAddress}
           />
           {showFilters && (

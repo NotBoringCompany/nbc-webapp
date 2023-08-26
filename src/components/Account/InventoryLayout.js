@@ -42,6 +42,8 @@ const InventoryLayout = ({
   useEffect(() => {
     if (user && !stakerInventory) {
       getStakerInventory();
+    } else {
+      setStakerInventoryLoading(false);
     }
   }, [user, stakerInventory, getStakerInventory]);
 
