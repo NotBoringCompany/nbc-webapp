@@ -33,7 +33,7 @@ const AuthForm = ({ forLogin = false }) => {
 
   const { login: authContextLogin, emailUser } = useContext(AuthContext);
 
-  const hasEmail = user?.attributes?.email || emailUser;
+  const hasEmail = user?.attributes?.email || !!emailUser;
 
   const loading = isUserUpdating || isAuthenticating || isEmailUserAuthenticating;
 
@@ -47,7 +47,8 @@ const AuthForm = ({ forLogin = false }) => {
     },
   });
 
-  if (!user && !forLogin) {
+  // if the user is not logged in via Moralis (user) or email (emailUser) or it's not `forLogin`, return null
+  if ((!user && !emailUser) && !forLogin) {
     return null;
   }
 
@@ -89,7 +90,7 @@ const AuthForm = ({ forLogin = false }) => {
           setIsEmailUserAuthenticating(false);
           // ADD ERROR MODAL HERE (DONT REFRESH PAGE!)
         } else if (status === 200 && message.includes('Login successful')) {
-          authContextLogin({email});
+          authContextLogin(email);
           // ADD MODAL FIRST TELLING THAT THEYLL BE REDIRECTED BEFORE REDIRECTING
           router.replace('/');
           setIsEmailUserAuthenticating(false);
@@ -210,6 +211,12 @@ const AuthForm = ({ forLogin = false }) => {
         {!!userError && (
           <Text sx={{ color: '#ca4242' }} mt='md'>
             {userError.message}
+          </Text>
+        )}
+
+        {emailLoginError && forLogin && (
+          <Text sx={{ color: '#ca4242' }} mt='md'>
+            {emailLoginError}
           </Text>
         )}
       </form>

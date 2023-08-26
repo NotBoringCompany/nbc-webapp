@@ -1,7 +1,9 @@
 import { createStyles, Menu, Button, Divider, Text } from '@mantine/core';
 import { IconUser, IconChevronDown, IconLogout, IconLayoutDashboard, IconBox } from '@tabler/icons';
 import { useRouter } from 'next/router';
+import { useContext } from 'react';
 import { useMoralis } from 'react-moralis';
+import AuthContext from '../Auth/AuthContext';
 
 const useStyles = createStyles((theme) => ({
   menuDropdown: {
@@ -28,8 +30,14 @@ const NavbarMenu = () => {
   const { logout } = useMoralis();
   const router = useRouter();
 
+  const { emailUser, logout: emailLogout } = useContext(AuthContext);
+
   const handleLogout = async () => {
-    await logout();
+    if (emailUser) {
+      await emailLogout();
+    } else {
+      await logout();
+    }
     router.reload(window.location.pathname);
   };
   return (

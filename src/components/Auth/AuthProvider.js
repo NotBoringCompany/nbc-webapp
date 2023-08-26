@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createContext, useContext } from 'react'
 import AuthContext from './AuthContext';
 
@@ -9,12 +9,26 @@ const AuthProvider = ({ children }) => {
     const [isEmailAuthenticated, setIsEmailAuthenticated] = useState(false);
     const [emailUser, setEmailUser] = useState(null);
 
-    const login = (userData) => {
+    useEffect(() => {
+        const storedEmailUser = localStorage.getItem('emailUser');
+        const storedIsEmailAuthenticated = localStorage.getItem('isEmailAuthenticated');
+
+        if (storedEmailUser && storedIsEmailAuthenticated === 'true') {
+            setEmailUser(storedEmailUser);
+            setIsEmailAuthenticated(true);
+        }
+    }, [])
+
+    const login = (email) => {
+        localStorage.setItem('emailUser', email);
+        localStorage.setItem('isEmailAuthenticated', 'true');
         setIsEmailAuthenticated(true);
-        setEmailUser({...emailUser, ...userData});
+        setEmailUser({...emailUser, email });
     }
 
     const logout = () => {
+        localStorage.removeItem('emailUser');
+        localStorage.removeItem('isEmailAuthenticated');
         setIsEmailAuthenticated(false);
         setEmailUser(null);
     }
