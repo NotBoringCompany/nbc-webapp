@@ -25,13 +25,11 @@ const AuthForm = ({ forLogin = false }) => {
     authError,
     userError,
   } = useMoralis();
-
-  const [emailLoginError, setEmailLoginError] = useState(null);
-  const [isEmailUserAuthenticating, setIsEmailUserAuthenticating] = useState(false);
-
   const router = useRouter();
 
-  const { login: authContextLogin, emailUser } = useContext(AuthContext);
+  const [ isEmailUserAuthenticating, setIsEmailUserAuthenticating ] = useState(false);
+
+  const { login: emailLogin, emailUser, emailLoginError, setEmailLoginError } = useContext(AuthContext);
 
   const hasEmail = user?.attributes?.email || !!emailUser;
 
@@ -52,7 +50,9 @@ const AuthForm = ({ forLogin = false }) => {
     return null;
   }
 
-  const handleFormSubmit = async (formData) => {
+  const handleFormSubmit = async (formData, e) => {
+    e.preventDefault();
+
     const { email, password } = formData;
     if (!forLogin) {
       if (isAuthenticated && user) {
@@ -67,39 +67,14 @@ const AuthForm = ({ forLogin = false }) => {
         });
       }
     } else {
-      setIsEmailUserAuthenticating(true);
-      // CHANGE THIS TO USE OUR LOGIN INSTEAD.
-      // this is our emailLogin from the backend (not moralis' login)
-      const emailLogin = async () => {
-        const getLogin = await fetch(`https://nbc-webapp-api-ts-production.up.railway.app/webapp/email-login`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          })
-        }).catch((err) => console.log(err));
-
-        const { status, message, error, data } = await getLogin.json();
-
-        if (status === 500) {
-          console.log('error: ', message);
-          setEmailLoginError(message);
-          setIsEmailUserAuthenticating(false);
-          // ADD ERROR MODAL HERE (DONT REFRESH PAGE!)
-        } else if (status === 200 && message.includes('Login successful')) {
-          authContextLogin(email);
-          // ADD MODAL FIRST TELLING THAT THEYLL BE REDIRECTED BEFORE REDIRECTING
-          router.replace('/');
-          setIsEmailUserAuthenticating(false);
-        }
+      try {
+        setIsEmailUserAuthenticating(true);
+        await emailLogin(email, password);
+        setIsEmailUserAuthenticating(false);
+      } catch (err) {
+        setEmailLoginError(err.message);
+        setIsEmailUserAuthenticating(false);
       }
-
-      await emailLogin();
-      // // this is using moralis's login
-      // await login(email, password);
     }
   };
 
