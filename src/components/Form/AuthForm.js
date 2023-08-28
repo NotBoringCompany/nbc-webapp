@@ -69,11 +69,10 @@ const AuthForm = ({ forLogin = false }) => {
     } else {
       try {
         setIsEmailUserAuthenticating(true);
-        await emailLogin(email, password);
+        await emailLogin(email.toLowerCase(), password);
         setIsEmailUserAuthenticating(false);
       } catch (err) {
         setEmailLoginError(err.message);
-        setIsEmailUserAuthenticating(false);
       }
     }
   };
