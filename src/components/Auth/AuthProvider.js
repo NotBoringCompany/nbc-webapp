@@ -13,8 +13,12 @@ const AuthProvider = ({ children }) => {
     const [ emailUser, setEmailUser ] = useState(null);
     const [ emailLoginError, setEmailLoginError ] = useState(null);
 
+    // authenticate({
+        
+    // })
+
     /** WEB3 STATES */
-    const { enableWeb3, isAuthenticated, authenticate, Moralis } = useMoralis();
+    const { enableWeb3, isAuthenticated, authenticate, Moralis, logout: moralisLogout } = useMoralis();
     const [ authError, setAuthError ] = useState(false);
     const [ isAuthenticating, setIsAuthenticating ] = useState(false);
 
@@ -64,7 +68,8 @@ const AuthProvider = ({ children }) => {
                     enableWeb3,
                     Moralis,
                     authenticate,
-                    'metamask'
+                    'metamask',
+                    data.wallet
                 );
 
                 if (!isAuthenticating) {
@@ -107,11 +112,15 @@ const AuthProvider = ({ children }) => {
         }
     };
 
-    const logout = () => {
+    const logout = async () => {
         localStorage.removeItem('jwtToken');
         localStorage.removeItem('email');
         setIsEmailAuthenticated(false);
         setEmailUser(null);
+        if (isAuthenticated) {
+            await moralisLogout();
+        }
+
         router.replace('/');
     };
 
