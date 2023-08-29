@@ -99,14 +99,19 @@ const AuthProvider = ({ children }) => {
 
                 const { status, error, message, data } = await checkVerifStatus.json();
                 if (status === 200) {
-                    // if theyre not verified and verif token hasn't been sent, we show both verify modal WITH button
-                    if (!data?.hasVerificationToken && !data?.verified) {
-                        setShowVerifyModal(true);
-                        setShowVerifyButton(true);
-                        // if theyre not verified and verif token has been sent, we show only verify modal
-                    } else if (data?.hasVerificationToken && !data?.verified) {
-                        setShowVerifyModal(true);
-                        setShowVerifyButton(false);
+                    // since we require the `uniqueHash` when requesting to get the verification email,
+                    // we wait for `user` to exist. this should take a few seconds max once logged in.
+                    if (user) {
+                        console.log(user?.get('uniqueHash'))
+                        // if theyre not verified and verif token hasn't been sent, we show both verify modal WITH button
+                        if (!data?.hasVerificationToken && !data?.verified) {
+                            setShowVerifyModal(true);
+                            setShowVerifyButton(true);
+                            // if theyre not verified and verif token has been sent, we show only verify modal
+                        } else if (data?.hasVerificationToken && !data?.verified) {
+                            setShowVerifyModal(true);
+                            setShowVerifyButton(false);
+                        }
                     }
                     // we dont check for any other cases.
                 }
@@ -168,7 +173,7 @@ const AuthProvider = ({ children }) => {
             },
             body: JSON.stringify({
                 email: user?.get('email') || localStorage.getItem('email') || emailUser,
-                jwtToken: localStorage.getItem('jwtToken'),
+                uniqueHash: user?.get('uniqueHash')
             })
         });
 
@@ -220,6 +225,11 @@ const AuthProvider = ({ children }) => {
                                 >
                                     Send verification email
                                 </Button>
+                            </>
+                        )}
+                        {sendVerifEmailError && (
+                            <>
+                                <Text>There has been an error while sending the email. Reason: <br /><Text c='#ca4242'>{sendVerifEmailError}</Text></Text>
                             </>
                         )}
                         {sentVerficationEmail && (
