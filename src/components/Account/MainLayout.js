@@ -57,7 +57,7 @@ const AccountMainLayout = ({
         >
           <AccountOverviewBox
             pageName={pageName ?? pageTitle}
-            email={emailUser}
+            email={emailUser || user.get('email')}
             ethAddress={user?.attributes?.ethAddress}
           />
           {showFilters && (

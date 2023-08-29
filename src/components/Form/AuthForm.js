@@ -29,7 +29,7 @@ const AuthForm = ({ forLogin = false }) => {
 
   const [ isEmailUserAuthenticating, setIsEmailUserAuthenticating ] = useState(false);
 
-  const { login: emailLogin, emailUser, emailLoginError, setEmailLoginError } = useContext(AuthContext);
+  const { login: emailLogin, emailUser, emailLoginError, setEmailLoginError, setEmailUser} = useContext(AuthContext);
 
   const hasEmail = user?.attributes?.email || !!emailUser;
 
@@ -65,6 +65,8 @@ const AuthForm = ({ forLogin = false }) => {
           password: password,
           uniqueHash: uniqueHash.toString(),
         });
+
+        await setEmailUser(email);
       }
     } else {
       try {

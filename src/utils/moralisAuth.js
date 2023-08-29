@@ -8,7 +8,8 @@ const handleAuth = async (
     enableWeb3,
     Moralis,
     authenticate,
-    provider
+    provider,
+    manualAccount,
 ) => {
     try {
         setAuthError(null);
@@ -28,7 +29,8 @@ const handleAuth = async (
 
         // get message to sign from auth api
         const { message } = await Moralis.Cloud.run('requestMessage', {
-            address: account,
+            // uses `manualAccount` if provided.
+            address: manualAccount ?? account,
             chain: parseInt(chainId, 16),
             network: 'evm',
         });
