@@ -1,10 +1,15 @@
+import AuthContext from '@/components/Auth/AuthContext';
 import Layout from '@/components/Layout/Layout';
 import { Flex, Text } from '@mantine/core';
 import { IconAlertOctagon } from '@tabler/icons';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useMoralis } from 'react-moralis';
 
 const SignupVerification = () => {
+    const { emailUser, logout: emailLogout } = useContext(AuthContext);
+    const { user, logout } = useMoralis();
+
     // will be disabled once verifyToken finishes executing
     const [verifying, setVerifying] = useState(true);
     const [errorMsg, setErrorMsg] = useState(null);
@@ -16,60 +21,65 @@ const SignupVerification = () => {
     const { email, token, changedEmail, prevEmail } = router.query;
 
     useEffect(() => {
-            console.log('prev email: ', prevEmail)
-            console.log('email: ', email)
-            console.log('token: ', token)
-            const verifyToken = async () => {
-                const verify = (changedEmail === 'true' && !!prevEmail) ? await fetch(
-                    `https://nbc-webapp-api-ts-production.up.railway.app/webapp/verify-token-email-change`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            newEmail: email,
-                            token: token,
-                            prevEmail: prevEmail,
-                        })
-                    }
-                ) : await fetch(
-                    `https://nbc-webapp-api-ts-production.up.railway.app/webapp/verify-token`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            email: email,
-                            token: token,
-                        }),
-                    }
-                )
-
-                const { status, error, message, data } = await verify.json();
-                console.log(verify)
-
-                if (error || status === 500) {
-                    // for some reason, message here can be an object, thus the stringify method.
-                    setErrorMsg(JSON.stringify(message));
-                } else {
-                    // just in case
-                    setErrorMsg(null);
-                    setVerified(true);
+        console.log('prev email: ', prevEmail)
+        console.log('email: ', email)
+        console.log('token: ', token)
+        const verifyToken = async () => {
+            const verify = (changedEmail === 'true' && !!prevEmail) ? await fetch(
+                `https://nbc-webapp-api-ts-production.up.railway.app/webapp/verify-token-email-change`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        newEmail: email,
+                        token: token,
+                        prevEmail: prevEmail,
+                    })
                 }
+            ) : await fetch(
+                `https://nbc-webapp-api-ts-production.up.railway.app/webapp/verify-token`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        token: token,
+                    }),
+                }
+            )
 
-                setVerifying(false);
-            };
-            // we require at least email and token to exist to proceed calling the function.
-            if (verifying) {
-                // wait 0.5 before calling verifyToken
+            const { status, error, message, data } = await verify.json();
+            console.log(verify)
+
+            if (error || status === 500) {
+                // for some reason, message here can be an object, thus the stringify method.
+                setErrorMsg(JSON.stringify(message));
+            } else {
+                // just in case
+                setErrorMsg(null);
+                setVerified(true);
+            }
+
+            setVerifying(false);
+        };
+        // we require at least email and token to exist to proceed calling the function.
+        if (verifying) {
+            if (email && token) {
+                verifyToken();
+                // log users out IF they are logged in
                 setTimeout(() => {
-                    if (email && token) {
-                        verifyToken();
+                    if (user) {
+                        logout();
+                    } else if (emailUser) {
+                        emailLogout();
                     }
-                }, 500);
-            } 
+                }, 2000)
+            }
+        }
     }, [email, token, verifying]);
 
     return (
