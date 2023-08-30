@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import jwt_decode from 'jwt-decode';
 import { useMoralis } from 'react-moralis';
 import handleAuth from '@/utils/moralisAuth';
-import { userAgent } from 'next/server';
 import { Button, Modal, Text } from '@mantine/core';
 
 const AuthProvider = ({ children }) => {
@@ -16,10 +15,10 @@ const AuthProvider = ({ children }) => {
     const [emailLoginError, setEmailLoginError] = useState(null);
     const [showVerifyModal, setShowVerifyModal] = useState(false);
     const [showVerifyButton, setShowVerifyButton] = useState(false);
+    const [showVerifyNewEmailModal, setShowVerifyNewEmailModal] = useState(false);
     const [sendingVerificationEmail, setSendingVerificationEmail] = useState(false);
     const [sentVerficationEmail, setSentVerificationEmail] = useState(false);
     const [sendVerifEmailError, setSendVerifEmailError] = useState(null);
-
 
     /** WEB3 STATES */
     const { enableWeb3, isAuthenticated, authenticate, Moralis, logout: moralisLogout, user } = useMoralis();
@@ -118,9 +117,32 @@ const AuthProvider = ({ children }) => {
             }
         }
 
+        // checks whether a user has recently changed their email and hasn't verified this email yet.
+        // if yes, we send them a modal to verify their email.
+        const checkNewEmailUnverified = async () => {
+            const hasEmail = localStorage.getItem('email') || user?.get('email');
+            if (hasEmail) {
+                const resp = await fetch(`https://nbc-webapp-api-ts-production.up.railway.app/webapp/check-new-email-unverified/${user?.get('email')}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+
+                const { status, error, message, data } = await resp.json();
+                // we only care about the case where the user has changed their email and hasn't verified it yet.
+                if (status === 200) {
+                    if (!data?.verified) {
+                        setShowVerifyNewEmailModal(true);
+                    }
+                }
+            }
+        }
+
         checkAuth();
         checkWalletExists();
         requireVerificationLoggedIn();
+        checkNewEmailUnverified();
     }, [router, isAuthenticated, Moralis, enableWeb3, authenticate, isAuthenticating, emailUser, user]);
 
     const login = async (email, password) => {

@@ -12,16 +12,28 @@ const SignupVerification = () => {
     const [verified, setVerified] = useState(false);
 
     const router = useRouter();
-    const { email, token } = router.query;
-
-    console.log('verifying: ', verifying);
-    console.log('verified: ', verified);
-    console.log('errorMsg: ', errorMsg);
+    // changedEmail = boolean, if user has changed email.
+    const { email, token, changedEmail, prevEmail } = router.query;
 
     useEffect(() => {
-        if (verifying) {
+            console.log('prev email: ', prevEmail)
+            console.log('email: ', email)
+            console.log('token: ', token)
             const verifyToken = async () => {
-                const verify = await fetch(
+                const verify = (changedEmail === 'true' && !!prevEmail) ? await fetch(
+                    `https://nbc-webapp-api-ts-production.up.railway.app/webapp/verify-token-email-change`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            newEmail: email,
+                            token: token,
+                            prevEmail: prevEmail,
+                        })
+                    }
+                ) : await fetch(
                     `https://nbc-webapp-api-ts-production.up.railway.app/webapp/verify-token`,
                     {
                         method: 'POST',
@@ -33,9 +45,10 @@ const SignupVerification = () => {
                             token: token,
                         }),
                     }
-                );
+                )
 
                 const { status, error, message, data } = await verify.json();
+                console.log(verify)
 
                 if (error || status === 500) {
                     // for some reason, message here can be an object, thus the stringify method.
@@ -48,9 +61,15 @@ const SignupVerification = () => {
 
                 setVerifying(false);
             };
-
-            verifyToken();
-        }
+            // we require at least email and token to exist to proceed calling the function.
+            if (verifying) {
+                // wait 0.5 before calling verifyToken
+                setTimeout(() => {
+                    if (email && token) {
+                        verifyToken();
+                    }
+                }, 500);
+            } 
     }, [email, token, verifying]);
 
     return (
