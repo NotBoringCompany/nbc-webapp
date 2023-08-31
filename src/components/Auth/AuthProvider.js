@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createContext, useContext } from 'react';
 import AuthContext from './AuthContext';
 import { useRouter } from 'next/router';
@@ -21,10 +21,11 @@ const AuthProvider = ({ children }) => {
     const [sendVerifEmailError, setSendVerifEmailError] = useState(null);
 
     /** WEB3 STATES */
-    const { enableWeb3, isAuthenticated, authenticate, Moralis, logout: moralisLogout, user } = useMoralis();
+    const { enableWeb3, isAuthenticated, isAuthenticating, authenticate, Moralis, logout: moralisLogout, user } = useMoralis();
     const [authError, setAuthError] = useState(false);
-    const [isAuthenticating, setIsAuthenticating] = useState(false);
+    // const [isAuthenticating, setIsAuthenticating] = useState(false);
 
+    const web3AuthRef = useRef(false);
 
     useEffect(() => {
         const checkAuth = () => {
@@ -50,37 +51,6 @@ const AuthProvider = ({ children }) => {
                 setEmailUser(null);
             }
         };
-
-        const checkWalletExists = async () => {
-            const walletExists = await fetch(
-                `https://nbc-webapp-api-ts-production.up.railway.app/webapp/check-wallet-exists/${user?.get('email') || localStorage.getItem('email') || emailUser}`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }
-            )
-
-            const { status, error, message, data } = await walletExists.json();
-
-            if (data?.wallet && !isAuthenticated) {
-                console.log('wallet exists')
-                await handleAuth(
-                    setAuthError,
-                    setIsAuthenticating,
-                    enableWeb3,
-                    Moralis,
-                    authenticate,
-                    'metamask',
-                    data.wallet
-                );
-
-                if (!isAuthenticating) {
-                    router.replace('/');
-                }
-            }
-        }
 
         // if a user logs in via wallet and they haven't verified their email, require them to verify.
         // when a user refreshes, we need to make sure that we don't send multiple emails.
@@ -140,10 +110,45 @@ const AuthProvider = ({ children }) => {
         }
 
         checkAuth();
-        checkWalletExists();
         requireVerificationLoggedIn();
         checkNewEmailUnverified();
-    }, [router, isAuthenticated, Moralis, enableWeb3, authenticate, isAuthenticating, emailUser, user]);
+    }, [router, isAuthenticating, emailUser, user]);
+
+    useEffect(() => {
+        const checkWalletExists = async () => {
+            const walletExists = await fetch(
+                `https://nbc-webapp-api-ts-production.up.railway.app/webapp/check-wallet-exists/${user?.get('email') || localStorage.getItem('email') || emailUser}`,
+                {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+            )
+
+            const { status, error, message, data } = await walletExists.json();
+
+            if (data?.wallet && !isAuthenticated && !isAuthenticating) {
+                console.log('wallet exists')
+                console.log('data wallet: ', data.wallet)
+                await handleAuth(
+                    setAuthError,
+                    // setIsAuthenticating,
+                    enableWeb3,
+                    Moralis,
+                    authenticate,
+                    'metamask',
+                    data.wallet
+                ).then(() => {
+                    router.replace('/');
+                })
+            } else {
+                return;
+            }
+        }
+
+        checkWalletExists();
+    }, [isAuthenticated, user, emailUser])
 
     const login = async (email, password) => {
         try {

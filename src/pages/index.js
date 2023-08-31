@@ -35,8 +35,6 @@ export default function Home() {
   const { classes } = useStyles();
 
   const { isEmailAuthenticated, emailUser } = useContext(AuthContext);
-  console.log('emailUser', emailUser)
-  console.log('isEmailAuthenticated', isEmailAuthenticated)
 
   const ownsKey = useCallback(async () => {
     const rawRes = await fetch(

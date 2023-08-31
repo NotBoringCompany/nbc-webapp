@@ -38,7 +38,7 @@ const NavbarMenu = () => {
     } else {
       await logout();
     }
-    router.reload(window.location.pathname);
+    router.replace('/');
   };
   return (
     <Menu shadow='md' width={200}>

@@ -7,8 +7,8 @@ import { useContext, useEffect, useState } from 'react';
 import { useMoralis } from 'react-moralis';
 
 const SignupVerification = () => {
-    const { emailUser, logout: emailLogout } = useContext(AuthContext);
-    const { user, logout } = useMoralis();
+    const { emailUser, logout: emailLogout, setEmailUser } = useContext(AuthContext);
+    const { isAuthenticated, logout } = useMoralis();
 
     // will be disabled once verifyToken finishes executing
     const [verifying, setVerifying] = useState(true);
@@ -62,6 +62,7 @@ const SignupVerification = () => {
                 // just in case
                 setErrorMsg(null);
                 setVerified(true);
+                setEmailUser(email);
             }
 
             setVerifying(false);
@@ -72,7 +73,7 @@ const SignupVerification = () => {
                 verifyToken();
                 // log users out IF they are logged in
                 setTimeout(() => {
-                    if (user) {
+                    if (isAuthenticated) {
                         logout();
                     } else if (emailUser) {
                         emailLogout();

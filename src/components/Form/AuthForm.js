@@ -45,9 +45,23 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
     validate: {
       currentEmail: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
       newEmail: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
+      password: (value) => (value.length < 8 ? 'Password must have at least 8 characters' : null),
       // this needs to be stronger.
-      password: (value) =>
-        value.length >= 6 ? null : 'Password must have at least 6 characters',
+      newPassword: (value) => {
+        if (value.length < 8) {
+          return 'Password must have at least 8 characters';
+        }
+        if (!/[a-z]/.test(value) || !/[A-Z]/.test(value) || !/[0-9]/.test(value) || !/[!@#$%^&*]/.test(value)) {
+          return 'Password must include lowercase, uppercase, numbers, and special symbols';
+        }
+        if (value.includes('commonword') || value.includes('useremail')) {
+          return 'Avoid using common words or personal information';
+        }
+        // TO DO: Check against common password databases
+        // Implement this part using a relevant library or service
+        // Example: if (isPasswordCompromised(value)) return 'Password has been compromised';
+        return null;
+      }
     },
   });
 
@@ -134,7 +148,25 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
         }
       } else if (changePassword) {
         if (emailUser ?? user?.get('email') ?? localStorage.getItem('email')) {
-          // TO DO -> ADD PASSWORD CHANGE FUNCTIONALITY
+          const resp = await fetch(`https://nbc-webapp-api-ts-production.up.railway.app/webapp/change-password`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: user?.get('email') || emailUser || localStorage.getItem('email'),
+              password: password,
+              newPassword: newPassword,
+            })
+          });
+
+          const { status, message, error, data } = await resp.json();
+
+          if (status === 200) {
+            setSuccessMessage('Successfully changed your password!');
+          } else {
+            setAdditionalError(message);
+          }
           console.log('password change functionality');
         } else {
           setAdditionalError('Error with email authentication. Please try to log in with your email again.');
@@ -143,7 +175,7 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
     } else {
       try {
         setIsEmailUserAuthenticating(true);
-        await login(email.toLowerCase(), password);
+        await login(currentEmail.toLowerCase(), password);
         setIsEmailUserAuthenticating(false);
       } catch (err) {
         setEmailLoginError(err.message);
@@ -261,25 +293,6 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
                   },
                 },
               })}
-              label='Email'
-              type='email'
-              placeholder='Email'
-              {...form.getInputProps('currentEmail')}
-            />
-            <TextInput
-              my='sm'
-              sx={(theme) => ({
-                input: {
-                  width: '100%',
-                  marginTop: '4px',
-                  padding: '24px 16px',
-                  border: `${theme.colors.nbcGreen[0]} 2px solid`,
-                  borderRadius: '8px',
-                  ':focus': {
-                    border: '2px solid #42ca9f',
-                  },
-                },
-              })}
               label='Current Password'
               type='password'
               placeholder='Current Password'
@@ -342,6 +355,47 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
               })}
               type='password'
               placeholder='Set Password'
+              {...form.getInputProps('password')}
+            />
+          </>
+        )}
+        {forLogin && (
+          <>
+            <TextInput
+              my='sm'
+              sx={(theme) => ({
+                input: {
+                  width: '100%',
+                  marginTop: '4px',
+                  padding: '24px 16px',
+                  border: `${theme.colors.nbcGreen[0]} 2px solid`,
+                  borderRadius: '8px',
+                  ':focus': {
+                    border: '2px solid #42ca9f',
+                  },
+                },
+              })}
+              label='Email'
+              type='email'
+              placeholder='Email'
+              {...form.getInputProps('currentEmail')}
+            />
+            <TextInput
+              label='Password'
+              sx={(theme) => ({
+                input: {
+                  width: '100%',
+                  marginTop: '4px',
+                  padding: '24px 16px',
+                  border: `${theme.colors.nbcGreen[0]} 2px solid`,
+                  borderRadius: '8px',
+                  ':focus': {
+                    border: '2px solid #42ca9f',
+                  },
+                },
+              })}
+              type='password'
+              placeholder='Password'
               {...form.getInputProps('password')}
             />
           </>

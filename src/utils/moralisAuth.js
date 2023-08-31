@@ -4,16 +4,17 @@
  */
 const handleAuth = async (
     setAuthError,
-    setIsAuthenticating,
+    // setIsAuthenticating,
     enableWeb3,
     Moralis,
     authenticate,
     provider,
     manualAccount,
 ) => {
+    let authMsg;
     try {
         setAuthError(null);
-        setIsAuthenticating(true);
+        // setIsAuthenticating(true);
 
         // enable web3 to get user address and chain
         await enableWeb3({ throwOnError: true, provider });
@@ -36,14 +37,15 @@ const handleAuth = async (
         });
 
         // authenticate and login via parse
-        await authenticate({
+        authMsg = await authenticate({
             signingMessage: message,
             throwOnError: true,
         });
     } catch (err) {
         setAuthError(err);
     } finally {
-        setIsAuthenticating(false);
+        // setIsAuthenticating(false);
+        console.log(authMsg);
     }
 }
 
