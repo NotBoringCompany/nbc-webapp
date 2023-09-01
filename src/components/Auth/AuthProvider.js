@@ -25,8 +25,6 @@ const AuthProvider = ({ children }) => {
     const [authError, setAuthError] = useState(false);
     // const [isAuthenticating, setIsAuthenticating] = useState(false);
 
-    const web3AuthRef = useRef(false);
-
     useEffect(() => {
         const checkAuth = () => {
             const token = localStorage.getItem('jwtToken');
@@ -50,6 +48,8 @@ const AuthProvider = ({ children }) => {
                 setIsEmailAuthenticated(false);
                 setEmailUser(null);
             }
+
+
         };
 
         // if a user logs in via wallet and they haven't verified their email, require them to verify.
@@ -128,7 +128,11 @@ const AuthProvider = ({ children }) => {
 
             const { status, error, message, data } = await walletExists.json();
 
-            if (data?.wallet && !isAuthenticated && !isAuthenticating) {
+            if (status === 500) {
+                return;
+            }
+
+            if (data?.wallet !== null && !isAuthenticated && !isAuthenticating) {
                 console.log('wallet exists')
                 console.log('data wallet: ', data.wallet)
                 await handleAuth(
@@ -139,16 +143,14 @@ const AuthProvider = ({ children }) => {
                     authenticate,
                     'metamask',
                     data.wallet
-                ).then(() => {
-                    router.replace('/');
-                })
+                );
             } else {
                 return;
             }
         }
 
         checkWalletExists();
-    }, [isAuthenticated, user, emailUser])
+    }, [user])
 
     const login = async (email, password) => {
         try {
@@ -184,7 +186,7 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem('email');
         setIsEmailAuthenticated(false);
         setEmailUser(null);
-        if (isAuthenticated) {
+        if (isAuthenticated && user.attributes.ethAddress) {
             await moralisLogout();
         }
 
