@@ -32,6 +32,8 @@ export default function Home() {
   const emailConnected = !!(user && user.get('email'));
   // checks if the user has AT LEAST 1 key of salvation
   const [hasKey, setHasKey] = useState(false);
+  // checks if the user has access to an Alpha V1 invite code
+  const [hasInviteCode, setHasInviteCode] = useState(false);
   const { classes } = useStyles();
 
   const { isEmailAuthenticated, emailUser } = useContext(AuthContext);
@@ -45,9 +47,25 @@ export default function Home() {
     setHasKey(res.data?.ownerIds?.length > 0);
   }, [user]);
 
+  const ownsInviteCode = useCallback(async () => {
+    const resp = await fetch(
+      `https://nbc-webapp-api-ts-production.up.railway.app/backend-account/owns-alpha-invite-code/${emailUser || user?.attributes?.email}`
+    );
+
+    const { status, message, error, data } = await resp.json();
+
+    if (status === 200) {
+      setHasInviteCode(data.hasInviteCode);
+    }
+  }, [emailUser, user?.attributes?.email])
+
   useEffect(() => {
     ownsKey();
   }, [ownsKey, user]);
+
+  useEffect(() => {
+    ownsInviteCode();
+  }, [ownsInviteCode]);
 
   return (
     <>
@@ -56,7 +74,7 @@ export default function Home() {
           <Box className={classes.ctaContainer}>
             <Flex align='center' justify='center' direction='column'>
               <HeadingThree color='white' mb={20} order={1}>
-                REALM HUNTER: ALPHA RELEASE
+                REALM HUNTER: ALPHA RELEASE V1.0
               </HeadingThree>
               <Text
                 size={24}
@@ -65,10 +83,10 @@ export default function Home() {
                   lineHeight: 1,
                 })}
               >
-                Alpha V1.0 (PC) is now out for Key Of Salvation holders!
+                Alpha V1.0 (PC & Mac) is now out!
               </Text>
               <Text size={16} weight={500} italic mt={5}>
-                Mac build will be released soon.
+                You are required to redeem an invite code or have a Key Of Salvation <br /> to gain access to the alpha.
               </Text>
 
               <Link
@@ -178,19 +196,18 @@ export default function Home() {
                   color='#e9d562'
                 />
               )}
-              <Text size={18} color={hasKey ? '#42ca9f' : '#e9d562'}>
-                {emailConnected
-                  ? 'At least 1 Key Of Salvation owned'
-                  : 'Own at least 1 Key Of Salvation*'}
+              <Text size={18} color={hasKey || hasInviteCode ? '#42ca9f' : '#e9d562'}>
+                {emailConnected 
+                  ? hasKey ? 'At least 1 Key of Salvation owned' : 'Owns an Alpha V1 invite code'
+                  : 'Own at least 1 Key Of Salvation OR an Alpha V1 invite code' 
+                }
               </Text>
             </Flex>
             <Text size={15} mt={30}>
-              *Note: You don{"'t"} need a Key to gain access to the download
-              link,{' '}
+              *Note: The link is available to the public, {' '}
               <strong>
                 <br />
-                however you are required to own AT LEAST 1 Key to log in and
-                play the alpha.
+                however you are required EITHER 1 Key Of Salvation or an invite code to PLAY the alpha.
               </strong>
             </Text>
           </Box>
