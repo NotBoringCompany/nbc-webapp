@@ -210,6 +210,12 @@ export default function Home() {
                 however you are required EITHER 1 Key Of Salvation or an invite code to PLAY the alpha.
               </strong>
             </Text>
+            <Text size={20} mt={50}>
+              Do you have an invite code to play the Alpha?{' '}<br />
+            </Text>
+            <Text size={20}>
+              Redeem your code <Link href='/account/redeem-code' style={{color: '#42ca9f'}}>here</Link>.
+            </Text>
           </Box>
         </Flex>
       </Layout>
