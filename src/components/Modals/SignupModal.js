@@ -85,8 +85,7 @@ const SignupModal = ({ isOpen = false, onClose }) => {
             if (!error) {
                 setSignedUp(true);
                 setTimeout(() => {
-                    // CHANGE THIS TO REDIRECT THEM TO A PAGE CALLED 'SUCCESSFUL-SIGNUP'
-                    router.replace('/');
+                    router.replace('/signup/success');
                 }, 2000);
             } else {
                 setErrorMsg(message)
