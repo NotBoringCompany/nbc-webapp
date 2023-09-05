@@ -183,7 +183,7 @@ export default function Home() {
               </Text>
             </Flex>
             <Flex direction='row' align='center' justify='center' mt={10}>
-              {hasKey ? (
+              {(hasKey || hasInviteCode) ? (
                 <IconCheck
                   size={30}
                   style={{ marginRight: 15 }}
@@ -196,7 +196,7 @@ export default function Home() {
                   color='#e9d562'
                 />
               )}
-              <Text size={18} color={hasKey || hasInviteCode ? '#42ca9f' : '#e9d562'}>
+              <Text size={18} color={(hasKey || hasInviteCode) ? '#42ca9f' : '#e9d562'}>
                 {emailConnected 
                   ? hasKey ? 'At least 1 Key of Salvation owned' : 'Owns an Alpha V1 invite code'
                   : 'Own at least 1 Key Of Salvation OR an Alpha V1 invite code' 
