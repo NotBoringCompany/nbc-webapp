@@ -9,6 +9,7 @@ const SettingsLayout = () => {
   const [showChangeEmail, setShowChangeEmail] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [showLinkAccount, setShowLinkAccount] = useState(false);
+  const [showLinkWallet, setShowLinkWallet] = useState(false);
   const [resetFormTrigger, setResetFormTrigger] = useState(false);
 
   const { user } = useMoralis();
@@ -22,6 +23,9 @@ const SettingsLayout = () => {
     if (showLinkAccount) {
       setShowLinkAccount(false);
     }
+    if (showLinkWallet) {
+      setShowLinkWallet(false);
+    }
     setResetFormTrigger(!resetFormTrigger);
   }
 
@@ -32,6 +36,9 @@ const SettingsLayout = () => {
     }
     if (showLinkAccount) {
       setShowLinkAccount(false);
+    }
+    if (showLinkWallet) {
+      setShowLinkWallet(false);
     }
     setResetFormTrigger(!resetFormTrigger);
   }
@@ -44,8 +51,26 @@ const SettingsLayout = () => {
     if (showChangePassword) {
       setShowChangePassword(false);
     }
+    if (showLinkWallet) {
+      setShowLinkWallet(false);
+    }
     setResetFormTrigger(!resetFormTrigger);
   }
+
+  const handleLinkWallet = () => {
+    setShowLinkWallet(!showLinkWallet);
+    if (showChangeEmail) {
+      setShowChangeEmail(false);
+    }
+    if (showChangePassword) {
+      setShowChangePassword(false);
+    }
+    if (showLinkAccount) {
+      setShowLinkAccount(false);
+    }
+    setResetFormTrigger(!resetFormTrigger);
+  }
+
   return (
     <Flex
       direction='column'
@@ -149,11 +174,31 @@ const SettingsLayout = () => {
         >
           Link your account
         </Button>
+        <Button
+          disabled={user?.attributes?.ethAddress}
+          sx={(theme) => ({
+            backgroundColor: '#42ca9f',
+            marginLeft: 20,
+            ':hover': {
+              transform: 'scale(1.01) translate(1px, -3px)',
+              transitionDuration: '200ms',
+              backgroundColor: '#42ca9f',
+            },
+
+            [theme.fn.smallerThan('sm')]: {
+              fontSize: 10,
+            }
+          })}
+          onClick={() => handleLinkWallet()}
+        >
+          Link your wallet
+        </Button>
       </Flex>
       <AuthForm 
         changeEmail={showChangeEmail} 
         changePassword={showChangePassword} 
         linkAccount={showLinkAccount} 
+        linkWallet={showLinkWallet}
         resetFormTrigger={resetFormTrigger}
         setResetFormTrigger={setResetFormTrigger}
       />

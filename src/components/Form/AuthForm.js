@@ -6,11 +6,20 @@ import CryptoJS from 'crypto-js';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import AuthContext from '../Auth/AuthContext';
+import { validChecksum } from '@/utils/checksum';
 
 /**
  * `AuthForm` is used for logging in, for changing email/password, or for linking a user's account with email (if they used wallet)
  */
-const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = false, linkAccount = false, resetFormTrigger = false, setResetFormTrigger }) => {
+const AuthForm = ({
+  forLogin = false,
+  changeEmail = false,
+  changePassword = false,
+  linkAccount = false,
+  linkWallet = false,
+  resetFormTrigger = false,
+  setResetFormTrigger
+}) => {
   const {
     isAuthenticated,
     user,
@@ -19,6 +28,9 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
     isAuthenticating,
     authError,
     userError,
+    enableWeb3,
+    isWeb3Enabled,
+    Moralis
   } = useMoralis();
   const router = useRouter();
 
@@ -61,7 +73,8 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
         // Implement this part using a relevant library or service
         // Example: if (isPasswordCompromised(value)) return 'Password has been compromised';
         return null;
-      }
+      },
+      wallet: (value) => (!validChecksum(value) ? 'Invalid wallet address' : null),
     },
   });
 
@@ -81,7 +94,7 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
     // reset any prior error messages to null first
     setAdditionalError(null);
     setLoading(true);
-    const { currentEmail, newEmail, password, newPassword } = formData;
+    const { currentEmail, newEmail, password, newPassword, wallet } = formData;
 
     if (!forLogin) {
       if (linkAccount) {
@@ -92,32 +105,32 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
           );
 
           const hasUniqueHash = user?.get('uniqueHash');
-          
+
           if (hasUniqueHash) {
             await setUserData({
               email: currentEmail,
               password: password,
             })
-            .then(() => {
-              setSuccessMessage('Successfully linked your account!');
-              setTimeout(() => {
-                router.reload();
-              }, 2000);
-            })
-            .catch((err) => setAdditionalError(err.message));
+              .then(() => {
+                setSuccessMessage('Successfully linked your account!');
+                setTimeout(() => {
+                  router.reload();
+                }, 2000);
+              })
+              .catch((err) => setAdditionalError(err.message));
           } else {
             await setUserData({
               email: currentEmail,
               password: password,
               uniqueHash: uniqueHash.toString(),
             })
-            .then(() => {
-              setSuccessMessage('Successfully linked your account!');
-              setTimeout(() => {
-                router.reload();
-              }, 2000);
-            })
-            .catch((err) => setAdditionalError(err.message));
+              .then(() => {
+                setSuccessMessage('Successfully linked your account!');
+                setTimeout(() => {
+                  router.reload();
+                }, 2000);
+              })
+              .catch((err) => setAdditionalError(err.message));
           }
         } else {
           setAdditionalError('Error with wallet authentication. Please try to log in with your wallet again.');
@@ -141,7 +154,7 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
           if (status === 200) {
             setSuccessMessage('Successfully changed your email! A verification email has been sent to your new email.');
           } else {
-            setAdditionalError(message);  
+            setAdditionalError(message);
           }
         } else {
           setAdditionalError('Error with email authentication. Please try to log in with your email again.');
@@ -170,6 +183,35 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
           console.log('password change functionality');
         } else {
           setAdditionalError('Error with email authentication. Please try to log in with your email again.');
+        }
+      } else if (linkWallet) {
+        if (emailUser ?? user?.get('email') ?? localStorage.getItem('email')) {
+          try {
+            const resp = await fetch(`https://nbc-webapp-api-ts-production.up.railway.app/webapp/link-wallet`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                email: user?.get('email') || emailUser || localStorage.getItem('email'),
+                password: password,
+                wallet: wallet,
+              })
+            });
+
+            const { status, message, error, data } = await resp.json();
+
+            if (status === 200) {
+              setSuccessMessage('Successfully linked your wallet! You will now be required to authenticate with Metamask upon refreshing.');
+              setTimeout(() => {
+                router.reload();
+              }, 5000);
+            } else {
+              setAdditionalError(message);
+            }
+          } catch (err) {
+            setAdditionalError(err.message);
+          }
         }
       }
     } else {
@@ -359,6 +401,46 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
             />
           </>
         )}
+        {!forLogin && linkWallet && (
+          <>
+            <TextInput
+              label='Password'
+              sx={(theme) => ({
+                input: {
+                  width: '100%',
+                  marginTop: '4px',
+                  padding: '24px 16px',
+                  border: `${theme.colors.nbcGreen[0]} 2px solid`,
+                  borderRadius: '8px',
+                  ':focus': {
+                    border: '2px solid #42ca9f',
+                  },
+                },
+              })}
+              type='password'
+              placeholder='Password'
+              {...form.getInputProps('password')}
+            />
+            <TextInput
+              label='Set Wallet'
+              sx={(theme) => ({
+                input: {
+                  width: '100%',
+                  marginTop: '4px',
+                  padding: '24px 16px',
+                  border: `${theme.colors.nbcGreen[0]} 2px solid`,
+                  borderRadius: '8px',
+                  ':focus': {
+                    border: '2px solid #42ca9f',
+                  },
+                },
+              })}
+              type='text'
+              placeholder='Set Wallet'
+              {...form.getInputProps('wallet')}
+            />
+          </>
+        )}
         {forLogin && (
           <>
             <TextInput
@@ -400,7 +482,7 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
             />
           </>
         )}
-        {(forLogin || changeEmail || changePassword || linkAccount) && (
+        {(forLogin || changeEmail || changePassword || linkAccount || linkWallet) && (
           <Button
             h='48px'
             miw='200px'
@@ -425,7 +507,8 @@ const AuthForm = ({ forLogin = false, changeEmail = false, changePassword = fals
                   forLogin ? 'Login' :
                     changeEmail ? 'Change email' :
                       changePassword ? 'Change password' :
-                        linkAccount && 'Link account'
+                        linkAccount ? 'Link account' :
+                          linkWallet && 'Link wallet'
                 }
               </Text>
             )}
