@@ -29,7 +29,6 @@ const useStyles = createStyles((theme) => ({
 
 export default function Home() {
   const { isAuthenticated, user } = useMoralis();
-  const emailConnected = !!(user && user.get('email'));
   // checks if the user has AT LEAST 1 key of salvation
   const [hasKey, setHasKey] = useState(false);
   // checks if the user has access to an Alpha V1 invite code
@@ -66,6 +65,8 @@ export default function Home() {
   useEffect(() => {
     ownsInviteCode();
   }, [ownsInviteCode]);
+
+  const emailConnected = !!(user && user.get('email')) || emailUser;
 
   return (
     <>
@@ -197,10 +198,7 @@ export default function Home() {
                 />
               )}
               <Text size={18} color={(hasKey || hasInviteCode) ? '#42ca9f' : '#e9d562'}>
-                {emailConnected 
-                  ? hasKey ? 'At least 1 Key of Salvation owned' : 'Owns an Alpha V1 invite code'
-                  : 'Own at least 1 Key Of Salvation OR an Alpha V1 invite code' 
-                }
+                {emailConnected ? hasKey ? 'At least 1 Key Of Salvation owned' : hasInviteCode ? 'Owns an Alpha V1 invite code' : 'At least 1 Key Of Salvation or an Alpha V1 invite code' : 'At least 1 Key Of Salvation or an Alpha V1 invite code'}
               </Text>
             </Flex>
             <Text size={15} mt={30}>
