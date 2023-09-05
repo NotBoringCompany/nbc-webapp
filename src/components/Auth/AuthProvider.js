@@ -132,7 +132,7 @@ const AuthProvider = ({ children }) => {
                 return;
             }
 
-            if (data?.wallet !== null && !isAuthenticated && !isAuthenticating) {
+            if (data?.wallet && !isAuthenticated && !isAuthenticating) {
                 console.log('wallet exists')
                 console.log('data wallet: ', data.wallet)
                 await handleAuth(

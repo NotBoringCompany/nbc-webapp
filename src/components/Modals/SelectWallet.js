@@ -30,16 +30,19 @@ const useStyles = createStyles((theme) => ({
 const SelectWallet = ({ showSelectWallet, setShowSelectWallet }) => {
   const { classes } = useStyles();
 
-  const { enableWeb3, isAuthenticated, authenticate, logout, Moralis } =
+  const { enableWeb3, isAuthenticated, isAuthenticating, authenticate, logout, Moralis } =
     useMoralis();
   const [authError, setAuthError] = useState(false);
-  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
       setShowSelectWallet(false);
     }
   }, [isAuthenticated, setShowSelectWallet]);
+
+  const callHandleAuth = () => {
+    handleAuth(setAuthError, enableWeb3, Moralis, authenticate, 'metamask');
+  }
 
   return (
     <>
@@ -54,14 +57,7 @@ const SelectWallet = ({ showSelectWallet, setShowSelectWallet }) => {
             className={classes.walletButton}
             disabled={isAuthenticating}
             onClick={() =>
-              handleAuth(
-                setAuthError,
-                setIsAuthenticating,
-                enableWeb3,
-                Moralis,
-                authenticate,
-                'metamask'
-              )
+              callHandleAuth()
             }
           >
             {isAuthenticating ? (
