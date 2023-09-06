@@ -177,31 +177,41 @@ const AuthForm = ({
 
           const hasUniqueHash = user?.get('uniqueHash');
 
-          if (hasUniqueHash) {
-            await setUserData({
-              email: currentEmail,
-              password: password,
-            })
-              .then(() => {
-                setSuccessMessage('Successfully linked your account!');
-                setTimeout(() => {
-                  router.reload();
-                }, 2000);
-              })
-              .catch((err) => setAdditionalError(err.message));
-          } else {
-            await setUserData({
-              email: currentEmail,
-              password: password,
-              uniqueHash: uniqueHash.toString(),
-            })
-              .then(() => {
-                setSuccessMessage('Successfully linked your account!');
-                setTimeout(() => {
-                  router.reload();
-                }, 2000);
-              })
-              .catch((err) => setAdditionalError(err.message));
+          const resp = await fetch(`https://nbc-webapp-api-ts-production.up.railway.app/webapp/check-user-exists/${currentEmail}`);
+
+          const { status, message, error, data } = await resp.json();
+
+          if (status === 200) {
+            if (data?.userExists) {
+              setAdditionalError('An account with that email already exists.');
+            } else {
+              if (hasUniqueHash) {
+                await setUserData({
+                  email: currentEmail,
+                  password: password,
+                })
+                  .then(() => {
+                    setSuccessMessage('Successfully linked your account! You will now be required to authenticate with Metamask upon refreshing.');
+                    setTimeout(() => {
+                      router.reload();
+                    }, 3000);
+                  })
+                  .catch((err) => setAdditionalError(err.message));
+              } else {
+                await setUserData({
+                  email: currentEmail,
+                  password: password,
+                  uniqueHash: uniqueHash.toString(),
+                })
+                  .then(() => {
+                    setSuccessMessage('Successfully linked your account! You will now be required to authenticate with Metamask upon refreshing.');
+                    setTimeout(() => {
+                      router.reload();
+                    }, 3000);
+                  })
+                  .catch((err) => setAdditionalError(err.message));
+              }
+            }
           }
         } else {
           setAdditionalError('Error with wallet authentication. Please try to log in with your wallet again.');
@@ -280,7 +290,7 @@ const AuthForm = ({
               setSuccessMessage('Successfully linked your wallet! You will now be required to authenticate with Metamask upon refreshing.');
               setTimeout(() => {
                 router.reload();
-              }, 5000);
+              }, 3000);
             } else {
               setAdditionalError(message);
             }
