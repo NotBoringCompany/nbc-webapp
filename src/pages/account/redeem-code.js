@@ -3,6 +3,7 @@ import Layout from '@/components/Layout/Layout'
 import { Box, Button, Flex, Loader, Text, TextInput } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { IconAlertOctagon } from '@tabler/icons'
+import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
 import { useMoralis } from 'react-moralis'
 
@@ -13,6 +14,7 @@ const RedeemCode = () => {
     const [successMessage, setSuccessMessage] = useState(null);
     const { user } = useMoralis();
     const { emailUser } = useContext(AuthContext);
+    const router = useRouter();
 
     const handleFormSubmit = async (formData) => {
         setLoading(true);
@@ -38,6 +40,10 @@ const RedeemCode = () => {
                 setErrorMessage(null);
                 setSuccessMessage(message);
                 setLoading(false);
+
+                setTimeout(() => {
+                    router.reload();
+                }, 2000);
             }
         } catch (err) {
             setErrorMessage(err.message);

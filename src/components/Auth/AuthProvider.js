@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createContext, useContext } from 'react';
 import AuthContext from './AuthContext';
 import { useRouter } from 'next/router';
@@ -24,6 +24,65 @@ const AuthProvider = ({ children }) => {
     const { enableWeb3, isAuthenticated, isAuthenticating, authenticate, Moralis, logout: moralisLogout, user } = useMoralis();
     const [authError, setAuthError] = useState(false);
     // const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+    const checkWalletExists = useCallback(async () => {
+        const walletExists = await fetch(
+            `https://nbc-webapp-api-ts-production.up.railway.app/webapp/check-wallet-exists/${user?.get('email') || localStorage.getItem('email') || emailUser}`,
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }
+        )
+
+        const { status, error, message, data } = await walletExists.json();
+
+        if (status === 500) {
+            return;
+        }
+
+        if (data?.wallet && !isAuthenticated && !isAuthenticating) {    
+            console.log('wallet exists')
+            console.log('data wallet: ', data.wallet)
+
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+            const account = accounts[0];
+
+            if (account !== data.wallet) {
+                // SHOW MODAL HERE TO REQUEST USERS TO CHANGE THEIR ACCOUNT TO THE LINKED ONE
+                accounts[0] = data.wallet;
+            }
+
+            await handleAuth(
+                setAuthError,
+                enableWeb3,
+                Moralis,
+                authenticate,
+                'metamask',
+                data.wallet,
+            )
+        } else {
+            return;
+        }
+    }, [user])
+
+    // useEffect(() => {
+    //     checkWalletExists();
+    // }, [user])
+
+    useEffect(() => {
+        // when a user changes an account (via Moralis)
+        const accountChanged = async () => {
+            await checkWalletExists();
+        }
+    
+        window.ethereum.on('accountsChanged', accountChanged);
+    }, [checkWalletExists])
+
+    useEffect(() => {
+        checkWalletExists();
+    }, [checkWalletExists])
 
     useEffect(() => {
         const checkAuth = () => {
@@ -113,44 +172,6 @@ const AuthProvider = ({ children }) => {
         requireVerificationLoggedIn();
         checkNewEmailUnverified();
     }, [router, isAuthenticating, emailUser, user]);
-
-    useEffect(() => {
-        const checkWalletExists = async () => {
-            const walletExists = await fetch(
-                `https://nbc-webapp-api-ts-production.up.railway.app/webapp/check-wallet-exists/${user?.get('email') || localStorage.getItem('email') || emailUser}`,
-                {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                }
-            )
-
-            const { status, error, message, data } = await walletExists.json();
-
-            if (status === 500) {
-                return;
-            }
-
-            if (data?.wallet && !isAuthenticated && !isAuthenticating) {
-                console.log('wallet exists')
-                console.log('data wallet: ', data.wallet)
-                await handleAuth(
-                    setAuthError,
-                    // setIsAuthenticating,
-                    enableWeb3,
-                    Moralis,
-                    authenticate,
-                    'metamask',
-                    data.wallet
-                );
-            } else {
-                return;
-            }
-        }
-
-        checkWalletExists();
-    }, [user])
 
     const login = async (email, password) => {
         try {

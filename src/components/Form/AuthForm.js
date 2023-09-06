@@ -1,12 +1,13 @@
 import { useForm } from '@mantine/form';
 import { useMoralis } from 'react-moralis';
-import { Text, TextInput, Button, Loader } from '@mantine/core';
+import { Text, TextInput, Button, Loader, Flex } from '@mantine/core';
 import moralisErrorMessage from '@/utils/moralisErrorMessage';
 import CryptoJS from 'crypto-js';
 import { useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import AuthContext from '../Auth/AuthContext';
 import { validChecksum } from '@/utils/checksum';
+import { IconCircleCheck, IconCircleX } from '@tabler/icons';
 
 /**
  * `AuthForm` is used for logging in, for changing email/password, or for linking a user's account with email (if they used wallet)
@@ -36,7 +37,8 @@ const AuthForm = ({
 
   const [isEmailUserAuthenticating, setIsEmailUserAuthenticating] = useState(false);
 
-  const { login, emailUser, emailLoginError, setEmailLoginError, setEmailUser } = useContext(AuthContext);
+  const { login, emailUser, emailLoginError, setEmailLoginError, setEmailUser, logout } = useContext(AuthContext);
+  const { logout: moralisLogout } = useMoralis();
 
   const hasEmail = user?.attributes?.email || !!emailUser;
 
@@ -44,6 +46,31 @@ const AuthForm = ({
 
   const [additionalError, setAdditionalError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+
+  // required for `linkAccount`
+  const [passwordRequirements, setPasswordRequirements] = useState({
+    length: false,
+    lowercase: false,
+    uppercase: false,
+    number: false,
+    special: false,
+  });
+
+  // required for `changePassword`
+  const [newPasswordRequirements, setNewPasswordRequirements] = useState({
+    length: false,
+    lowercase: false,
+    uppercase: false,
+    number: false,
+    special: false,
+  });
+
+  const passwordRequirementsMet =
+    passwordRequirements.length &&
+    passwordRequirements.lowercase &&
+    passwordRequirements.uppercase &&
+    passwordRequirements.number &&
+    passwordRequirements.special;
 
   const initialValues = {
     currentEmail: '',
@@ -84,6 +111,50 @@ const AuthForm = ({
       setResetFormTrigger(false);
     }
   }, [resetFormTrigger, setResetFormTrigger])
+
+  useEffect(() => {
+    const checkPasswordRequirements = async () => {
+      const { password } = form.values;
+      const meetsLength = password.length >= 8;
+      const meetsLowercase = /[a-z]/.test(password);
+      const meetsUppercase = /[A-Z]/.test(password);
+      const meetsNumber = /[0-9]/.test(password);
+      const meetsSpecial = /[!@#$%^&*]/.test(password);
+
+      setPasswordRequirements({
+        length: meetsLength,
+        lowercase: meetsLowercase,
+        uppercase: meetsUppercase,
+        number: meetsNumber,
+        special: meetsSpecial,
+      })
+    }
+
+    checkPasswordRequirements();
+  }, [form.values])
+
+  useEffect(() => {
+    const checkPasswordRequirementsNew = async () => {
+      const { newPassword } = form.values;
+      const meetsLength = newPassword.length >= 8;
+      const meetsLowercase = /[a-z]/.test(newPassword);
+      const meetsUppercase = /[A-Z]/.test(newPassword);
+      const meetsNumber = /[0-9]/.test(newPassword);
+      const meetsSpecial = /[!@#$%^&*]/.test(newPassword);
+
+      setNewPasswordRequirements({
+        length: meetsLength,
+        lowercase: meetsLowercase,
+        uppercase: meetsUppercase,
+        number: meetsNumber,
+        special: meetsSpecial,
+      })
+    }
+
+    checkPasswordRequirementsNew();
+  }, [form.values])
+
+  console.log(form.values);
 
   // if the user is not logged in via Moralis (user) or email (emailUser) or it's not `forLogin`, return null
   if (!user && !emailUser && !forLogin) {
@@ -176,7 +247,11 @@ const AuthForm = ({
           const { status, message, error, data } = await resp.json();
 
           if (status === 200) {
-            setSuccessMessage('Successfully changed your password!');
+            setSuccessMessage('Successfully changed your password! Redirecting...');
+            setTimeout(async () => {
+              await logout();
+              await moralisLogout();
+            }, 2000)
           } else {
             setAdditionalError(message);
           }
@@ -358,6 +433,33 @@ const AuthForm = ({
               placeholder='New Password'
               {...form.getInputProps('newPassword')}
             />
+            <Text sx={(theme) => ({
+              marginTop: 10,
+            })}>Password requirements:</Text>
+            <Flex
+              align='center'
+            >
+              {newPasswordRequirements.length ? <IconCircleCheck color='#42ca9f' /> : <IconCircleX color='#ca4242' />}
+              <Text ml={10} color={newPasswordRequirements.length ? '#42ca9f' : '#ca4242'}>At least 8 characters</Text>
+            </Flex>
+            <Flex
+              align='center'
+            >
+              {(newPasswordRequirements.lowercase && newPasswordRequirements.uppercase) ? <IconCircleCheck color='#42ca9f' /> : <IconCircleX color='#ca4242' />}
+              <Text ml={10} color={(newPasswordRequirements.lowercase && newPasswordRequirements.uppercase) ? '#42ca9f' : '#ca4242'}>Includes lower and upper case characters</Text>
+            </Flex>
+            <Flex
+              align='center'
+            >
+              {newPasswordRequirements.number ? <IconCircleCheck color='#42ca9f' /> : <IconCircleX color='#ca4242' />}
+              <Text ml={10} color={newPasswordRequirements.number ? '#42ca9f' : '#ca4242'}>At least 1 number</Text>
+            </Flex>
+            <Flex
+              align='center'
+            >
+              {newPasswordRequirements.special ? <IconCircleCheck color='#42ca9f' /> : <IconCircleX color='#ca4242' />}
+              <Text ml={10} color={newPasswordRequirements.special ? '#42ca9f' : '#ca4242'}>At least 1 special character</Text>
+            </Flex>
           </>
         )}
         {!forLogin && linkAccount && (
@@ -399,6 +501,33 @@ const AuthForm = ({
               placeholder='Set Password'
               {...form.getInputProps('password')}
             />
+            <Text sx={(theme) => ({
+              marginTop: 10,
+            })}>Password requirements:</Text>
+            <Flex
+              align='center'
+            >
+              {passwordRequirements.length ? <IconCircleCheck color='#42ca9f' /> : <IconCircleX color='#ca4242' />}
+              <Text ml={10} color={passwordRequirements.length ? '#42ca9f' : '#ca4242'}>At least 8 characters</Text>
+            </Flex>
+            <Flex
+              align='center'
+            >
+              {(passwordRequirements.lowercase && passwordRequirements.uppercase) ? <IconCircleCheck color='#42ca9f' /> : <IconCircleX color='#ca4242' />}
+              <Text ml={10} color={(passwordRequirements.lowercase && passwordRequirements.uppercase) ? '#42ca9f' : '#ca4242'}>Includes lower and upper case characters</Text>
+            </Flex>
+            <Flex
+              align='center'
+            >
+              {passwordRequirements.number ? <IconCircleCheck color='#42ca9f' /> : <IconCircleX color='#ca4242' />}
+              <Text ml={10} color={passwordRequirements.number ? '#42ca9f' : '#ca4242'}>At least 1 number</Text>
+            </Flex>
+            <Flex
+              align='center'
+            >
+              {passwordRequirements.special ? <IconCircleCheck color='#42ca9f' /> : <IconCircleX color='#ca4242' />}
+              <Text ml={10} color={passwordRequirements.special ? '#42ca9f' : '#ca4242'}>At least 1 special character</Text>
+            </Flex>
           </>
         )}
         {!forLogin && linkWallet && (
@@ -524,11 +653,11 @@ const AuthForm = ({
             {additionalError}
           </Text>
         )}
-        {!!authError && forLogin && (
+        {/* {!!authError && forLogin && (
           <Text sx={{ color: '#ca4242' }} mt='md'>
             {moralisErrorMessage('auth', authError.code)}
           </Text>
-        )}
+        )} */}
 
         {!!userError && (
           <Text sx={{ color: '#ca4242' }} mt='md'>

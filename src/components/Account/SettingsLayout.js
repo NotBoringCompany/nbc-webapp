@@ -13,6 +13,8 @@ const SettingsLayout = () => {
   const [resetFormTrigger, setResetFormTrigger] = useState(false);
 
   const { user } = useMoralis();
+
+
   const { emailUser } = useContext(AuthContext);
 
   const handleEmailChange = () => {
@@ -84,7 +86,7 @@ const SettingsLayout = () => {
         }
       })}
       >
-        You can either link your account to an email if you haven&apos;t done so or you can change your email and password.
+        You can either link your account to an email/wallet if you haven&apos;t done so or you can change your email and password.
       </Text>
       <Flex
             direction='row'
@@ -121,6 +123,7 @@ const SettingsLayout = () => {
         direction='row'
       >
         <Button
+          disabled={!emailUser || !user?.attributes?.email}
           sx={(theme) => ({
             backgroundColor: '#42ca9f',
             marginRight: 20,
